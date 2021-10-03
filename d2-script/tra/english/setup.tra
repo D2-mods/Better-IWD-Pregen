@@ -1,0 +1,11 @@
+//Setup
+@1 = ~Add or Update IWD Pregen script (for EE games)~
+@2 = ~Installs on IWD:EE, BG:EE, BG2:EE and EET~
+@3 = ~Install IWD Pregen script to IWD2~
+@4 = ~This component is for IWD2~
+
+
+//SCRPDESC.2DA entries
+@10 = ~IWD PREGEN:~
+@11 = ~The character will auto-attack when enemies are sighted, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If no enemies are nearby, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)~
+@12 = ~The character will auto-attack when enemies are sighted, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth or Battle Song. If no enemies are nearby, a character with Rogue or Monk levels will search for traps, but not if using Stealth or Battle Song. (<script>)~

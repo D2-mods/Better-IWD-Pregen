@@ -1,0 +1,36 @@
+IF
+	ActionListEmpty()
+	Class(Myself,MAGE)
+	OR(4)
+		InWeaponRange([EVILCUTOFF])
+		Range([EVILCUTOFF],3)
+		CheckStat(Myself,1,POLYMORPHED)
+		CheckStatLT(Myself,5,THAC0)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
+	OR(3)
+		Class(Myself,THIEF_ALL)
+		Class(Myself,MONK)
+		Class(Myself,SHAMAN)
+	!ModalState(TURNUNDEAD)
+	!ModalState(DETECTTRAPS)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		FindTraps()
+END

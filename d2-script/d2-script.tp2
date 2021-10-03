@@ -1,0 +1,68 @@
+BACKUP ~d2-script\backup~
+AUTHOR ~Dan_P~
+VERSION ~0.5~
+
+LANGUAGE ~English~ ~english~ ~d2-script\tra\english\setup.tra~
+
+//Installing to EEs
+	 
+BEGIN @1
+REQUIRE_PREDICATE GAME_IS ~iwdee bgee bg2ee eet~ @2
+LABEL ~D2-SCRIPT-IWDPGEN~
+
+ACTION_IF ((GAME_IS ~iwdee~) AND (FILE_EXISTS_IN_GAME ~iwdpgen.BCS~)) BEGIN
+
+COPY_EXISTING ~iwdpgen.BCS~ ~override~					// patch iwdpgen.BCS
+  DECOMPILE_AND_PATCH BEGIN
+  REPLACE_TEXTUALLY EXACT_MATCH
+  ~!ModalState(STEALTH)~
+  ~!ModalState(STEALTH) !ModalState(SHAMANDANCE)~
+  REPLACE_TEXTUALLY EXACT_MATCH
+  ~Class(Myself,MONK)~
+  ~Class(Myself,MONK) Class(Myself,SHAMAN)~
+  REPLACE_TEXTUALLY EXACT_MATCH
+  ~OR(2)~
+  ~OR(3)~
+  REPLACE_TEXTUALLY EXACT_MATCH
+  ~!StateCheck(Myself,STATE_INVISIBLE)~
+  ~!Class(Myself,MAGE) !StateCheck(Myself,STATE_INVISIBLE)~
+  END
+  
+EXTEND_BOTTOM ~iwdpgen.BCS~ ~%MOD_FOLDER%\baf\d2bsid1p.BAF~		// add block to BCS
+COPY_EXISTING ~iwdpgen.BCS~ ~scripts\iwdpgen.BS~		// copy to scripts folder
+
+COPY_EXISTING ~SCRPDESC.2DA~ ~override~					// update text
+REPLACE ~40838~ @10
+REPLACE ~40839~ @11
+
+END 
+
+ELSE BEGIN
+
+COMPILE ~%MOD_FOLDER%\baf\d2bsid1a.BAF~					// create BCS file
+COPY_EXISTING ~d2bsid1a.BCS~ ~scripts\iwdpgen.BS~		// copy to scripts folder
+
+APPEND ~SCRPDESC.2DA~									// add line to 2DA (with placeholder values)
+  ~iwdpgen     @10       @11~
+
+COPY_EXISTING ~SCRPDESC.2DA~ ~override~					// replace placeholders with actual strings
+REPLACE ~@10~ @10
+REPLACE ~@11~ @11
+
+END
+
+
+//Installing to IWD2
+
+BEGIN @3
+REQUIRE_PREDICATE (GAME_IS ~iwd2~) @4
+
+COMPILE ~%MOD_FOLDER%\baf\d2bsid2a.BAF~
+COPY_EXISTING ~d2bsid2a.BCS~ ~scripts\iwdpgen.BS~
+
+APPEND ~SCRPDESC.2DA~
+  ~iwdpgen     @10       @12~
+
+COPY_EXISTING ~SCRPDESC.2DA~ ~override~
+REPLACE ~@10~ @10
+REPLACE ~@12~ @12
