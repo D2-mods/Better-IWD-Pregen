@@ -61,6 +61,7 @@ IF
 		CheckSpellState(Myself,SANCTUARY)
 	!ModalState(Myself,BATTLESONG)
 	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
 		Wait(2)

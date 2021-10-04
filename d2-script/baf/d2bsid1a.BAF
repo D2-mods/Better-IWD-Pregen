@@ -61,6 +61,7 @@ IF
 		Class(Myself,SHAMAN)
 	!ModalState(TURNUNDEAD)
 	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100

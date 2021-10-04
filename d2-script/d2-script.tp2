@@ -1,6 +1,6 @@
 BACKUP ~d2-script\backup~
 AUTHOR ~Dan_P~
-VERSION ~0.5~
+VERSION ~0.6~
 
 LANGUAGE ~English~ ~english~ ~d2-script\tra\english\setup.tra~
 

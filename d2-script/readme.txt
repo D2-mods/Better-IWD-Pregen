@@ -1,4 +1,5 @@
 Updated IWD Pregen script (for EEs and IWD2)
+GitHub: https://github.com/D2-mods/D2-Script
 Game version: IWD:EE, IWD2, BG:EE, BG2:EE, EET
 
 
@@ -48,13 +49,19 @@ CREDITS:
 
 Coding, Testing: Dan_P
 
-Resources:
-IESDP
-NearInfinity
-WeiDU readme
+Tools and Resources used:  
+- WeiDU v247 https://github.com/WeiDUorg/weidu  
+- NearInfinity v2.2-20210501 https://github.com/Argent77/NearInfinity  
+- Notepad++ https://notepad-plus-plus.org/  
+- Git Bash https://git-scm.com/downloads  
+- Infinity Auto Packager https://github.com/InfinityTools/InfinityAutoPackager  
+- IESDP https://gibberlings3.github.io/iesdp/index.htm
 
 
 VERSION INFO:
+
+v0.6
+- Fix regression: Auto-search was activating during Stealth
 
 v0.4
 - added additional restrictions to auto-attacking for mages and sorcerers
