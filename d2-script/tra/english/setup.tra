@@ -7,5 +7,9 @@
 
 //SCRPDESC.2DA entries
 @10 = ~IWD PREGEN:~
-@11 = ~The character will auto-attack when enemies are sighted, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If no enemies are nearby, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)~
-@12 = ~The character will auto-attack when enemies are sighted, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth or Battle Song. If no enemies are nearby, a character with Rogue or Monk levels will search for traps, but not if using Stealth or Battle Song. (<script>)~
+@11 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
+
+*Melee auto-attack range is dependent on class (see readme for full breakdown). Generally speaking, warrior classes stay aggressive, while mages and sorcerers won't rush into melee. Other classes will start attacking from a medium distance (about 12 ft. away).~
+@12 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth or Battle Song. If not in auto-attack range, a character with Rogue or Monk levels will search for traps, but not if using Stealth or Battle Song. (<script>)
+
+*Melee auto-attack range is dependent on class (see readme for full breakdown). Generally speaking, warrior classes stay aggressive, while wizards and sorcerers won't rush into melee. Other classes will start attacking from a medium distance (about 12 ft. away).~

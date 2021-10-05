@@ -8,7 +8,8 @@ IF
 	!ModalState(DETECTTRAPS)
 	!ModalState(STEALTH)
 	!ModalState(SHAMANDANCE)
-	!Range([EVILCUTOFF],30)
+	!Range([EVILCUTOFF],12)
+	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
 		FindTraps()
@@ -16,14 +17,13 @@ END
 
 IF
 	ActionListEmpty()
-	!Class(Myself,MAGE)
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 	!ModalState(BATTLESONG)
 	!ModalState(TURNUNDEAD)
 	!ModalState(STEALTH)
 	!ModalState(SHAMANDANCE)
-	See([EVILCUTOFF])
+	InWeaponRange([EVILCUTOFF])
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -32,9 +32,59 @@ END
 
 IF
 	ActionListEmpty()
-	Class(Myself,MAGE)
-	OR(4)
-		InWeaponRange([EVILCUTOFF])
+	OR(3)
+		Class(Myself,FIGHTER_ALL)
+		Class(Myself,PALADIN_ALL)
+		Class(Myself,RANGER_ALL)
+	OR(3)
+		Range([EVILCUTOFF],25)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+		ActuallyInCombat()
+	!Class(Myself,MONK)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(7)
+		Class(Myself,CLERIC)
+		Class(Myself,THIEF)
+		Class(Myself,BARD)
+		Class(Myself,DRUID)
+		Class(Myself,MONK)
+		Class(Myself,SHAMAN)
+		Class(Myself,CLERIC_THIEF)
+	OR(2)
+		Range([EVILCUTOFF],12)
+		CheckStat(Myself,1,POLYMORPHED)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(3)
+		Class(Myself,MAGE)
+		Class(Myself,MAGE_THIEF)
+		Class(Myself,CLERIC_MAGE)
+	OR(3)
 		Range([EVILCUTOFF],3)
 		CheckStat(Myself,1,POLYMORPHED)
 		CheckStatLT(Myself,5,THAC0)
@@ -52,13 +102,13 @@ END
 
 IF
 	ActionListEmpty()
-	OR(2)
-		StateCheck(Myself,STATE_INVISIBLE)
-		CheckStat(Myself,1,SANCTUARY)
 	OR(3)
 		Class(Myself,THIEF_ALL)
 		Class(Myself,MONK)
 		Class(Myself,SHAMAN)
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
 	!ModalState(TURNUNDEAD)
 	!ModalState(DETECTTRAPS)
 	!ModalState(STEALTH)

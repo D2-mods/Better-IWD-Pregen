@@ -1,52 +1,87 @@
-Updated IWD Pregen script (for EEs and IWD2)
-GitHub: https://github.com/D2-mods/D2-Script
+Better IWD Pregen - a minimalist script for all classes
+GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Game version: IWD:EE, IWD2, BG:EE, BG2:EE, EET
 
 
-OVERVIEW:
-
-The IWD Pregen script from IWD:EE basically does what I want an AI script to do, which is auto-attack, but not when invisible/hidden or using certain class abilities. It does not switch targets without your input, and does not switch weapons, unless a ranged weapon runs out of ammo. I like to micro-manage everything else.
+==================================================
+OVERVIEW
+==================================================
+The IWD Pregen script from IWD:EE basically does what I want an AI script to do, which is auto-attack, but not when invisible/hidden or using certain class abilities. It does not switch targets without your input, and does not switch weapons, unless a ranged weapon runs out of ammo.
 
 I originally made this mod for IWD:EE to add Shamanic Dance to the list of abilities that prevent auto-attack, because Beamdog hasn't added it in, as of v2.6. I then decided to make a similar script for IWD2, because none of the base game scripts are similar. You can also use this with BG:EE, BG2:EE and EET.
 
-Note: some classes have additional restrictions for auto-attacking (see below)
+What this mod does is take IWD Pregen, and finetune the auto-attack and auto-Search scripting (based on my own preferences), while keeping it minimalist. Spells, abilities, item use, etc., are for the player to micro-manage. The biggest difference you'll notice from the vanilla IWD Pregen is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle, and more options for placement of characters, without needing to turn AI/auto-attack off.
 
 
-INSTALLATION:
-
+==================================================
+INSTALLATION
+==================================================
 Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform).
 
 
-DESCRIPTIONS:
-
+==================================================
+DESCRIPTIONS
+==================================================
 EEs
-IWD PREGEN: The character will auto-attack when enemies are sighted, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If no enemies are nearby, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance.
+IWD PREGEN: The character will auto-attack when enemies are in range, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance.
 
 IWD2
-IWD PREGEN: The character will auto-attack when enemies are sighted, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth or Battle Song. If no enemies are nearby, a character with Rogue or Monk levels will search for traps, but not if using Stealth or Battle Song.
+IWD PREGEN: The character will auto-attack when enemies are in range, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth or Battle Song. If not in auto-attack range, a character with Rogue or Monk levels** will search for traps, but not if using Stealth or Battle Song.
+
+**for auto-Search, only characters with Rogue or Monk levels will automatically use the Search ability, even if you remove the class restrictions from the script. This seems to be hardcoded or hidden in a file somewhere.
 
 
-Additional info:
-
+==================================================
+Auto-attack breakdown:
+==================================================
 EEs
-- single-class mages and sorcerers will only auto-attack if one of the following conditions is met:
+Class: Fighter, Ranger, Paladin, including any multiclass combinations
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 25 ft.
+	3. Attacked by enemy (doesn't need to be hit)
+	4. Combat counter is greater than 0, and the character sees an enemy (as long as combat is happening in the active area, the counter will be greater than 0)
+
+Class: Cleric, Druid, Monk, Shaman, Thief, Bard, Cleric/Thief
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 12 ft.
+	3. Shapeshift or Polymorph
+	
+Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
+	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 3 ft.
 	3. Polymorphed
 	4. THAC0 is less than 5
 
 IWD2
-- characters with wizard or sorcerer levels will only auto-attack if one of the following conditions is met:
+Class: Fighter, Ranger, Paladin or Barbarian, single-class or a multiclass with 3+ levels
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 25 ft.
+	3. Attacked by enemy (doesn't need to be hit)
+	4. At Level 3+: If not in sight of enemies, but a nearby ally begins auto-attacking, this character may follow the other into combat
+
+Class: Cleric, Druid, Monk, Thief or Bard, including multiclass with Wizard or Sorcerer
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 12 ft.
+	3. Tenser's Transformation or Iron Body in effect
+	4. Druid Shapeshift
+	5. Monk at level 9+: if not in sight of enemies, but a nearby ally begins auto-attacking, the Monk may follow the other into combat
+
+Class: Wizard or Sorcerer
+	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 3 ft.
-	3. Tenser's Transformation is in effect
-	4. Druid Shapeshift
-	5. Level 3+ in Fighter, Ranger, Paladin, Monk, or Barbarian
-- for auto-Search, I didn't actually put class restrictions in the script. However, from my testing, only characters with rogue or monk levels will automatically use the Search ability.
+	3. Tenser's Transformation or Iron Body in effect
+	4. Polymorphed (not in unmodded game, but a mod could add such spells)
+	
 
-
-CREDITS:
-
+==================================================
+CREDITS
+==================================================
 Coding, Testing: Dan_P
 
 Tools and Resources used:  
@@ -58,21 +93,24 @@ Tools and Resources used:
 - IESDP https://gibberlings3.github.io/iesdp/index.htm
 
 
-VERSION INFO:
+==================================================
+VERSION INFO
+==================================================
+v0.7
+- Melee auto-attacking conditions added for all classes (set to my own personal preferences)
 
 v0.6
-- Fix regression: Auto-search was activating during Stealth
+- fixed auto-Search activating during Stealth (for IWD2, I'd recommend putting Stealth directly on the quick bar, instead of using it from the Skills menu)
 
 v0.4
-- added additional restrictions to auto-attacking for mages and sorcerers
+- added additional restrictions to auto-attacking for mages and sorcerers (see auto-attack details)
 
 v0.3
-- added auto-search during combat, if invisible or sanctuaried; will not auto-search if character is using Turn Undead or Shamanic Dance (EEs), or using Battle Song (IWD2), because these abilities don't break the Sanctuary effect
+- added auto-Search during combat, if invisible or sanctuaried; will not auto-Search if character is using Turn Undead or Shamanic Dance (EEs), or using Battle Song (IWD2), because these abilities don't break the Sanctuary effect
 
 v0.2
 - usable with IWD2, BGEE, BG2EE and EET
 - added Shaman detect illusion to script
-- reorganized folder structure
 
 v0.1
 - initial release

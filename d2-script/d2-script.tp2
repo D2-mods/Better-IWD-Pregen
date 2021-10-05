@@ -1,6 +1,6 @@
 BACKUP ~d2-script\backup~
 AUTHOR ~Dan_P~
-VERSION ~0.6~
+VERSION ~0.7~
 
 LANGUAGE ~English~ ~english~ ~d2-script\tra\english\setup.tra~
 
@@ -15,17 +15,23 @@ ACTION_IF ((GAME_IS ~iwdee~) AND (FILE_EXISTS_IN_GAME ~iwdpgen.BCS~)) BEGIN
 COPY_EXISTING ~iwdpgen.BCS~ ~override~					// patch iwdpgen.BCS
   DECOMPILE_AND_PATCH BEGIN
   REPLACE_TEXTUALLY EXACT_MATCH
-  ~!ModalState(STEALTH)~
-  ~!ModalState(STEALTH) !ModalState(SHAMANDANCE)~
+  ~OR(2)~
+  ~OR(3)~
   REPLACE_TEXTUALLY EXACT_MATCH
   ~Class(Myself,MONK)~
   ~Class(Myself,MONK) Class(Myself,SHAMAN)~
   REPLACE_TEXTUALLY EXACT_MATCH
-  ~OR(2)~
-  ~OR(3)~
+  ~!ModalState(STEALTH)~
+  ~!ModalState(STEALTH) !ModalState(SHAMANDANCE)~
   REPLACE_TEXTUALLY EXACT_MATCH
-  ~!StateCheck(Myself,STATE_INVISIBLE)~
-  ~!Class(Myself,MAGE) !StateCheck(Myself,STATE_INVISIBLE)~
+  ~!Range([EVILCUTOFF],30)~
+  ~!Range([EVILCUTOFF],30) !InWeaponRange([EVILCUTOFF])~
+  REPLACE_TEXTUALLY EXACT_MATCH
+  ~!Range([EVILCUTOFF],30)~
+  ~!Range([EVILCUTOFF],12)~
+  REPLACE_TEXTUALLY EXACT_MATCH
+  ~See([EVILCUTOFF])~
+  ~InWeaponRange([EVILCUTOFF])~
   END
   
 EXTEND_BOTTOM ~iwdpgen.BCS~ ~%MOD_FOLDER%\baf\d2bsid1p.BAF~		// add block to BCS
@@ -56,6 +62,8 @@ END
 
 BEGIN @3
 REQUIRE_PREDICATE (GAME_IS ~iwd2~) @4
+
+COPY ~%MOD_FOLDER%\dummy~ ~override~					// copy dummy file, prevents error message
 
 COMPILE ~%MOD_FOLDER%\baf\d2bsid2a.BAF~
 COPY_EXISTING ~d2bsid2a.BCS~ ~scripts\iwdpgen.BS~
