@@ -6,11 +6,11 @@ Game version: IWD:EE, IWD2, BG:EE, BG2:EE, EET
 ==================================================
 OVERVIEW
 ==================================================
-The IWD Pregen script from IWD:EE basically does what I want an AI script to do, which is auto-attack, but not when invisible/hidden or using certain class abilities. It does not switch targets without your input, and does not switch weapons, unless a ranged weapon runs out of ammo.
+The IWD Pregen script from IWD:EE basically does what I want an AI script to do, which is auto-attack, but not when invisible/hiding or using certain class abilities, like Bard Song or Turn Undead. It's a plug and play script without any hotkeys.
 
-I originally made this mod for IWD:EE to add Shamanic Dance to the list of abilities that prevent auto-attack, because Beamdog hasn't added it in, as of v2.6. I then decided to make a similar script for IWD2, because none of the base game scripts are similar. You can also use this with BG:EE, BG2:EE and EET.
+What this mod does is take IWD Pregen, and finetune the auto-attack and auto-Search scripting (based on my own preferences), while keeping it minimalist. Spells, abilities, item use, etc., are for the player to micro-manage. 
 
-What this mod does is take IWD Pregen, and finetune the auto-attack and auto-Search scripting (based on my own preferences), while keeping it minimalist. Spells, abilities, item use, etc., are for the player to micro-manage. The biggest difference you'll notice from the vanilla IWD Pregen is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle, and more options for placement of characters, without needing to turn AI/auto-attack off.
+The biggest difference you'll notice from the vanilla IWD Pregen is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle, and more options for placement of characters, without needing to turn AI off.
 
 
 ==================================================
@@ -96,6 +96,12 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v0.8
+- EEs: better targeting of enemies with weapon immunity (it's not 100%, may still target immune enemies, but makes it more likely to attack enemies you can actually hit)
+- all games: if a character becomes invisible while playing a Bard Song, the song will stop to preserve invisibility (Shamanic Dance will not stop to preserve summons)
+- all games: if using a ranged weapon, will back away if a melee attacker gets too close (only a small amount, it's mainly to give visual feedback in case the player wasn't paying attention)
+- all games: at near-death, won't auto-attack unless target is in range of current weapon (this allows you to pull a character away from a scrum, and not worry about them rushing back in before being healed)
+
 v0.7
 - Melee auto-attacking conditions added for all classes (set to my own personal preferences)
 
@@ -113,4 +119,4 @@ v0.2
 - added Shaman detect illusion to script
 
 v0.1
-- initial release
+- adds Shamanic to list of abilities that prevent auto-attack

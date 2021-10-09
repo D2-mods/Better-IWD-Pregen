@@ -1,21 +1,4 @@
 IF
-	ActionListEmpty()
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	!Range([EVILCUTOFF],12)
-	!InWeaponRange([EVILCUTOFF])
-THEN
-	RESPONSE #100
-		FindTraps()
-END
-
-IF
 	ModalState(BATTLESONG)
 	StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -474,4 +457,3 @@ THEN
 	RESPONSE #100
 		FindTraps()
 END
-

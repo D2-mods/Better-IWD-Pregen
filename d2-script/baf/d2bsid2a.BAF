@@ -15,13 +15,54 @@ THEN
 END
 
 IF
+	ModalState(Myself,BATTLESONG)
+	StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+THEN
+	RESPONSE #100
+		ClearActions(Myself)
+END
+
+IF
+	IsWeaponRanged(Myself)
+	OR(2)
+		See([EVILCUTOFF],0)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+	LOS([EVILCUTOFF],6)
+	!IsWeaponRanged(NearestEnemyOf())
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		RunAwayFrom(NearestEnemyOf(),35)
+END
+
+IF
 	ActionListEmpty()
-	Or(5)
+	HPPercentLT(Myself,15)
+	!InWeaponRange([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Or(8)
 		LevelInClassGT(Myself,2,BARBARIAN)
 		LevelInClassGT(Myself,2,FIGHTER)
 		LevelInClassGT(Myself,2,PALADIN)
 		LevelInClassGT(Myself,2,RANGER)
 		LevelInClassGT(Myself,8,MONK)
+		CheckSpellState(Myself,TENSERS_TRANSFORMATION)
+		CheckStat(Myself,1,POLYMORPHED)
+		CheckSpellState(Myself,IRON_BODY)
 	Heard([GOODCUTOFF],600)
 	!See([EVILCUTOFF],0)
 	AnyPCSeesEnemy()
