@@ -16,6 +16,24 @@ THEN
 END
 
 IF
+	ActionListEmpty()
+	OR(3)
+		Class(Myself,THIEF_ALL)
+		Class(Myself,MONK)
+		Class(Myself,SHAMAN)
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
+	!ModalState(TURNUNDEAD)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
 	ModalState(BATTLESONG)
 	StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -25,11 +43,27 @@ THEN
 END
 
 IF
+	ActionListEmpty()
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF])
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
 	IsWeaponRanged(Myself)
 	OR(2)
 		See([EVILCUTOFF])
 		AttackedBy([EVILCUTOFF],DEFAULT)
-	Range([EVILCUTOFF],6)
+	Range([EVILCUTOFF],4)
 	!IsWeaponRanged(NearestEnemyOf())
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -59,9 +93,46 @@ END
 
 IF
 	ActionListEmpty()
-	OR(2)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
+	OR(3)
+		Class(Myself,THIEF_ALL)
+		Class(Myself,MONK)
+		Class(Myself,SHAMAN)
+	!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+	!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+	!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+	!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+	See([EVILCUTOFF])
+	!ModalState(TURNUNDEAD)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	OR(3)
+		Class(Myself,THIEF_ALL)
+		Class(Myself,MONK)
+		Class(Myself,SHAMAN)
+	!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+	See([EVILCUTOFF])
+	!ModalState(TURNUNDEAD)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
 	!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
 	!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
 	!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
@@ -81,9 +152,6 @@ END
 
 IF
 	ActionListEmpty()
-	OR(2)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
 	!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
 	!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
@@ -108,9 +176,7 @@ IF
 		Class(Myself,PALADIN_ALL)
 		Class(Myself,RANGER_ALL)
 		CheckStat(Myself,1,POLYMORPHED)
-	OR(4)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
+	OR(2)
 		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
@@ -135,9 +201,7 @@ IF
 		Class(Myself,PALADIN_ALL)
 		Class(Myself,RANGER_ALL)
 		CheckStat(Myself,1,POLYMORPHED)
-	OR(4)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
+	OR(2)
 		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
@@ -162,9 +226,7 @@ IF
 		Class(Myself,PALADIN_ALL)
 		Class(Myself,RANGER_ALL)
 		CheckStat(Myself,1,POLYMORPHED)
-	OR(4)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
+	OR(2)
 		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
@@ -194,9 +256,7 @@ IF
 	OR(2)
 		InWeaponRange([EVILCUTOFF])
 		Range([EVILCUTOFF],12)
-	OR(4)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
+	OR(2)
 		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
@@ -225,9 +285,7 @@ IF
 	OR(2)
 		InWeaponRange([EVILCUTOFF])
 		Range([EVILCUTOFF],12)
-	OR(4)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
+	OR(2)
 		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
@@ -256,9 +314,7 @@ IF
 	OR(2)
 		InWeaponRange([EVILCUTOFF])
 		Range([EVILCUTOFF],12)
-	OR(4)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
+	OR(2)
 		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
@@ -284,9 +340,7 @@ IF
 	OR(2)
 		InWeaponRange([EVILCUTOFF])
 		CheckStatLT(Myself,5,THAC0)
-	OR(4)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
+	OR(2)
 		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
@@ -312,9 +366,7 @@ IF
 	OR(2)
 		InWeaponRange([EVILCUTOFF])
 		CheckStatLT(Myself,5,THAC0)
-	OR(4)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
+	OR(2)
 		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
@@ -340,9 +392,7 @@ IF
 	OR(2)
 		InWeaponRange([EVILCUTOFF])
 		CheckStatLT(Myself,5,THAC0)
-	OR(4)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
+	OR(2)
 		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
@@ -361,9 +411,7 @@ END
 
 IF
 	ActionListEmpty()
-	OR(4)
-		!WeaponEffectiveVs(LastTargetedBy(),MAINHAND)
-		!WeaponCanDamage(LastTargetedBy(),MAINHAND)
+	OR(2)
 		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
 	WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
@@ -379,6 +427,78 @@ IF
 THEN
 	RESPONSE #100
 		AttackReevaluate(TenthNearestEnemyOf(),30)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
+		Range([EVILCUTOFF.0.0.MAGE_ALL],5)
+	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF.0.0.MAGE_ALL],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
+		Range([EVILCUTOFF.0.0.CLERIC_ALL],5)
+	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF.0.0.CLERIC_ALL],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
+		Range([EVILCUTOFF.0.0.DRUID_ALL],5)
+	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF.0.0.DRUID_ALL],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
+		Range([EVILCUTOFF.0.0.BARD_ALL],5)
+	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF.0.0.BARD_ALL],30)
 END
 
 IF
@@ -455,23 +575,5 @@ IF
 THEN
 	RESPONSE #100
 		AttackReevaluate([EVILCUTOFF],30)
-END
-
-IF
-	ActionListEmpty()
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
-	OR(2)
-		StateCheck(Myself,STATE_INVISIBLE)
-		CheckStat(Myself,1,SANCTUARY)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		FindTraps()
 END
 

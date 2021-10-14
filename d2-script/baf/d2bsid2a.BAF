@@ -15,6 +15,23 @@ THEN
 END
 
 IF
+	ActionListEmpty()
+	OR(2)
+		Class(Myself,ROGUE)
+		Class(Myself,MONK)
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		Wait(2)
+		FindTraps()
+END
+
+IF
 	ModalState(Myself,BATTLESONG)
 	StateCheck(Myself,STATE_INVISIBLE)
 	!CheckSpellState(Myself,SANCTUARY)
@@ -24,11 +41,27 @@ THEN
 END
 
 IF
+	ActionListEmpty()
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckSpellState(Myself,SANCTUARY)
+	!Class(Myself,ROGUE)
+	!Class(Myself,MONK)
+	InWeaponRange([EVILCUTOFF])
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
 	IsWeaponRanged(Myself)
 	OR(2)
 		See([EVILCUTOFF],0)
 		AttackedBy([EVILCUTOFF],DEFAULT)
-	LOS([EVILCUTOFF],6)
+	LOS([EVILCUTOFF],5)
 	!IsWeaponRanged(NearestEnemyOf())
 	!StateCheck(Myself,STATE_INVISIBLE)
 	!CheckSpellState(Myself,SANCTUARY)
@@ -36,7 +69,7 @@ IF
 	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
-		RunAwayFrom(NearestEnemyOf(),35)
+		RunAwayFrom(NearestEnemyOf(),40)
 END
 
 IF
@@ -76,6 +109,96 @@ THEN
 		MoveToObject(LastHeardBy())
 		EquipWeapon()
 		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.WIZARD])
+		LOS([EVILCUTOFF.0.0.WIZARD],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		Shout(600)
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF.0.0.WIZARD],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.SORCERER])
+		LOS([EVILCUTOFF.0.0.SORCERER],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		Shout(600)
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF.0.0.SORCERER],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.CLERIC])
+		LOS([EVILCUTOFF.0.0.CLERIC],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		Shout(600)
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF.0.0.CLERIC],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.DRUID])
+		LOS([EVILCUTOFF.0.0.DRUID],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		Shout(600)
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF.0.0.DRUID],30)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.BARD])
+		LOS([EVILCUTOFF.0.0.BARD],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		Shout(600)
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF.0.0.BARD],30)
 END
 
 IF
@@ -179,22 +302,5 @@ THEN
 		Shout(600)
 		EquipWeapon()
 		AttackReevaluate([EVILCUTOFF],30)
-END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		Class(Myself,ROGUE)
-		Class(Myself,MONK)
-	OR(2)
-		StateCheck(Myself,STATE_INVISIBLE)
-		CheckSpellState(Myself,SANCTUARY)
-	!ModalState(Myself,BATTLESONG)
-	!ModalState(Myself,DETECTTRAPS)
-	!ModalState(Myself,STEALTH)
-THEN
-	RESPONSE #100
-		Wait(2)
-		FindTraps()
 END
 

@@ -96,6 +96,12 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v0.9
+- EEs: auto-Search will activate if enemies are in sight, but all are immune to your weapon
+- all games: limited prioritizing of enemy casters (wizard, sorceror, cleric, druid, or bard); will attack these classes first, but only if within range of the currently equipped weapon, or in melee range (can sometimes still target other enemies)
+- all games: smaller distance from enemy for the auto-running away (when using a ranged weapon); this should give enough room to cast a close-range spell on an ally, attacking in melee, and not have the auto-run activate
+- all games: edits to various blocks in the script file, either for compatibility with new blocks, or to remove redundant triggers
+
 v0.8
 - EEs: better targeting of enemies with weapon immunity (it's not 100%, may still target immune enemies, but makes it more likely to attack enemies you can actually hit)
 - all games: if a character becomes invisible while playing a Bard Song, the song will stop to preserve invisibility (Shamanic Dance will not stop to preserve summons)
