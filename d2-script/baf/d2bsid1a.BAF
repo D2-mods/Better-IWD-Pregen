@@ -59,11 +59,12 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	IsWeaponRanged(Myself)
 	OR(2)
-		See([EVILCUTOFF])
+		LOS([EVILCUTOFF],4)
 		AttackedBy([EVILCUTOFF],DEFAULT)
-	Range([EVILCUTOFF],4)
+	Range([EVILCUTOFF],8)
 	!IsWeaponRanged(NearestEnemyOf())
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -97,10 +98,18 @@ IF
 		Class(Myself,THIEF_ALL)
 		Class(Myself,MONK)
 		Class(Myself,SHAMAN)
-	!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-	!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-	!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-	!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
 	See([EVILCUTOFF])
 	!ModalState(TURNUNDEAD)
 	!ModalState(DETECTTRAPS)
@@ -113,49 +122,18 @@ END
 
 IF
 	ActionListEmpty()
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
-	!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
-	See([EVILCUTOFF])
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		FindTraps()
-END
-
-IF
-	ActionListEmpty()
-	!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-	!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-	!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-	!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
-	See([EVILCUTOFF])
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		NoAction()
-END
-
-IF
-	ActionListEmpty()
-	!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
 	See([EVILCUTOFF])
 	!InParty([EVILCUTOFF])
 	!StateCheck(Myself,STATE_INVISIBLE)
@@ -176,12 +154,15 @@ IF
 		Class(Myself,PALADIN_ALL)
 		Class(Myself,RANGER_ALL)
 		CheckStat(Myself,1,POLYMORPHED)
+	OR(3)
+		InWeaponRange([EVILCUTOFF])
+		Range([EVILCUTOFF],25)
+		AttackedBy([EVILCUTOFF],DEFAULT)
 	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	See([EVILCUTOFF])
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
 	!InParty([EVILCUTOFF])
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -191,7 +172,7 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate(NearestEnemyOf(),30)
+		AttackOneRound(SecondNearestEnemyOf())
 END
 
 IF
@@ -201,122 +182,16 @@ IF
 		Class(Myself,PALADIN_ALL)
 		Class(Myself,RANGER_ALL)
 		CheckStat(Myself,1,POLYMORPHED)
-	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	See([EVILCUTOFF])
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		AttackReevaluate(SecondNearestEnemyOf(),30)
-END
-
-IF
-	ActionListEmpty()
-	OR(4)
-		Class(Myself,FIGHTER_ALL)
-		Class(Myself,PALADIN_ALL)
-		Class(Myself,RANGER_ALL)
-		CheckStat(Myself,1,POLYMORPHED)
-	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	See([EVILCUTOFF])
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		AttackReevaluate(ThirdNearestEnemyOf(),30)
-END
-
-IF
-	ActionListEmpty()
-	OR(6)
-		Class(Myself,CLERIC)
-		Class(Myself,THIEF)
-		Class(Myself,BARD)
-		Class(Myself,DRUID)
-		Class(Myself,SHAMAN)
-		Class(Myself,CLERIC_THIEF)
-	OR(2)
+	OR(3)
 		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],12)
+		Range([EVILCUTOFF],25)
+		AttackedBy([EVILCUTOFF],DEFAULT)
 	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		AttackReevaluate(NearestEnemyOf(),30)
-END
-
-IF
-	ActionListEmpty()
-	OR(6)
-		Class(Myself,CLERIC)
-		Class(Myself,THIEF)
-		Class(Myself,BARD)
-		Class(Myself,DRUID)
-		Class(Myself,SHAMAN)
-		Class(Myself,CLERIC_THIEF)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
 	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],12)
-	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		AttackReevaluate(SecondNearestEnemyOf(),30)
-END
-
-IF
-	ActionListEmpty()
-	OR(6)
-		Class(Myself,CLERIC)
-		Class(Myself,THIEF)
-		Class(Myself,BARD)
-		Class(Myself,DRUID)
-		Class(Myself,SHAMAN)
-		Class(Myself,CLERIC_THIEF)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],12)
-	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
 	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
 	WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
 	!InParty([EVILCUTOFF])
@@ -328,47 +203,25 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate(ThirdNearestEnemyOf(),30)
+		AttackOneRound(ThirdNearestEnemyOf())
 END
 
 IF
 	ActionListEmpty()
-	OR(3)
-		Class(Myself,MAGE)
-		Class(Myself,MAGE_THIEF)
-		Class(Myself,CLERIC_MAGE)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
+	OR(7)
+		Class(Myself,CLERIC)
+		Class(Myself,THIEF)
+		Class(Myself,BARD)
+		Class(Myself,DRUID)
+		Class(Myself,SHAMAN)
+		Class(Myself,CLERIC_THIEF)
 		CheckStatLT(Myself,5,THAC0)
 	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		AttackReevaluate(NearestEnemyOf(),30)
-END
-
-IF
-	ActionListEmpty()
-	OR(3)
-		Class(Myself,MAGE)
-		Class(Myself,MAGE_THIEF)
-		Class(Myself,CLERIC_MAGE)
-	OR(2)
 		InWeaponRange([EVILCUTOFF])
-		CheckStatLT(Myself,5,THAC0)
+		Range([EVILCUTOFF],12)
 	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
 	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
 	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
 	!InParty([EVILCUTOFF])
@@ -380,21 +233,28 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate(SecondNearestEnemyOf(),30)
+		AttackOneRound(SecondNearestEnemyOf())
 END
 
 IF
 	ActionListEmpty()
-	OR(3)
-		Class(Myself,MAGE)
-		Class(Myself,MAGE_THIEF)
-		Class(Myself,CLERIC_MAGE)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
+	OR(7)
+		Class(Myself,CLERIC)
+		Class(Myself,THIEF)
+		Class(Myself,BARD)
+		Class(Myself,DRUID)
+		Class(Myself,SHAMAN)
+		Class(Myself,CLERIC_THIEF)
 		CheckStatLT(Myself,5,THAC0)
 	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
+		InWeaponRange([EVILCUTOFF])
+		Range([EVILCUTOFF],12)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
 	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
 	WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
 	!InParty([EVILCUTOFF])
@@ -406,14 +266,75 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate(ThirdNearestEnemyOf(),30)
+		AttackOneRound(ThirdNearestEnemyOf())
+END
+
+IF
+	ActionListEmpty()
+	OR(3)
+		Class(Myself,MAGE)
+		Class(Myself,MAGE_THIEF)
+		Class(Myself,CLERIC_MAGE)
+	OR(2)
+		InWeaponRange([EVILCUTOFF])
+		Range([EVILCUTOFF],3)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackOneRound(SecondNearestEnemyOf())
+END
+
+IF
+	ActionListEmpty()
+	OR(3)
+		Class(Myself,MAGE)
+		Class(Myself,MAGE_THIEF)
+		Class(Myself,CLERIC_MAGE)
+	OR(2)
+		InWeaponRange([EVILCUTOFF])
+		Range([EVILCUTOFF],3)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackOneRound(ThirdNearestEnemyOf())
 END
 
 IF
 	ActionListEmpty()
 	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
 	WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
 	WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
 	InWeaponRange([EVILCUTOFF])
@@ -426,7 +347,7 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate(TenthNearestEnemyOf(),30)
+		AttackOneRound(TenthNearestEnemyOf())
 END
 
 IF
@@ -434,7 +355,6 @@ IF
 	OR(2)
 		InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
 		Range([EVILCUTOFF.0.0.MAGE_ALL],5)
-	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 	!InParty([EVILCUTOFF])
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -444,7 +364,7 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF.0.0.MAGE_ALL],30)
+		AttackOneRound([EVILCUTOFF.0.0.MAGE_ALL])
 END
 
 IF
@@ -452,7 +372,6 @@ IF
 	OR(2)
 		InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
 		Range([EVILCUTOFF.0.0.CLERIC_ALL],5)
-	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 	!InParty([EVILCUTOFF])
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -462,7 +381,24 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF.0.0.CLERIC_ALL],30)
+		AttackOneRound([EVILCUTOFF.0.0.CLERIC_ALL])
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.SHAMAN])
+		Range([EVILCUTOFF.0.0.SHAMAN],5)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackOneRound([EVILCUTOFF.0.0.SHAMAN])
 END
 
 IF
@@ -470,7 +406,6 @@ IF
 	OR(2)
 		InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
 		Range([EVILCUTOFF.0.0.DRUID_ALL],5)
-	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 	!InParty([EVILCUTOFF])
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -480,7 +415,7 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF.0.0.DRUID_ALL],30)
+		AttackOneRound([EVILCUTOFF.0.0.DRUID_ALL])
 END
 
 IF
@@ -488,7 +423,6 @@ IF
 	OR(2)
 		InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
 		Range([EVILCUTOFF.0.0.BARD_ALL],5)
-	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 	!InParty([EVILCUTOFF])
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -498,7 +432,7 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF.0.0.BARD_ALL],30)
+		AttackOneRound([EVILCUTOFF.0.0.BARD_ALL])
 END
 
 IF
@@ -507,13 +441,12 @@ IF
 		Class(Myself,FIGHTER_ALL)
 		Class(Myself,PALADIN_ALL)
 		Class(Myself,RANGER_ALL)
-	OR(4)
+	OR(3)
 		InWeaponRange([EVILCUTOFF])
 		Range([EVILCUTOFF],25)
 		AttackedBy([EVILCUTOFF],DEFAULT)
-		ActuallyInCombat()
 	!Class(Myself,MONK)
-	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
+	!Kit(Myself,KENSAI)
 	!InParty([EVILCUTOFF])
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -523,7 +456,29 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF],30)
+		AttackOneRound([EVILCUTOFF])
+END
+
+IF
+	ActionListEmpty()
+	OR(3)
+		Class(Myself,MONK)
+		Kit(Myself,KENSAI)
+		CheckStat(Myself,1,POLYMORPHED)
+	OR(3)
+		InWeaponRange([EVILCUTOFF])
+		Range([EVILCUTOFF],17)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+	!InParty([EVILCUTOFF])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		AttackOneRound([EVILCUTOFF])
 END
 
 IF
@@ -533,14 +488,12 @@ IF
 		Class(Myself,THIEF)
 		Class(Myself,BARD)
 		Class(Myself,DRUID)
-		Class(Myself,MONK)
 		Class(Myself,SHAMAN)
 		Class(Myself,CLERIC_THIEF)
-	OR(3)
+		CheckStatLT(Myself,5,THAC0)
+	OR(2)
 		InWeaponRange([EVILCUTOFF])
 		Range([EVILCUTOFF],12)
-		CheckStat(Myself,1,POLYMORPHED)
-	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 	!InParty([EVILCUTOFF])
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -550,7 +503,7 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF],30)
+		AttackOneRound([EVILCUTOFF])
 END
 
 IF
@@ -559,12 +512,9 @@ IF
 		Class(Myself,MAGE)
 		Class(Myself,MAGE_THIEF)
 		Class(Myself,CLERIC_MAGE)
-	OR(4)
+	OR(2)
 		InWeaponRange([EVILCUTOFF])
 		Range([EVILCUTOFF],3)
-		CheckStat(Myself,1,POLYMORPHED)
-		CheckStatLT(Myself,5,THAC0)
-	WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
 	!InParty([EVILCUTOFF])
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -574,6 +524,6 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF],30)
+		AttackOneRound([EVILCUTOFF])
 END
 

@@ -57,11 +57,12 @@ THEN
 END
 
 IF
+	ActionListEmpty()
 	IsWeaponRanged(Myself)
 	OR(2)
-		See([EVILCUTOFF],0)
+		LOS([EVILCUTOFF],4)
 		AttackedBy([EVILCUTOFF],DEFAULT)
-	LOS([EVILCUTOFF],5)
+	Range([EVILCUTOFF],10,LESS_THAN)
 	!IsWeaponRanged(NearestEnemyOf())
 	!StateCheck(Myself,STATE_INVISIBLE)
 	!CheckSpellState(Myself,SANCTUARY)
@@ -69,7 +70,7 @@ IF
 	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
-		RunAwayFrom(NearestEnemyOf(),40)
+		RunAwayFrom(NearestEnemyOf(),35)
 END
 
 IF
@@ -107,8 +108,7 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		MoveToObject(LastHeardBy())
-		EquipWeapon()
-		AttackReevaluate([EVILCUTOFF],30)
+		Continue()
 END
 
 IF
@@ -126,7 +126,7 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		EquipWeapon()
-		AttackReevaluate([EVILCUTOFF.0.0.WIZARD],30)
+		AttackOneRound([EVILCUTOFF.0.0.WIZARD])
 END
 
 IF
@@ -144,7 +144,7 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		EquipWeapon()
-		AttackReevaluate([EVILCUTOFF.0.0.SORCERER],30)
+		AttackOneRound([EVILCUTOFF.0.0.SORCERER])
 END
 
 IF
@@ -162,7 +162,7 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		EquipWeapon()
-		AttackReevaluate([EVILCUTOFF.0.0.CLERIC],30)
+		AttackOneRound([EVILCUTOFF.0.0.CLERIC])
 END
 
 IF
@@ -180,7 +180,7 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		EquipWeapon()
-		AttackReevaluate([EVILCUTOFF.0.0.DRUID],30)
+		AttackOneRound([EVILCUTOFF.0.0.DRUID])
 END
 
 IF
@@ -198,7 +198,7 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		EquipWeapon()
-		AttackReevaluate([EVILCUTOFF.0.0.BARD],30)
+		AttackOneRound([EVILCUTOFF.0.0.BARD])
 END
 
 IF
@@ -229,19 +229,16 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		EquipWeapon()
-		AttackReevaluate([EVILCUTOFF],30)
+		AttackOneRound([EVILCUTOFF])
 END
 
 IF
 	ActionListEmpty()
-	Or(7)
+	Or(4)
 		LevelInClassGT(Myself,2,BARBARIAN)
 		LevelInClassGT(Myself,2,FIGHTER)
 		LevelInClassGT(Myself,2,PALADIN)
 		LevelInClassGT(Myself,2,RANGER)
-		CheckSpellState(Myself,TENSERS_TRANSFORMATION)
-		CheckStat(Myself,1,POLYMORPHED)
-		CheckSpellState(Myself,IRON_BODY)
 	Or(3)
 		InWeaponRange([EVILCUTOFF])
 		LOS([EVILCUTOFF],25)
@@ -256,7 +253,31 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		EquipWeapon()
-		AttackReevaluate([EVILCUTOFF],30)
+		AttackOneRound([EVILCUTOFF])
+END
+
+IF
+	ActionListEmpty()
+	Or(4)
+		LevelInClassGT(Myself,8,MONK)
+		CheckSpellState(Myself,TENSERS_TRANSFORMATION)
+		CheckStat(Myself,1,POLYMORPHED)
+		CheckSpellState(Myself,IRON_BODY)
+	Or(3)
+		InWeaponRange([EVILCUTOFF])
+		LOS([EVILCUTOFF],18)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		Shout(600)
+		EquipWeapon()
+		AttackOneRound([EVILCUTOFF])
 END
 
 IF
@@ -280,7 +301,7 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		EquipWeapon()
-		AttackReevaluate([EVILCUTOFF],30)
+		AttackOneRound([EVILCUTOFF])
 END
 
 IF
@@ -301,6 +322,6 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		EquipWeapon()
-		AttackReevaluate([EVILCUTOFF],30)
+		AttackOneRound([EVILCUTOFF])
 END
 

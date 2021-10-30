@@ -6,9 +6,9 @@ Game version: IWD:EE, IWD2, BG:EE, BG2:EE, EET
 ==================================================
 OVERVIEW
 ==================================================
-The IWD Pregen script from IWD:EE basically does what I want an AI script to do, which is auto-attack, but not when invisible/hiding or using certain class abilities, like Bard Song or Turn Undead. It's a plug and play script without any hotkeys.
+The IWD Pregen script from IWD:EE basically does what I want an AI script to do, which is auto-attack, but not when invisible/hiding or using certain class abilities, like Bard Song or Turn Undead. It's a minimalist script that reduces some of the more frustrating aspects of auto-attacking.
 
-What this mod does is take IWD Pregen, and finetune the auto-attack and auto-Search scripting (based on my own preferences), while keeping it minimalist. Spells, abilities, item use, etc., are for the player to micro-manage. 
+What this mod does is take IWD Pregen, and finetune the auto-attack and auto-Search scripting (based on my own preferences), while keeping it minimalist. Spells, abilities, item use, etc., are for the player to micromanage.
 
 The biggest difference you'll notice from the vanilla IWD Pregen is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle, and more options for placement of characters, without needing to turn AI off.
 
@@ -40,43 +40,49 @@ Class: Fighter, Ranger, Paladin, including any multiclass combinations
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 25 ft.
 	3. Attacked by enemy (doesn't need to be hit)
-	4. Combat counter is greater than 0, and the character sees an enemy (as long as combat is happening in the active area, the counter will be greater than 0)
 
-Class: Cleric, Druid, Monk, Shaman, Thief, Bard, Cleric/Thief
+Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 17 ft.
+	3. Attacked by enemy (doesn't need to be hit)
+	
+Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 12 ft.
-	3. Shapeshift or Polymorph
 	
 Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 3 ft.
-	3. Polymorphed
-	4. THAC0 is less than 5
+	3. If THAC0 is less than 5, will attack if enemy is within 12 ft.
 
 IWD2
-Class: Fighter, Ranger, Paladin or Barbarian, single-class or a multiclass with 3+ levels
+Class: Fighter, Ranger, Paladin or Barbarian, single-class or multiclass with 3+ levels
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 25 ft.
 	3. Attacked by enemy (doesn't need to be hit)
-	4. At Level 3+: If not in sight of enemies, but a nearby ally begins auto-attacking, this character may follow the other into combat
+	4. At Level 3+: If not in sight of enemies, but a nearby ally begins auto-attacking, the character may follow the other into combat
 
+Class: Monk with 9+ levels, Wild Shape/Tenser's/Iron Body (without 3+ warrior levels)
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 18 ft.
+	3. Attacked by enemy (doesn't need to be hit)
+	4. If not in sight of enemies, but a nearby ally begins auto-attacking, the character may follow the other into combat
+	
 Class: Cleric, Druid, Monk, Thief or Bard, including multiclass with Wizard or Sorcerer
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 12 ft.
-	3. Tenser's Transformation or Iron Body in effect
-	4. Druid Shapeshift
-	5. Monk at level 9+: if not in sight of enemies, but a nearby ally begins auto-attacking, the Monk may follow the other into combat
-
+	
 Class: Wizard or Sorcerer
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 3 ft.
-	3. Tenser's Transformation or Iron Body in effect
-	4. Polymorphed (not in unmodded game, but a mod could add such spells)
+	3. If Polymorphed, will use the Wild Shape conditions (no polymorph spells in unmodded game)
 	
 
 ==================================================
@@ -96,11 +102,15 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v1.0
+- Changes to auto-attack conditions for some classes (see breakdown for updated info)
+- Improved scripting when facing enemies with weapon/damage immunity
+- Improved auto-run behavior (when holding a ranged weapon in melee range); it no longer overrides user commands, but is still checked once per round if auto-attacking
+
 v0.9
-- EEs: auto-Search will activate if enemies are in sight, but all are immune to your weapon
-- all games: limited prioritizing of enemy casters (wizard, sorceror, cleric, druid, or bard); will attack these classes first, but only if within range of the currently equipped weapon, or in melee range (can sometimes still target other enemies)
-- all games: smaller distance from enemy for the auto-running away (when using a ranged weapon); this should give enough room to cast a close-range spell on an ally, attacking in melee, and not have the auto-run activate
-- all games: edits to various blocks in the script file, either for compatibility with new blocks, or to remove redundant triggers
+- added some limited prioritizing of enemy casters (wizard, sorceror, cleric, druid, or bard); will attack these classes first, but only if within range of the currently equipped weapon, or under 5 ft. away (can still target other enemies sometimes)
+- subtle improvements to auto-attack or auto-Search in specific situations
+- edits to various blocks in the script file, either fixing incorrect behavior or to remove redundant triggers
 
 v0.8
 - EEs: better targeting of enemies with weapon immunity (it's not 100%, may still target immune enemies, but makes it more likely to attack enemies you can actually hit)
@@ -110,6 +120,7 @@ v0.8
 
 v0.7
 - Melee auto-attacking conditions added for all classes (set to my own personal preferences)
+- Overall improvements to auto-attack and auto-search behavior
 
 v0.6
 - fixed auto-Search activating during Stealth (for IWD2, I'd recommend putting Stealth directly on the quick bar, instead of using it from the Skills menu)
@@ -125,4 +136,4 @@ v0.2
 - added Shaman detect illusion to script
 
 v0.1
-- adds Shamanic to list of abilities that prevent auto-attack
+- adds Shamanic Dance to list of abilities that prevent auto-attack
