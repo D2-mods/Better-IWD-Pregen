@@ -102,6 +102,10 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v1.1
+- renamed BAF files (script file is still iwdpgen.BS)
+- Rewrote the scripting for facing enemies with weapon/damage immunity
+
 v1.0
 - Changes to auto-attack conditions for some classes (see breakdown for updated info)
 - Improved scripting when facing enemies with weapon/damage immunity

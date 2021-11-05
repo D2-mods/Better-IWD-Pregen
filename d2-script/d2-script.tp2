@@ -1,6 +1,6 @@
 BACKUP ~d2-script\backup~
 AUTHOR ~Dan_P~
-VERSION ~1.0~
+VERSION ~1.1~
 
 LANGUAGE ~English~ ~english~ ~d2-script\tra\english\setup.tra~
 
@@ -32,7 +32,7 @@ DECOMPILE_AND_PATCH BEGIN
   REPLACE_TEXTUALLY EXACT_MATCH ~!ModalState(BATTLESONG)~ ~!ModalState(DETECTTRAPS)~
 END
 
-EXTEND_BOTTOM ~iwdpgen.BCS~ ~%MOD_FOLDER%\baf\d2bsid1b.BAF~	// add blocks to BCS
+EXTEND_BOTTOM ~iwdpgen.BCS~ ~%MOD_FOLDER%\baf\d2bsee0.BAF~	// add blocks to BCS
 COPY_EXISTING ~iwdpgen.BCS~ ~scripts\iwdpgen.BS~			// copy to scripts folder
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~						// update text
@@ -43,8 +43,8 @@ END
 
 ELSE BEGIN
 
-COMPILE ~%MOD_FOLDER%\baf\d2bsid1a.BAF~						// create BCS file
-COPY_EXISTING ~d2bsid1a.BCS~ ~scripts\iwdpgen.BS~			// copy to scripts folder
+COMPILE ~%MOD_FOLDER%\baf\d2bsee1.BAF~						// create BCS file
+COPY_EXISTING ~d2bsee1.BCS~ ~scripts\iwdpgen.BS~			// copy to scripts folder
 
 APPEND ~SCRPDESC.2DA~										// add line to 2DA (with placeholder values)
   ~iwdpgen     @10       @11~
@@ -64,8 +64,8 @@ LABEL ~D2-SCRIPT-IWD2~
 
 COPY ~%MOD_FOLDER%\dummy~ ~override~						// copy dummy file, prevents error message
 
-COMPILE ~%MOD_FOLDER%\baf\d2bsid2a.BAF~
-COPY_EXISTING ~d2bsid2a.BCS~ ~scripts\iwdpgen.BS~
+COMPILE ~%MOD_FOLDER%\baf\d2bsid2.BAF~
+COPY_EXISTING ~d2bsid2.BCS~ ~scripts\iwdpgen.BS~
 
 APPEND ~SCRPDESC.2DA~
   ~iwdpgen     @10       @12~
