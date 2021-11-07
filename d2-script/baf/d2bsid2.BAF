@@ -42,6 +42,58 @@ END
 
 IF
 	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	See([EVILCUTOFF],0)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+	Global("inviscutattack","LOCALS",0)
+THEN
+	RESPONSE #100
+		SetGlobal("inviscutattack","LOCALS",1)
+END
+
+IF
+	ActionListEmpty()
+	!See([EVILCUTOFF],0)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+	Global("inviscutattack","LOCALS",1)
+THEN
+	RESPONSE #100
+		SetGlobal("inviscutattack","LOCALS",0)
+END
+
+IF
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	Global("inviscutattack","LOCALS",1)
+THEN
+	RESPONSE #100
+		ClearActions(Myself)
+		SetGlobal("inviscutattack","LOCALS",0)
+END
+
+IF
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckSpellState(Myself,SANCTUARY)
+	OR(3)
+		ModalState(Myself,BATTLESONG)
+		ModalState(Myself,DETECTTRAPS)
+		ModalState(Myself,STEALTH)
+	Global("inviscutattack","LOCALS",1)
+THEN
+	RESPONSE #100
+		SetGlobal("inviscutattack","LOCALS",0)
+END
+
+IF
+	ActionListEmpty()
 	OR(2)
 		StateCheck(Myself,STATE_INVISIBLE)
 		CheckSpellState(Myself,SANCTUARY)
