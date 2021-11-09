@@ -55,6 +55,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobal("inviscutattack","LOCALS",1)
+		Continue()
 END
 
 IF
@@ -68,6 +69,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobal("inviscutattack","LOCALS",0)
+		Continue()
 END
 
 IF

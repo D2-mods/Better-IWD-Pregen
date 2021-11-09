@@ -1,6 +1,6 @@
 BACKUP ~d2-script\backup~
 AUTHOR ~Dan_P~
-VERSION ~1.2~
+VERSION ~1.3~
 
 LANGUAGE ~English~ ~english~ ~d2-script\tra\english\setup.tra~
 
@@ -12,7 +12,7 @@ LABEL ~D2-SCRIPT-IWDPGEN~
 
 ACTION_IF ((GAME_IS ~iwdee~) AND (FILE_EXISTS_IN_GAME ~iwdpgen.BCS~)) BEGIN
 
-COPY_EXISTING ~iwdpgen.BCS~ ~override~						// patch iwdpgen.BCS
+COPY_EXISTING ~iwdpgen.BCS~ ~override~    // patch iwdpgen.BCS
 DECOMPILE_AND_PATCH BEGIN
   REPLACE_TEXTUALLY EXACT_MATCH ~OR(2)~ ~OR(3)~
   REPLACE_TEXTUALLY EXACT_MATCH ~Class(Myself,MONK)~ ~Class(Myself,MONK) Class(Myself,SHAMAN)~
@@ -32,10 +32,10 @@ DECOMPILE_AND_PATCH BEGIN
   REPLACE_TEXTUALLY EXACT_MATCH ~!ModalState(BATTLESONG)~ ~!ModalState(DETECTTRAPS)~
 END
 
-EXTEND_BOTTOM ~iwdpgen.BCS~ ~%MOD_FOLDER%\baf\d2bsee0.BAF~	// add blocks to BCS
-COPY_EXISTING ~iwdpgen.BCS~ ~scripts\iwdpgen.BS~			// copy to scripts folder
+EXTEND_BOTTOM ~iwdpgen.BCS~ ~%MOD_FOLDER%\baf\d2bsee0.BAF~    // add blocks to BCS
+COPY_EXISTING ~iwdpgen.BCS~ ~scripts\iwdpgen.BS~    // copy to scripts folder
 
-COPY_EXISTING ~SCRPDESC.2DA~ ~override~						// update text
+COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // update text
 REPLACE ~40838~ @10
 REPLACE ~40839~ @11
 
@@ -43,13 +43,13 @@ END
 
 ELSE BEGIN
 
-COMPILE ~%MOD_FOLDER%\baf\d2bsee1.BAF~						// create BCS file
-COPY_EXISTING ~d2bsee1.BCS~ ~scripts\iwdpgen.BS~			// copy to scripts folder
+COMPILE ~%MOD_FOLDER%\baf\d2bsee1.BAF~    // create BCS file
+COPY_EXISTING ~d2bsee1.BCS~ ~scripts\iwdpgen.BS~    // copy to scripts folder
 
-APPEND ~SCRPDESC.2DA~										// add line to 2DA (with placeholder values)
+APPEND ~SCRPDESC.2DA~    // add line to 2DA (with placeholder values)
   ~iwdpgen     @10       @11~
 
-COPY_EXISTING ~SCRPDESC.2DA~ ~override~						// replace placeholders with actual strings
+COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // replace placeholders with actual strings
 REPLACE ~@10~ @10
 REPLACE ~@11~ @11
 
@@ -62,7 +62,7 @@ BEGIN @3
 REQUIRE_PREDICATE (GAME_IS ~iwd2~) @4
 LABEL ~D2-SCRIPT-IWD2~
 
-COPY ~%MOD_FOLDER%\dummy~ ~override~						// copy dummy file, prevents error message
+COPY ~%MOD_FOLDER%\dummy~ ~override~    // copy dummy file, prevents error message
 
 COMPILE ~%MOD_FOLDER%\baf\d2bsid2.BAF~
 COPY_EXISTING ~d2bsid2.BCS~ ~scripts\iwdpgen.BS~

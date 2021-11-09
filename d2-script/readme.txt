@@ -102,6 +102,9 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v1.3
+- small update, should reduce delay for auto-attack at start of combat
+
 v1.2
 - another rework of the scripting for enemies with weapon/damage immunity; it combines stuff from v1.0 and v1.1, but it's mostly based on the v1.0
 - increased likelihood of character stopping attacking, if suddenly invisible (for example, from a contingency or area invisibility spell); not 100% reliable (can't stop an attack already initiated) and only works when fighting actual enemies
