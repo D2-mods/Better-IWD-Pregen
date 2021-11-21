@@ -1,34 +1,62 @@
 IF
-	ActionListEmpty()
-	OR(2)
-		Class(Myself,ROGUE)
-		Class(Myself,MONK)
+	OnCreation()
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
 	!ModalState(Myself,BATTLESONG)
-	!ModalState(Myself,DETECTTRAPS)
 	!ModalState(Myself,STEALTH)
-	!LOS([EVILCUTOFF],12)
-	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Wait(2)
-		FindTraps()
+		SetGlobalTimer("d2cooldown","LOCALS",0)
+END
+
+IF
+	HotKey(B)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2cooldown","LOCALS",30)
+END
+
+IF
+	HotKey(E)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2cooldown","LOCALS",0)
 END
 
 IF
 	ActionListEmpty()
-	OR(2)
-		Class(Myself,ROGUE)
-		Class(Myself,MONK)
-	OR(2)
-		StateCheck(Myself,STATE_INVISIBLE)
-		CheckSpellState(Myself,SANCTUARY)
+	See([EVILCUTOFF],0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
 	!ModalState(Myself,BATTLESONG)
-	!ModalState(Myself,DETECTTRAPS)
 	!ModalState(Myself,STEALTH)
+	OR(2)
+		Global("d2autobattle","LOCALS",0)
+		Global("inviscutattack","LOCALS",0)
 THEN
 	RESPONSE #100
-		Wait(2)
-		FindTraps()
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		SetGlobal("inviscutattack","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	!Detect([EVILCUTOFF])
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+	OR(2)
+		Global("d2autobattle","LOCALS",1)
+		Global("inviscutattack","LOCALS",1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2autobattle","LOCALS",0)
+		SetGlobal("inviscutattack","LOCALS",0)
+		Continue()
 END
 
 IF
@@ -41,56 +69,16 @@ THEN
 END
 
 IF
-	ActionListEmpty()
-	!StateCheck(Myself,STATE_INVISIBLE)
-	!CheckSpellState(Myself,SANCTUARY)
-	See([EVILCUTOFF],0)
-	!ModalState(Myself,BATTLESONG)
-	!ModalState(Myself,STEALTH)
-	Global("inviscutattack","LOCALS",0)
-THEN
-	RESPONSE #100
-		SetGlobal("inviscutattack","LOCALS",1)
-		Continue()
-END
-
-IF
-	ActionListEmpty()
-	!See([EVILCUTOFF],0)
-	!ModalState(Myself,BATTLESONG)
-	!ModalState(Myself,STEALTH)
-	Global("inviscutattack","LOCALS",1)
-THEN
-	RESPONSE #100
-		SetGlobal("inviscutattack","LOCALS",0)
-		Continue()
-END
-
-IF
 	OR(2)
 		StateCheck(Myself,STATE_INVISIBLE)
 		CheckSpellState(Myself,SANCTUARY)
 	!ModalState(Myself,BATTLESONG)
-	!ModalState(Myself,DETECTTRAPS)
 	!ModalState(Myself,STEALTH)
 	Global("inviscutattack","LOCALS",1)
 THEN
 	RESPONSE #100
 		ClearActions(Myself)
-		SetGlobal("inviscutattack","LOCALS",0)
-END
-
-IF
-	OR(2)
-		StateCheck(Myself,STATE_INVISIBLE)
-		CheckSpellState(Myself,SANCTUARY)
-	OR(3)
-		ModalState(Myself,BATTLESONG)
-		ModalState(Myself,DETECTTRAPS)
-		ModalState(Myself,STEALTH)
-	Global("inviscutattack","LOCALS",1)
-THEN
-	RESPONSE #100
+		SetGlobal("d2autobattle","LOCALS",0)
 		SetGlobal("inviscutattack","LOCALS",0)
 END
 
@@ -99,8 +87,6 @@ IF
 	OR(2)
 		StateCheck(Myself,STATE_INVISIBLE)
 		CheckSpellState(Myself,SANCTUARY)
-	!Class(Myself,ROGUE)
-	!Class(Myself,MONK)
 	InWeaponRange([EVILCUTOFF])
 	!ModalState(Myself,BATTLESONG)
 	!ModalState(Myself,DETECTTRAPS)
@@ -108,6 +94,7 @@ IF
 THEN
 	RESPONSE #100
 		NoAction()
+		Continue()
 END
 
 IF
@@ -158,6 +145,7 @@ IF
 	!CheckSpellState(Myself,SANCTUARY)
 	!ModalState(Myself,BATTLESONG)
 	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 THEN
 	RESPONSE #100
 		Shout(600)
@@ -178,9 +166,8 @@ IF
 	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
-		Shout(600)
 		EquipWeapon()
-		AttackOneRound([EVILCUTOFF.0.0.WIZARD])
+		Attack([EVILCUTOFF.0.0.WIZARD])
 END
 
 IF
@@ -196,9 +183,8 @@ IF
 	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
-		Shout(600)
 		EquipWeapon()
-		AttackOneRound([EVILCUTOFF.0.0.SORCERER])
+		Attack([EVILCUTOFF.0.0.SORCERER])
 END
 
 IF
@@ -214,9 +200,8 @@ IF
 	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
-		Shout(600)
 		EquipWeapon()
-		AttackOneRound([EVILCUTOFF.0.0.CLERIC])
+		Attack([EVILCUTOFF.0.0.CLERIC])
 END
 
 IF
@@ -232,9 +217,8 @@ IF
 	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
-		Shout(600)
 		EquipWeapon()
-		AttackOneRound([EVILCUTOFF.0.0.DRUID])
+		Attack([EVILCUTOFF.0.0.DRUID])
 END
 
 IF
@@ -250,9 +234,70 @@ IF
 	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
-		Shout(600)
 		EquipWeapon()
-		AttackOneRound([EVILCUTOFF.0.0.BARD])
+		Attack([EVILCUTOFF.0.0.BARD])
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		See(NearestEnemyOf(),0)
+		See(NearestEnemyOf(ProtectedBy()),0)
+	OR(2)
+		!InWeaponRange(NearestEnemyOf(ProtectedBy()))
+		!LOS(NearestEnemyOf(ProtectedBy()),5)
+	OR(2)
+		See(NearestEnemyOf(),0)
+		See(LastAttackerOf(),0)
+	OR(2)
+		!InWeaponRange(LastAttackerOf())
+		!LOS(NearestEnemyOf(LastAttackerOf()),5)
+	OR(2)
+		See(NearestEnemyOf(),0)
+		See(NearestEnemyOf(LeaderOf()),0)
+	OR(2)
+		!InWeaponRange(NearestEnemyOf(LeaderOf()))
+		!LOS(NearestEnemyOf(LeaderOf()),5)
+	OR(2)
+		See(NearestEnemyOf(),0)
+		See(NearestEnemyOf(MostDamagedOf()),0)
+	OR(2)
+		!InWeaponRange(NearestEnemyOf(MostDamagedOf()))
+		!LOS(NearestEnemyOf(MostDamagedOf()),5)
+	OR(2)
+		See(NearestEnemyOf(),0)
+		See(NearestEnemyOf(WeakestOf()),0)
+	OR(2)
+		!InWeaponRange(NearestEnemyOf(WeakestOf()))
+		!LOS(NearestEnemyOf(WeakestOf()),5)
+	!See(NearestEnemyOf(),0)
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		InWeaponRange([EVILCUTOFF])
+		LOS([EVILCUTOFF],5)
+	OR(2)
+		InWeaponRange(LastSeenBy())
+		LOS(LastSeenBy(),5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2retarget3","LOCALS")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget3","LOCALS",18)
+		EquipWeapon()
+		Attack(LastSeenBy())
 END
 
 IF
@@ -279,11 +324,11 @@ IF
 	!CheckSpellState(Myself,SANCTUARY)
 	!ModalState(Myself,BATTLESONG)
 	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 THEN
 	RESPONSE #100
-		Shout(600)
 		EquipWeapon()
-		AttackOneRound([EVILCUTOFF])
+		AttackReevaluate([EVILCUTOFF],30)
 END
 
 IF
@@ -303,11 +348,11 @@ IF
 	!CheckSpellState(Myself,SANCTUARY)
 	!ModalState(Myself,BATTLESONG)
 	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 THEN
 	RESPONSE #100
-		Shout(600)
 		EquipWeapon()
-		AttackOneRound([EVILCUTOFF])
+		AttackReevaluate([EVILCUTOFF],30)
 END
 
 IF
@@ -327,11 +372,11 @@ IF
 	!CheckSpellState(Myself,SANCTUARY)
 	!ModalState(Myself,BATTLESONG)
 	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 THEN
 	RESPONSE #100
-		Shout(600)
 		EquipWeapon()
-		AttackOneRound([EVILCUTOFF])
+		AttackReevaluate([EVILCUTOFF],30)
 END
 
 IF
@@ -351,11 +396,42 @@ IF
 	!CheckSpellState(Myself,SANCTUARY)
 	!ModalState(Myself,BATTLESONG)
 	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 THEN
 	RESPONSE #100
-		Shout(600)
 		EquipWeapon()
-		AttackOneRound([EVILCUTOFF])
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	Or(12)
+		Class(Myself,FIGHTER)
+		Class(Myself,RANGER)
+		Class(Myself,PALADIN)
+		Class(Myself,BARBARIAN)
+		Class(Myself,CLERIC)
+		Class(Myself,DRUID)
+		Class(Myself,MONK)
+		Class(Myself,ROGUE)
+		Class(Myself,BARD)
+		CheckSpellState(Myself,TENSERS_TRANSFORMATION)
+		CheckStat(Myself,1,POLYMORPHED)
+		CheckSpellState(Myself,IRON_BODY)
+	Or(2)
+		InWeaponRange([EVILCUTOFF])
+		LOS([EVILCUTOFF],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF],30)
 END
 
 IF
@@ -374,8 +450,95 @@ IF
 	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
-		Shout(600)
 		EquipWeapon()
-		AttackOneRound([EVILCUTOFF])
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	IsWeaponRanged(Myself)
+	AttackedBy([EVILCUTOFF],DEFAULT)
+	LOS(NearestEnemyOf(),3)
+	!IsWeaponRanged(NearestEnemyOf())
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget1","LOCALS",6)
+END
+
+IF
+	OR(3)
+		InWeaponRange([EVILCUTOFF.0.0.SORCERER])
+		InWeaponRange([EVILCUTOFF.0.0.WIZARD])
+		InWeaponRange([EVILCUTOFF.0.0.CLERIC])
+	!Class(NearestEnemyOf(),SORCERER)
+	!Class(NearestEnemyOf(),WIZARD)
+	!Class(NearestEnemyOf(),CLERIC)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.DRUID])
+		InWeaponRange([EVILCUTOFF.0.0.BARD])
+	!Class(NearestEnemyOf(),SORCERER)
+	!Class(NearestEnemyOf(),WIZARD)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),BARD)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		Class(Myself,ROGUE)
+		Class(Myself,MONK)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!LOS([EVILCUTOFF],12)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Wait(2)
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		Class(Myself,ROGUE)
+		Class(Myself,MONK)
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		Wait(2)
+		FindTraps()
 END
 

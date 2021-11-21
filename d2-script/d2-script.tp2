@@ -1,69 +1,54 @@
 BACKUP ~d2-script\backup~
 AUTHOR ~Dan_P~
-VERSION ~1.3~
+VERSION ~2.0~
 
-LANGUAGE ~English~ ~english~ ~d2-script\tra\english\setup.tra~
+LANGUAGE ~English~ 
+         ~english~ 
+		 ~d2-script\tra\english\setup.tra~
 
-//Installing to EEs
-	 
+
+//Better IWD Pregen (BGEE, BG2EE, EET, IWDEE, IWD2)
+
 BEGIN @1
-REQUIRE_PREDICATE GAME_IS ~iwdee bgee bg2ee eet~ @2
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee eet iwdee iwd2~ @2
 LABEL ~D2-SCRIPT-IWDPGEN~
 
-ACTION_IF ((GAME_IS ~iwdee~) AND (FILE_EXISTS_IN_GAME ~iwdpgen.BCS~)) BEGIN
+//////////////////////////////////////////////////
+ACTION_IF (GAME_IS ~iwdee~) BEGIN
 
-COPY_EXISTING ~iwdpgen.BCS~ ~override~    // patch iwdpgen.BCS
-DECOMPILE_AND_PATCH BEGIN
-  REPLACE_TEXTUALLY EXACT_MATCH ~OR(2)~ ~OR(3)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~Class(Myself,MONK)~ ~Class(Myself,MONK) Class(Myself,SHAMAN)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!ModalState(STEALTH)~ ~!ModalState(STEALTH) !ModalState(SHAMANDANCE)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!Range([EVILCUTOFF],30)~ ~!Range([EVILCUTOFF],30) !InWeaponRange([EVILCUTOFF])~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!Range([EVILCUTOFF],30)~ ~!Range([EVILCUTOFF],12)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~See([EVILCUTOFF])~ ~~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!InParty([EVILCUTOFF])~ ~~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!StateCheck(Myself,STATE_INVISIBLE)~ ~OR(3) !StateCheck(Myself,STATE_INVISIBLE)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!StateCheck(Myself,STATE_INVISIBLE)~ ~Class(Myself,THIEF_ALL) !StateCheck(Myself,STATE_INVISIBLE)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!StateCheck(Myself,STATE_INVISIBLE)~ ~Class(Myself,MONK) !StateCheck(Myself,STATE_INVISIBLE)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!StateCheck(Myself,STATE_INVISIBLE)~ ~Class(Myself,SHAMAN) !StateCheck(Myself,STATE_INVISIBLE)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!StateCheck(Myself,STATE_INVISIBLE)~ ~OR(2) !StateCheck(Myself,STATE_INVISIBLE)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!StateCheck(Myself,STATE_INVISIBLE)~ ~StateCheck(Myself,STATE_INVISIBLE)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~CheckStatLT(Myself,1,SANCTUARY)~ ~CheckStat(Myself,1,SANCTUARY)~
-  REPLACE_TEXTUALLY EXACT_MATCH ~AttackReevaluate([EVILCUTOFF],30)~ ~FindTraps()~
-  REPLACE_TEXTUALLY EXACT_MATCH ~!ModalState(BATTLESONG)~ ~!ModalState(DETECTTRAPS)~
-END
+ACTION_IF (FILE_EXISTS ~override\iwdpgen.BCS~)
+BEGIN WARN @99 END    // iwdpgen.BCS detected in override
 
-EXTEND_BOTTOM ~iwdpgen.BCS~ ~%MOD_FOLDER%\baf\d2bsee0.BAF~    // add blocks to BCS
-COPY_EXISTING ~iwdpgen.BCS~ ~scripts\iwdpgen.BS~    // copy to scripts folder
+COMPILE ~%MOD_FOLDER%\baf\d2bsee0.BAF~    // create BCS file
+COPY_EXISTING ~d2bsee0.BCS~ ~scripts\iwdpgen.BS~    // copy to scripts folder
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // update text
-REPLACE ~40838~ @10
-REPLACE ~40839~ @11
+  REPLACE ~40838~ @10
+  REPLACE ~40839~ @11
+  PRETTY_PRINT_2DA
+BUT_ONLY
 
-END 
+END
+//////////////////////////////////////////////////
+ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 
-ELSE BEGIN
-
-COMPILE ~%MOD_FOLDER%\baf\d2bsee1.BAF~    // create BCS file
-COPY_EXISTING ~d2bsee1.BCS~ ~scripts\iwdpgen.BS~    // copy to scripts folder
+COMPILE ~%MOD_FOLDER%\baf\d2bsee1.BAF~
+COPY_EXISTING ~d2bsee1.BCS~ ~scripts\iwdpgen.BS~
 
 APPEND ~SCRPDESC.2DA~    // add line to 2DA (with placeholder values)
   ~iwdpgen     @10       @11~
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // replace placeholders with actual strings
-REPLACE ~@10~ @10
-REPLACE ~@11~ @11
+  REPLACE ~@10~ @10
+  REPLACE ~@11~ @11
+  PRETTY_PRINT_2DA
+BUT_ONLY
 
 END
-
-
-//Installing to IWD2
-
-BEGIN @3
-REQUIRE_PREDICATE (GAME_IS ~iwd2~) @4
-LABEL ~D2-SCRIPT-IWD2~
+//////////////////////////////////////////////////
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
 
 COPY ~%MOD_FOLDER%\dummy~ ~override~    // copy dummy file, prevents error message
-
 COMPILE ~%MOD_FOLDER%\baf\d2bsid2.BAF~
 COPY_EXISTING ~d2bsid2.BCS~ ~scripts\iwdpgen.BS~
 
@@ -71,5 +56,45 @@ APPEND ~SCRPDESC.2DA~
   ~iwdpgen     @10       @12~
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~
-REPLACE ~@10~ @10
-REPLACE ~@12~ @12
+  REPLACE ~@10~ @10
+  REPLACE ~@12~ @12
+  PRETTY_PRINT_2DA
+BUT_ONLY
+
+END
+//////////////////////////////////////////////////
+
+
+//Better AI for Call Woodland Beings (BGEE, BG2EE, EET, IWDEE)
+
+BEGIN @3
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee iwdee eet~ @4
+LABEL ~D2-SCRIPT-NYMPH~
+
+ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb1.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb1a.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb1b.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb1c.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb1d.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb1e.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb1f.BAF~
+COPY_EXISTING ~d2cwb1.BCS~ ~override\NYMPH.BCS~
+END
+
+ACTION_IF (GAME_IS ~iwdee~) BEGIN
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb0.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb0a.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb0b.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb0c.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb0d.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb0e.BAF~
+COMPILE ~%MOD_FOLDER%\nymph\d2cwb0f.BAF~
+COPY_EXISTING ~d2cwb0.BCS~ ~override\NYMPH.BCS~
+END
+
+COPY_EXISTING ~NYMPHSU.CRE~ ~override~    // set script for nymph (if another mod changed it)
+  PATCH_IF (SOURCE_SIZE > 0x2d3) BEGIN
+  WRITE_ASCII 0x248 NYMPH #8
+  END
+BUT_ONLY

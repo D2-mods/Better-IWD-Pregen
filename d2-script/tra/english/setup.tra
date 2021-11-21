@@ -1,8 +1,10 @@
 //Setup
-@1 = ~Better IWD Pregen for EE games~
-@2 = ~Installs on IWD:EE, BG:EE, BG2:EE and EET~
-@3 = ~Better IWD Pregen for IWD2~
-@4 = ~This component is for IWD2~
+@1 = ~Better IWD Pregen (for EEs and IWD2)~
+@2 = ~Installs on IWD:EE, IWD2, BG:EE, BG2:EE and EET~
+@3 = ~Better AI for Call Woodland Beings~
+@4 = ~Installs on BG:EE, BG2:EE, IWD:EE and EET~
+@99 = ~WARNING: iwdpgen.BCS detected in override - this component will compile d2bsee0.BCS and overwrite iwdpgen.BS (iwdpgen.BCS is left untouched, so you can compare the scripts with NearInfinity, if previous changes were made)
+~
 
 
 //SCRPDESC.2DA entries

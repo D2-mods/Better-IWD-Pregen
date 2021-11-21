@@ -1,6 +1,6 @@
 Better IWD Pregen - a minimalist script for all classes
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
-Game version: IWD:EE, IWD2, BG:EE, BG2:EE, EET
+Game version: BG:EE, BG2:EE, IWD:EE, IWD2, EET
 
 
 ==================================================
@@ -12,11 +12,20 @@ What this mod does is take IWD Pregen, and finetune the auto-attack and auto-Sea
 
 The biggest difference you'll notice from the vanilla IWD Pregen is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle, and more options for placement of characters, without needing to turn AI off.
 
+UPDATE v2.0:
+- added Cooldown hotkeys (B to enter for 5 rounds, E to deactivate); reduces melee aggro range to 5 ft.
+- reworked auto-attack targeting; retargeting will only happen if relevant targets are in sight, instead of every round, regardless of enemy
+- added an improved AI script for the nymph summon (Call Woodland Beings)
+
 
 ==================================================
-INSTALLATION
+INSTALL
 ==================================================
-Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform).
+Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform). It's best to install this mod near the end of the order. It shouldn't affect other mods, unless they also use the files iwdpgen.BCS or NYMPH.BCS.
+
+This mod has 2 components:
+1. Better IWD Pregen (appears in-game as "IWD PREGEN")
+2. EEs only: Better AI for Call Woodland Beings (should be installed after SCS)
 
 
 ==================================================
@@ -44,7 +53,7 @@ Class: Fighter, Ranger, Paladin, including any multiclass combinations
 Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 17 ft.
+	2. Enemy is within 18 ft.
 	3. Attacked by enemy (doesn't need to be hit)
 	
 Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
@@ -86,6 +95,16 @@ Class: Wizard or Sorcerer
 	
 
 ==================================================
+Better AI for Call Woodland Beings
+==================================================
+Installs a better AI script for the nymph summon (Call Woodland Beings). Not as wasteful with spells, won't cast statuses on undead, golems or enemies with high magic resist, will teleport to catch up with the party if no PCs in sight. Will still fight in melee, but is more cautious at low HP if it has spells remaining. Will not attack or cast spells at enemies if invisible. Note that the creature's stats and spells remain unchanged from vanilla. Only the script is changed.
+
+Compatible with BG:EE, BG2:EE, IWD:EE and EET.
+
+NOTE: As in the vanilla script, the nymph may use Dimension Door at will if conditions are met. This is mostly for convenience to make up for the slow walking speed. It will alway teleport to either the nearest enemy or back to its summoner. In addition, pressing the D key outside of combat (with nymph selected) will teleport it to its summoner.
+
+
+==================================================
 CREDITS
 ==================================================
 Coding, Testing: Dan_P
@@ -102,6 +121,13 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v2.0
+- all games: added Cooldown hotkeys (B to enter for 5 rounds, E to deactivate); reduces melee aggro range to 5 ft.
+- all games: reworked auto-attack targeting; retargeting will only happen now if relevant targets are in sight, instead of every round, regardless of enemy
+- EEs: added an improved AI script for the nymph summon (Call Woodland Beings)
+- IWDEE: in Dragon's Eye 5th floor, will not attack certain targets that reduce reputation if killed
+- IWD2: Shout action changed to only be made when enemies are initially sighted, or after responding to a Shout (was previously made with every attack action)
+
 v1.3
 - small update, should reduce delay for auto-attack at start of combat
 
