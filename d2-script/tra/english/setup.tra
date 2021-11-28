@@ -3,7 +3,7 @@
 @2 = ~Installs on IWD:EE, IWD2, BG:EE, BG2:EE and EET~
 @3 = ~Better AI for Call Woodland Beings~
 @4 = ~Installs on BG:EE, BG2:EE, IWD:EE and EET~
-@99 = ~WARNING: iwdpgen.BCS detected in override - this component will compile d2bsee0.BCS and overwrite iwdpgen.BS (iwdpgen.BCS is left untouched, so you can compare the scripts with NearInfinity, if previous changes were made)
+@99 = ~WARNING: iwdpgen.BCS detected in override - this component will compile d2bsee.BCS and overwrite iwdpgen.BS (iwdpgen.BCS is left untouched, so you can compare the scripts with NearInfinity, if previous changes were made)
 ~
 
 
@@ -11,7 +11,11 @@
 @10 = ~IWD PREGEN:~
 @11 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
 
-*Melee auto-attack range is dependent on class (see readme for full breakdown). Generally speaking, warrior classes stay aggressive, while mages and sorcerers won't rush into melee. Other classes will start attacking from a medium distance (about 12 ft. away).~
+*Melee auto-attack range is dependent on class (see readme for full breakdown).
+
+Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
 @12 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth or Battle Song. If not in auto-attack range, a character with Rogue or Monk levels will search for traps, but not if using Stealth or Battle Song. (<script>)
 
-*Melee auto-attack range is dependent on class (see readme for full breakdown). Generally speaking, warrior classes stay aggressive, while wizards and sorcerers won't rush into melee. Other classes will start attacking from a medium distance (about 12 ft. away).~
+*Melee auto-attack range is dependent on class (see readme for full breakdown).
+
+Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~

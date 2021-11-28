@@ -19,6 +19,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2cooldown","LOCALS",30)
+		Continue()
 END
 
 IF
@@ -30,41 +31,42 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2cooldown","LOCALS",0)
-END
-
-IF
-	ActionListEmpty()
-	See([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	OR(2)
-		Global("d2autobattle","LOCALS",0)
-		Global("inviscutattack","LOCALS",0)
-THEN
-	RESPONSE #100
-		SetGlobal("d2autobattle","LOCALS",1)
-		SetGlobal("inviscutattack","LOCALS",1)
 		Continue()
 END
 
 IF
 	ActionListEmpty()
-	!Detect([EVILCUTOFF])
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	OR(2)
-		Global("d2autobattle","LOCALS",1)
-		Global("inviscutattack","LOCALS",1)
+	OR(4)
+		ModalState(BATTLESONG)
+		ModalState(TURNUNDEAD)
+		ModalState(STEALTH)
+		ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!Detect([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(400)
 		SetGlobal("d2autobattle","LOCALS",0)
-		SetGlobal("inviscutattack","LOCALS",0)
 		Continue()
 END
 
@@ -78,6 +80,7 @@ THEN
 END
 
 IF
+	Global("d2autobattle","LOCALS",1)
 	OR(2)
 		StateCheck(Myself,STATE_INVISIBLE)
 		CheckStat(Myself,1,SANCTUARY)
@@ -85,45 +88,49 @@ IF
 	!ModalState(TURNUNDEAD)
 	!ModalState(STEALTH)
 	!ModalState(SHAMANDANCE)
-	Global("inviscutattack","LOCALS",1)
 THEN
 	RESPONSE #100
 		ClearActions(Myself)
 		SetGlobal("d2autobattle","LOCALS",0)
-		SetGlobal("inviscutattack","LOCALS",0)
 END
 
 IF
 	ActionListEmpty()
+	InWeaponRange([EVILCUTOFF])
+	OR(3)
+		Class(Myself,THIEF_ALL)
+		Class(Myself,MONK)
+		Class(Myself,SHAMAN)
 	OR(2)
 		StateCheck(Myself,STATE_INVISIBLE)
 		CheckStat(Myself,1,SANCTUARY)
-	InWeaponRange([EVILCUTOFF])
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
 	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		NoAction()
-		Continue()
+		FindTraps()
 END
 
 IF
 	ActionListEmpty()
-	IsWeaponRanged(Myself)
+	InWeaponRange([EVILCUTOFF])
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
 	OR(2)
 		LOS([EVILCUTOFF],4)
 		AttackedBy([EVILCUTOFF],DEFAULT)
-	Range([EVILCUTOFF],8)
+	IsWeaponRanged(Myself)
+	Range(NearestEnemyOf(),8)
 	!IsWeaponRanged(NearestEnemyOf())
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
 		RunAwayFrom(NearestEnemyOf(),35)
@@ -132,43 +139,12 @@ END
 IF
 	ActionListEmpty()
 	HPPercentLT(Myself,15)
-	!InWeaponRange([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		NoAction()
-END
-
-IF
-	ActionListEmpty()
 	OR(3)
 		Class(Myself,THIEF_ALL)
 		Class(Myself,MONK)
 		Class(Myself,SHAMAN)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
-	OR(2)
-		See([EVILCUTOFF])
-		ActuallyInCombat()
-	!ModalState(TURNUNDEAD)
 	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
 		FindTraps()
@@ -176,25 +152,30 @@ END
 
 IF
 	ActionListEmpty()
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
-	OR(2)
-		See([EVILCUTOFF])
-		ActuallyInCombat()
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	Global("d2autobattle","LOCALS",1)
+	HPPercentLT(Myself,15)
+	!ModalState(DETECTTRAPS)
+	See([EVILCUTOFF])
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END
+
+IF
+	ActionListEmpty()
+	HPPercentLT(Myself,15)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Heard([GOODCUTOFF],400)
+	!Range([EVILCUTOFF],30)
 THEN
 	RESPONSE #100
 		NoAction()
@@ -202,370 +183,73 @@ END
 
 IF
 	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	Or(4)
+		Class(Myself,FIGHTER_ALL)
+		Class(Myself,PALADIN_ALL)
+		Class(Myself,RANGER_ALL)
+		CheckStat(Myself,1,POLYMORPHED)
+	Heard([GOODCUTOFF],600)
+	!Range(LastHeardBy(),3)
+	!See([EVILCUTOFF])
+	ActuallyInCombat()
 THEN
 	RESPONSE #100
-		Attack(SecondNearestEnemyOf())
+		SetGlobalTimer("d2assist","LOCALS",30)
+		Shout(600)
+		MoveToObject(LastHeardBy())
+		Continue()
+END
+
+IF
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	GlobalTimerNotExpired("d2assist","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	OR(2)
+		Range([EVILCUTOFF],15)
+		Range(LastHeardBy(),3)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobalTimer("d2assist","LOCALS",0)
+		Continue()
 END
 
 IF
 	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	Class(Myself,MAGE_THIEF)
+	!ModalState(DETECTTRAPS)
+	!IsWeaponRanged(Myself)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Attack(NearestEnemyOf())
+		FindTraps()
 END
 
 IF
 	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		Attack(ThirdNearestEnemyOf())
-END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		Attack(TenthNearestEnemyOf())
-END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2retarget1","LOCALS",6)
-END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
-		Range([EVILCUTOFF.0.0.MAGE_ALL],5)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.MAGE_ALL])
-END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
-		Range([EVILCUTOFF.0.0.CLERIC_ALL],5)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.CLERIC_ALL])
-END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.SHAMAN])
-		Range([EVILCUTOFF.0.0.SHAMAN],5)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.SHAMAN])
-END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
-		Range([EVILCUTOFF.0.0.DRUID_ALL],5)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.DRUID_ALL])
-END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
-		Range([EVILCUTOFF.0.0.BARD_ALL],5)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.BARD_ALL])
-END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		See(NearestEnemyOf())
-		See(NearestEnemyOf(ProtectedBy()))
-	OR(2)
-		!InWeaponRange(NearestEnemyOf(ProtectedBy()))
-		!Range(NearestEnemyOf(ProtectedBy()),5)
-	OR(2)
-		See(NearestEnemyOf())
-		See(LastAttackerOf())
-	OR(2)
-		!InWeaponRange(LastAttackerOf())
-		!Range(NearestEnemyOf(LastAttackerOf()),5)
-	OR(2)
-		See(NearestEnemyOf())
-		See(NearestEnemyOf(LeaderOf()))
-	OR(2)
-		!InWeaponRange(NearestEnemyOf(LeaderOf()))
-		!Range(NearestEnemyOf(LeaderOf()),5)
-	OR(2)
-		See(NearestEnemyOf())
-		See(NearestEnemyOf(MostDamagedOf()))
-	OR(2)
-		!InWeaponRange(NearestEnemyOf(MostDamagedOf()))
-		!Range(NearestEnemyOf(MostDamagedOf()),5)
-	OR(2)
-		See(NearestEnemyOf())
-		See(NearestEnemyOf(WeakestOf()))
-	OR(2)
-		!InWeaponRange(NearestEnemyOf(WeakestOf()))
-		!Range(NearestEnemyOf(WeakestOf()),5)
-	!See(NearestEnemyOf())
-THEN
-	RESPONSE #100
-END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		InWeaponRange(LastSeenBy())
-		Range(LastSeenBy(),5)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
 	Global("d2autobattle","LOCALS",1)
-	!GlobalTimerNotExpired("d2retarget1","LOCALS")
-	!GlobalTimerNotExpired("d2retarget2","LOCALS")
-	!GlobalTimerNotExpired("d2retarget3","LOCALS")
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2retarget3","LOCALS",18)
-		Attack(LastSeenBy())
-END
-
-IF
-	ActionListEmpty()
 	OR(3)
-		Class(Myself,FIGHTER_ALL)
-		Class(Myself,PALADIN_ALL)
-		Class(Myself,RANGER_ALL)
-	OR(3)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],25)
-		AttackedBy([EVILCUTOFF],DEFAULT)
-	!Class(Myself,MONK)
-	!Kit(Myself,KENSAI)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+		Class(Myself,MAGE)
+		Class(Myself,MAGE_THIEF)
+		Class(Myself,CLERIC_MAGE)
+	!ModalState(DETECTTRAPS)
+	!IsWeaponRanged(Myself)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	See([EVILCUTOFF])
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF],30)
-END
-
-IF
-	ActionListEmpty()
-	OR(3)
-		Class(Myself,MONK)
-		Kit(Myself,KENSAI)
-		CheckStat(Myself,1,POLYMORPHED)
-	OR(3)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],18)
-		AttackedBy([EVILCUTOFF],DEFAULT)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-THEN
-	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF],30)
-END
-
-IF
-	ActionListEmpty()
-	OR(7)
-		Class(Myself,CLERIC)
-		Class(Myself,THIEF)
-		Class(Myself,BARD)
-		Class(Myself,DRUID)
-		Class(Myself,SHAMAN)
-		Class(Myself,CLERIC_THIEF)
-		CheckStatLT(Myself,5,THAC0)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],12)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-THEN
-	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF],30)
-END
-
-IF
-	ActionListEmpty()
-	OR(11)
-		Class(Myself,FIGHTER_ALL)
-		Class(Myself,PALADIN_ALL)
-		Class(Myself,RANGER_ALL)
-		Class(Myself,CLERIC)
-		Class(Myself,THIEF)
-		Class(Myself,BARD)
-		Class(Myself,DRUID)
-		Class(Myself,SHAMAN)
-		Class(Myself,CLERIC_THIEF)
-		CheckStat(Myself,1,POLYMORPHED)
-		CheckStatLT(Myself,5,THAC0)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	GlobalTimerNotExpired("d2cooldown","LOCALS")
-THEN
-	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF],30)
+		Shout(600)
 END
 
 IF
@@ -574,160 +258,12 @@ IF
 		Class(Myself,MAGE)
 		Class(Myself,MAGE_THIEF)
 		Class(Myself,CLERIC_MAGE)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],3)
-	!InParty([EVILCUTOFF])
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		AttackReevaluate([EVILCUTOFF],30)
-END
-
-IF
-	IsWeaponRanged(Myself)
-	AttackedBy([EVILCUTOFF],DEFAULT)
-	Range(NearestEnemyOf(),3)
-	!IsWeaponRanged(NearestEnemyOf())
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	Global("d2autobattle","LOCALS",1)
-	!GlobalTimerNotExpired("d2retarget1","LOCALS")
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2retarget1","LOCALS",6)
-END
-
-IF
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	OR(4)
-		WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-		WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
-	OR(4)
-		WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-		WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-		WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-		WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
-	ActuallyInCombat()
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	Global("d2autobattle","LOCALS",1)
-	!GlobalTimerNotExpired("d2retarget1","LOCALS")
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2retarget1","LOCALS",6)
-END
-
-IF
-	OR(2)
-		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
-		Range(NearestEnemyOfType([0.0.TROLL]),5)
-	ActuallyInCombat()
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	Global("d2autobattle","LOCALS",1)
-	!GlobalTimerNotExpired("d2retarget1","LOCALS")
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2retarget1","LOCALS",6)
-END
-
-IF
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
-		InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
-	!Class(NearestEnemyOf(),MAGE_ALL)
-	!Class(NearestEnemyOf(),CLERIC_ALL)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	Global("d2autobattle","LOCALS",1)
-	!GlobalTimerNotExpired("d2retarget1","LOCALS")
-	!GlobalTimerNotExpired("d2retarget2","LOCALS")
-	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2retarget2","LOCALS",12)
-END
-
-IF
-	OR(3)
-		InWeaponRange([EVILCUTOFF.0.0.SHAMAN])
-		InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
-		InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
-	!Class(NearestEnemyOf(),MAGE_ALL)
-	!Class(NearestEnemyOf(),CLERIC_ALL)
-	!Class(NearestEnemyOf(),SHAMAN)
-	!Class(NearestEnemyOf(),DRUID_ALL)
-	!Class(NearestEnemyOf(),BARD_ALL)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	Global("d2autobattle","LOCALS",1)
-	!GlobalTimerNotExpired("d2retarget1","LOCALS")
-	!GlobalTimerNotExpired("d2retarget2","LOCALS")
-	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2retarget2","LOCALS",12)
-END
-
-IF
-	ActionListEmpty()
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	!Range([EVILCUTOFF],12)
+	!IsWeaponRanged(Myself)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([EVILCUTOFF],3)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		FindTraps()
+		NoAction()
 END
-
-IF
-	ActionListEmpty()
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
-	OR(2)
-		StateCheck(Myself,STATE_INVISIBLE)
-		CheckStat(Myself,1,SANCTUARY)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		FindTraps()
-END
-

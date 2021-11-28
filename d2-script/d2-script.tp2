@@ -1,10 +1,10 @@
-BACKUP ~d2-script\backup~
+BACKUP ~d2-script/backup~
 AUTHOR ~Dan_P~
 VERSION ~2.0~
 
 LANGUAGE ~English~ 
          ~english~ 
-		 ~d2-script\tra\english\setup.tra~
+         ~d2-script/tra/english/setup.tra~
 
 
 //Better IWD Pregen (BGEE, BG2EE, EET, IWDEE, IWD2)
@@ -16,11 +16,14 @@ LABEL ~D2-SCRIPT-IWDPGEN~
 //////////////////////////////////////////////////
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
 
-ACTION_IF (FILE_EXISTS ~override\iwdpgen.BCS~)
-BEGIN WARN @99 END    // iwdpgen.BCS detected in override
+ACTION_IF (FILE_EXISTS ~override/iwdpgen.BCS~) BEGIN WARN @99 END    // iwdpgen.BCS detected in override
 
-COMPILE ~%MOD_FOLDER%\baf\d2bsee0.BAF~    // create BCS file
-COPY_EXISTING ~d2bsee0.BCS~ ~scripts\iwdpgen.BS~    // copy to scripts folder
+COPY - ~%MOD_FOLDER%/baf/d2bsee1.BAF~ ~%MOD_FOLDER%/temp/d2bsee.BAF~    // rename and compile script
+COMPILE ~%MOD_FOLDER%/temp/d2bsee.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#iwdee.BAF~    // game-specific blocks
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
+COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~    // copy to scripts folder
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // update text
   REPLACE ~40838~ @10
@@ -32,8 +35,36 @@ END
 //////////////////////////////////////////////////
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 
-COMPILE ~%MOD_FOLDER%\baf\d2bsee1.BAF~
-COPY_EXISTING ~d2bsee1.BCS~ ~scripts\iwdpgen.BS~
+COPY - ~%MOD_FOLDER%/baf/d2bsee1.BAF~ ~%MOD_FOLDER%/temp/d2bsee.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2bsee.BAF~
+
+ACTION_IF ((GAME_IS ~bgee~) AND (NOT GAME_INCLUDES ~sod~)) BEGIN
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#bgee.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
+COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
+END
+
+ACTION_IF ((GAME_IS ~bgee~) AND (GAME_INCLUDES ~sod~)) BEGIN
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#sod.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
+COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
+END
+
+ACTION_IF (GAME_IS ~bg2ee~) BEGIN
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#bg2ee.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
+COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
+END
+
+ACTION_IF (GAME_IS ~eet~) BEGIN
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#eet.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
+COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
+END
 
 APPEND ~SCRPDESC.2DA~    // add line to 2DA (with placeholder values)
   ~iwdpgen     @10       @11~
@@ -48,9 +79,9 @@ END
 //////////////////////////////////////////////////
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
 
-COPY ~%MOD_FOLDER%\dummy~ ~override~    // copy dummy file, prevents error message
-COMPILE ~%MOD_FOLDER%\baf\d2bsid2.BAF~
-COPY_EXISTING ~d2bsid2.BCS~ ~scripts\iwdpgen.BS~
+COPY ~%MOD_FOLDER%/dummy~ ~override~    // copy dummy file, prevents error message
+COMPILE ~%MOD_FOLDER%/baf/d2bsid2.BAF~
+COPY_EXISTING ~d2bsid2.BCS~ ~scripts/iwdpgen.BS~
 
 APPEND ~SCRPDESC.2DA~
   ~iwdpgen     @10       @12~
@@ -71,30 +102,70 @@ BEGIN @3
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee iwdee eet~ @4
 LABEL ~D2-SCRIPT-NYMPH~
 
+//////////////////////////////////////////////////
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb1.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb1a.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb1b.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb1c.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb1d.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb1e.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb1f.BAF~
-COPY_EXISTING ~d2cwb1.BCS~ ~override\NYMPH.BCS~
-END
 
+COMPILE ~%MOD_FOLDER%/nymph/d2cwb1.BAF~
+COPY_EXISTING ~d2cwb1.BCS~ ~override/NYMPH.BCS~
+
+COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1b.BAF~
+  REPLACE_TEXTUALLY EXACT_MATCH ~Player1~ ~Player2~
+  REPLACE_TEXTUALLY EXACT_MATCH ~d2cwb1b~ ~d2cwb1c~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1c.BAF~
+  REPLACE_TEXTUALLY EXACT_MATCH ~Player1~ ~Player3~
+  REPLACE_TEXTUALLY EXACT_MATCH ~d2cwb1b~ ~d2cwb1d~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1d.BAF~
+  REPLACE_TEXTUALLY EXACT_MATCH ~Player1~ ~Player4~
+  REPLACE_TEXTUALLY EXACT_MATCH ~d2cwb1b~ ~d2cwb1e~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1e.BAF~
+  REPLACE_TEXTUALLY EXACT_MATCH ~Player1~ ~Player5~
+  REPLACE_TEXTUALLY EXACT_MATCH ~d2cwb1b~ ~d2cwb1f~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1f.BAF~
+  REPLACE_TEXTUALLY EXACT_MATCH ~Player1~ ~Player6~
+  REPLACE_TEXTUALLY EXACT_MATCH ~d2cwb1b~ ~d2cwb1a~
+  
+COMPILE ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb1b.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb1c.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb1d.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb1e.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb1f.BAF~
+
+END
+//////////////////////////////////////////////////
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb0.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb0a.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb0b.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb0c.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb0d.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb0e.BAF~
-COMPILE ~%MOD_FOLDER%\nymph\d2cwb0f.BAF~
-COPY_EXISTING ~d2cwb0.BCS~ ~override\NYMPH.BCS~
-END
 
+COMPILE ~%MOD_FOLDER%/nymph/d2cwb0.BAF~
+COPY_EXISTING ~d2cwb0.BCS~ ~override/NYMPH.BCS~
+
+COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0b.BAF~
+  REPLACE_TEXTUALLY EXACT_MATCH ~Player1~ ~Player2~
+  REPLACE_TEXTUALLY EXACT_MATCH ~d2cwb0b~ ~d2cwb0c~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0c.BAF~
+  REPLACE_TEXTUALLY EXACT_MATCH ~Player1~ ~Player3~
+  REPLACE_TEXTUALLY EXACT_MATCH ~d2cwb0b~ ~d2cwb0d~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0d.BAF~
+  REPLACE_TEXTUALLY EXACT_MATCH ~Player1~ ~Player4~
+  REPLACE_TEXTUALLY EXACT_MATCH ~d2cwb0b~ ~d2cwb0e~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0e.BAF~
+  REPLACE_TEXTUALLY EXACT_MATCH ~Player1~ ~Player5~
+  REPLACE_TEXTUALLY EXACT_MATCH ~d2cwb0b~ ~d2cwb0f~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0f.BAF~
+  REPLACE_TEXTUALLY EXACT_MATCH ~Player1~ ~Player6~
+  REPLACE_TEXTUALLY EXACT_MATCH ~d2cwb0b~ ~d2cwb0a~
+  
+COMPILE ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb0b.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb0c.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb0d.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb0e.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb0f.BAF~
+
+END
+//////////////////////////////////////////////////
 COPY_EXISTING ~NYMPHSU.CRE~ ~override~    // set script for nymph (if another mod changed it)
   PATCH_IF (SOURCE_SIZE > 0x2d3) BEGIN
   WRITE_ASCII 0x248 NYMPH #8
   END
 BUT_ONLY
+//////////////////////////////////////////////////

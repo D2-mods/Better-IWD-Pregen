@@ -1,0 +1,25 @@
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
+		Range(NearestEnemyOfType([0.0.TROLL]),10)
+	HP(NearestEnemyOfType([0.0.TROLL]),1)
+	OR(12)
+		HasItemEquipedReal("bddagg02",Myself)    // fire weapons
+		HasItemEquipedReal("bdblun09",Myself)
+		HasItemEquipedReal("bdsw1h08",Myself)
+		HasItemEquipedReal("bdsw2h02",Myself)
+		HasItemEquipedReal("sw1h24",Myself)
+		HasItemEquipedReal("bddagg01",Myself)    // acid weapons
+		HasItemEquipedReal("bddagg05",Myself)
+		HasItemEquipedReal("bddart01",Myself)
+		HasItemEquipedReal("bdsw1h02",Myself)
+		HasItem("melfmet",Myself)
+		HasItem("fblade",Myself)
+		HasItem("plyflind",Myself)
+THEN
+	RESPONSE #100
+		Attack(NearestEnemyOfType([0.0.TROLL]))
+END

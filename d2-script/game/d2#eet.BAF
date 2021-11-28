@@ -1,0 +1,95 @@
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
+		Range(NearestEnemyOfType([0.0.TROLL]),10)
+	HP(NearestEnemyOfType([0.0.TROLL]),1)
+	!CharName("Fire Troll",NearestEnemyOfType([0.0.TROLL]))
+	OR(43)
+		HasItemEquipedReal("ax1h12",Myself)    // fire weapons
+		HasItemEquipedReal("dagg12",Myself)
+		HasItemEquipedReal("blun26",Myself)
+		HasItemEquipedReal("blun27",Myself)
+		HasItemEquipedReal("xbow14",Myself)
+		HasItemEquipedReal("xbow15",Myself)
+		HasItemEquipedReal("xbow16",Myself)
+		HasItemEquipedReal("sw1h24",Myself)
+		HasItemEquipedReal("sw1h39",Myself)
+		HasItemEquipedReal("sw1h53",Myself)
+		HasItemEquipedReal("sw1h60",Myself)
+		HasItemEquipedReal("sw1h61",Myself)
+		HasItemEquipedReal("ax1h13",Myself)    // cold/acid
+		HasItemEquipedReal("blun22",Myself)    // acid
+		HasItemEquipedReal("halb05",Myself)    // all elements
+		HasItemEquipedReal("blun14",Myself)    // flail of ages
+		HasItemEquipedReal("blun14d",Myself)    // fire/cold
+		HasItemEquipedReal("blun14e",Myself)    // acid cold
+		HasItemEquipedReal("blun14f",Myself)    // fire/acid
+		HasItemEquipedReal("blun14h",Myself)    // fire
+		HasItemEquipedReal("blun14i",Myself)    // acid
+		HasItemEquipedReal("blun30",Myself)
+		HasItemEquipedReal("blun30c",Myself)
+		HasItemEquipedReal("blun30d",Myself)
+		HasItemEquipedReal("ohrax1h1",Myself)    // more fire weapons
+		HasItemEquipedReal("ohdsw03",Myself)
+		HasItemEquipedReal("ohdsw2ha",Myself)
+		HasItemEquipedReal("ohdsw2hb",Myself)
+		HasItemEquipedReal("ohdsw2hc",Myself)
+		HasItemEquipedReal("ohdsw2hd",Myself)
+		HasItem("melfmet",Myself)
+		HasItem("fblade",Myself)
+		HasItem("plyflind",Myself)
+		HasItem("firern",Myself)
+		HasItem("drufir",Myself)
+		HasItemEquipedReal("bddart01",Myself)
+		HasItemEquipedReal("bddagg02",Myself)    // SoD weapons
+		HasItemEquipedReal("bdblun09",Myself)
+		HasItemEquipedReal("bdsw1h08",Myself)
+		HasItemEquipedReal("bdsw2h02",Myself)
+		HasItemEquipedReal("bddagg01",Myself)
+		HasItemEquipedReal("bddagg05",Myself)
+		HasItemEquipedReal("bdsw1h02",Myself)
+THEN
+	RESPONSE #100
+		Attack(NearestEnemyOfType([0.0.TROLL]))
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
+		Range(NearestEnemyOfType([0.0.TROLL]),10)
+	HP(NearestEnemyOfType([0.0.TROLL]),1)
+	CharName("Fire Troll",NearestEnemyOfType([0.0.TROLL]))
+	OR(23)
+		HasItemEquipedReal("ax1h13",Myself)    // cold/acid
+		HasItemEquipedReal("blun22",Myself)    // acid
+		HasItemEquipedReal("halb05",Myself)    // all elements
+		HasItemEquipedReal("blun14",Myself)    // flail of ages
+		HasItemEquipedReal("blun14d",Myself)    // fire/cold
+		HasItemEquipedReal("blun14e",Myself)    // acid cold
+		HasItemEquipedReal("blun14f",Myself)    // fire/acid
+		HasItemEquipedReal("blun14g",Myself)    // cold
+		HasItemEquipedReal("blun14i",Myself)    // acid
+		HasItemEquipedReal("blun30",Myself)
+		HasItemEquipedReal("blun30c",Myself)
+		HasItemEquipedReal("blun30d",Myself)
+		HasItemEquipedReal("halb08",Myself)
+		HasItemEquipedReal("halb09",Myself)
+		HasItemEquipedReal("blun35",Myself)
+		HasItemEquipedReal("sw1h06",Myself)
+		HasItemEquipedReal("sw1h68",Myself)
+		HasItemEquipedReal("sw1h69",Myself)
+		HasItemEquipedReal("bdsw2h01",Myself)
+		HasItemEquipedReal("bddart01",Myself)
+		HasItemEquipedReal("bddagg01",Myself)
+		HasItemEquipedReal("bddagg05",Myself)
+		HasItemEquipedReal("bdsw1h02",Myself)
+THEN
+	RESPONSE #100
+		Attack(NearestEnemyOfType([0.0.TROLL]))
+END

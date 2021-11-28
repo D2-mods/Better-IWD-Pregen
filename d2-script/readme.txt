@@ -13,9 +13,9 @@ What this mod does is take IWD Pregen, and finetune the auto-attack and auto-Sea
 The biggest difference you'll notice from the vanilla IWD Pregen is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle, and more options for placement of characters, without needing to turn AI off.
 
 UPDATE v2.0:
+- rework of auto-attack, main thing is improved retargeting scripting
 - added Cooldown hotkeys (B to enter for 5 rounds, E to deactivate); reduces melee aggro range to 5 ft.
-- reworked auto-attack targeting; retargeting will only happen if relevant targets are in sight, instead of every round, regardless of enemy
-- added an improved AI script for the nymph summon (Call Woodland Beings)
+- EEs: added an improved AI script for the nymph summon (Call Woodland Beings)
 
 
 ==================================================
@@ -48,19 +48,21 @@ Class: Fighter, Ranger, Paladin, including any multiclass combinations
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 25 ft.
-	3. Attacked by enemy (doesn't need to be hit)
+	3. Attacked by enemy
+	4. If not in sight of enemies, can respond to a call for help
 
 Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 18 ft.
-	3. Attacked by enemy (doesn't need to be hit)
-	
+	3. Attacked by enemy
+	4. If not in sight of enemies, can respond to a call for help
+
 Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 12 ft.
-	
+
 Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
@@ -68,40 +70,62 @@ Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
 	3. If THAC0 is less than 5, will attack if enemy is within 12 ft.
 
 IWD2
-Class: Fighter, Ranger, Paladin or Barbarian, single-class or multiclass with 3+ levels
+Class: Fighter, Ranger, Paladin or Barbarian (single-class or multiclass with 3+ levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 25 ft.
-	3. Attacked by enemy (doesn't need to be hit)
-	4. At Level 3+: If not in sight of enemies, but a nearby ally begins auto-attacking, the character may follow the other into combat
+	3. Attacked by enemy
+	4. Level 3+: If not in sight of enemies, can respond to a call for help
 
-Class: Monk with 9+ levels, Wild Shape/Tenser's/Iron Body (without 3+ warrior levels)
+Class: Monk (Level 9+), Wild Shape/Tenser's/Iron Body (without 3+ warrior levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 18 ft.
-	3. Attacked by enemy (doesn't need to be hit)
-	4. If not in sight of enemies, but a nearby ally begins auto-attacking, the character may follow the other into combat
-	
+	3. Attacked by enemy
+	4. If not in sight of enemies, can respond to a call for help
+
 Class: Cleric, Druid, Monk, Thief or Bard, including multiclass with Wizard or Sorcerer
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 12 ft.
-	
+
 Class: Wizard or Sorcerer
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 3 ft.
-	3. If Polymorphed, will use the Wild Shape conditions (no polymorph spells in unmodded game)
-	
+
+
+==================================================
+Calls for help info (Shout action/response):
+==================================================
+A Shout action is made when initially seeing an enemy, immediately after responding to a Shout, or repeatedly if idling in battle (i.e. standing outside melee range).
+
+Response: If not in sight of enemies, the character can respond to a Shout, moving towards the caller. This action continues until either the character reaches the caller, or an enemy is within 15 feet.
+
+Characters will not use or respond to a Shout if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. A character in Cooldown mode can make a Shout, but will not respond to one.
+
 
 ==================================================
 Better AI for Call Woodland Beings
 ==================================================
-Installs a better AI script for the nymph summon (Call Woodland Beings). Not as wasteful with spells, won't cast statuses on undead, golems or enemies with high magic resist, will teleport to catch up with the party if no PCs in sight. Will still fight in melee, but is more cautious at low HP if it has spells remaining. Will not attack or cast spells at enemies if invisible. Note that the creature's stats and spells remain unchanged from vanilla. Only the script is changed.
+Info:
+- not as wasteful with spells
+- won't cast statuses on undead or enemies with high magic resist
+- will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
+- is more cautious at low HP if it has spells remaining
+- will not attack or cast spells at enemies if invisible
+- Cooldown hotkeys to delay spellcasting
 
 Compatible with BG:EE, BG2:EE, IWD:EE and EET.
 
-NOTE: As in the vanilla script, the nymph may use Dimension Door at will if conditions are met. This is mostly for convenience to make up for the slow walking speed. It will alway teleport to either the nearest enemy or back to its summoner. In addition, pressing the D key outside of combat (with nymph selected) will teleport it to its summoner.
+DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner).
+
+Marking: The nymph "marks" a PC as an object for various actions (by default, this is the summoner). If the marked PC is not on the map for any reason, the nymph will choose another PC on the same map. The nymph will always switch back to its summoner if in visual range. Note that the summoner, as an identifier, is not saved if a summon is still on the map (so if reloading, the script will default to Player1 as the "marked" PC).
+
+Hotkeys:
+- if the D key is pressed outside of combat, and not in visual range of enemies, the nymph will teleport to its summoner (or other PC)
+- if the B key is pressed, the nymph will enter Cooldown for 3 rounds; will not cast offensive spells or teleport to an enemy in Cooldown mode
+- if the E key is pressed, the Cooldown timer is set to 0 (deactivated)
 
 
 ==================================================
@@ -110,7 +134,7 @@ CREDITS
 Coding, Testing: Dan_P
 
 Tools and Resources used:  
-- WeiDU v247 https://github.com/WeiDUorg/weidu  
+- WeiDU v249 https://github.com/WeiDUorg/weidu  
 - NearInfinity v2.2-20210501 https://github.com/Argent77/NearInfinity  
 - Notepad++ https://notepad-plus-plus.org/  
 - Git Bash https://git-scm.com/downloads  
@@ -122,11 +146,12 @@ Tools and Resources used:
 VERSION INFO
 ==================================================
 v2.0
-- all games: added Cooldown hotkeys (B to enter for 5 rounds, E to deactivate); reduces melee aggro range to 5 ft.
-- all games: reworked auto-attack targeting; retargeting will only happen now if relevant targets are in sight, instead of every round, regardless of enemy
-- EEs: added an improved AI script for the nymph summon (Call Woodland Beings)
+- rework of auto-attack, main thing is improved retargeting scripting
+- added Cooldown hotkeys (B to enter for 5 rounds, E to deactivate); reduces melee aggro range to 5 ft.
 - IWDEE: in Dragon's Eye 5th floor, will not attack certain targets that reduce reputation if killed
-- IWD2: Shout action changed to only be made when enemies are initially sighted, or after responding to a Shout (was previously made with every attack action)
+- IWD2: when responding to a call for help, ranged attackers will no longer follow into melee range (will stop 15 ft. or further away)
+- EEs: added calls for help (Shout action/response), using similar scripting as IWD2
+- EEs: added an improved AI script for the nymph summon (Call Woodland Beings)
 
 v1.3
 - small update, should reduce delay for auto-attack at start of combat

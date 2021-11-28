@@ -1,0 +1,17 @@
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
+		Range(NearestEnemyOfType([0.0.TROLL]),10)
+	HP(NearestEnemyOfType([0.0.TROLL]),1)
+	OR(4)
+		HasItemEquipedReal("sw1h24",Myself)    // all fire
+		HasItem("melfmet",Myself)
+		HasItem("fblade",Myself)
+		HasItem("plyflind",Myself)
+THEN
+	RESPONSE #100
+		Attack(NearestEnemyOfType([0.0.TROLL]))
+END
