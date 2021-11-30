@@ -21,7 +21,7 @@ UPDATE v2.0:
 ==================================================
 INSTALL
 ==================================================
-Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform). It's best to install this mod near the end of the order. It shouldn't affect other mods, unless they also use the files iwdpgen.BCS or NYMPH.BCS.
+Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform). It's best to install this mod near the end of the order. It shouldn't affect other mods, unless they also use the files iwdpgen.BS or NYMPH.BCS.
 
 This mod has 2 components:
 1. Better IWD Pregen (appears in-game as "IWD PREGEN")
@@ -145,6 +145,10 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v2.1
+- fixed nymph summon not detecting invisible PCs, causing it to use Dimension Door repeatedly (it's scripted to teleport to the party if out of range)
+- nymph summon will no longer use Dimension Door if invisible (because it removes the invisibility); the D hotkey can still be used to force teleport it
+
 v2.0
 - rework of auto-attack, main thing is improved retargeting scripting
 - added Cooldown hotkeys (B to enter for 5 rounds, E to deactivate); reduces melee aggro range to 5 ft.

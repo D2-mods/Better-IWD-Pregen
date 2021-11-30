@@ -56,9 +56,9 @@ END
 IF
 	Allegiance(Myself,GOODCUTOFF)
 	!GlobalTimerNotExpired("d2ddoorjump","LOCALS")
-	OR(2)
-		!Range([GOODCUTOFF],25)
-		!See([PC])
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!Detect([PC])
 THEN
 	RESPONSE #100
 		ForceSpellRES("BDDDOORX",Player1)
@@ -90,6 +90,8 @@ IF
 	ActionListEmpty()
 	Allegiance(Myself,GOODCUTOFF)
 	!GlobalTimerNotExpired("d2ddoorjump","LOCALS")
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
 	OR(2)
 		SpellCast(Myself,0)
 		HPPercentLT(Myself,30)
@@ -104,6 +106,8 @@ IF
 	ActionListEmpty()
 	Allegiance(Myself,GOODCUTOFF)
 	!GlobalTimerNotExpired("d2ddoorjump","LOCALS")
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
 	ActuallyInCombat()
 	!See([EVILCUTOFF])
 	!Range([GOODCUTOFF],20)
@@ -117,6 +121,8 @@ IF
 	ActionListEmpty()
 	Allegiance(Myself,GOODCUTOFF)
 	!GlobalTimerNotExpired("d2ddoorjump","LOCALS")
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
 	SpellCast(Myself,0)
 	Range([EVILCUTOFF],3)
 THEN
