@@ -145,6 +145,9 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v2.2
+- fixed some triggers that I realized were scripted wrong; gameplay effect is minimal
+
 v2.1
 - fixed nymph summon not detecting invisible PCs, causing it to use Dimension Door repeatedly (it's scripted to teleport to the party if out of range)
 - nymph summon will no longer use Dimension Door if invisible (because it removes the invisibility); the D hotkey can still be used to force teleport it
