@@ -145,6 +145,9 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v2.3
+- fixed an additional error in the IWD2 script; this is just rearranging some OR() groups (which I just learned work slightly differently from the other games)
+
 v2.2
 - fixed some triggers that I realized were scripted wrong; gameplay effect is minimal
 
