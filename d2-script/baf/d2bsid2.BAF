@@ -27,22 +27,14 @@ THEN
 		SetGlobalTimer("d2cooldown","LOCALS",0)
 		Continue()
 END
-
-IF
-	ActionListEmpty()
-	OR(2)
-		ModalState(Myself,BATTLESONG)
-		ModalState(Myself,STEALTH)
-THEN
-	RESPONSE #100
-		NoAction()
-END
-
+		
 IF
 	ActionListEmpty()
 	Global("d2autobattle","LOCALS",0)
 	!StateCheck(Myself,STATE_INVISIBLE)
 	!CheckSpellState(Myself,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
 	See([EVILCUTOFF],0)
 THEN
 	RESPONSE #100
@@ -54,6 +46,8 @@ END
 IF
 	ActionListEmpty()
 	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
 	!Detect([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -69,6 +63,16 @@ IF
 THEN
 	RESPONSE #100
 		ClearActions(Myself)
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		ModalState(Myself,BATTLESONG)
+		ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		NoAction()
 END
 
 IF
@@ -390,7 +394,7 @@ THEN
 	RESPONSE #100
 		SetGlobalTimer("d2retarget3","LOCALS",18)
 		EquipWeapon()
-		Attack(LastSeenBy())
+		AttackOneRound(LastSeenBy())
 END
 
 IF

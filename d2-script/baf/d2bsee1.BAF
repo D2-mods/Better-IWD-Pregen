@@ -36,21 +36,13 @@ END
 
 IF
 	ActionListEmpty()
-	OR(4)
-		ModalState(BATTLESONG)
-		ModalState(TURNUNDEAD)
-		ModalState(STEALTH)
-		ModalState(SHAMANDANCE)
-THEN
-	RESPONSE #100
-		NoAction()
-END
-
-IF
-	ActionListEmpty()
 	Global("d2autobattle","LOCALS",0)
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
 	See([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -62,6 +54,10 @@ END
 IF
 	ActionListEmpty()
 	Global("d2autobattle","LOCALS",1)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
 	!Detect([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -77,6 +73,18 @@ IF
 THEN
 	RESPONSE #100
 		ClearActions(Myself)
+END
+
+IF
+	ActionListEmpty()
+	OR(4)
+		ModalState(BATTLESONG)
+		ModalState(TURNUNDEAD)
+		ModalState(STEALTH)
+		ModalState(SHAMANDANCE)
+THEN
+	RESPONSE #100
+		NoAction()
 END
 
 IF

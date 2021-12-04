@@ -145,6 +145,10 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v2.4
+- fixed regression, caused by dumb ordering of blocks, that prevented Bard Song from stopping when invisible
+- IWD2: I noticed unexpected (and undocumented on IESDP) behavior from the Attack() action in IWD2; I've changed one of the Attack() actions to AttackOneRound() because it could lock a character into auto-attacking (ignoring the triggers in the script)
+
 v2.3
 - fixed an additional error in the IWD2 script; this is just rearranging some OR() groups (which I just learned work slightly differently from the other games)
 
