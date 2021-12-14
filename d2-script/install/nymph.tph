@@ -1,0 +1,67 @@
+//////////////////////////////////////////////////
+ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+
+COMPILE ~%MOD_FOLDER%/nymph/d2cwb1.BAF~
+COPY_EXISTING ~d2cwb1.BCS~ ~override/NYMPH.BCS~
+
+COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1b.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player2~
+  REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1c~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1c.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player3~
+  REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1d~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1d.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player4~
+  REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1e~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1e.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player5~
+  REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1f~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1f.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player6~
+  REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1a~
+  
+COMPILE ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb1b.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb1c.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb1d.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb1e.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb1f.BAF~
+
+END
+//////////////////////////////////////////////////
+ACTION_IF (GAME_IS ~iwdee~) BEGIN
+
+COMPILE ~%MOD_FOLDER%/nymph/d2cwb0.BAF~
+COPY_EXISTING ~d2cwb0.BCS~ ~override/NYMPH.BCS~
+
+COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0b.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player2~
+  REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0c~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0c.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player3~
+  REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0d~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0d.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player4~
+  REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0e~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0e.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player5~
+  REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0f~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0f.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player6~
+  REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0a~
+  
+COMPILE ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb0b.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb0c.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb0d.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb0e.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb0f.BAF~
+
+END
+//////////////////////////////////////////////////
+COPY_EXISTING ~NYMPHSU.CRE~ ~override~    // set script for nymph (if another mod changed it)
+  PATCH_IF (SOURCE_SIZE > 0x2d3) BEGIN
+  WRITE_ASCII 0x248 NYMPH #8
+  END
+BUT_ONLY
+//////////////////////////////////////////////////

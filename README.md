@@ -1,6 +1,6 @@
 # Better IWD Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
-Game version: BG:EE, BG2:EE, IWD:EE, IWD2, EET
+Installs on: BG:EE, BG2:EE, IWD:EE, IWD2, EET, BG2/Tutu/BGT (Beta), IWD1 (Beta)
 
 #### Overview:
 This script manages auto-attack, while giving more nuanced control of the characters, so the player can focus on tactics and usage of spells and abilities to win battles. The script will never use your consumable items, spells, or abilities. What it does is put you in position to better use these abilities, while reducing some of the more frustrating aspects of auto-attack.

@@ -1,0 +1,87 @@
+==================================================
+Auto-attack features
+==================================================
+- melee aggro range is dependent on class; range from 3 ft. (mages) to 25 ft.
+- will not attack if under the effects of Invisibility or Sanctuary
+- will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance
+- EEs: active retargeting if a character's current weapon cannot hit or damage an enemy
+- priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon)
+- Cooldown hotkeys to reduce melee aggro range to 5 ft. for 5 rounds, or set back to normal instantly
+
+
+==================================================
+Other features
+==================================================
+- classes with Search will use it whenever not attacking (note: IWD2 is hardcoded for only Rogues and Monks to be able to auto-Search)
+- will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance
+- will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (for example, from a contingency or area invisibility spell)
+- will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
+- calls for help (Shout action/response); see below for details
+
+
+==================================================
+Auto-attack breakdown (BG:EE, BG2(EE), IWD(EE))
+==================================================
+Class: Fighter, Ranger, Paladin, including any multiclass combinations
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 25 ft.
+	3. Attacked by enemy
+	4. If not in sight of enemies, can respond to a call for help
+
+Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 18 ft.
+	3. Attacked by enemy
+	4. If not in sight of enemies, can respond to a call for help
+
+Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 12 ft.
+
+Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 3 ft.
+	3. If THAC0 is less than 5, will attack if enemy is within 12 ft.
+
+
+==================================================
+Auto-attack breakdown (IWD2)
+==================================================
+Class: Fighter, Ranger, Paladin or Barbarian (single-class or multiclass with 3+ levels)
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 25 ft.
+	3. Attacked by enemy
+	4. Level 3+: If not in sight of enemies, can respond to a call for help
+
+Class: Monk (Level 9+), Wild Shape/Tenser's/Iron Body (without 3+ warrior levels)
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 18 ft.
+	3. Attacked by enemy
+	4. If not in sight of enemies, can respond to a call for help
+
+Class: Cleric, Druid, Monk, Thief or Bard, including multiclass with Wizard or Sorcerer
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 12 ft.
+
+Class: Wizard or Sorcerer
+	Conditions (one must be met to auto-attack)
+	1. Enemy is within range of the currently equipped weapon
+	2. Enemy is within 3 ft.
+
+
+==================================================
+Calls for help info (Shout action/response)
+==================================================
+A Shout action is made when initially seeing an enemy, immediately after responding to a Shout, or repeatedly if idling in battle (i.e. standing outside melee range).
+
+Response: If not in sight of enemies, the character can respond to a Shout, moving towards the caller. This action continues until either the character reaches the caller, or an enemy is within 15 feet.
+
+Characters will not use or respond to a Shout if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. A character in Cooldown mode can make a Shout, but will not respond to one.
+

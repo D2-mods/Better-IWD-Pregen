@@ -1,6 +1,6 @@
 Better IWD Pregen - a minimalist script for all classes
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
-Game version: BG:EE, BG2:EE, IWD:EE, IWD2, EET
+Installs on: BG:EE, BG2:EE, IWD:EE, IWD2, EET, BG2/Tutu/BGT (Beta), IWD1 (Beta)
 
 
 ==================================================
@@ -21,117 +21,35 @@ UPDATE v2.0:
 ==================================================
 INSTALL
 ==================================================
-Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform). It's best to install this mod near the end of the order. It shouldn't affect other mods, unless they also use the files iwdpgen.BS or NYMPH.BCS.
+Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform). It's best to install this mod near the end of the order. The scripts shouldn't affect other mods, unless they also use the files iwdpgen.BS or NYMPH.BCS.
 
-This mod has 2 components:
+Script components:
 1. Better IWD Pregen (appears in-game as "IWD PREGEN")
 2. EEs only: Better AI for Call Woodland Beings (should be installed after SCS)
 
-
-==================================================
-DESCRIPTIONS
-==================================================
-EEs
-IWD PREGEN: The character will auto-attack when enemies are in range, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance.
-
-IWD2
-IWD PREGEN: The character will auto-attack when enemies are in range, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth or Battle Song. If not in auto-attack range, a character with Rogue or Monk levels** will search for traps, but not if using Stealth or Battle Song.
-
-**for auto-Search, only characters with Rogue or Monk levels will automatically use the Search ability, even if you remove the class restrictions from the script. This seems to be hardcoded or hidden in a file somewhere.
+Tweak components:
+1. Adjust enemy damage at higher difficulties (IWD1)
+2. Add or remove Avarine Decanter (IWD2)
+3. Unnerf Animate Dead (IWD2)
 
 
 ==================================================
-Auto-attack breakdown:
+IN-GAME DESCRIPTION (adjusted for each game)
 ==================================================
-EEs
-Class: Fighter, Ranger, Paladin, including any multiclass combinations
-	Conditions (one must be met to auto-attack)
-	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 25 ft.
-	3. Attacked by enemy
-	4. If not in sight of enemies, can respond to a call for help
+IWD PREGEN: The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
 
-Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
-	Conditions (one must be met to auto-attack)
-	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 18 ft.
-	3. Attacked by enemy
-	4. If not in sight of enemies, can respond to a call for help
+*Melee auto-attack range is dependent on class (see readme for full breakdown).
 
-Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
-	Conditions (one must be met to auto-attack)
-	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 12 ft.
-
-Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
-	Conditions (one must be met to auto-attack)
-	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 3 ft.
-	3. If THAC0 is less than 5, will attack if enemy is within 12 ft.
-
-IWD2
-Class: Fighter, Ranger, Paladin or Barbarian (single-class or multiclass with 3+ levels)
-	Conditions (one must be met to auto-attack)
-	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 25 ft.
-	3. Attacked by enemy
-	4. Level 3+: If not in sight of enemies, can respond to a call for help
-
-Class: Monk (Level 9+), Wild Shape/Tenser's/Iron Body (without 3+ warrior levels)
-	Conditions (one must be met to auto-attack)
-	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 18 ft.
-	3. Attacked by enemy
-	4. If not in sight of enemies, can respond to a call for help
-
-Class: Cleric, Druid, Monk, Thief or Bard, including multiclass with Wizard or Sorcerer
-	Conditions (one must be met to auto-attack)
-	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 12 ft.
-
-Class: Wizard or Sorcerer
-	Conditions (one must be met to auto-attack)
-	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 3 ft.
-
-
-==================================================
-Calls for help info (Shout action/response):
-==================================================
-A Shout action is made when initially seeing an enemy, immediately after responding to a Shout, or repeatedly if idling in battle (i.e. standing outside melee range).
-
-Response: If not in sight of enemies, the character can respond to a Shout, moving towards the caller. This action continues until either the character reaches the caller, or an enemy is within 15 feet.
-
-Characters will not use or respond to a Shout if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. A character in Cooldown mode can make a Shout, but will not respond to one.
-
-
-==================================================
-Better AI for Call Woodland Beings
-==================================================
-Info:
-- not as wasteful with spells
-- won't cast statuses on undead or enemies with high magic resist
-- will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
-- is more cautious at low HP if it has spells remaining
-- will not attack or cast spells at enemies if invisible
-- Cooldown hotkeys to delay spellcasting
-
-Compatible with BG:EE, BG2:EE, IWD:EE and EET.
-
-DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner).
-
-Marking: The nymph "marks" a PC as an object for various actions (by default, this is the summoner). If the marked PC is not on the map for any reason, the nymph will choose another PC on the same map. The nymph will always switch back to its summoner if in visual range. Note that the summoner, as an identifier, is not saved if a summon is still on the map (so if reloading, the script will default to Player1 as the "marked" PC).
-
-Hotkeys:
-- if the D key is pressed outside of combat, and not in visual range of enemies, the nymph will teleport to its summoner (or other PC)
-- if the B key is pressed, the nymph will enter Cooldown for 3 rounds; will not cast offensive spells or teleport to an enemy in Cooldown mode
-- if the E key is pressed, the Cooldown timer is set to 0 (deactivated)
+Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.
 
 
 ==================================================
 CREDITS
 ==================================================
 Coding, Testing: Dan_P
+
+Custom Functions:
+- CD_EXTEND-O-MATIC, from CamDawg, posted at <https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220>
 
 Tools and Resources used:  
 - WeiDU v249 https://github.com/WeiDUorg/weidu  
@@ -145,9 +63,13 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v2.5
+- added Beta support for original BG2/Tutu/BGT and IWD1; a few incompatible triggers or blocks had to be removed for each game (the core features of the script are in); I'm calling this a Beta because I only did very limited testing + made sure they look okay in NearInfinity
+- added a few tweak options for IWD1 and IWD2
+
 v2.4
 - fixed regression, caused by dumb ordering of blocks, that prevented Bard Song from stopping when invisible
-- IWD2: I noticed unexpected (and undocumented on IESDP) behavior from the Attack() action in IWD2; I've changed one of the Attack() actions to AttackOneRound() because it could lock a character into auto-attacking (ignoring the triggers in the script)
+- IWD2: I noticed unexpected (and undocumented on IESDP) behavior from the Attack() action; I've changed one of the Attack() actions to AttackOneRound() because it could lock a character into auto-attacking (ignoring the triggers in the script)
 
 v2.3
 - fixed an additional error in the IWD2 script; this is just rearranging some OR() groups (which I just learned work slightly differently from the other games)

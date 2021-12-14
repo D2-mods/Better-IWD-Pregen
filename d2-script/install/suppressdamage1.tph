@@ -1,0 +1,4 @@
+ACTION_IF (FILE_EXISTS ~icewind.ini~) BEGIN
+COPY ~icewind.ini~ ~icewind.ini~
+  REPLACE_TEXTUALLY ~Damage=0~ ~Damage=1~
+END

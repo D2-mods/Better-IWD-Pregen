@@ -1,0 +1,4 @@
+COPY_EXISTING ~50NYM.DLG~ ~override~    // edit Nym's script
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY ~50Nym2~ ~50Nym~
+  END

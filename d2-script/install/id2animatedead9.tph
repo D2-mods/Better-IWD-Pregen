@@ -1,0 +1,28 @@
+COPY_EXISTING ~SPWI501.SPL~ ~override~
+
+LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=7 END
+LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=9 END
+LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=11 END
+LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=13 END
+LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=15 END
+LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=17 END
+
+LPF ALTER_EFFECT INT_VAR header=1 match_probability1=50 STR_VAR probability1=49 END
+LPF ALTER_EFFECT INT_VAR header=1 match_probability2=51 STR_VAR probability2=50 END
+
+LPF ~CD_EXTEND-O-MATIC~
+  INT_VAR
+	base_dur = 0
+	step_dur = 0
+	step_size = 2
+	level_cap = 9
+	min_dur = 3000
+END
+
+LPF ALTER_EFFECT INT_VAR header=2 match_probability2=0 STR_VAR resource=~00SBGD~ END
+LPF ALTER_EFFECT INT_VAR header=2 match_probability1=100 STR_VAR resource=~00SPOZMB~ END
+
+LPF ALTER_EFFECT INT_VAR header=3 match_probability2=0 STR_VAR resource=~00SGRBGD~ END
+LPF ALTER_EFFECT INT_VAR header=3 match_probability1=100 STR_VAR resource=~00SZMBLO~ END
+
+PRINT @53    // print message to check readme for spell info

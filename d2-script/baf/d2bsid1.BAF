@@ -1,10 +1,9 @@
 IF
 	OnCreation()
 	GlobalTimerNotExpired("d2cooldown","LOCALS")
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2cooldown","LOCALS",0)
@@ -12,10 +11,9 @@ END
 
 IF
 	HotKey(B)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2cooldown","LOCALS",30)
@@ -24,10 +22,9 @@ END
 
 IF
 	HotKey(E)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2cooldown","LOCALS",0)
@@ -39,10 +36,9 @@ IF
 	Global("d2autobattle","LOCALS",0)
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
 	See([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -54,10 +50,9 @@ END
 IF
 	ActionListEmpty()
 	Global("d2autobattle","LOCALS",1)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
 	!Detect([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -67,7 +62,7 @@ THEN
 END
 
 IF
-	ModalState(BATTLESONG)
+	ModalState(Myself,BATTLESONG)
 	StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 THEN
@@ -77,11 +72,10 @@ END
 
 IF
 	ActionListEmpty()
-	OR(4)
-		ModalState(BATTLESONG)
-		ModalState(TURNUNDEAD)
-		ModalState(STEALTH)
-		ModalState(SHAMANDANCE)
+	OR(3)
+		ModalState(Myself,BATTLESONG)
+		ModalState(Myself,TURNUNDEAD)
+		ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
 		NoAction()
@@ -92,10 +86,9 @@ IF
 	OR(2)
 		StateCheck(Myself,STATE_INVISIBLE)
 		CheckStat(Myself,1,SANCTUARY)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
 THEN
 	RESPONSE #100
 		ClearActions(Myself)
@@ -105,16 +98,14 @@ END
 IF
 	ActionListEmpty()
 	InWeaponRange([EVILCUTOFF])
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
+	ClassEx(Myself,THIEF)
 	OR(2)
 		StateCheck(Myself,STATE_INVISIBLE)
 		CheckStat(Myself,1,SANCTUARY)
-	!ModalState(DETECTTRAPS)
+	!ModalState(Myself,DETECTTRAPS)
 THEN
 	RESPONSE #100
+		Wait(2)
 		FindTraps()
 END
 
@@ -147,14 +138,12 @@ END
 IF
 	ActionListEmpty()
 	HPPercentLT(Myself,15)
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
-	!ModalState(DETECTTRAPS)
+	ClassEx(Myself,THIEF)
+	!ModalState(Myself,DETECTTRAPS)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
+		Wait(2)
 		FindTraps()
 END
 
@@ -162,7 +151,7 @@ IF
 	ActionListEmpty()
 	Global("d2autobattle","LOCALS",1)
 	HPPercentLT(Myself,15)
-	!ModalState(DETECTTRAPS)
+	!ModalState(Myself,DETECTTRAPS)
 	See([EVILCUTOFF])
 	!InWeaponRange([EVILCUTOFF])
 THEN
@@ -195,14 +184,13 @@ IF
 	CheckStatLT(Myself,1,SANCTUARY)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 	Or(4)
-		Class(Myself,FIGHTER_ALL)
-		Class(Myself,PALADIN_ALL)
-		Class(Myself,RANGER_ALL)
+		ClassEx(Myself,FIGHTER)
+		ClassEx(Myself,PALADIN)
+		ClassEx(Myself,RANGER)
 		CheckStat(Myself,1,POLYMORPHED)
 	Heard([GOODCUTOFF],600)
 	!Range(LastHeardBy(),3)
 	!See([EVILCUTOFF])
-	ActuallyInCombat()
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2assist","LOCALS",30)
@@ -230,7 +218,7 @@ END
 IF
 	ActionListEmpty()
 	Class(Myself,MAGE_THIEF)
-	!ModalState(DETECTTRAPS)
+	!ModalState(Myself,DETECTTRAPS)
 	!IsWeaponRanged(Myself)
 	CheckStatLT(Myself,1,POLYMORPHED)
 	CheckStatGT(Myself,4,THAC0)
@@ -238,6 +226,7 @@ IF
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
+		Wait(2)
 		FindTraps()
 END
 
@@ -248,7 +237,7 @@ IF
 		Class(Myself,MAGE)
 		Class(Myself,MAGE_THIEF)
 		Class(Myself,CLERIC_MAGE)
-	!ModalState(DETECTTRAPS)
+	!ModalState(Myself,DETECTTRAPS)
 	!IsWeaponRanged(Myself)
 	CheckStatLT(Myself,1,POLYMORPHED)
 	CheckStatGT(Myself,4,THAC0)
@@ -278,142 +267,83 @@ END
 
 IF
 	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	Or(4)
+		ClassEx(Myself,FIGHTER)
+		ClassEx(Myself,PALADIN)
+		ClassEx(Myself,RANGER)
+		CheckStat(Myself,1,POLYMORPHED)
+	See([EVILCUTOFF.0.HUMAN])
+	See([EVILCUTOFF.0.YUANTI])
 	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
-	!ModalState(DETECTTRAPS)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+		InWeaponRange([EVILCUTOFF.0.YUANTI])
+		Range([EVILCUTOFF.0.YUANTI],25)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
+		Attack([EVILCUTOFF.0.YUANTI])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	See([EVILCUTOFF.0.HUMAN])
+	See([EVILCUTOFF.0.YUANTI])
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.YUANTI])
+		Range([EVILCUTOFF.0.YUANTI],12)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.YUANTI])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+	See([EVILCUTOFF.0.HUMAN])
+	See([EVILCUTOFF.0.YUANTI])
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.YUANTI])
+		Range([EVILCUTOFF.0.YUANTI],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.YUANTI])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	ClassEx(Myself,THIEF)
+	!ModalState(Myself,DETECTTRAPS)
+	See([EVILCUTOFF.0.HUMAN])
+	See([EVILCUTOFF.0.YUANTI])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Wait(2)
 		FindTraps()
 END
 
 IF
 	ActionListEmpty()
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	See([EVILCUTOFF.0.HUMAN])
+	See([EVILCUTOFF.0.YUANTI])
+	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
 		NoAction()
-END
-
-IF
-	ActionListEmpty()
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
-THEN
-	RESPONSE #100
-		Attack(SecondNearestEnemyOf())
-END
-
-IF
-	ActionListEmpty()
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
-THEN
-	RESPONSE #100
-		Attack(NearestEnemyOf())
-END
-
-IF
-	ActionListEmpty()
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
-THEN
-	RESPONSE #100
-		Attack(ThirdNearestEnemyOf())
-END
-
-IF
-	ActionListEmpty()
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
-	!InParty([EVILCUTOFF])
-THEN
-	RESPONSE #100
-		Attack(TenthNearestEnemyOf())
-END
-
-IF
-	ActionListEmpty()
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	!InParty([EVILCUTOFF])
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2retarget1","LOCALS",6)
 END
 
 IF
@@ -440,19 +370,6 @@ IF
 THEN
 	RESPONSE #100
 		Attack([EVILCUTOFF.0.0.CLERIC_ALL])
-END
-
-IF
-	ActionListEmpty()
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.SHAMAN])
-		Range([EVILCUTOFF.0.0.SHAMAN],5)
-	!InParty([EVILCUTOFF])
-THEN
-	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.SHAMAN])
 END
 
 IF
@@ -537,12 +454,10 @@ IF
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(3)
-		Class(Myself,FIGHTER_ALL)
-		Class(Myself,PALADIN_ALL)
-		Class(Myself,RANGER_ALL)
-	!Class(Myself,MONK)
-	!Kit(Myself,KENSAI)
+	Or(3)
+		ClassEx(Myself,FIGHTER)
+		ClassEx(Myself,PALADIN)
+		ClassEx(Myself,RANGER)
 	OR(3)
 		InWeaponRange([EVILCUTOFF])
 		Range([EVILCUTOFF],25)
@@ -558,10 +473,7 @@ IF
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(3)
-		Class(Myself,MONK)
-		Kit(Myself,KENSAI)
-		CheckStat(Myself,1,POLYMORPHED)
+	CheckStat(Myself,1,POLYMORPHED)
 	OR(3)
 		InWeaponRange([EVILCUTOFF])
 		Range([EVILCUTOFF],18)
@@ -577,12 +489,11 @@ IF
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(7)
+	OR(6)
 		Class(Myself,CLERIC)
 		Class(Myself,THIEF)
 		Class(Myself,BARD)
 		Class(Myself,DRUID)
-		Class(Myself,SHAMAN)
 		Class(Myself,CLERIC_THIEF)
 		CheckStatLT(Myself,5,THAC0)
 	OR(2)
@@ -599,15 +510,14 @@ IF
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 	GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(11)
-		Class(Myself,FIGHTER_ALL)
-		Class(Myself,PALADIN_ALL)
-		Class(Myself,RANGER_ALL)
+	Or(10)
+		ClassEx(Myself,FIGHTER)
+		ClassEx(Myself,PALADIN)
+		ClassEx(Myself,RANGER)
 		Class(Myself,CLERIC)
 		Class(Myself,THIEF)
 		Class(Myself,BARD)
 		Class(Myself,DRUID)
-		Class(Myself,SHAMAN)
 		Class(Myself,CLERIC_THIEF)
 		CheckStat(Myself,1,POLYMORPHED)
 		CheckStatLT(Myself,5,THAC0)
@@ -639,10 +549,9 @@ END
 
 IF
 	Global("d2autobattle","LOCALS",1)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
 	IsWeaponRanged(Myself)
 	AttackedBy([EVILCUTOFF],DEFAULT)
@@ -655,29 +564,14 @@ END
 
 IF
 	Global("d2autobattle","LOCALS",1)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
 	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	OR(4)
-		WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-		WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
-	OR(4)
-		WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-		WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-		WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-		WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
-	ActuallyInCombat()
+		InWeaponRange([NOTGOOD.0.TROLL])
+		Range([NOTGOOD.0.TROLL],5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2retarget1","LOCALS",6)
@@ -685,31 +579,12 @@ END
 
 IF
 	Global("d2autobattle","LOCALS",1)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
-	!GlobalTimerNotExpired("d2retarget1","LOCALS")
-	OR(2)
-		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
-		Range(NearestEnemyOfType([0.0.TROLL]),5)
-	ActuallyInCombat()
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2retarget1","LOCALS",6)
-END
-
-IF
-	Global("d2autobattle","LOCALS",1)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
 	GlobalTimerNotExpired("d2retarget1","LOCALS")
 	!See([EVILCUTOFF])
-	ActuallyInCombat()
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2retarget1","LOCALS",6)
@@ -717,19 +592,18 @@ END
 
 IF
 	Global("d2autobattle","LOCALS",1)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
 	!GlobalTimerNotExpired("d2retarget2","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 	OR(2)
 		InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
 		InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
-	!Class(NearestEnemyOf(),MAGE_ALL)
-	!Class(NearestEnemyOf(),CLERIC_ALL)
+	!ClassEx(NearestEnemyOf(),MAGE)
+	!ClassEx(NearestEnemyOf(),CLERIC)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2retarget2","LOCALS",12)
@@ -737,23 +611,20 @@ END
 
 IF
 	Global("d2autobattle","LOCALS",1)
-	!ModalState(BATTLESONG)
-	!ModalState(TURNUNDEAD)
-	!ModalState(DETECTTRAPS)
-	!ModalState(STEALTH)
-	!ModalState(SHAMANDANCE)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
 	!GlobalTimerNotExpired("d2retarget2","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(3)
-		InWeaponRange([EVILCUTOFF.0.0.SHAMAN])
+	OR(2)
 		InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
 		InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
-	!Class(NearestEnemyOf(),MAGE_ALL)
-	!Class(NearestEnemyOf(),CLERIC_ALL)
-	!Class(NearestEnemyOf(),SHAMAN)
-	!Class(NearestEnemyOf(),DRUID_ALL)
-	!Class(NearestEnemyOf(),BARD_ALL)
+	!ClassEx(NearestEnemyOf(),MAGE)
+	!ClassEx(NearestEnemyOf(),CLERIC)
+	!ClassEx(NearestEnemyOf(),DRUID)
+	!ClassEx(NearestEnemyOf(),BARD)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2retarget2","LOCALS",12)
@@ -761,20 +632,18 @@ END
 
 IF
 	ActionListEmpty()
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
-	!ModalState(DETECTTRAPS)
+	ClassEx(Myself,THIEF)
+	!ModalState(Myself,DETECTTRAPS)
 THEN
 	RESPONSE #100
+		Wait(2)
 		FindTraps()
 END
 
 IF
 	ActionListEmpty()
 	Global("d2autobattle","LOCALS",1)
-	!ModalState(DETECTTRAPS)
+	!ModalState(Myself,DETECTTRAPS)
 	See([EVILCUTOFF])
 THEN
 	RESPONSE #100

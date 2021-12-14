@@ -1,20 +1,61 @@
-//Setup
-@1 = ~Better IWD Pregen (for EEs and IWD2)~
-@2 = ~Installs on IWD:EE, IWD2, BG:EE, BG2:EE and EET~
+//Scripts
+@1 = ~Better IWD Pregen~
+@2 = ~Installs on BG:EE, BG2(EE), IWD(EE), IWD2, Tutu/BGT/EET~
 @3 = ~Better AI for Call Woodland Beings~
 @4 = ~Installs on BG:EE, BG2:EE, IWD:EE and EET~
-@99 = ~WARNING: iwdpgen.BCS detected in override - this component will compile d2bsee.BCS and overwrite iwdpgen.BS (iwdpgen.BCS is left untouched, so you can compare the scripts with NearInfinity, if previous changes were made)
+
+
+//Tweaks
+@400 = ~Adjust enemy damage at higher difficulties (IWD1)~
+@401 = ~Enemies don't do extra damage~
+@402 = ~Enemies do extra damage (game default)~
+@403 = ~This component is for IWD1~
+@404 = ~Add or remove Avarine Decanter (IWD2)~
+@405 = ~Add Avarine Decanter~
+@406 = ~Remove Avarine Decanter~
+@407 = ~This component is for IWD2~
+@408 = ~Unnerf Animate Dead (IWD2)~
+@409 = ~Use unnerfed Animate Dead, and correct chance of each creature type to 50/50~
+@410 = ~Use nerfed Animate Dead, but correct chance of each creature type to 50/50~
+
+
+//WeiDU Messages
+@50 = ~NOTE: iwdpgen.BCS detected in override - this component will compile d2bsee.BCS and overwrite iwdpgen.BS (iwdpgen.BCS is left untouched, so you can compare the scripts with NearInfinity, if previous changes were made)
+~
+@51 = ~NOTE: Disabled the ToBEx "Expanded Actions" hack. If using ToBEx v26/v28, the Expanded Actions hack alters the NoAction() script action to remove Modal states, making this script unusable for some classes.
+~
+@52 = ~NOTE: The Avarine Decanter was already installed. This component made no changes to the override.
+~
+@53 = ~NOTE: See the readme-tweaks file in the mod folder for summon list and additional info.
 ~
 
 
 //SCRPDESC.2DA entries
-@10 = ~IWD PREGEN:~
-@11 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
+@100 = ~IWD PREGEN:~
+
+//BGEE, BG2EE, IWDEE, EET
+@101 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
 
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
 Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
-@12 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth or Battle Song. If not in auto-attack range, a character with Rogue or Monk levels will search for traps, but not if using Stealth or Battle Song. (<script>)
+
+//IWD2
+@102 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth or Battle Song. If not in auto-attack range, a character with Rogue or Monk levels will search for traps, but not if using Stealth or Battle Song. (<script>)
+
+*Melee auto-attack range is dependent on class (see readme for full breakdown).
+
+Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
+
+//BG2
+@103 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, or Turn Undead. If not in auto-attack range, a Thief or Monk will search for traps or illusions, but not if using Stealth or Turn Undead. (<script>)
+
+*Melee auto-attack range is dependent on class (see readme for full breakdown).
+
+Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
+
+//IWD1
+@104 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, or Turn Undead. If not in auto-attack range, a Thief will search for traps, but not if using Stealth or Turn Undead. (<script>)
 
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
