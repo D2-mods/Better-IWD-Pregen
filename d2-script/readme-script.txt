@@ -16,25 +16,34 @@ Other features
 - will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance
 - will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (for example, from a contingency or area invisibility spell)
 - will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
-- calls for help (Shout action/response); see below for details
+- ***REMOVED*** Calls for help (Shout action/response)
 
 
 ==================================================
-Auto-attack breakdown (BG:EE, BG2(EE), IWD(EE))
+Cooldown hotkeys
+==================================================
+- if the B key is pressed, the character will enter a Cooldown mode for 5 rounds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active
+- if the E key is pressed, the Cooldown mode will be deactivated
+- both these keys can also be used as "stop action" buttons, as they will override other actions
+- if the game is saved while a character is in Cooldown mode, it will be deactivated on reload
+
+Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering
+
+
+==================================================
+Auto-attack breakdown (BG(EE), BG2(EE), IWD(EE))
 ==================================================
 Class: Fighter, Ranger, Paladin, including any multiclass combinations
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 25 ft.
 	3. Attacked by enemy
-	4. If not in sight of enemies, can respond to a call for help
 
 Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 18 ft.
 	3. Attacked by enemy
-	4. If not in sight of enemies, can respond to a call for help
 
 Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
 	Conditions (one must be met to auto-attack)
@@ -56,14 +65,12 @@ Class: Fighter, Ranger, Paladin or Barbarian (single-class or multiclass with 3+
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 25 ft.
 	3. Attacked by enemy
-	4. Level 3+: If not in sight of enemies, can respond to a call for help
 
 Class: Monk (Level 9+), Wild Shape/Tenser's/Iron Body (without 3+ warrior levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 18 ft.
 	3. Attacked by enemy
-	4. If not in sight of enemies, can respond to a call for help
 
 Class: Cleric, Druid, Monk, Thief or Bard, including multiclass with Wizard or Sorcerer
 	Conditions (one must be met to auto-attack)
@@ -77,8 +84,22 @@ Class: Wizard or Sorcerer
 
 
 ==================================================
+Baldur's Gate (in BG1 engine) - script info
+==================================================
+- characters will preserve Hide/Invisibility/Sanctuary
+- melee aggro ranges working
+- Calls for help working (REMOVED, but theoretically, I could add it back in)
+- Cooldown hotkeys working
+- no auto-Search (the FindTraps() script action doesn't work)
+- Bard Song, Turn Undead, and Search won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
+
+
+==================================================
 Calls for help info (Shout action/response)
 ==================================================
+NOTE: This feature was added in v2.0 and removed in the v3.0. It actually works pretty good, but I decided it's too active of an action for a minimalist script, even with being able to disable it with the Cooldown mode.
+
+
 A Shout action is made when initially seeing an enemy, immediately after responding to a Shout, or repeatedly if idling in battle (i.e. standing outside melee range).
 
 Response: If not in sight of enemies, the character can respond to a Shout, moving towards the caller. This action continues until either the character reaches the caller, or an enemy is within 15 feet.

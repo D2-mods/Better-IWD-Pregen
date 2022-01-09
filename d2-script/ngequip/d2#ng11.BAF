@@ -1,0 +1,86 @@
+IF
+	!Global("d2Player1initiate","GLOBAL",1)
+	Exists(Player1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2Player1start","GLOBAL",6)
+		Continue()
+END
+
+IF
+	!Global("d2Player1initiate","GLOBAL",1)
+	GlobalTimerExpired("d2Player1start","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1initiate","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1start","GLOBAL")
+	NumItems("STAF01",Player1,1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2Player1equip","GLOBAL",6)
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItem("SW1H04",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("SW1H04",0,0,0))    // longsword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1random","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItem("DAGG05",Player1)
+	!HasItem("SHLD10",Player1)
+THEN
+	RESPONSE #50
+		ActionOverride(Player1,CreateItem("DAGG05",5,0,0))    // throwing daggers
+		SetGlobal("d2Player1random","GLOBAL",1)
+		Continue()
+	RESPONSE #50
+		ActionOverride(Player1,CreateItem("SHLD10",0,0,0))    // buckler
+		SetGlobal("d2Player1random","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItem("SLNG01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("SLNG01",0,0,0))    // sling
+		ActionOverride(Player1,CreateItem("BULL01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robe","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItem("d2#ngrb0",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("d2#ngrb0",0,0,0))    // worn garment
+		SetGlobal("d2Player1robe","GLOBAL",1)
+		Continue()
+END

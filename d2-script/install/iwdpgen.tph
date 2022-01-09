@@ -1,7 +1,6 @@
-//////////////////////////////////////////////////
-ACTION_IF (GAME_IS ~iwdee~) BEGIN
+////////////////////////////////////////////////////////////
 
-ACTION_IF (FILE_EXISTS ~override/iwdpgen.BCS~) BEGIN PRINT @50 END    // iwdpgen.BCS detected in override
+ACTION_IF (GAME_IS ~iwdee~) BEGIN
 
 COPY - ~%MOD_FOLDER%/baf/d2bsee1.BAF~ ~%MOD_FOLDER%/temp/d2bsee.BAF~    // rename and compile script
 COMPILE ~%MOD_FOLDER%/temp/d2bsee.BAF~
@@ -10,6 +9,12 @@ EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
 EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
 COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~    // copy to scripts folder
 
+ACTION_IF (FILE_EXISTS_IN_GAME ~iwdpgen.BCS~) BEGIN
+  COPY_EXISTING ~iwdpgen.BCS~ ~override/iwdpgen.BAK~    // backup iwdpgen.BCS
+  COPY_EXISTING ~d2bsee.BCS~ ~override/iwdpgen.BCS~    // replace iwdpgen.BCS (corrects default party AI)
+  PRINT @50
+END
+
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // update text
   REPLACE ~40838~ @100
   REPLACE ~40839~ @101
@@ -17,7 +22,9 @@ COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // update text
 BUT_ONLY
 
 END
-//////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
+
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 
 COPY - ~%MOD_FOLDER%/baf/d2bsee1.BAF~ ~%MOD_FOLDER%/temp/d2bsee.BAF~
@@ -61,7 +68,9 @@ COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // replace placeholders with actual s
 BUT_ONLY
 
 END
-//////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
+
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
 
 COPY ~%MOD_FOLDER%/iwd2/attstyle.ids~ ~override~    // copy dummy file, prevents error message
@@ -78,8 +87,10 @@ COPY_EXISTING ~SCRPDESC.2DA~ ~override~
 BUT_ONLY
 
 END
-//////////////////////////////////////////////////
-ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2~) BEGIN
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN
 
 COMPILE ~%MOD_FOLDER%/baf/d2bsbg2.BAF~
 COPY_EXISTING ~d2bsbg2.BCS~ ~scripts/iwdpgen.BS~
@@ -94,14 +105,19 @@ COPY_EXISTING ~SCRPDESC.2DA~ ~override~
 BUT_ONLY
 
 //disable Expanded Actions hack (if ToBEx detected)
-ACTION_IF ((FILE_EXISTS ~TobEx/backup/1000/TobEx.dll~) AND (FILE_EXISTS ~TobEx.dll~)) BEGIN
+ACTION_IF (((FILE_EXISTS ~TobEx/backup/1000/TobEx.dll~) OR
+            (FILE_EXISTS ~TobEx/backup/100/ARGS.100~)) AND 
+            (FILE_EXISTS ~TobEx.dll~)) BEGIN
+
 COPY ~TobEx_ini/TobExCore.ini~ ~TobEx_ini/TobExCore.ini~
   REPLACE_TEXTUALLY ~Expanded Actions=1~ ~Expanded Actions=0~
 PRINT @51
 END
 
 END
-//////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
+
 ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
 
 COMPILE ~%MOD_FOLDER%/baf/d2bsid1.BAF~
@@ -117,4 +133,23 @@ COPY_EXISTING ~SCRPDESC.2DA~ ~override~
 BUT_ONLY
 
 END
-//////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN
+
+COMPILE ~%MOD_FOLDER%/baf/d2bsbg1.BAF~
+COPY_EXISTING ~d2bsbg1.BCS~ ~scripts/iwdpgen.BS~
+
+APPEND ~SCRPDESC.2DA~
+  ~iwdpgen     @100       @105~
+
+COPY_EXISTING ~SCRPDESC.2DA~ ~override~
+  REPLACE ~@100~ @100
+  REPLACE ~@105~ @105
+  PRETTY_PRINT_2DA
+BUT_ONLY
+
+END
+
+////////////////////////////////////////////////////////////

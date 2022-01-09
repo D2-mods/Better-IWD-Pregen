@@ -1,6 +1,6 @@
-Better IWD Pregen - a minimalist script for all classes
+Better IWD Pregen
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
-Installs on: BG:EE, BG2:EE, IWD:EE, IWD2, EET, BG2/Tutu/BGT (Beta), IWD1 (Beta)
+Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built on these engines
 
 
 ==================================================
@@ -10,7 +10,7 @@ The IWD Pregen script from IWD:EE basically does what I want an AI script to do,
 
 What this mod does is take IWD Pregen, and finetune the auto-attack and auto-Search scripting (based on my own preferences), while keeping it minimalist. Spells, abilities, item use, etc., are for the player to micromanage.
 
-The biggest difference you'll notice from the vanilla IWD Pregen is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle, and more options for placement of characters, without needing to turn AI off.
+The biggest difference you'll notice from the vanilla IWD Pregen is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle and more options for placement of characters, without needing to turn AI off.
 
 UPDATE v2.0:
 - rework of auto-attack, main thing is improved retargeting scripting
@@ -21,16 +21,39 @@ UPDATE v2.0:
 ==================================================
 INSTALL
 ==================================================
-Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform). It's best to install this mod near the end of the order. The scripts shouldn't affect other mods, unless they also use the files iwdpgen.BS or NYMPH.BCS.
+Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform). It's best to install this mod near the end of the order.
 
 Script components:
 1. Better IWD Pregen (appears in-game as "IWD PREGEN")
-2. EEs only: Better AI for Call Woodland Beings (should be installed after SCS)
+2. EEs: Better AI for Call Woodland Beings (should be installed after SCS)
 
 Tweak components:
 1. Adjust enemy damage at higher difficulties (IWD1)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
+4. EEs: Allow movement bonuses from shapeshift forms to bypass Free Action
+5. IWDEE: Increase movement speed of Winter Wolf and Polar Bear forms
+6. Give party starting equipment (IWD games)
+7. Give party a Bag of Holding at game start (classic and EEs)
+8. All classes get full HP bonuses from Constitution (classic and EEs)
+
+All components can be installed independently and in any order.
+
+
+==================================================
+COMPATIBILITY (2022-01)
+==================================================
+EEs: BG:EE, SoD, BG2:EE, IWD:EE, EET (v2.5/v2.6)
+Classic: BG1, BG2, IWD1, IWD2 (tested with GOG versions)
+
+TobEx (v26/v28): If TobEx is installed, the BG2 script will deactivate the Expanded Actions hack (because it breaks the script for some classes). The issue is caused by Expanded Actions changing the behavior of the NoAction() script action to disable Modal states (ex. Bard Song). Note that the normal behavior in all IE games, from classic BG1 to the EEs, is that NoAction() does not disable Modal states. If TobEx files are added as a part of other mods, Expanded Actions will not be deactivated, unless issues are observed/reported with a specific mod.
+
+IWD-in-BG2: Tested and working.
+Tutu/BGT: Untested but installable.
+Classic Adventures: Tested and working.
+Epic Endeavors: Tested and working.
+
+NOTE: I'm not 100% sure the party scripts work with expansionless versions of the classic games.
 
 
 ==================================================
@@ -49,11 +72,11 @@ CREDITS
 Coding, Testing: Dan_P
 
 Custom Functions:
-- CD_EXTEND-O-MATIC, from CamDawg, posted at <https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220>
+- CD_EXTEND-O-MATIC, by CamDawg, posted at <https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220>
 
 Tools and Resources used:  
 - WeiDU v249 https://github.com/WeiDUorg/weidu  
-- NearInfinity v2.2-20210501 https://github.com/Argent77/NearInfinity  
+- NearInfinity v2.2-20211218 https://github.com/Argent77/NearInfinity  
 - Notepad++ https://notepad-plus-plus.org/  
 - Git Bash https://git-scm.com/downloads  
 - Infinity Auto Packager https://github.com/InfinityTools/InfinityAutoPackager  
@@ -63,6 +86,31 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v3.0
+- Fixed an issue where some Bioware NPCs could target each other for 1-2 seconds after killing enemies. I didn't notice this until recently because I did most of my early testing with custom characters only.
+
+- Removed Calls for Help responses. I think what I had was pretty good, but it took away control from the player, which goes against the intent of a minimalist script. Shout actions are still in the script, in case I want to use them later (they should have a negligible effect on efficiency).
+
+- Added support for classic Baldur's Gate (that's BG1 on the BG1 engine). Key info:
+	- characters will preserve Hide/Invisibility/Sanctuary
+	- melee aggro ranges working
+	- calls for help working (REMOVED, but theoretically, I could add it back in)
+	- Cooldown hotkeys working
+	- no auto-Search (the FindTraps() script action doesn't work)
+	- Bard Song, Turn Undead, and Search won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
+
+- Added the following tweaks:
+	- EEs: Allow movement bonuses from shapeshift forms to bypass Free Action
+	- IWDEE: Increase movement speed of Winter Wolf and Polar Bear forms
+	- Give party starting equipment (IWD games)
+	- Give party a Bag of Holding at game start (classic and EEs)
+	- All classes get full HP bonuses from Constitution (classic and EEs)
+
+- Tested and confirmed that the BG2 script is working with various conversion mods, including IWD-in-BG2, Classic Adventures, and Epic Endeavors. The Bag of Holding tweak is also working with these.
+
+- This mod is pretty much finished now besides bug fixes, or making minor adjustments. The only TODO I have planned in my notes is PsT:EE support, which I'll probably only add if/when I get around to replaying it.
+
+
 v2.5
 - added Beta support for original BG2/Tutu/BGT and IWD1; a few incompatible triggers or blocks had to be removed for each game (the core features of the script are in); I'm calling this a Beta because I only did very limited testing + made sure they look okay in NearInfinity
 - added a few tweak options for IWD1 and IWD2

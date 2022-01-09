@@ -1,0 +1,76 @@
+COPY_EXISTING ~plywwolf.ITM~ ~override~
+  LPF iwdee_movement_equip INT_VAR speed=180 END
+BUT_ONLY
+
+COPY_EXISTING ~plypbear.ITM~ ~override~
+  LPF iwdee_movement_equip INT_VAR speed=250 END
+BUT_ONLY
+
+COPY_EXISTING ~cdpolyww.ITM~ ~override~
+  LPF iwdee_movement_equip INT_VAR speed=180 END
+BUT_ONLY
+
+COPY_EXISTING ~cdpolypb.ITM~ ~override~
+  LPF iwdee_movement_equip INT_VAR speed=250 END
+BUT_ONLY
+
+COPY_EXISTING ~PLYWOLF1.ITM~ ~override~
+  LPF iwdee_movement_equip INT_VAR speed=180 END
+BUT_ONLY
+
+COPY_EXISTING ~PLYBEAR1.ITM~ ~override~
+  LPF iwdee_movement_equip INT_VAR speed=250 END
+BUT_ONLY
+
+COPY_EXISTING ~cdpolybb.ITM~ ~override~
+  LPF delete_movement_effects END
+BUT_ONLY
+
+COPY_EXISTING ~plybeetl.ITM~ ~override~
+  LPF delete_movement_effects END
+BUT_ONLY
+
+
+
+//Check opcode to use
+OUTER_SET movebonus1 = ID_OF_LABEL ~d2-iwdee-fixes.tp2~ ~D2-IWDEE-MOVEBONUS1~
+OUTER_SET movebonus0 = ID_OF_LABEL ~d2-iwdee-fixes.tp2~ ~D2-IWDEE-MOVEBONUS0~
+OUTER_SET plymovebonus1 = ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-PLYMOVEBONUS1~
+OUTER_SET plymovebonus0 = ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-PLYMOVEBONUS0~
+
+ACTION_IF ((MOD_IS_INSTALLED ~d2-iwdee-fixes.tp2~ %movebonus0%) OR
+           (MOD_IS_INSTALLED ~d2-script.tp2~ %plymovebonus0%)) BEGIN
+
+  ACTION_IF (((MOD_IS_INSTALLED ~d2-script.tp2~ %plymovebonus1%) AND
+              (INSTALL_ORDER ~d2-script.tp2~ %plymovebonus1% AFTER ~d2-iwdee-fixes.tp2~ %movebonus0%)) OR
+             ((MOD_IS_INSTALLED ~d2-iwdee-fixes.tp2~ %movebonus1%) AND
+              (INSTALL_ORDER ~d2-iwdee-fixes.tp2~ %movebonus1% AFTER ~d2-script.tp2~ %plymovebonus0%))) BEGIN		 
+  
+  END
+  ELSE BEGIN
+  
+  COPY_EXISTING_REGEXP ~ply.*.itm~ ~override~
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=176 opcode=126 END
+  BUT_ONLY
+
+  COPY_EXISTING_REGEXP ~cdpoly.*.itm~ ~override~
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=176 opcode=126 END
+  BUT_ONLY
+
+  END
+END
+
+
+
+//Text edits
+COPY_EXISTING ~SPCL107.SPL~ ~override~
+  SAY NAME1 @140 SAY UNIDENTIFIED_DESC @240
+  
+COPY_EXISTING ~SPCL101.SPL~ ~override~
+  SAY NAME1 @141 SAY UNIDENTIFIED_DESC @241
+  
+COPY_EXISTING ~spwi482.SPL~ ~override~
+  SAY NAME1 @142 SAY UNIDENTIFIED_DESC @242
+  
+COPY_EXISTING ~spwi481.SPL~ ~override~
+  SAY NAME1 @143 SAY UNIDENTIFIED_DESC @243

@@ -12,11 +12,11 @@ LPF ALTER_EFFECT INT_VAR header=1 match_probability2=51 STR_VAR probability2=50 
 
 LPF ~CD_EXTEND-O-MATIC~
   INT_VAR
-	base_dur = 0
-	step_dur = 0
-	step_size = 2
-	level_cap = 9
-	min_dur = 3000
+    base_dur = 0
+    step_dur = 0
+    step_size = 2
+    level_cap = 9
+    min_dur = 3000
 END
 
 LPF ALTER_EFFECT INT_VAR header=2 match_probability2=0 STR_VAR resource=~00SBGD~ END

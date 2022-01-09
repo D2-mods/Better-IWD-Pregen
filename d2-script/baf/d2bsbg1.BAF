@@ -1,0 +1,993 @@
+IF
+	OnCreation()
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2cooldown","LOCALS",0)
+END
+
+IF
+	HotKey(B)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2cooldown","LOCALS",30)
+		Continue()
+END
+
+IF
+	HotKey(E)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2cooldown","LOCALS",0)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!Class(Myself,BARD)
+	!Class(Myself,CLERIC)
+	!Class(Myself,CLERIC_THIEF)
+	!Class(Myself,FIGHTER_CLERIC)
+	!Class(Myself,FIGHTER_MAGE_CLERIC)
+	!Class(Myself,CLERIC_MAGE)
+	!Class(Myself,THIEF)
+	!Class(Myself,FIGHTER_THIEF)
+	!Class(Myself,MAGE_THIEF)
+	!Class(Myself,FIGHTER_MAGE_THIEF)
+	!Class(Myself,PALADIN)
+	!Class(Myself,CLERIC_RANGER)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!Class(Myself,BARD)
+	!Class(Myself,CLERIC)
+	!Class(Myself,CLERIC_THIEF)
+	!Class(Myself,CLERIC_MAGE)
+	!Class(Myself,THIEF)
+	!Class(Myself,MAGE_THIEF)
+	Range([EVILCUTOFF],25)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	CheckStat(Myself,1,POLYMORPHED)
+	Range([EVILCUTOFF],18)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!Class(Myself,CLERIC_MAGE)
+	!Class(Myself,MAGE_THIEF)
+	Range([EVILCUTOFF],12)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	Class(Myself,CLERIC_MAGE)
+	CheckStatLT(Myself,5,THAC0)
+	Range([EVILCUTOFF],12)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Class(Myself,MAGE_THIEF)
+	CheckStatLT(Myself,5,THAC0)
+	Range([EVILCUTOFF],12)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF],3)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!Detect([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(400)
+		SetGlobal("d2autobattle","LOCALS",0)
+		Continue()
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	StateCheck(Myself,STATE_INVISIBLE)
+THEN
+	RESPONSE #100
+		ClearActions(Myself)
+		SetGlobal("d2autobattle","LOCALS",0)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	CheckStat(Myself,1,SANCTUARY)
+THEN
+	RESPONSE #100
+		ClearActions(Myself)
+		SetGlobal("d2autobattle","LOCALS",0)
+END
+
+IF
+	ActionListEmpty()
+	InWeaponRange([EVILCUTOFF])
+	StateCheck(Myself,STATE_INVISIBLE)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	InWeaponRange([EVILCUTOFF])
+	CheckStat(Myself,1,SANCTUARY)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	HPPercentLT(Myself,15)
+	!Class(Myself,BARD)
+	!Class(Myself,CLERIC)
+	!Class(Myself,CLERIC_THIEF)
+	!Class(Myself,FIGHTER_CLERIC)
+	!Class(Myself,FIGHTER_MAGE_CLERIC)
+	!Class(Myself,CLERIC_MAGE)
+	!Class(Myself,THIEF)
+	!Class(Myself,FIGHTER_THIEF)
+	!Class(Myself,MAGE_THIEF)
+	!Class(Myself,FIGHTER_MAGE_THIEF)
+	!Class(Myself,PALADIN)
+	!Class(Myself,CLERIC_RANGER)
+	See([EVILCUTOFF])
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END
+
+IF
+	ActionListEmpty()
+	HPPercentLT(Myself,15)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	Class(Myself,MAGE)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	See([EVILCUTOFF])
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END
+
+IF
+	ActionListEmpty()
+	Class(Myself,MAGE)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Class(Myself,MAGE_THIEF)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Class(Myself,CLERIC_MAGE)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.MAGE])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.MAGE])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.MAGE_THIEF])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.MAGE_THIEF])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC_MAGE])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.CLERIC_MAGE])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_MAGE])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.FIGHTER_MAGE])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_MAGE_THIEF])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.FIGHTER_MAGE_THIEF])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_MAGE_CLERIC])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.FIGHTER_MAGE_CLERIC])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.CLERIC])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.DRUID])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.DRUID])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_CLERIC])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.FIGHTER_CLERIC])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC_RANGER])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.CLERIC_RANGER])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_DRUID])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.FIGHTER_DRUID])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF.0.0.BARD])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.BARD])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.MAGE],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.MAGE])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.MAGE_THIEF],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.MAGE_THIEF])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.CLERIC_MAGE],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.CLERIC_MAGE])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.FIGHTER_MAGE],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.FIGHTER_MAGE])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.FIGHTER_MAGE_THIEF],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.FIGHTER_MAGE_THIEF])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.FIGHTER_MAGE_CLERIC],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.FIGHTER_MAGE_CLERIC])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.CLERIC],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.CLERIC])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.DRUID],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.DRUID])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.FIGHTER_CLERIC],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.FIGHTER_CLERIC])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.CLERIC_RANGER],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.CLERIC_RANGER])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.FIGHTER_DRUID],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.FIGHTER_DRUID])
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF.0.0.BARD],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.0.BARD])
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	InWeaponRange(NearestEnemyOf(WeakestOf()))
+	!See(NearestEnemyOf(WeakestOf()))
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	Range(NearestEnemyOf(WeakestOf()),5)
+	!See(NearestEnemyOf(WeakestOf()))
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	InWeaponRange(NearestEnemyOf(MostDamagedOf()))
+	!See(NearestEnemyOf(MostDamagedOf()))
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	Range(NearestEnemyOf(MostDamagedOf()),5)
+	!See(NearestEnemyOf(MostDamagedOf()))
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	InWeaponRange(NearestEnemyOf(LeaderOf()))
+	!See(NearestEnemyOf(LeaderOf()))
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	Range(NearestEnemyOf(LeaderOf()),5)
+	!See(NearestEnemyOf(LeaderOf()))
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	InWeaponRange(LastAttackerOf())
+	!See(LastAttackerOf())
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	Range(LastAttackerOf(),5)
+	!See(LastAttackerOf())
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	InWeaponRange(NearestEnemyOf(ProtectedBy()))
+	!See(NearestEnemyOf(ProtectedBy()))
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	Range(NearestEnemyOf(ProtectedBy()),5)
+	!See(NearestEnemyOf(ProtectedBy()))
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2retarget3","LOCALS")
+	InWeaponRange(LastSeenBy())
+	!InParty(LastSeenBy())
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget3","LOCALS",18)
+		Attack(LastSeenBy())
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2retarget3","LOCALS")
+	Range(LastSeenBy(),5)
+	!InParty(LastSeenBy())
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget3","LOCALS",18)
+		Attack(LastSeenBy())
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!Class(Myself,CLERIC)
+	!Class(Myself,THIEF)
+	!Class(Myself,BARD)
+	!Class(Myself,DRUID)
+	!Class(Myself,CLERIC_THIEF)
+	!Class(Myself,MAGE)
+	!Class(Myself,MAGE_THIEF)
+	!Class(Myself,CLERIC_MAGE)
+	AttackedBy([EVILCUTOFF],DEFAULT)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!Class(Myself,CLERIC)
+	!Class(Myself,THIEF)
+	!Class(Myself,BARD)
+	!Class(Myself,DRUID)
+	!Class(Myself,CLERIC_THIEF)
+	!Class(Myself,MAGE)
+	!Class(Myself,MAGE_THIEF)
+	!Class(Myself,CLERIC_MAGE)
+	Range([EVILCUTOFF],25)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	CheckStat(Myself,1,POLYMORPHED)
+	Range([EVILCUTOFF],18)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!Class(Myself,MAGE)
+	!Class(Myself,MAGE_THIEF)
+	!Class(Myself,CLERIC_MAGE)
+	Range([EVILCUTOFF],12)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	CheckStatLT(Myself,5,THAC0)
+	Range([EVILCUTOFF],12)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!Class(Myself,MAGE)
+	!Class(Myself,MAGE_THIEF)
+	!Class(Myself,CLERIC_MAGE)
+	Range([EVILCUTOFF],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+	CheckStat(Myself,1,POLYMORPHED)
+	Range([EVILCUTOFF],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+	CheckStatLT(Myself,5,THAC0)
+	Range([EVILCUTOFF],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF],3)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.MAGE])
+	!Class(NearestEnemyOf(),MAGE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.DRUID])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.MAGE_THIEF])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),MAGE_THIEF)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC_MAGE])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),CLERIC_MAGE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_MAGE])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),FIGHTER_MAGE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_MAGE_THIEF])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),FIGHTER_MAGE_THIEF)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_MAGE_CLERIC])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),FIGHTER_MAGE_CLERIC)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_CLERIC])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),FIGHTER_CLERIC)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC_RANGER])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),CLERIC_RANGER)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_DRUID])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),FIGHTER_DRUID)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.BARD])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),BARD)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!Class(Myself,BARD)
+	!Class(Myself,CLERIC)
+	!Class(Myself,CLERIC_THIEF)
+	!Class(Myself,FIGHTER_CLERIC)
+	!Class(Myself,FIGHTER_MAGE_CLERIC)
+	!Class(Myself,CLERIC_MAGE)
+	!Class(Myself,THIEF)
+	!Class(Myself,FIGHTER_THIEF)
+	!Class(Myself,MAGE_THIEF)
+	!Class(Myself,FIGHTER_MAGE_THIEF)
+	!Class(Myself,PALADIN)
+	!Class(Myself,CLERIC_RANGER)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END

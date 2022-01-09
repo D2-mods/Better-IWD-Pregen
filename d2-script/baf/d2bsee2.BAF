@@ -247,7 +247,7 @@ IF
 	OR(2)
 		InWeaponRange(LastSeenBy())
 		Range(LastSeenBy(),5)
-	!InParty([EVILCUTOFF])
+	!InParty(LastSeenBy())
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2retarget3","LOCALS",18)

@@ -1,40 +1,48 @@
 BACKUP ~d2-script/backup~
 AUTHOR ~Dan_P~
-VERSION ~2.5~
+VERSION ~3.0~
 
 ALWAYS
   INCLUDE ~%MOD_FOLDER%/lib/CD_EXTEND-O-MATIC.tpa~
+  INCLUDE ~%MOD_FOLDER%/lib/delete_movement_effects.tpa~
+  INCLUDE ~%MOD_FOLDER%/lib/iwdee_movement_equip.tpa~
 END
 
 LANGUAGE ~English~ 
          ~english~ 
          ~d2-script/tra/english/setup.tra~
 
+////////////////////////////////////////////////////////////
 
-//Better IWD Pregen (BGEE, BG2(EE), IWD(EE), IWD2, Tutu/BGT/EET)
+//Better IWD Pregen (appears in-game as "IWD PREGEN")
 
 BEGIN @1
-REQUIRE_PREDICATE ((GAME_IS ~bgee~) OR
+DESIGNATED 10
+REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
                    (GAME_INCLUDES ~bg2~) OR
                    (GAME_INCLUDES ~iwd~) OR
-                   (GAME_INCLUDES ~iwd2~)) @2
+                   (GAME_INCLUDES ~iwd2~) OR
+                   (GAME_IS ~ca~ )) @2
 LABEL ~D2-SCRIPT-IWDPGEN~
 INCLUDE ~%MOD_FOLDER%/install/iwdpgen.tph~
 
+////////////////////////////////////////////////////////////
 
 //Better AI for Call Woodland Beings (BGEE, BG2EE, EET, IWDEE)
 
 BEGIN @3
+DESIGNATED 20
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee iwdee eet~ @4
 LABEL ~D2-SCRIPT-NYMPH~
 INCLUDE ~%MOD_FOLDER%/install/nymph.tph~
 
+////////////////////////////////////////////////////////////
 
 //Adjust enemy damage at higher difficulties (IWD1)
-//IWD2 has a similar INI option, but it doesn't work
 
 BEGIN @401    // enemies don't do extra damage
-REQUIRE_PREDICATE (GAME_IS ~iwd how totlm iwd_in_bg2~) @403
+DESIGNATED 30
+REQUIRE_PREDICATE (GAME_IS ~iwd how totlm~) @403
 SUBCOMPONENT @400
 LABEL ~D2-TWEAKS-SUPPRESSDAMAGE1~
 INCLUDE ~%MOD_FOLDER%/install/suppressdamage1.tph~
@@ -44,11 +52,12 @@ SUBCOMPONENT @400
 LABEL ~D2-TWEAKS-SUPPRESSDAMAGE0~
 INCLUDE ~%MOD_FOLDER%/install/suppressdamage0.tph~
 
+////////////////////////////////////////////////////////////
 
 //Add or remove Avarine Decanter (IWD2)
-//GOG version adds this by default
 
 BEGIN @405    // add Avarine Decanter
+DESIGNATED 40
 REQUIRE_PREDICATE (GAME_IS ~iwd2~) @407
 SUBCOMPONENT @404
 LABEL ~D2-TWEAKS-NYMBONUS1~
@@ -59,18 +68,134 @@ SUBCOMPONENT @404
 LABEL ~D2-TWEAKS-NYMBONUS0~
 INCLUDE ~%MOD_FOLDER%/install/nymbonus0.tph~
 
+////////////////////////////////////////////////////////////
 
 //Unnerf Animate Dead (IWD2)
-//also corrects the chance of each creature type to 50/50 (was 51/49)
 
 BEGIN @409    // Use unnerfed Animate Dead
+DESIGNATED 50
 REQUIRE_PREDICATE (GAME_IS ~iwd2~) @407
 SUBCOMPONENT @408
 LABEL ~D2-TWEAKS-ID2ANIMATEDEAD17~
 INCLUDE ~%MOD_FOLDER%/install/id2animatedead17.tph~
 
 BEGIN @410    // Use nerfed Animate Dead
-REQUIRE_PREDICATE (GAME_IS ~iwd2~) @407
 SUBCOMPONENT @408
 LABEL ~D2-TWEAKS-ID2ANIMATEDEAD9~
 INCLUDE ~%MOD_FOLDER%/install/id2animatedead9.tph~
+
+////////////////////////////////////////////////////////////
+
+//Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)
+
+BEGIN @412    // Movement bonuses bypass Free Action
+DESIGNATED 60
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee iwdee eet~ @4
+SUBCOMPONENT @411
+LABEL ~D2-TWEAKS-PLYMOVEBONUS1~
+INCLUDE ~%MOD_FOLDER%/install/plymovebonus1.tph~
+
+BEGIN @413    // Movement bonuses are blocked by Free Action
+SUBCOMPONENT @411
+LABEL ~D2-TWEAKS-PLYMOVEBONUS0~
+INCLUDE ~%MOD_FOLDER%/install/plymovebonus0.tph~
+
+////////////////////////////////////////////////////////////
+
+//Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)
+
+BEGIN @415    // for Druids and Polymorph Self
+DESIGNATED 70
+REQUIRE_PREDICATE GAME_IS ~iwdee~ @417
+SUBCOMPONENT @414
+LABEL ~D2-IWDEE-FASTERDRUIDS1~
+INCLUDE ~%MOD_FOLDER%/install/fasterdruids1.tph~
+
+BEGIN @416    // for Druids only
+SUBCOMPONENT @414
+LABEL ~D2-IWDEE-FASTERDRUIDS0~
+INCLUDE ~%MOD_FOLDER%/install/fasterdruids0.tph~
+
+////////////////////////////////////////////////////////////
+
+//Give party starting equipment (IWD games)
+
+BEGIN @418
+DESIGNATED 80
+REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 iwd how totlm iwd_in_bg2~) @419
+LABEL ~D2-TWEAKS-NGEQUIP~
+INCLUDE ~%MOD_FOLDER%/install/ngequip.tph~
+
+////////////////////////////////////////////////////////////
+
+//Give party a Bag of Holding at game start (classic and EEs)
+
+BEGIN @421    // "Bottomless" bag (same as Tweaks Anthology component)
+DESIGNATED 90
+REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
+                   (NOT GAME_IS ~bg1 totsc iwd pst pstee~)) @425
+SUBCOMPONENT @420
+LABEL ~D2-TWEAKS-NGBAGA~
+INCLUDE ~%MOD_FOLDER%/install/ngbagA.tph~
+
+BEGIN @422    // Capacity = 50 items (IWD2 default)
+REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
+                   (NOT GAME_IS ~bg1 totsc iwd pst pstee~)) @425
+SUBCOMPONENT @420
+LABEL ~D2-TWEAKS-NGBAGB~
+INCLUDE ~%MOD_FOLDER%/install/ngbagB.tph~
+
+BEGIN @423    // Capacity = 100 items (BG2 default)
+REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
+                   (NOT GAME_IS ~bg1 totsc iwd pst pstee~)) @425
+SUBCOMPONENT @420
+LABEL ~D2-TWEAKS-NGBAGC~
+INCLUDE ~%MOD_FOLDER%/install/ngbagC.tph~
+
+BEGIN @424    // Bottomless, and Gold is exchanged when adding/removing items (experimental)
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @425
+SUBCOMPONENT @420
+LABEL ~D2-TWEAKS-NGBAGD~
+INCLUDE ~%MOD_FOLDER%/install/ngbagD.tph~
+
+////////////////////////////////////////////////////////////
+
+//All classes get full HP bonuses from Constitution (classic and EEs)
+
+BEGIN @427    // 2E-style HP bonuses (i.e. BG-style)
+DESIGNATED 100
+REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
+                   (GAME_INCLUDES ~bg2~) OR
+                   (GAME_INCLUDES ~iwd~) OR
+                   (GAME_IS ~ca~ )) @429
+SUBCOMPONENT @426
+LABEL ~D2-TWEAKS-CONBON2E~
+INCLUDE ~%MOD_FOLDER%/install/conbon2e.tph~
+
+BEGIN @428    // 3e/4e/5e-style bonuses (+1 for every 2 stat points above 10)
+REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
+                   (GAME_INCLUDES ~bg2~) OR
+                   (GAME_INCLUDES ~iwd~) OR
+                   (GAME_IS ~ca~ )) @429
+SUBCOMPONENT @426
+LABEL ~D2-TWEAKS-CONBON3E~
+INCLUDE ~%MOD_FOLDER%/install/conbon3e.tph~
+
+////////////////////////////////////////////////////////////
+
+
+
+
+//Not implemented
+
+/*
+
+//Auto-assign script to new characters
+
+BEGIN @9999
+DESIGNATED 9999
+REQUIRE_COMPONENT ~d2-script.tp2~ ~10~ @5
+LABEL ~D2-SCRIPT-NGAUTO~
+INCLUDE ~%MOD_FOLDER%/install/ngauto.tph~
+
+*/

@@ -1,0 +1,950 @@
+IF
+	!Global("d2Player1initiate","GLOBAL",1)
+	Exists(Player1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2Player1start","GLOBAL",6)
+		Continue()
+END
+
+IF
+	!Global("d2Player1initiate","GLOBAL",1)
+	GlobalTimerExpired("d2Player1start","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1initiate","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1start","GLOBAL")
+	NumItems("00STAF01",Player1,1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2Player1equip","GLOBAL",6)
+		Continue()
+END
+
+IF
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("00STAF01",Player1)
+	OR(2)
+		!Global("d2Player1melee","GLOBAL",1)
+		NumItemsGT("00STAF01",Player1,1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("00STAF01"))
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Race(Player1,ELF)
+	!SubRace(Player1,ELF_DROW)
+	!SubRace(Player1,ELF_WILD)
+	!HasItem("00SWDL01",Player1)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("00SWDL01",0,0,0))    // long sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		SubRace(Player1,ELF_DROW)
+		SubRace(Player1,ELF_WILD)
+	!HasItem("00SWDC01",Player1)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("00SWDC01",0,0,0))    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Race(Player1,ELF)
+	!HasItem("00BOWS01",Player1)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("00BOWS01",0,0,0))    // shortbow
+		ActionOverride(Player1,CreateItem("00AROW01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Race(Player1,DWARF)
+	OR(4)
+		Class(Player1,FIGHTER)
+		Class(Player1,RANGER)
+		Class(Player1,PALADIN)
+		Class(Player1,BARBARIAN)
+	!HasItem("00HAMT01",Player1)
+	!HasItem("00AX1H05",Player1)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #50
+		ActionOverride(Player1,CreateItem("00HAMT01",5,0,0))    // throwing hammer
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #50
+		ActionOverride(Player1,CreateItem("00AX1H05",5,0,0))    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Race(Player1,HALFLING)
+	!Class(Player1,WIZARD)
+	!HasItem("00SLNG01",Player1)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
+		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Race(Player1,GNOME)
+	!Class(Player1,DRUID)
+	!HasItem("00BWLX01",Player1)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
+		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,FIGHTER)
+	!HasItem("00AX1H01",Player1)
+	!HasItem("00FLAL01",Player1)
+	!HasItem("00SWDC01",Player1)
+	!HasItem("00SWDT01",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00AX1H01",0,0,0))    // battle axe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00FLAL01",0,0,0))    // flail
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SWDC01",0,0,0))    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SWDT01",0,0,0))    // greatsword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,RANGER)
+	!HasItem("00SWDC01",Player1)
+	!HasItem("00AX1H12",Player1)
+	!HasItem("00AX2H01",Player1)
+	!HasItem("00DAGG02",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SWDC01",0,0,0))    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00AX1H12",0,0,0))    // handaxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00AX2H01",0,0,0))    // greataxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DAGG02",0,0,0))    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,PALADIN)
+	!HasItem("00SWDL01",Player1)
+	!HasItem("00HAMM01",Player1)
+	!HasItem("00MSTR01",Player1)
+	!HasItem("00HALB01",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SWDL01",0,0,0))    // long sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00HAMM01",0,0,0))    // hammer
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00MSTR01",0,0,0))    // morningstar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00HALB01",0,0,0))    // halberd
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,BARBARIAN)
+	!HasItem("00SWDT01",Player1)
+	!HasItem("00AX2H01",Player1)
+	!HasItem("00SPER01",Player1)
+	!HasItem("00HAMM01",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SWDT01",0,0,0))    // greatsword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00AX2H01",0,0,0))    // greataxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SPER01",0,0,0))    // spear
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00HAMM01",0,0,0))    // hammer
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,MONK)
+	!HasItem("00AX1H12",Player1)
+	!HasItem("00MSTR01",Player1)
+	!HasItem("00STAF01",Player1)
+	!HasItem("00DAGG02",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00AX1H12",0,0,0))    // handaxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00MSTR01",0,0,0))    // morningstar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00STAF01",0,0,0))    // staff
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DAGG02",0,0,0))    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,CLERIC)
+	!HasItem("00MACE01",Player1)
+	!HasItem("00MSTR01",Player1)
+	!HasItem("00CLUB01",Player1)
+	!HasItem("00STAF01",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00MACE01",0,0,0))    // mace
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00MSTR01",0,0,0))    // morningstar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00CLUB01",0,0,0))    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00STAF01",0,0,0))    // staff
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,DRUID)
+	!HasItem("00SWDC01",Player1)
+	!HasItem("00SPER01",Player1)
+	!HasItem("00STAF01",Player1)
+	!HasItem("00CLUB01",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SWDC01",0,0,0))    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SPER01",0,0,0))    // spear
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00STAF01",0,0,0))    // staff
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00CLUB01",0,0,0))    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,BARD)
+	!HasItem("00SWDL01",Player1)
+	!HasItem("00SWDS01",Player1)
+	!HasItem("00MACE01",Player1)
+	!HasItem("00DAGG02",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SWDL01",0,0,0))    // long sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SWDS01",0,0,0))    // short sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00MACE01",0,0,0))    // mace
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DAGG02",0,0,0))    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,ROGUE)
+	!HasItem("00DAGG02",Player1)
+	!HasItem("00CLUB01",Player1)
+	!HasItem("00SWDS01",Player1)
+	!HasItem("00MSTR01",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DAGG02",0,0,0))    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00CLUB01",0,0,0))    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SWDS01",0,0,0))    // short sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00MSTR01",0,0,0))    // morningstar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,WIZARD)
+	!HasItem("00STAF01",Player1)
+	!HasItem("00DAGG02",Player1)
+	!HasItem("00CLUB01",Player1)
+	!HasItem("00MSTR01",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00STAF01",0,0,0))    // staff
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DAGG02",0,0,0))    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00CLUB01",0,0,0))    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00MSTR01",0,0,0))    // morningstar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,SORCERER)
+	!HasItem("00MACE01",Player1)
+	!HasItem("00SWDS01",Player1)
+	!HasItem("00STAF01",Player1)
+	!HasItem("00DAGG02",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00MACE01",0,0,0))    // mace
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SWDS01",0,0,0))    // short sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00STAF01",0,0,0))    // staff
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DAGG02",0,0,0))    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(3)
+		Class(Player1,FIGHTER)
+		Class(Player1,RANGER)
+		Class(Player1,PALADIN)
+	!HasItem("00BOWS01",Player1)
+	!HasItem("00BWLX01",Player1)
+	!HasItem("00SLNG01",Player1)
+	!HasItem("00AX1H05",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00BOWS01",0,0,0))    // shortbow
+		ActionOverride(Player1,CreateItem("00AROW01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
+		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
+		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00AX1H05",5,0,0))    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,BARBARIAN)
+	!HasItem("00AX1H05",Player1)
+	!HasItem("00BOWS01",Player1)
+	!HasItem("00SLNG01",Player1)
+	!HasItem("00HAMT01",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00AX1H05",5,0,0))    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00BOWS01",0,0,0))    // shortbow
+		ActionOverride(Player1,CreateItem("00AROW01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
+		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00HAMT01",5,0,0))    // throwing hammer
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,MONK)
+	!HasItem("00AX1H05",Player1)
+	!HasItem("00SLNG01",Player1)
+	!HasItem("00DART01",Player1)
+	!HasItem("00BWLX01",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00AX1H05",5,0,0))    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
+		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DART01",20,0,0))    // dart
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
+		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,ROGUE)
+	!HasItem("00BOWS01",Player1)
+	!HasItem("00BWLX01",Player1)
+	!HasItem("00DART01",Player1)
+	!HasItem("00DAGG06",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00BOWS01",0,0,0))    // shortbow
+		ActionOverride(Player1,CreateItem("00AROW01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
+		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DART01",20,0,0))    // dart
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DAGG06",5,0,0))    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,DRUID)
+	!HasItem("00SLNG01",Player1)
+	!HasItem("00DART01",Player1)
+THEN
+	RESPONSE #50
+		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
+		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #50
+		ActionOverride(Player1,CreateItem("00DART01",20,0,0))    // dart
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,WIZARD)
+	!HasItem("00BWLX01",Player1)
+	!HasItem("00DAGG06",Player1)
+THEN
+	RESPONSE #50
+		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
+		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #50
+		ActionOverride(Player1,CreateItem("00DAGG06",5,0,0))    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,CLERIC)
+	!HasItem("00SLNG01",Player1)
+	!HasItem("00BWLX01",Player1)
+THEN
+	RESPONSE #50
+		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
+		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #50
+		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
+		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		Class(Player1,SORCERER)
+		Class(Player1,BARD)
+	!HasItem("00BWLX01",Player1)
+	!HasItem("00SLNG01",Player1)
+	!HasItem("00DART01",Player1)
+	!HasItem("00DAGG06",Player1)
+THEN
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
+		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
+		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DART01",20,0,0))    // dart
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player1,CreateItem("00DAGG06",5,0,0))    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00SWDL01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00SWDL01",Player1,43,TRUE))    // long sword
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00SWDC01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00SWDC01",Player1,43,TRUE))    // scimitar
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00AX1H01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00AX1H01",Player1,43,TRUE))    // battle axe
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00AX2H01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00AX2H01",Player1,43,TRUE))    // greataxe
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00FLAL01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00FLAL01",Player1,43,TRUE))    // flail
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00HAMM01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00HAMM01",Player1,43,TRUE))    // hammer
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00SPER01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00SPER01",Player1,43,TRUE))    // spear
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00HALB01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00HALB01",Player1,43,TRUE))    // halberd
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00AX1H12",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00AX1H12",Player1,43,TRUE))    // handaxe
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00SWDT01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00SWDT01",Player1,43,TRUE))    // greatsword
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00MSTR01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00MSTR01",Player1,43,TRUE))    // morningstar
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00MACE01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00MACE01",Player1,43,TRUE))    // mace
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00SWDS01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00SWDS01",Player1,43,TRUE))    // short sword
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00CLUB01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00CLUB01",Player1,43,TRUE))    // club
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00DAGG02",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00DAGG02",Player1,43,TRUE))    // dagger
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("00STAF01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00STAF01",Player1,43,TRUE))    // staff
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("00BOWS01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00BOWS01",Player1,45,TRUE))    // shortbow
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("00AX1H05",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00AX1H05",Player1,45,TRUE))    // throwing axe
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("00HAMT01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00HAMT01",Player1,45,TRUE))    // throwing hammer
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("00BWLX01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00BWLX01",Player1,45,TRUE))    // light crossbow
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("00SLNG01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00SLNG01",Player1,45,TRUE))    // sling
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("00DART01",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00DART01",Player1,45,TRUE))    // dart
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("00DAGG06",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("00DAGG06",Player1,45,TRUE))    // throwing dagger
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robe","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItem("d2#ngrb2",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("d2#ngrb2",0,0,0))    // worn garment
+		SetGlobal("d2Player1robe","GLOBAL",1)
+		Continue()
+END
+
+IF
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemInSlot("d2#ngrb2",Player1,SLOT_ARMOR)
+	HasItem("d2#ngrb2",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,XEquipItem("d2#ngrb2",Player1,SLOT_ARMOR,TRUE))
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerExpired("d2Player1equip","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robe","GLOBAL",0)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItem("d2#ngrb2",Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1robe","GLOBAL",0)
+END

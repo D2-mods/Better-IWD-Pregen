@@ -1,8 +1,10 @@
 //Scripts
 @1 = ~Better IWD Pregen~
-@2 = ~Installs on BG:EE, BG2(EE), IWD(EE), IWD2, Tutu/BGT/EET~
-@3 = ~Better AI for Call Woodland Beings~
-@4 = ~Installs on BG:EE, BG2:EE, IWD:EE and EET~
+@2 = ~Installs on BG(EE), BG2(EE), IWD(EE), IWD2, and any mods built on these engines~
+@3 = ~Better AI for Call Woodland Beings (EEs)~
+@4 = ~Installs on BG:EE, BG2:EE, IWD:EE, and EET~
+@9999 = ~Auto-assign script to new characters~
+@5 = ~Requires installing the Better IWD Pregen script~
 
 
 //Tweaks
@@ -17,10 +19,32 @@
 @408 = ~Unnerf Animate Dead (IWD2)~
 @409 = ~Use unnerfed Animate Dead, and correct chance of each creature type to 50/50~
 @410 = ~Use nerfed Animate Dead, but correct chance of each creature type to 50/50~
+@411 = ~EEs: Allow movement bonuses from shapeshift forms to bypass Free Action~
+@412 = ~Movement bonuses bypass Free Action~
+@413 = ~Movement bonuses are blocked by Free Action~
+@414 = ~IWDEE: Increase movement speed of Winter Wolf and Polar Bear forms~
+@415 = ~for Druids and Polymorph Self~
+@416 = ~for Druids only~
+@417 = ~This component is for IWD:EE~
+@418 = ~Give player characters starting equipment (IWD games)~
+@419 = ~Installs on IWD:EE, IWD1, IWD2, and IWD-in-BG2~
+
+@420 = ~Give party a Bag of Holding at game start (EEs, BG2, IWD1, IWD2)~
+@421 = ~"Bottomless" bag (same as Tweaks Anthology component)~
+@422 = ~Capacity = 50 items (IWD2 default)~
+@423 = ~Capacity = 100 items (BG2 default)~
+@424 = ~Bottomless, and Gold is exchanged when adding/removing items (experimental)~
+@425 = ~This option does not currently support this game~
+
+@426 = ~All classes get full HP bonuses from Constitution~
+@427 = ~2e-style HP bonuses (i.e. BG-style)~
+@428 = ~3e/4e/5e-style bonuses (+1 for every 2 stat points above 10)~
+@429 = ~Installs on BG(EE), BG2(EE), IWD(EE), and any mods built on these engines~
+
 
 
 //WeiDU Messages
-@50 = ~NOTE: iwdpgen.BCS detected in override - this component will compile d2bsee.BCS and overwrite iwdpgen.BS (iwdpgen.BCS is left untouched, so you can compare the scripts with NearInfinity, if previous changes were made)
+@50 = ~NOTE: This component replaces both iwdpgen.BCS and iwdpgen.BS. The existing iwdpgen.BCS is backed up as iwdpgen.BAK in the override folder, and can be viewed in Near Infinity.
 ~
 @51 = ~NOTE: Disabled the ToBEx "Expanded Actions" hack. If using ToBEx v26/v28, the Expanded Actions hack alters the NoAction() script action to remove Modal states, making this script unusable for some classes.
 ~
@@ -28,6 +52,9 @@
 ~
 @53 = ~NOTE: See the readme-tweaks file in the mod folder for summon list and additional info.
 ~
+@54 = ~NOTE: See the readme-tweaks file for additional info, as well as how to avoid (or use) an exploit.
+~
+
 
 
 //SCRPDESC.2DA entries
@@ -60,3 +87,359 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
 Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
+
+//BG1
+@105 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth. (<script>)
+
+*Melee auto-attack range is dependent on class (see readme for full breakdown).
+
+Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
+
+
+
+//Movement speed (Winter Wolf and Polar Bear)
+@140 = ~Shapeshift: Winter Wolf~
+@240 = ~Shapeshift: Winter Wolf
+
+Strength: 18
+Dexterity: 13
+
+Base Armor Class: 2
+Number of Attacks: 2
+Attack Damage: 1d6 slashing
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+– Increased movement rate
+
+The Druid is healed 12 Hit Points after using this ability.~
+
+@141 = ~Shapeshift: Polar Bear~
+@241 = ~Shapeshift: Polar Bear
+
+Strength: 18/00
+Dexterity: 10
+
+Base Armor Class: 4
+Number of Attacks: 3
+Attack Damage: 1d12 slashing
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+– Increased movement rate
+
+The Druid is healed 12 Hit Points after using this ability.~
+
+@142 = ~Shapeshift: Winter Wolf~
+@242 = ~Shapeshift: Winter Wolf
+
+Strength: 18
+Dexterity: 13
+
+Base Armor Class: 2
+Number of Attacks: 2
+Attack Damage: 1d6 slashing
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+– Increased movement rate~
+
+@143 = ~Shapeshift: Polar Bear~
+@243 = ~Shapeshift: Polar Bear
+
+Strength: 18/00
+Dexterity: 10
+
+Base Armor Class: 4
+Number of Attacks: 3
+Attack Damage: 1d12 slashing
+
+Special Abilities:
+– Cold Resistance: 75%
+– Fire Resistance: -25%
+– Increased movement rate~
+
+
+
+//Katana descriptions (for ngequip)
+@700 = ~Katana~
+@701 = ~The katana is a single-edged, slightly curved sword that ends with a chisel point. The katana is perhaps one of the finest swords ever made, the steps to its creation a long and secret process that is more art form than anything else. This blade is an important facet of Kara-Turan culture. To touch or wield a samurai's katana is to insult the samurai and to incite his wrath. For a gaijin, or foreigner, to own such a blade is a rare occurrence. Either the gaijin is a greatly honored friend of an important minister, or the gaijin has murdered a samurai.
+
+STATISTICS:
+
+Damage: 1d10 (slashing)
+Speed Factor: 4
+Proficiency Type: Katana
+Type: One-handed
+Requires:
+ 6 Strength
+
+Weight: 6~
+
+@702 = ~The katana is a single-edged, slightly curved sword that ends with a chisel point. The katana is perhaps one of the finest swords ever made, the steps to its creation a long and secret process, that is more art form than anything else.  This blade is an important facet of Kara-Tur culture.  To touch or wield a samurai's katana is to insult the samurai and to incite his wrath.  For a gaijin, or foreigner, to own such a blade is a rare occurrence. Either the gaijin is a greatly honored friend of an important minister, or  the gaijin has murdered a samurai.
+
+STATISTICS:
+
+Damage:  1D10
+Damage type:  slashing
+Weight:  6
+Speed Factor: 4
+Proficiency Type: Katana
+Type:  1-handed
+Requires: 6 Strength
+Not Usable By:
+ Druid
+ Cleric
+ Mage~
+ 
+ 
+ 
+//Worn Garment descriptions (for ngequip)
+@710 = ~Worn Garment~
+@711 = ~A plain robe, worn by travelers on extended journeys. Provides some modest protection from the elements.
+
+STATISTICS:
+
+Equipped abilities:
+– Fire Resistance: +3%
+– Cold Resistance: +3%
+
+Weight: 3~
+
+@712 = ~A plain robe, worn by travelers on extended journeys. Provides some modest protection from the elements.
+
+STATISTICS:
+
+Fire Resistance:  +3% bonus
+Cold Resistance:  +3% bonus
+Weight:  3
+Not usable by:~
+
+@713 = ~A plain robe, worn by travelers on extended journeys. Provides some modest protection from the elements.
+
+STATISTICS:
+
+Resistance:  1/- Fire Resistance
+Resistance:  1/- Cold Resistance
+Weight:  3 lb.~
+
+
+
+//light crossbow descriptions for IWD-in-BG2 (for ngequip)
+@150 = ~Light Crossbow~
+@250 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller.  The bow is usually made of ash or yew.  The crossbow fires a quarrel (also called a bolt). 
+
+STATISTICS:
+
+THAC0: +2 bonus
+Weight: 7
+Speed Factor: 5
+Proficiency Type: Crossbows
+Type:  2-handed
+Not Usable By:
+ Druid
+ Cleric
+ Mage
+ Thief~
+
+@151 = ~High Quality Light Crossbow~
+@251 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller.  The bow is usually made of ash or yew.  The crossbow fires a quarrel (also called a bolt). 
+
+STATISTICS:
+
+THAC0: +3 bonus
+Weight: 7
+Speed Factor: 5
+Proficiency Type: Crossbow
+Type:  2-handed
+Not Usable By:
+ Druid
+ Cleric
+ Mage
+ Thief~
+ 
+@152 = ~Light Crossbow +1~
+@252 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller.  The bow is usually made of ash or yew.  The crossbow fires a quarrel (also called a bolt). 
+
+STATISTICS:
+
+Damage:  +1 (missile)
+THAC0:  +3
+Weight: 6
+Speed Factor: 4
+Proficiency Type: Crossbows
+Type:  2-handed
+Not Usable By:
+ Druid
+ Cleric
+ Mage
+ Thief~
+
+@153 = ~Light Crossbow of Speed ~
+@253 = ~Light crossbow of speed:  'The Army Scythe'  
+A short-lived outpost of humans in the Frozen Forest unearthed this weapon, and many others, from the ruins of an ancient settlement deep within that cold land.  Never knowing the names of their extinct benefactors, the colonists used these "tools" to carve a large territory for themselves, though in the end it was for naught.  Crushed by a superior number of Hobgoblins, these unfortunate souls have joined the ancients in their anonymity.  
+
+STATISTICS:
+
+Damage:  +1 (missile)
+THAC0:  +3 bonus
+Special:  1 extra attack per round
+Weight: 5
+Speed Factor: 4
+Proficiency Type: Crossbows
+Type:  2-handed
+Not Usable By:
+ Druid
+ Cleric
+ Mage
+ Thief~
+
+@154 = ~Finest Light Crossbow~
+@254 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller.  The bow is usually made of ash or yew.  The crossbow fires a quarrel (also called a bolt). 
+
+STATISTICS:
+
+THAC0: +4 bonus
+Weight: 7
+Speed Factor: 5
+Proficiency Type: Crossbows
+Type:  2-handed
+Not Usable By:
+ Druid
+ Cleric
+ Mage
+ Thief~
+
+@155 = ~Light Crossbow of Defense~
+@255 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller.  The bow is usually made of ash or yew.  The crossbow fires a quarrel (also called a bolt). A slight blue glow can be seen emanating from the crossbar.
+
+STATISTICS:
+
+Damage: +2 (missile)
+THAC0: +4 bonus
+Armor Class Bonus: 1
+Resistance Bonus: +10% Missile Resistance
+Weight: 7
+Speed Factor: 3
+Proficiency Type: Crossbows
+Type:  2-handed
+Not Usable By:
+ Druid
+ Cleric
+ Mage
+ Thief~
+
+@156 = ~Light Crossbow of Speed~
+@256 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller.  The bow is usually made of ash or yew.  The crossbow fires a quarrel (also called a bolt). A slight blue glow can be seen emanating from the crossbar.
+
+STATISTICS:
+
+Damage: +2 (missile)
+THAC0: +4
+Special: 2 attacks per round
+Weight: 7
+Speed Factor: 3
+Proficiency Type: Crossbows
+Type:  2-handed
+Not Usable By:
+ Druid
+ Cleric
+ Mage
+ Thief~
+
+@157 = ~Repeating Light Crossbow~
+@257 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller.  The bow is usually made of ash or yew.  The crossbow fires a quarrel (also called a bolt). A slight blue glow can be seen emanating from the crossbar.
+
+STATISTICS:
+
+Damage: +3 (missile)
+THAC0: +5
+Special: 3 attacks per round
+Weight: 7
+Speed Factor: 2
+Proficiency Type: Crossbows
+Type:  2-handed
+Not Usable By:
+ Druid
+ Cleric
+ Mage
+ Thief~
+
+
+
+//Bag of Holding - unidentified (for ngbag)
+
+@720 = ~Bag~
+
+//iwd1
+@721 = ~This bag has seen better days. Dirt and soot cover the outside of the bag, and a foul stench can be detected, even when placed at a distance.
+
+STATISTICS:
+
+Weight: 5~
+
+//iwd2
+@722 = ~This is a common cloth sack of about 2 feet by 4 feet in size.
+
+STATISTICS:
+
+Weight: 5 lb.~
+
+
+
+//Bag of Holding - identified (for ngbag)
+
+@730 = ~Bag of Holding~
+
+//bg1, bg2, iwd1
+@731 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Weight: 5~
+
+@732 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Capacity: 50 items
+Weight: 5~
+
+@733 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Capacity: 100 items
+Weight: 5~
+
+@734 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Special: Gold is exchanged when adding or removing an item
+
+Weight: 5~
+
+//iwd2
+@735 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Weight: 5 lb.~
+
+@736 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Capacity: 50 items
+Weight: 5 lb.~
+
+@737 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Capacity: 100 items
+Weight: 5 lb.~

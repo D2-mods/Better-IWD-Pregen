@@ -1,0 +1,8 @@
+ACTION_IF (GAME_IS ~bg1 totsc iwd how totlm~) BEGIN
+  COPY ~%MOD_FOLDER%/stattables/3e-bg1-HPCONBON.2DA~ ~override/HPCONBON.2DA~
+
+END
+ELSE BEGIN
+
+  COPY ~%MOD_FOLDER%/stattables/3e-bg2-HPCONBON.2DA~ ~override/HPCONBON.2DA~
+END

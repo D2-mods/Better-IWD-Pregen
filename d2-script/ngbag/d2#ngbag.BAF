@@ -1,0 +1,9 @@
+IF
+	!Global("d2ngbag","GLOBAL",1)
+	!PartyHasItem("d2#ngbag")
+THEN
+	RESPONSE #100
+		GiveItemCreate("d2#ngbag",Player1,0,0,0)
+		SetGlobal("d2ngbag","GLOBAL",1)
+		Continue()
+END

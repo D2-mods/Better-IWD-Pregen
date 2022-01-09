@@ -1,0 +1,41 @@
+IF
+	!Global("d2ngcastaff","GLOBAL",1)
+	NumItemsGT("STAF01",Player1,1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("STAF01"))
+		SetGlobal("d2ngcastaff","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngcabag","GLOBAL",1)
+	Global("d2ngbag","GLOBAL",1)
+	PartyHasItem("d2#ngbag")
+THEN
+	RESPONSE #100
+		SetGlobal("d2ngcabag","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngcabag","GLOBAL",1)
+	Global("d2ngbag","GLOBAL",1)
+	!PartyHasItem("d2#ngbag")
+THEN
+	RESPONSE #100
+		GiveItemCreate("d2#ngbag",Player1,0,0,0)
+		SetGlobal("d2ngcabag","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngcabagdupe","GLOBAL",1)
+	Global("d2ngcabag","GLOBAL",1)
+	NumItemsGT("d2#ngbag",Player1,1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("d2#ngbag"))
+		SetGlobal("d2ngcabagdupe","GLOBAL",1)
+		Continue()
+END

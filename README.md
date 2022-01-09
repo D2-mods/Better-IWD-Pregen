@@ -1,8 +1,27 @@
 # Better IWD Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
-Installs on: BG:EE, BG2:EE, IWD:EE, IWD2, EET, BG2/Tutu/BGT (Beta), IWD1 (Beta)
+Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built on these engines
 
-#### Overview:
+#### Components:
+Script components:
+  ```
+1. Better IWD Pregen (appears in-game as "IWD PREGEN")
+2. EEs: Better AI for Call Woodland Beings (should be installed after SCS)
+  ```
+Tweak components:
+  ```
+1. Adjust enemy damage at higher difficulties (IWD1)
+2. Add or remove Avarine Decanter (IWD2)
+3. Unnerf Animate Dead (IWD2)
+4. EEs: Allow movement bonuses from shapeshift forms to bypass Free Action
+5. IWDEE: Increase movement speed of Winter Wolf and Polar Bear forms
+6. Give party starting equipment (IWD games)
+7. Give party a Bag of Holding at game start (classic and EEs)
+8. All classes get full HP bonuses from Constitution (classic and EEs)
+  ```
+All components can be installed independently and in any order. Most of the options in the installer are pretty self-explanatory, but the mod folder also contains a readme detailing the tweaks, in case there's any confusion.
+
+#### Overview (party script):
 This script manages auto-attack, while giving more nuanced control of the characters, so the player can focus on tactics and usage of spells and abilities to win battles. The script will never use your consumable items, spells, or abilities. What it does is put you in position to better use these abilities, while reducing some of the more frustrating aspects of auto-attack.
 
 Also, I'm normally not a fan of auto-using of abilities (for PCs), but Search is non-intrusive, and it's not unrealistic for characters trained in it to keep an eye on surroundings whenever possible, including during battle when not attacking.
@@ -20,7 +39,7 @@ Also, I'm normally not a fan of auto-using of abilities (for PCs), but Search is
 - will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance
 - will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (for example, from a contingency or area invisibility spell)
 - will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
-- calls for help (Shout action/response); see readme for details
+- ***REMOVED*** -> Calls for help (Shout action/response)
 
 v2.0: added an improved AI script for the nymph summon (Call Woodland Beings)
 
@@ -53,14 +72,12 @@ Class: Fighter, Ranger, Paladin, including any multiclass combinations
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 25 ft.
 	3. Attacked by enemy
-	4. If not in sight of enemies, can respond to a call for help
 
 Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 18 ft.
 	3. Attacked by enemy
-	4. If not in sight of enemies, can respond to a call for help
 
 Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
 	Conditions (one must be met to auto-attack)
@@ -81,14 +98,12 @@ Class: Fighter, Ranger, Paladin or Barbarian (single-class or multiclass with 3+
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 25 ft.
 	3. Attacked by enemy
-	4. Level 3+: If not in sight of enemies, can respond to a call for help
 
 Class: Monk (Level 9+), Wild Shape/Tenser's/Iron Body (without 3+ warrior levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 18 ft.
 	3. Attacked by enemy
-	4. If not in sight of enemies, can respond to a call for help
 
 Class: Cleric, Druid, Monk, Thief or Bard, including multiclass with Wizard or Sorcerer
 	Conditions (one must be met to auto-attack)
@@ -105,11 +120,13 @@ Class: Wizard or Sorcerer
 <details>
   <summary>Calls for help (Shout action/response)</summary>
   
-> A Shout action is made when initially seeing an enemy, immediately after responding to a Shout, or repeatedly if idling in battle (i.e. standing outside melee range).
+> NOTE: This feature was added in v2.0 and removed in the v3.0. It actually works pretty good, but I decided it's too active of an action for a minimalist script, even with being able to disable it with the Cooldown mode.
+  
+A Shout action is made when initially seeing an enemy, immediately after responding to a Shout, or repeatedly if idling in battle (i.e. standing outside melee range).
 
-> Response: If not in sight of enemies, the character can respond to a Shout, moving towards the caller. This action continues until either the character reaches the caller, or an enemy is within 15 feet.
+Response: If not in sight of enemies, the character can respond to a Shout, moving towards the caller. This action continues until either the character reaches the caller, or an enemy is within 15 feet.
 
-> Characters will not use or respond to a Shout if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. A character in Cooldown mode can make a Shout, but will not respond to one.
+Characters will not use or respond to a Shout if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. A character in Cooldown mode can make a Shout, but will not respond to one.
   
 </details>
 <details>
@@ -127,7 +144,7 @@ Info:
 
 Compatible with BG:EE, BG2:EE, IWD:EE and EET.
 
-> DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner).
+> DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
 
 > Marking: The nymph "marks" a PC as an object for various actions (by default, this is the summoner). If the marked PC is not on the map for any reason, the nymph will choose another PC on the same map. The nymph will always switch back to its summoner if in visual range. Note that the summoner, as an identifier, is not saved if a summon is still on the map (so if reloading, the script will default to Player1 as the "marked" PC).
 
@@ -135,5 +152,18 @@ Hotkeys:
 - if the D key is pressed outside of combat, and not in visual range of enemies, the nymph will teleport to its summoner (or other PC)
 - if the B key is pressed, the nymph will enter Cooldown for 3 rounds; will not cast offensive spells or teleport to an enemy in Cooldown mode
 - if the E key is pressed, the Cooldown timer is set to 0 (deactivated)
+  
+</details>
+<details>
+  <summary>Baldur's Gate (in BG1 engine)</summary>
+  
+  ```
+- characters will preserve Hide/Invisibility/Sanctuary
+- melee aggro ranges working
+- Calls for help working (REMOVED, but theoretically, I could add it back in)
+- Cooldown hotkeys working
+- no auto-Search (the FindTraps() script action doesn't work)
+  ```
+> NOTE: Bard Song, Turn Undead, and Search won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
   
 </details>
