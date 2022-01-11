@@ -19,24 +19,25 @@
 @408 = ~Unnerf Animate Dead (IWD2)~
 @409 = ~Use unnerfed Animate Dead, and correct chance of each creature type to 50/50~
 @410 = ~Use nerfed Animate Dead, but correct chance of each creature type to 50/50~
-@411 = ~EEs: Allow movement bonuses from shapeshift forms to bypass Free Action~
+
+@411 = ~Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)~
 @412 = ~Movement bonuses bypass Free Action~
 @413 = ~Movement bonuses are blocked by Free Action~
-@414 = ~IWDEE: Increase movement speed of Winter Wolf and Polar Bear forms~
+@414 = ~Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)~
 @415 = ~for Druids and Polymorph Self~
 @416 = ~for Druids only~
 @417 = ~This component is for IWD:EE~
-@418 = ~Give player characters starting equipment (IWD games)~
+@418 = ~Give party starting equipment (IWD games)~
 @419 = ~Installs on IWD:EE, IWD1, IWD2, and IWD-in-BG2~
 
-@420 = ~Give party a Bag of Holding at game start (EEs, BG2, IWD1, IWD2)~
+@420 = ~Give party a Bag of Holding at game start (classic and EEs)~
 @421 = ~"Bottomless" bag (same as Tweaks Anthology component)~
 @422 = ~Capacity = 50 items (IWD2 default)~
 @423 = ~Capacity = 100 items (BG2 default)~
 @424 = ~Bottomless, and Gold is exchanged when adding/removing items (experimental)~
 @425 = ~This option does not currently support this game~
 
-@426 = ~All classes get full HP bonuses from Constitution~
+@426 = ~All classes get full HP bonuses from Constitution (classic and EEs)~
 @427 = ~2e-style HP bonuses (i.e. BG-style)~
 @428 = ~3e/4e/5e-style bonuses (+1 for every 2 stat points above 10)~
 @429 = ~Installs on BG(EE), BG2(EE), IWD(EE), and any mods built on these engines~

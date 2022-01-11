@@ -109,14 +109,18 @@ This is pretty self-explanatory. You start the game with a bag. The first 3 comp
 
 Compatible with all IE games that support Bags of Holding (except PsT:EE for now).
 
+
 The 4th option is experimental and EE-only. You start with a bottomless bag (60000+ capacity). But unlike other bags, gold is added or taken away whenever items are added or removed. It works like a store, but I cut out the middleman entirely. You just put items in, or take them out, like a regular bag.
 
-Note that taking items out of the bag isn't cheap. For various reasons I made it super expensive, 3x the base price of an item. However, the gold you get for putting items into the bag is higher than what you'd get from most stores, and there's no depreciation. In BG2, the amounts are comparable to the best ToB merchants. In IWD, there are several merchants that will pay more, but most will only accept certain item types.
+Note that taking items out of the bag isn't cheap. I have it set to 180% markup, so comparable to the more expensive merchants. However, the gold you get for putting items into the bag is higher than what you'd get from most stores, and there's no depreciation. In BG2, the amounts are comparable to the best ToB merchants. In IWD, there are several merchants that will pay more, but most will only accept certain item types.
+
 
 Additional info:
 - bag screen won't show any numbers, you'll need to check the gold amount in the inventory
-- Charisma of the party leader will adjust the price when removing an item
 - Reputation has no effect on this bag/store
+- Charisma of the active character (the one with the bag) adjusts price for buying items back
+- items with 1 gold base price will always give 0 gold when putting in the bag
+- items with 0 gold base price are free to transfer either way (ex. regular arrows)
 
 Issues/Exploits:
 - Rechargeable items: Amount gained when putting in the bag is always the same, regardless of number of charges left. Removing an item, however, seems to take into account the current charges. At 0 charges, an item is actually free to take back. So the exploit is obvious. You can deplete an item of charges, then continually add and remove the item from the bag to make infinite gold. Luckily, avoiding abusing the exploit is pretty easy. Just don't do it (unless you want to, of course). Resting will recharge any items with depleted charges, including in the bag.

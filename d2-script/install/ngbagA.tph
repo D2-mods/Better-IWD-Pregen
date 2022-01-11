@@ -20,8 +20,8 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
   
   ACTION_IF (GAME_IS ~eet~) BEGIN
     COPY - ~%MOD_FOLDER%/ngbag/d2#ngbg2.BAF~ ~%MOD_FOLDER%/temp/d2#ngbg2.BAF~
-	  REPLACE_TEXTUALLY ~InParty("Imoen")~ ~InParty("Imoen2")~
-	  REPLACE_TEXTUALLY ~"d2#ngbag","Imoen"~ ~"d2#ngbag","Imoen2"~
+      REPLACE_TEXTUALLY ~InParty("Imoen")~ ~InParty("Imoen2")~
+      REPLACE_TEXTUALLY ~"d2#ngbag","Imoen"~ ~"d2#ngbag","Imoen2"~
     EXTEND_BOTTOM ~AR0602.BCS~ ~%MOD_FOLDER%/temp/d2#ngbg2.BAF~
   END
   
@@ -126,8 +126,8 @@ ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc ca~) BEGIN
   
   ACTION_IF (GAME_IS ~bgt~) BEGIN
     COPY - ~%MOD_FOLDER%/ngbag/d2#ngbg2.BAF~ ~%MOD_FOLDER%/temp/d2#ngbg2.BAF~
-	  REPLACE_TEXTUALLY ~InParty("Imoen")~ ~InParty("Imoen2")~
-	  REPLACE_TEXTUALLY ~"d2#ngbag","Imoen"~ ~"d2#ngbag","Imoen2"~
+      REPLACE_TEXTUALLY ~InParty("Imoen")~ ~InParty("Imoen2")~
+      REPLACE_TEXTUALLY ~"d2#ngbag","Imoen"~ ~"d2#ngbag","Imoen2"~
     EXTEND_BOTTOM ~AR0602.BCS~ ~%MOD_FOLDER%/temp/d2#ngbg2.BAF~
   END
   

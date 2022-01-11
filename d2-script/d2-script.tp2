@@ -1,6 +1,6 @@
 BACKUP ~d2-script/backup~
 AUTHOR ~Dan_P~
-VERSION ~3.0~
+VERSION ~3.1~
 
 ALWAYS
   INCLUDE ~%MOD_FOLDER%/lib/CD_EXTEND-O-MATIC.tpa~

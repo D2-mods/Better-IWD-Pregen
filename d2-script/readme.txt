@@ -53,7 +53,7 @@ Tutu/BGT: Untested but installable.
 Classic Adventures: Tested and working.
 Epic Endeavors: Tested and working.
 
-NOTE: I'm not 100% sure the party scripts work with expansionless versions of the classic games.
+NOTE: I'm not 100% sure the scripts work with expansionless versions of the classic games.
 
 
 ==================================================
@@ -86,6 +86,14 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v3.1
+- minor update, but I want to make sure the info's accurate
+- updated readme info for the experimental Bag of Holding option; key things to note:
+	- Charisma of the active character adjusts the price for buying items back (in the v3.0, I mistakenly wrote that it used the party leader's Charisma)
+	- items with 1 gold base price will always give 0 gold when putting in the bag; there's no way to change this (that I know of), even setting it to 100+% will still give 0 gold
+	- items with 0 gold base price are free to transfer either way (ex. regular arrows)
+- I also lowered the markup for taking items out of the bag (it was stupidly high); this makes it easier to use the exploit, but people who want to use it will use it regardless, since there's no way to completely remove it
+
 v3.0
 - Fixed an issue where some Bioware NPCs could target each other for 1-2 seconds after killing enemies. I didn't notice this until recently because I did most of my early testing with custom characters only.
 
