@@ -7,17 +7,23 @@ Script components:
   ```
 1. Better IWD Pregen (appears in-game as "IWD PREGEN")
 2. EEs: Better AI for Call Woodland Beings (should be installed after SCS)
+3. Auto-assign script to new characters
   ```
 Tweak components:
   ```
 1. Adjust enemy damage at higher difficulties (IWD1)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
-4. EEs: Allow movement bonuses from shapeshift forms to bypass Free Action
-5. IWDEE: Increase movement speed of Winter Wolf and Polar Bear forms
+4. Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)
+5. Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)
 6. Give party starting equipment (IWD games)
 7. Give party a Bag of Holding at game start (classic and EEs)
 8. All classes get full HP bonuses from Constitution (classic and EEs)
+9. Misc fixes for backstab-related 2DA files (EEs)
+10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+11. Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
+12. Weapon Style tweak for Deities of Faerun (EEs)
+13. Allow Minsc to use his Berserk ability at will (BG games)
   ```
 All components can be installed independently and in any order. Most of the options in the installer are pretty self-explanatory, but the mod folder also contains a readme detailing the tweaks, in case there's any confusion.
 

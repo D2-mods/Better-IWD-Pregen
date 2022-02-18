@@ -1,0 +1,348 @@
+//simplifies adding movement effect + icon
+//all functions usable as PATCH or ACTION
+//will not duplicate effects (deletes existing ones before adding)
+
+/*functions:
+add_movement_equip
+add_movement_spell
+delete_movement_effects
+*/
+
+////////////////////////////////////////////////////////////
+
+//adds movement effect + icon to equips
+//by default, bypasses free action
+
+DEFINE_PATCH_FUNCTION add_movement_equip
+
+  INT_VAR speed = 150    // % of base movement (150% = 1.5x), use range of 0-30 for other modes
+          mode = 5    // 0 = increment, 1 = set, 2 = set %, 5 = set stacking % (EE-only)
+          bypass = 1    // 1 = bypass free action, 0 = not bypass
+    
+	
+BEGIN
+
+  PATCH_IF ((%bypass% < 0) OR (%bypass% > 1)) BEGIN 
+    SET bypass = 1 
+  END
+
+  SET adjust = (50 * %bypass%)
+  SET entry = (126 + %adjust%)
+
+  PATCH_IF (GAME_IS ~iwdee~) BEGIN
+    SET icon = 193
+  END
+  ELSE BEGIN
+    SET icon = 195
+  END
+  
+  PATCH_IF ((%mode% = 5) AND !(GAME_IS ~bgee bg2ee iwdee pstee eet~)) BEGIN 
+    SET mode = 2
+  END
+  
+  PATCH_IF ((%mode% != 0) AND (%mode% != 1) AND (%mode% != 2) AND (%mode% != 5)) BEGIN 
+    SET mode = 2
+  END
+	
+  LPF DELETE_EFFECT INT_VAR match_opcode=126 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=176 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=16 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=317 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=%icon% END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=38 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=110 END
+  
+  LPF ADD_ITEM_EQEFFECT 
+  INT_VAR 
+    opcode=142 
+    target=1 
+    timing=2
+    parameter2=%icon%
+  END
+  
+  LPF ADD_ITEM_EQEFFECT 
+  INT_VAR 
+    opcode=%entry%
+    target=1 
+    timing=2
+    parameter1=%speed%
+    parameter2=%mode%
+  END
+
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION add_movement_equip
+
+  INT_VAR speed = 150    // % of base movement (150% = 1.5x), use range of 0-30 for other modes
+          mode = 5    // 0 = increment, 1 = set, 2 = set %, 5 = set stacking % (EE-only)
+          bypass = 1    // 1 = bypass free action, 0 = not bypass
+		  
+  STR_VAR item = ~~    // resource name of item file to patch
+    
+	
+BEGIN
+
+COPY_EXISTING ~%item%.itm~ ~override~
+  PATCH_IF ((%bypass% < 0) OR (%bypass% > 1)) BEGIN 
+    SET bypass = 1 
+  END
+  
+  SET adjust = (50 * %bypass%)
+  SET entry = (126 + %adjust%)
+
+  PATCH_IF GAME_IS ~iwdee~ BEGIN
+    SET icon = 193
+  END
+  ELSE BEGIN
+    SET icon = 195
+  END
+  
+  PATCH_IF ((%mode% = 5) AND !(GAME_IS ~bgee bg2ee iwdee pstee eet~)) BEGIN 
+    SET mode = 2
+  END
+  
+  PATCH_IF ((%mode% != 0) AND (%mode% != 1) AND (%mode% != 2) AND (%mode% != 5)) BEGIN 
+    SET mode = 2
+  END
+  
+  LPF DELETE_EFFECT INT_VAR match_opcode=126 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=176 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=16 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=317 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=%icon% END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=38 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=110 END
+  
+  LPF ADD_ITEM_EQEFFECT 
+  INT_VAR 
+    opcode=142 
+    target=1 
+    timing=2
+    parameter2=%icon%
+  END
+  
+  LPF ADD_ITEM_EQEFFECT 
+  INT_VAR 
+    opcode=%entry%
+    target=1 
+    timing=2
+    parameter1=%speed%
+    parameter2=%mode%
+  END
+BUT_ONLY
+
+END
+
+////////////////////////////////////////////////////////////
+
+//adds movement effect + icon to spells
+//by default, is blocked by free action
+
+DEFINE_PATCH_FUNCTION add_movement_spell
+
+  INT_VAR speed = 150    // % of base movement (150% = 1.5x), use range of 0-30 for other modes
+          mode = 5    // 0 = increment, 1 = set, 2 = set %, 5 = set stacking % (EE-only)
+          duration = 30    // duration in seconds
+          level = 1    // spell level
+          bypass = 0    // 1 = bypass free action, 0 = not bypass
+    
+	
+BEGIN
+
+  PATCH_IF ((%bypass% < 0) OR (%bypass% > 1)) BEGIN 
+    SET bypass = 0 
+  END
+
+  SET adjust = (50 * %bypass%)
+  SET entry = (126 + %adjust%)
+
+  PATCH_IF (GAME_IS ~iwdee~) BEGIN
+    SET icon = 193
+  END
+  ELSE BEGIN
+    SET icon = 195
+  END
+
+  PATCH_IF ((%mode% = 5) AND !(GAME_IS ~bgee bg2ee iwdee pstee eet~)) BEGIN 
+    SET mode = 2
+  END
+  
+  PATCH_IF ((%mode% != 0) AND (%mode% != 1) AND (%mode% != 2) AND (%mode% != 5)) BEGIN 
+    SET mode = 2
+  END
+  
+  LPF DELETE_EFFECT INT_VAR match_opcode=126 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=176 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=16 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=317 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=%icon% END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=38 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=110 END
+  
+  LPF ADD_SPELL_EFFECT 
+  INT_VAR 
+    opcode=142 
+    power=%level%
+    target=2 
+    duration=%duration%
+    resist_dispel=3
+    parameter2=%icon%
+  END
+  
+  LPF ADD_SPELL_EFFECT 
+  INT_VAR 
+    opcode=%entry%
+    power=%level%
+    target=2 
+    duration=%duration%
+    resist_dispel=3
+    parameter1=%speed%
+    parameter2=%mode%
+  END
+
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION add_movement_spell
+
+  INT_VAR speed = 150    // % of base movement (150% = 1.5x), use range of 0-30 for other modes
+          mode = 5    // 0 = increment, 1 = set, 2 = set %, 5 = set stacking % (EE-only)
+          duration = 30    // duration in seconds
+          level = 1    // spell level
+          bypass = 0    // 1 = bypass free action, 0 = not bypass
+		  
+  STR_VAR spell = ~~    // resource name of spell file to patch
+    
+	
+BEGIN
+
+COPY_EXISTING ~%spell%.spl~ ~override~
+  PATCH_IF ((%bypass% < 0) OR (%bypass% > 1)) BEGIN 
+    SET bypass = 0 
+  END
+  
+  SET adjust = (50 * %bypass%)
+  SET entry = (126 + %adjust%)
+
+  PATCH_IF GAME_IS ~iwdee~ BEGIN
+    SET icon = 193
+  END
+  ELSE BEGIN
+    SET icon = 195
+  END
+  
+  PATCH_IF ((%mode% = 5) AND !(GAME_IS ~bgee bg2ee iwdee pstee eet~)) BEGIN 
+    SET mode = 2
+  END
+  
+  PATCH_IF ((%mode% != 0) AND (%mode% != 1) AND (%mode% != 2) AND (%mode% != 5)) BEGIN 
+    SET mode = 2
+  END
+  
+  LPF DELETE_EFFECT INT_VAR match_opcode=126 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=176 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=16 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=317 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=%icon% END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=38 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=110 END
+  
+  LPF ADD_SPELL_EFFECT 
+  INT_VAR 
+    opcode=142 
+    power=%level%
+    target=2 
+    duration=%duration%
+    resist_dispel=3
+    parameter2=%icon%
+  END
+  
+  LPF ADD_SPELL_EFFECT 
+  INT_VAR 
+    opcode=%entry%
+    power=%level%
+    target=2 
+    duration=%duration%
+    resist_dispel=3
+    parameter1=%speed%
+    parameter2=%mode%
+  END
+BUT_ONLY
+
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION delete_movement_effects
+  
+  
+BEGIN
+
+  LPF DELETE_EFFECT INT_VAR match_opcode=126 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=176 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=16 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=317 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=38 END
+  LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=110 END
+  
+  PATCH_IF GAME_IS ~iwdee~ BEGIN
+    LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=193 END
+  END
+  ELSE BEGIN
+    LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=195 END
+  END
+
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION delete_movement_effects
+  
+  STR_VAR item = ~~    // resource name of item file to patch
+          spell = ~~
+  
+  
+BEGIN
+
+ACTION_IF (FILE_EXISTS ~%item%.itm~) BEGIN
+  COPY_EXISTING ~%item%.itm~ ~override~
+    LPF DELETE_EFFECT INT_VAR match_opcode=126 END
+    LPF DELETE_EFFECT INT_VAR match_opcode=176 END
+    LPF DELETE_EFFECT INT_VAR match_opcode=16 END
+    LPF DELETE_EFFECT INT_VAR match_opcode=317 END
+    LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=38 END
+    LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=110 END
+  
+    PATCH_IF GAME_IS ~iwdee~ BEGIN
+      LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=193 END
+    END
+    ELSE BEGIN
+      LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=195 END
+    END
+  BUT_ONLY
+END
+
+ACTION_IF (FILE_EXISTS ~%spell%.spl~) BEGIN
+  COPY_EXISTING ~%spell%.spl~ ~override~
+    LPF DELETE_EFFECT INT_VAR match_opcode=126 END
+    LPF DELETE_EFFECT INT_VAR match_opcode=176 END
+    LPF DELETE_EFFECT INT_VAR match_opcode=16 END
+    LPF DELETE_EFFECT INT_VAR match_opcode=317 END
+    LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=38 END
+    LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=110 END
+  
+    PATCH_IF GAME_IS ~iwdee~ BEGIN
+      LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=193 END
+    END
+    ELSE BEGIN
+      LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=195 END
+    END
+  BUT_ONLY
+END
+
+END
+
+////////////////////////////////////////////////////////////

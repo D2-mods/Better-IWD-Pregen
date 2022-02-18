@@ -1,16 +1,19 @@
 BACKUP ~d2-script/backup~
 AUTHOR ~Dan_P~
-VERSION ~3.1~
+VERSION ~3.2~
 
 ALWAYS
+  INCLUDE ~%MOD_FOLDER%/lib/d2_movement_effects.tpa~
+  INCLUDE ~%MOD_FOLDER%/lib/2da_find_row.tpa~
+  INCLUDE ~%MOD_FOLDER%/lib/weapprof_quick_edit.tpa~
   INCLUDE ~%MOD_FOLDER%/lib/CD_EXTEND-O-MATIC.tpa~
-  INCLUDE ~%MOD_FOLDER%/lib/delete_movement_effects.tpa~
-  INCLUDE ~%MOD_FOLDER%/lib/iwdee_movement_equip.tpa~
+  INCLUDE ~%MOD_FOLDER%/lib/2da_missing_cols.tpa~
 END
 
 LANGUAGE ~English~ 
          ~english~ 
          ~d2-script/tra/english/setup.tra~
+
 
 ////////////////////////////////////////////////////////////
 
@@ -35,6 +38,16 @@ DESIGNATED 20
 REQUIRE_PREDICATE GAME_IS ~bgee bg2ee iwdee eet~ @4
 LABEL ~D2-SCRIPT-NYMPH~
 INCLUDE ~%MOD_FOLDER%/install/nymph.tph~
+
+////////////////////////////////////////////////////////////
+
+//Auto-assign script to new characters
+
+BEGIN @9999
+DESIGNATED 9999
+REQUIRE_COMPONENT ~d2-script.tp2~ ~10~ @5
+LABEL ~D2-SCRIPT-NGAUTO~
+INCLUDE ~%MOD_FOLDER%/install/ngauto.tph~
 
 ////////////////////////////////////////////////////////////
 
@@ -173,29 +186,115 @@ LABEL ~D2-TWEAKS-CONBON2E~
 INCLUDE ~%MOD_FOLDER%/install/conbon2e.tph~
 
 BEGIN @428    // 3e/4e/5e-style bonuses (+1 for every 2 stat points above 10)
-REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
-                   (GAME_INCLUDES ~bg2~) OR
-                   (GAME_INCLUDES ~iwd~) OR
-                   (GAME_IS ~ca~ )) @429
 SUBCOMPONENT @426
 LABEL ~D2-TWEAKS-CONBON3E~
 INCLUDE ~%MOD_FOLDER%/install/conbon3e.tph~
 
 ////////////////////////////////////////////////////////////
 
+//Misc fixes for backstab-related 2DA files (EEs)
+
+BEGIN @430
+DESIGNATED 110
+REQUIRE_PREDICATE GAME_IS ~bgee bg2ee iwdee eet~ @4
+LABEL ~D2-TWEAKS-BACKSTABCHECK~
+INCLUDE ~%MOD_FOLDER%/install/backstabcheck.tph~
+
+////////////////////////////////////////////////////////////
+
+//Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+//default delay is 420 seconds
+//default cap for stat reduction is -7 (IWD:EE v2.5 and v2.6.6)
+
+BEGIN @432    // Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)
+DESIGNATED 120
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
+SUBCOMPONENT @431
+LABEL ~D2-TWEAKS-CRIPPSTR6~
+INCLUDE ~%MOD_FOLDER%/install/crippstr6.tph~
+
+BEGIN @433    // Can Sneak Attack a target once every 30 seconds (stat reduction does not stack)
+SUBCOMPONENT @431
+LABEL ~D2-TWEAKS-CRIPPSTR30~
+INCLUDE ~%MOD_FOLDER%/install/crippstr30.tph~
+
+BEGIN @434    // Uncap Crippling Strike, but do not change delay
+SUBCOMPONENT @431
+LABEL ~D2-TWEAKS-CRIPPSTR16~
+INCLUDE ~%MOD_FOLDER%/install/crippstr16.tph~
+
+////////////////////////////////////////////////////////////
+
+//Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
+//reverts changes by: Rogue Rebalancing by aVENGER
+//                    3.5e Weapon Style Rebalance by Reddbane
+//currently affects 4 archer Thief kits and Loremaster (from Might and Guile)
+
+BEGIN @435
+DESIGNATED 130
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~Setup-35weaponstyle.tp2~ 1) OR
+                   (FILE_EXISTS ~override/RR#DWF.RR~)) @436
+REQUIRE_PREDICATE ((FILE_EXISTS ~override/c0advent.2da~) OR
+                   (FILE_EXISTS ~override/claba7t1.2da~) OR
+                   (FILE_EXISTS ~override/D5_LORMA.2da~) OR
+                   (FILE_EXISTS ~override/CLABUSAT.2da~) OR
+                   (FILE_EXISTS ~override/D5_SNIPE.2da~)) @436
+LABEL ~D2-MODFIXES-WEAPONSTYLEFIX~
+INCLUDE ~%MOD_FOLDER%/install/weaponstylefix.tph~
+
+////////////////////////////////////////////////////////////
+
+//Weapon Style tweak for Deities of Faerun (EEs)
+//allows base-game druid and shaman kits to place 2 slots in two-weapon style
+//this is the way Raduziel's own kits work (including from I Hate Undead kitpack)
+
+BEGIN @437
+DESIGNATED 140
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
+REQUIRE_COMPONENT ~DeitiesOfFaerun.tp2~ 0 @438
+LABEL ~D2-MODFIXES-DOFPROFS~
+INCLUDE ~%MOD_FOLDER%/install/dofprofs.tph~
+
+////////////////////////////////////////////////////////////
+
+//Allow Minsc to use his Berserk ability at will (BG games)
+
+BEGIN @440    // Use at will, and reduce duration to 5 rounds (30 seconds)
+DESIGNATED 150
+REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
+                   (GAME_INCLUDES ~bg2~)) @443
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @444    // skip if Rashemi kit (Artisan's Kitpack) is detected
+SUBCOMPONENT @439
+LABEL ~D2-TWEAKS-MINSCRAGE30~
+INCLUDE ~%MOD_FOLDER%/install/minscrage30.tph~
+
+BEGIN @441    // Use at will, and reduce duration to 1 turn (60 seconds)
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @444    // skip if Rashemi kit (Artisan's Kitpack) is detected
+SUBCOMPONENT @439
+LABEL ~D2-TWEAKS-MINSCRAGE60~
+INCLUDE ~%MOD_FOLDER%/install/minscrage60.tph~
+
+BEGIN @442    // Use at will, but do not lower duration (120 seconds)
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @444    // skip if Rashemi kit (Artisan's Kitpack) is detected
+SUBCOMPONENT @439
+LABEL ~D2-TWEAKS-MINSCRAGE120~
+INCLUDE ~%MOD_FOLDER%/install/minscrage120.tph~
+
+BEGIN @445    // Timing fix for Minsc's Berserk ability (EEs)
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet~) @446
+REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE30~)) AND
+                   !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE60~)) AND
+                   !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE120~))) @447
+LABEL ~D2-TWEAKS-MINSCRAGE0~
+INCLUDE ~%MOD_FOLDER%/install/minscrage0.tph~
+
+////////////////////////////////////////////////////////////
 
 
 
-//Not implemented
 
 /*
 
-//Auto-assign script to new characters
-
-BEGIN @9999
-DESIGNATED 9999
-REQUIRE_COMPONENT ~d2-script.tp2~ ~10~ @5
-LABEL ~D2-SCRIPT-NGAUTO~
-INCLUDE ~%MOD_FOLDER%/install/ngauto.tph~
 
 */

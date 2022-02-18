@@ -36,11 +36,30 @@
 @423 = ~Capacity = 100 items (BG2 default)~
 @424 = ~Bottomless, and Gold is exchanged when adding/removing items (experimental)~
 @425 = ~This option does not currently support this game~
-
 @426 = ~All classes get full HP bonuses from Constitution (classic and EEs)~
 @427 = ~2e-style HP bonuses (i.e. BG-style)~
 @428 = ~3e/4e/5e-style bonuses (+1 for every 2 stat points above 10)~
 @429 = ~Installs on BG(EE), BG2(EE), IWD(EE), and any mods built on these engines~
+
+@430 = ~Misc fixes for backstab-related 2DA files (EEs)~
+@431 = ~Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)~
+@432 = ~Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)~
+@433 = ~Can Sneak Attack a target once every 30 seconds (stat reduction does not stack)~
+@434 = ~Uncap Crippling Strike, but do not change delay~
+@435 = ~Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)~
+@436 = ~Cannot detect files that this component has fixes for~
+@437 = ~Weapon Style tweak for Deities of Faerun (EEs)~
+@438 = ~This component requires the Deities of Faerun mod~
+
+@439 = ~Allow Minsc to use his Berserk ability at will (BG games)~
+@440 = ~Use at will, and reduce duration to 5 rounds (30 seconds)~
+@441 = ~Use at will, and reduce duration to 1 turn (60 seconds)~
+@442 = ~Use at will, but do not lower duration (120 seconds)~
+@443 = ~This component is for BG(EE) and BG2(EE)~
+@444 = ~This option is not available for Rashemi Berserker (Artisan's Kitpack)~
+@445 = ~Timing fix for Minsc's Berserk ability (EEs)~
+@446 = ~Installs on BG:EE, BG2:EE, and EET~
+@447 = ~This component is not needed for the current installation~
 
 
 
@@ -444,3 +463,19 @@ STATISTICS:
 
 Capacity: 100 items
 Weight: 5 lb.~
+
+
+
+//for Minsc Berserk tweak
+@900 = ~Berserk~
+@901 = ~Berserk
+
+Minsc becomes enraged for 5 rounds. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
+
+@902 = ~Berserk
+
+Minsc becomes enraged for 1 turn. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
+
+@903 = ~Berserk
+
+Minsc becomes enraged for 2 turns. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~

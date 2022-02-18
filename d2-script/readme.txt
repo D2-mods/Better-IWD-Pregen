@@ -1,4 +1,4 @@
-Better IWD Pregen
+Better IWD Pregen (v3.0+)
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built on these engines
 
@@ -26,22 +26,28 @@ Extract to game folder and run the setup to install or uninstall. I'm not famili
 Script components:
 1. Better IWD Pregen (appears in-game as "IWD PREGEN")
 2. EEs: Better AI for Call Woodland Beings (should be installed after SCS)
+3. Auto-assign script to new characters
 
 Tweak components:
 1. Adjust enemy damage at higher difficulties (IWD1)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
-4. EEs: Allow movement bonuses from shapeshift forms to bypass Free Action
-5. IWDEE: Increase movement speed of Winter Wolf and Polar Bear forms
+4. Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)
+5. Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)
 6. Give party starting equipment (IWD games)
 7. Give party a Bag of Holding at game start (classic and EEs)
 8. All classes get full HP bonuses from Constitution (classic and EEs)
+9. Misc fixes for backstab-related 2DA files (EEs)
+10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+11. Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
+12. Weapon Style tweak for Deities of Faerun (EEs)
+13. Allow Minsc to use his Berserk ability at will (BG games)
 
-All components can be installed independently and in any order.
+All components can be installed independently and in any order, except for auto-assigning the script.
 
 
 ==================================================
-COMPATIBILITY (2022-01)
+COMPATIBILITY (v3.0+)
 ==================================================
 EEs: BG:EE, SoD, BG2:EE, IWD:EE, EET (v2.5/v2.6)
 Classic: BG1, BG2, IWD1, IWD2 (tested with GOG versions)
@@ -72,7 +78,8 @@ CREDITS
 Coding, Testing: Dan_P
 
 Custom Functions:
-- CD_EXTEND-O-MATIC, by CamDawg, posted at <https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220>
+- CD_EXTEND-O-MATIC, by CamDawg (https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220)
+- 2DA_MISSING_COLS - by K4thos (https://github.com/K4thos/IE-code-repository)
 
 Tools and Resources used:  
 - WeiDU v249 https://github.com/WeiDUorg/weidu  
@@ -86,6 +93,16 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v3.2
+- Added component: Auto-assign script to new characters. This is a one-time action for each character when starting a new game, when NPCs join, or when loading an existing save.
+
+- Added the following tweaks:
+	- Misc fixes for backstab-related 2DA files (EEs)
+	- Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+	- Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
+	- Weapon Style tweak for Deities of Faerun (EEs)
+	- Allow Minsc to use his Berserk ability at will (BG games)
+
 v3.1
 - minor update, but I want to make sure the info's accurate
 - updated readme info for the experimental Bag of Holding option; key things to note:
@@ -117,7 +134,6 @@ v3.0
 - Tested and confirmed that the BG2 script is working with various conversion mods, including IWD-in-BG2, Classic Adventures, and Epic Endeavors. The Bag of Holding tweak is also working with these.
 
 - This mod is pretty much finished now besides bug fixes, or making minor adjustments. The only TODO I have planned in my notes is PsT:EE support, which I'll probably only add if/when I get around to replaying it.
-
 
 v2.5
 - added Beta support for original BG2/Tutu/BGT and IWD1; a few incompatible triggers or blocks had to be removed for each game (the core features of the script are in); I'm calling this a Beta because I only did very limited testing + made sure they look okay in NearInfinity

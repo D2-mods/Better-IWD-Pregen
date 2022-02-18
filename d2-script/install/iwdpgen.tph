@@ -16,8 +16,10 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~iwdpgen.BCS~) BEGIN
 END
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // update text
-  REPLACE ~40838~ @100
-  REPLACE ~40839~ @101
+  LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
+  INSERT_2DA_ROW %row_number% %columns% ~IWDPGEN @100 @101~
+  REPLACE ~@100~ @100
+  REPLACE ~@101~ @101
   PRETTY_PRINT_2DA
 BUT_ONLY
 

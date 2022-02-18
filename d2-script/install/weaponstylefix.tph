@@ -1,0 +1,37 @@
+//Fix weapon styles for some kits (based on description)
+//currently affects 4 archer Thief kits and Loremaster (from Might and Guile)
+
+ACTION_IF FILE_EXISTS ~override/c0advent.2da~ BEGIN    // Rogue Archer (Artisan's Kitpack)
+  COPY_EXISTING ~weapprof.2DA~ ~override~
+    LPF 2da_find_column STR_VAR col_name = ~C0ADVENT~ RET col_number END
+    LPF weapprof_set_styles INT_VAR col_number = %col_number% entry = 1 END    // set styles to 1
+  BUT_ONLY
+END
+
+ACTION_IF FILE_EXISTS ~override/claba7t1.2da~ BEGIN    // Sharpshooter (Improved Archer)
+  COPY_EXISTING ~weapprof.2DA~ ~override~
+    LPF 2da_find_column STR_VAR col_name = ~A7_SHARPSHOOTER~ RET col_number END
+    LPF weapprof_set_styles INT_VAR col_number = %col_number% entry = 1 END    // set styles to 1
+  BUT_ONLY
+END
+
+ACTION_IF FILE_EXISTS ~override/D5_LORMA.2da~ BEGIN    // Loremaster (Might and Guile)
+  COPY_EXISTING ~weapprof.2DA~ ~override~
+    LPF 2da_find_column STR_VAR col_name = ~D5_LOREMASTER~ RET col_number END
+    LPF weapprof_set_styles INT_VAR col_number = %col_number% a=0 b=0 c=0 d=0 END    // set styles to 0
+  BUT_ONLY
+END
+  
+ACTION_IF FILE_EXISTS ~override/D5_SNIPE.2da~ BEGIN    // Sniper (Might and Guile)
+  COPY_EXISTING ~weapprof.2DA~ ~override~
+    LPF 2da_find_column STR_VAR col_name = ~D5SNIPE~ RET col_number END
+    LPF weapprof_set_styles INT_VAR col_number = %col_number% entry = 1 END    // set styles to 1
+  BUT_ONLY
+END
+
+ACTION_IF FILE_EXISTS ~override/CLABUSAT.2da~ BEGIN    // Archer (Thief) from Expanded Classes
+  COPY_EXISTING ~weapprof.2DA~ ~override~
+    LPF 2da_find_column STR_VAR col_name = ~USAT00~ RET col_number END
+    LPF weapprof_set_styles INT_VAR col_number = %col_number% entry = 1 END    // set styles to 1
+  BUT_ONLY
+END

@@ -1,0 +1,1313 @@
+//Easy-to-use functions for editing weapprof.2da (proficiencies)
+//search by col_number or col_name
+//all functions available as PATCH or ACTION
+
+/*functions:
+weapprof_set_types
+weapprof_thief
+weapprof_not_thief
+weapprof_crushing
+weapprof_ranged
+weapprof_2handed
+weapprof_swords
+weapprof_druid
+weapprof_shaman
+weapprof_set_styles
+*/
+
+/*static functions:
+weapprof_bard
+weapprof_fighter2
+weapprof_fighter5
+weapprof_fighter_styles
+*/
+
+////////////////////////////////////////////////////////////
+
+//Sets for all weapon types (including bg1 profs)
+
+DEFINE_PATCH_FUNCTION weapprof_set_types
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+  
+  FOR (row = 3; row < 31; ++row) BEGIN    // row 3 to 30
+    SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ row col_number entry
+  END
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_set_types
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+  
+  FOR (row = 3; row < 31; ++row) BEGIN    // row 3 to 30
+    SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ row col_number entry
+  END
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets for Thief weapons (not styles)
+
+DEFINE_PATCH_FUNCTION weapprof_thief
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+    
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+  
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 3 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 4 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 5 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 7 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 10 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 12 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 13 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 16 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 17 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 18 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 20 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 25 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 26 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 28 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 29 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 30 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_thief
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+  
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 3 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 4 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 5 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 7 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 10 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 12 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 13 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 16 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 17 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 18 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 20 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 25 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 26 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 28 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 29 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 30 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets for non-Thief weapons
+
+DEFINE_PATCH_FUNCTION weapprof_not_thief
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+          entry = 0    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+    
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 6 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 8 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 9 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 11 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 14 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 15 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 19 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 21 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 22 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 23 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 24 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 27 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_not_thief
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+          entry = 0    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 6 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 8 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 9 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 11 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 14 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 15 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 19 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 21 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 22 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 23 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 24 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 27 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets for crushing melee weapons
+
+DEFINE_PATCH_FUNCTION weapprof_crushing
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 7 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 8 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 20 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 21 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 24 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 25 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 26 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_crushing
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 7 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 8 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 20 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 21 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 24 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 25 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 26 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets for ranged weapons
+
+DEFINE_PATCH_FUNCTION weapprof_ranged
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 5 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 10 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 26 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 27 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 28 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 29 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 30 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_ranged
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 5 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 10 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 26 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 27 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 28 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 29 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 30 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets for Two Handed melee weapons
+
+DEFINE_PATCH_FUNCTION weapprof_2handed
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 3 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 6 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 7 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 15 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 21 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 22 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 25 col_number entry
+  
+  PATCH_IF (GAME_IS ~iwdee~) BEGIN
+    SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 14 col_number entry    // Greataxe for IWD:EE
+  END
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_2handed
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 3 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 6 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 7 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 15 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 21 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 22 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 25 col_number entry
+  
+  PATCH_IF (GAME_IS ~iwdee~) BEGIN
+    SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 14 col_number entry    // Greataxe for IWD:EE
+  END
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets for swords (a dagger is not a sword)
+
+DEFINE_PATCH_FUNCTION weapprof_swords
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 3 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 4 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 11 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 12 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 13 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 15 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 16 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 17 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_swords
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 3 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 4 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 11 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 12 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 13 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 15 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 16 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 17 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets for Druid weapons
+
+DEFINE_PATCH_FUNCTION weapprof_druid
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 3 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 4 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 6 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 7 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 10 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 17 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 18 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 20 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 21 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 25 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 29 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 30 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_druid
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 3 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 4 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 6 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 7 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 10 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 17 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 18 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 20 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 21 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 25 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 29 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 30 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets for Shaman weapons
+
+DEFINE_PATCH_FUNCTION weapprof_shaman
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 4 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 5 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 6 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 7 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 9 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 10 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 14 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 18 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 20 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 21 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 25 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 28 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 29 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 30 col_number entry
+
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_shaman
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+          entry = 1    // set prof to this number
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 4 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 5 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 6 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 7 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 9 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 10 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 14 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 18 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 20 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 21 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 25 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 28 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 29 col_number entry
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 30 col_number entry
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets weapon styles (row 31 to 34)
+//all functions below here also include weapon styles
+//if %entry% is set to 1 or higher, then the a, b, c, d variables will be ignored
+
+DEFINE_PATCH_FUNCTION weapprof_set_styles
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+          entry = 0    // set prof to this number
+		  a = 1    // two handed
+		  b = 1    // sword and shield
+		  c = 1    // single weapon
+		  d = 1    // two weapon
+		  
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  PATCH_IF (%entry% > 0) BEGIN
+    SET a = 0
+    SET b = 0
+    SET c = 0
+    SET d = 0
+  END
+  
+  SET entry1 = (%entry% + %a%)
+  SET entry2 = (%entry% + %b%)
+  SET entry3 = (%entry% + %c%)
+  SET entry4 = (%entry% + %d%)
+  
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 31 col_number entry1    // two handed
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 32 col_number entry2    // sword and shield
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 33 col_number entry3    // single weapon
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 34 col_number entry4    // two weapon
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_set_styles
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+          entry = 0    // set prof to this number
+		  a = 1    // two handed
+		  b = 1    // sword and shield
+		  c = 1    // single weapon
+		  d = 1    // two weapon
+		  
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  PATCH_IF (%entry% > 0) BEGIN
+    SET a = 0
+    SET b = 0
+    SET c = 0
+    SET d = 0
+  END
+  
+  SET entry1 = (%entry% + %a%)
+  SET entry2 = (%entry% + %b%)
+  SET entry3 = (%entry% + %c%)
+  SET entry4 = (%entry% + %d%)
+  
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 31 col_number entry1    // two handed
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 32 col_number entry2    // sword and shield
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 33 col_number entry3    // single weapon
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 34 col_number entry4    // two weapon
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets profs to match bard class (1 slot in everything)
+
+DEFINE_PATCH_FUNCTION weapprof_bard
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  FOR (row = 3; row < 35; ++row) BEGIN    // row 3 to 34
+    SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ row col_number 1    // set to 1 slot
+  END
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_bard
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  FOR (row = 3; row < 35; ++row) BEGIN    // row 3 to 34
+    SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ row col_number 1    // set to 1 slot
+  END
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets profs to match fighter class (max 2 slots in weapons)
+
+DEFINE_PATCH_FUNCTION weapprof_fighter2
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  FOR (row = 3; row < 34; ++row) BEGIN    // row 3 to 33
+    SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ row col_number 2    // set to 2 slots
+  END
+  
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 34 col_number 3    // set two weapon style (row 34) to 3 slots  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_fighter2
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  FOR (row = 3; row < 34; ++row) BEGIN    // row 3 to 33
+    SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ row col_number 2    // set to 2 slots
+  END
+  
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 34 col_number 3    // set two weapon style (row 34) to 3 slots  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets profs to match fighter class (max 5 slots in weapons)
+
+DEFINE_PATCH_FUNCTION weapprof_fighter5
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  FOR (row = 3; row < 31; ++row) BEGIN    // row 3 to 30
+    SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ row col_number 5    // set to 5 slots
+  END
+  
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 31 col_number 2    // two handed
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 32 col_number 2    // sword and shield
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 33 col_number 2    // single weapon
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 34 col_number 3    // two weapon
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_fighter5
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  FOR (row = 3; row < 31; ++row) BEGIN    // row 3 to 30
+    SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ row col_number 5    // set to 5 slots
+  END
+  
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 31 col_number 2    // two handed
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 32 col_number 2    // sword and shield
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 33 col_number 2    // single weapon
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 34 col_number 3    // two weapon
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//Sets weapon styles to match fighter class (vanilla profs)
+
+DEFINE_PATCH_FUNCTION weapprof_fighter_styles
+	  
+  INT_VAR col_number = 0    // column number (can use a variable, col_number = %variable%)
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 31 col_number 2    // two handed
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 32 col_number 2    // sword and shield
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 33 col_number 2    // single weapon
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 34 col_number 3    // two weapon
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION weapprof_fighter_styles
+	  
+  INT_VAR col_number = 0    // column number (has priority over col_name if > 0)
+
+  STR_VAR col_name = ~~    // internal kit name (will return col_number)
+          kit = ~~    // synonym for col_name
+ 		  
+  RET     col_number    // optionally return column number to use for something else
+ 
+ 
+BEGIN
+  
+COPY_EXISTING ~weapprof.2DA~ ~override~
+  
+  PATCH_IF (col_number = 0) BEGIN  
+    COUNT_2DA_COLS cols    // stores total column # in %cols%
+    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
+    SET col_number = (%cols%)
+  
+    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
+      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
+      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+      END
+    END
+  END
+    
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 31 col_number 2    // two handed
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 32 col_number 2    // sword and shield
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 33 col_number 2    // single weapon
+  SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 34 col_number 3    // two weapon
+  
+  SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
+  PRETTY_PRINT_2DA
+	
+END
+
+////////////////////////////////////////////////////////////

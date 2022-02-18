@@ -123,7 +123,8 @@ Additional info:
 - items with 0 gold base price are free to transfer either way (ex. regular arrows)
 
 Issues/Exploits:
-- Rechargeable items: Amount gained when putting in the bag is always the same, regardless of number of charges left. Removing an item, however, seems to take into account the current charges. At 0 charges, an item is actually free to take back. So the exploit is obvious. You can deplete an item of charges, then continually add and remove the item from the bag to make infinite gold. Luckily, avoiding abusing the exploit is pretty easy. Just don't do it (unless you want to, of course). Resting will recharge any items with depleted charges, including in the bag.
+- Items in the bag can still be sold to merchants (so basically get double sell price).
+- Rechargeable items: Amount gained when putting in the bag is always the same (charges left doesn't matter). Removing the item, however, seems to take into account the current charges. At 0 charges, an item is actually free to take out. So the exploit is obvious. You can deplete an item of charges, then continually add and remove it from the bag to make infinite gold. Resting will recharge any items in the bag.
 
 
 ==================================================
@@ -132,4 +133,58 @@ All classes get full HP from CON (classic and EEs)
 - yet another universal CON bonus mod
 - choice between 2e/BG-style, or the more even HP curve of later editions
 - usable with all versions of BG1, BG2, and IWD, including conversion mods
+
+
+==================================================
+Misc fixes for backstab-related 2DA files (EEs)
+==================================================
+- fixes problematic lines in backstab-related 2das (added by some mod kits)
+- also makes sure base-game kits have correct progression to level 40 or 50
+- will also add all files necessary for Sneak Attack (if missing)
+
+
+==================================================
+Sneak Attack tweak + Crippling Strike fix (EEs)
+==================================================
+Reduce delay for Sneak Attacks
+- default delay is 420 seconds (i.e. immunity effect on target)
+- options to reduce delay to 6 or 30 seconds, or keep unchanged
+- the 3rd option (no change) will patch effects if a related tweak from OlvynTweaks is detected
+
+Uncap Crippling Strike
+- allows Crippling Strike to scale to -16 (Assassin at level 50)
+- by default, the stat reduction is capped at -7 (EE v2.5 and v2.6.6)
+- the dialogue box and Record screen could show higher numbers, but the effect never went past -7
+- main purpose is to allow Assassins to actually reach -10 in IWD:EE
+
+
+==================================================
+Fix weapon styles for some kits (mod-specific)
+==================================================
+- installable for: Rogue Rebalancing by aVENGER
+                   3.5e Weapon Style Rebalance by Reddbane
+- these tweaks raise max slots for certain kits that probably shouldn't get the boost
+- currently affects 4 archer Thief kits and Loremaster (from Might and Guile)
+
+
+==================================================
+Weapon Style tweak for Deities of Faerun (EEs)
+==================================================
+- allows base-game Druid/Shaman kits to place 2 slots in Two-Weapon Style
+- this just brings them up to the level of Raduziel's own divine kits (including from I Hate Undead kitpack)
+- also affects a few mod-added kits (need to be added individually)
+
+
+==================================================
+Allow Minsc to use Berserk at will (BG games)
+==================================================
+- can set duration to 30, 60, or 120 seconds
+- the way it works differs by game:
+	- EEs: can be recast at any time (stat bonuses do not stack)
+	- BG1: regain ability after duration runs out
+	- BG2: regain ability immediately, but cannot recast until duration runs out
+- BG2EE: fixes a timing error, which caused Minsc to always take 15 damage to his normal HP pool
+- BG2: fixes incorrect durations for some effects (checked with fixpack v13)
+
+NOTE: Will be skipped if Rashemi Berserker (Artisan's Kitpack) is installed
 

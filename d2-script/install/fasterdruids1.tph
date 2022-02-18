@@ -1,35 +1,11 @@
-COPY_EXISTING ~plywwolf.ITM~ ~override~
-  LPF iwdee_movement_equip INT_VAR speed=180 END
-BUT_ONLY
-
-COPY_EXISTING ~plypbear.ITM~ ~override~
-  LPF iwdee_movement_equip INT_VAR speed=250 END
-BUT_ONLY
-
-COPY_EXISTING ~cdpolyww.ITM~ ~override~
-  LPF iwdee_movement_equip INT_VAR speed=180 END
-BUT_ONLY
-
-COPY_EXISTING ~cdpolypb.ITM~ ~override~
-  LPF iwdee_movement_equip INT_VAR speed=250 END
-BUT_ONLY
-
-COPY_EXISTING ~PLYWOLF1.ITM~ ~override~
-  LPF iwdee_movement_equip INT_VAR speed=180 END
-BUT_ONLY
-
-COPY_EXISTING ~PLYBEAR1.ITM~ ~override~
-  LPF iwdee_movement_equip INT_VAR speed=250 END
-BUT_ONLY
-
-COPY_EXISTING ~cdpolybb.ITM~ ~override~
-  LPF delete_movement_effects END
-BUT_ONLY
-
-COPY_EXISTING ~plybeetl.ITM~ ~override~
-  LPF delete_movement_effects END
-BUT_ONLY
-
+LAF add_movement_equip INT_VAR speed=180 STR_VAR item = plywwolf END
+LAF add_movement_equip INT_VAR speed=180 STR_VAR item = cdpolyww END
+LAF add_movement_equip INT_VAR speed=180 STR_VAR item = PLYWOLF1 END
+LAF add_movement_equip INT_VAR speed=250 STR_VAR item = plypbear END
+LAF add_movement_equip INT_VAR speed=250 STR_VAR item = cdpolypb END
+LAF add_movement_equip INT_VAR speed=250 STR_VAR item = PLYBEAR1 END
+LAF delete_movement_effects STR_VAR item = cdpolybb END
+LAF delete_movement_effects STR_VAR item = plybeetl END
 
 
 //Check opcode to use
@@ -59,7 +35,6 @@ ACTION_IF ((MOD_IS_INSTALLED ~d2-iwdee-fixes.tp2~ %movebonus0%) OR
 
   END
 END
-
 
 
 //Text edits

@@ -1,0 +1,131 @@
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~iwd2 iwd how totlm~) BEGIN
+
+<<<<<<<< .../d2-script/temp/d2#ngbs.baf
+IF
+	!Global("d2ngauto","LOCALS",1)
+	InParty(Myself)
+THEN
+	RESPONSE #100
+		ChangeAIScript("IWDPGEN",3)
+		SetGlobal("d2ngauto","LOCALS",1)
+		Continue()
+END
+>>>>>>>>
+
+END
+ELSE BEGIN
+
+<<<<<<<< .../d2-script/temp/d2#ngbs.baf
+IF
+	!Global("d2ngauto","LOCALS",1)
+	InParty(Myself)
+THEN
+	RESPONSE #100
+		ChangeAIScript("IWDPGEN",4)
+		SetGlobal("d2ngauto","LOCALS",1)
+		Continue()
+END
+>>>>>>>>
+
+END
+
+////////////////////////////////////////////////////////////
+
+//fix SCRLEV.IDS for IWD games
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
+  COPY ~%MOD_FOLDER%/iwd2/SCRLEV2.IDS~ ~override/SCRLEV.IDS~
+END
+
+ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
+  COPY ~%MOD_FOLDER%/iwd2/SCRLEV1.IDS~ ~override/SCRLEV.IDS~
+END
+
+//add script block to bcs files
+ACTION_IF (FILE_EXISTS_IN_GAME ~DPLAYER2.BCS~) BEGIN
+  EXTEND_TOP ~DPLAYER2.BCS~ ~.../d2-script/temp/d2#ngbs.baf~
+END
+
+ACTION_IF (FILE_EXISTS_IN_GAME ~DPLAYER3.BCS~) BEGIN
+  EXTEND_TOP ~DPLAYER3.BCS~ ~.../d2-script/temp/d2#ngbs.baf~
+END
+
+//classic BG1: Imoen in "Mission-Pack-Save" doesn't have DPLAYER2 script
+ACTION_IF (GAME_IS ~bgee totsc~) BEGIN
+  COPY ~scripts/default.bs~ ~override/default.bcs~
+  EXTEND_TOP ~default.BCS~ ~.../d2-script/temp/d2#ngbs.baf~
+  COPY ~override/default.bcs~ ~scripts/default.bs~
+END
+  
+//create iwdpgen.BCS (prevents needing to reload before the script is set)
+ACTION_IF !(GAME_IS ~iwdee~) BEGIN
+  COPY_EXISTING ~scripts/iwdpgen.BS~ ~override/iwdpgen.BCS~
+END
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+  ACTION_IF (FILE_EXISTS_IN_GAME ~AR2600.BCS~) BEGIN    // BG1 start
+    COPY_EXISTING ~AR2600.BCS~ ~override~
+      DECOMPILE_AND_PATCH BEGIN
+        REPLACE_TEXTUALLY ~BDDEFAI~ ~IWDPGEN~
+      END
+    BUT_ONLY
+  END  
+
+  ACTION_IF (FILE_EXISTS_IN_GAME ~bd0120.BCS~) BEGIN    // SoD start
+    COPY_EXISTING ~bd0120.BCS~ ~override~
+      DECOMPILE_AND_PATCH BEGIN
+        REPLACE_TEXTUALLY ~BDDEFAI~ ~IWDPGEN~
+      END
+    BUT_ONLY
+  END  
+
+  ACTION_IF (FILE_EXISTS_IN_GAME ~AR0602.BCS~) BEGIN    // BG2 start
+    COPY_EXISTING ~AR0602.BCS~ ~override~
+      DECOMPILE_AND_PATCH BEGIN
+        REPLACE_TEXTUALLY ~BDDEFAI~ ~IWDPGEN~
+      END
+    BUT_ONLY
+  END  
+  
+  ACTION_IF (FILE_EXISTS_IN_GAME ~AR4000.BCS~) BEGIN    // ToB start
+    COPY_EXISTING ~AR4000.BCS~ ~override~
+      DECOMPILE_AND_PATCH BEGIN
+        REPLACE_TEXTUALLY ~BDDEFAI~ ~IWDPGEN~
+      END
+    BUT_ONLY
+  END
+  
+  ACTION_IF (FILE_EXISTS_IN_GAME ~BG2600.BCS~) BEGIN    // EET BG1 start
+    COPY_EXISTING ~BG2600.BCS~ ~override~
+      DECOMPILE_AND_PATCH BEGIN
+        REPLACE_TEXTUALLY ~BDDEFAI~ ~IWDPGEN~
+      END
+    BUT_ONLY
+  END
+END
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+
+COPY_EXISTING ~partyai.2DA~ ~override~
+
+  COUNT_2DA_ROWS 1 row_count
+  FOR (row = 3; row < row_count; ++row) BEGIN    // row 3 to bottom row (all names in list)
+    READ_2DA_ENTRY row 1 1 ~match~    // read table entry, and stores in variable %match%
+    PATCH_IF !(~%match%~ STRING_EQUAL_CASE ~iwdpgen~) BEGIN
+      SET_2DA_ENTRY_LATER ~d2_ngauto~ row 1 ~iwdpgen~
+    END
+  END
+  
+  SET_2DA_ENTRIES_NOW ~d2_ngauto~ 1
+  PRETTY_PRINT_2DA
+  
+BUT_ONLY
+  
+END
+
+////////////////////////////////////////////////////////////

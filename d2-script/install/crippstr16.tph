@@ -1,0 +1,31 @@
+//backup existing spell file (if in override)
+ACTION_IF (FILE_EXISTS ~override/backstab.SPL~) BEGIN
+  COPY ~override/backstab.SPL~ ~override/backstab.SPL.BAK~
+END
+
+//copy new spell to override and patch if tweak is detected
+COPY ~%MOD_FOLDER%/crippstr/backstab16.SPL~ ~override/backstab.SPL~
+
+  PATCH_IF (MOD_IS_INSTALLED ~METweaks.tp2~ 3800) BEGIN
+    LPF DELETE_EFFECT INT_VAR match_opcode = 292 END
+  END
+
+  PATCH_IF (MOD_IS_INSTALLED ~METweaks.tp2~ 3805) BEGIN
+    LPF ALTER_EFFECT INT_VAR match_opcode = 292 duration = 6 END
+  END
+  
+  PATCH_IF (MOD_IS_INSTALLED ~METweaks.tp2~ 3810) BEGIN
+    LPF DELETE_EFFECT INT_VAR match_opcode = 292 END
+    LPF ADD_SPELL_EFFECT 
+      INT_VAR opcode = 321 target = 2 timing = 1 insert_point = 0
+      STR_VAR resource = ~backstab~
+    END
+  END
+  
+  PATCH_IF (MOD_IS_INSTALLED ~METweaks.tp2~ 3815) BEGIN
+    LPF ALTER_EFFECT INT_VAR match_opcode = 292 duration = 6 END
+    LPF ADD_SPELL_EFFECT 
+      INT_VAR opcode = 321 target = 2 timing = 1 insert_point = 0
+      STR_VAR resource = ~backstab~
+    END
+  END

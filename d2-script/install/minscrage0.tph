@@ -1,0 +1,5 @@
+COPY_EXISTING ~SPIN117.SPL~ ~override~
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 18 match_parameter1 = 15 duration = 120 END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 17 match_parameter1 = 15 duration = 120 END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 12 match_parameter1 = 15 duration = 119 END
+BUT_ONLY
