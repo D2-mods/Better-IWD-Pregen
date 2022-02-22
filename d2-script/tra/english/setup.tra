@@ -3,8 +3,9 @@
 @2 = ~Installs on BG(EE), BG2(EE), IWD(EE), IWD2, and any mods built on these engines~
 @3 = ~Better AI for Call Woodland Beings (EEs)~
 @4 = ~Installs on BG:EE, BG2:EE, IWD:EE, and EET~
+@5 = ~This option is not available for atweaks PNP Fey or CWB revisions~
 @9999 = ~Auto-assign script to new characters~
-@5 = ~Requires installing the Better IWD Pregen script~
+@6 = ~Requires installing the Better IWD Pregen script~
 
 
 //Tweaks
@@ -61,6 +62,9 @@
 @446 = ~Installs on BG:EE, BG2:EE, and EET~
 @447 = ~This component is not needed for the current installation~
 
+@448 = ~Items are auto-equipped or added to inventory~
+@449 = ~Start with a bag, containing a mix of weapons~
+
 
 
 //WeiDU Messages
@@ -114,6 +118,14 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
 Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
+
+
+
+//Cooldown mode feedback
+@1000 = ~Cooldown Mode activated for 60 seconds~
+@1001 = ~Cooldown Mode activated for 30 seconds~
+@1002 = ~Cooldown Mode activated for 18 seconds~
+@1003 = ~Cooldown Mode deactivated~
 
 
 
@@ -391,7 +403,6 @@ Not Usable By:
 
 
 //Bag of Holding - unidentified (for ngbag)
-
 @720 = ~Bag~
 
 //iwd1
@@ -410,8 +421,33 @@ Weight: 5 lb.~
 
 
 
-//Bag of Holding - identified (for ngbag)
+//Bag of Holding - identified (for ngitembag)
+@726 = ~Weapon Sack~
 
+//iwdee (ngitembag)
+@727 = ~This magical sack was prepared for <CHARNAME> and <PRO_HISHER> allies. It contains an assortment of weapons, and any or all can be taken out. However, a magical force prevents the party from placing items into the bag.
+
+STATISTICS:
+
+Weight: 5~
+
+//iwd1 (ngitembag)
+@728 = ~This magical sack was prepared for <CHARNAME> and <PROTAGONIST_HISHER> allies. It contains an assortment of weapons, and any or all can be taken out. However, a magical force prevents the party from placing items into the bag.
+
+STATISTICS:
+
+Weight: 5~
+
+//iwd2 (ngitembag)
+@729 = ~This magical sack was prepared for <CHARNAME> and <PROTAGONIST_HISHER> allies. It contains an assortment of weapons, and any or all can be taken out. However, a magical force prevents the party from placing items into the bag.
+
+STATISTICS:
+
+Weight: 5 lb.~
+
+
+
+//Bag of Holding - identified (for ngbag)
 @730 = ~Bag of Holding~
 
 //bg1, bg2, iwd1

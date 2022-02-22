@@ -1,37 +1,10 @@
 IF
-	!Global("d2Player1initiate","GLOBAL",1)
-	Exists(Player1)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2Player1start","GLOBAL",6)
-		Continue()
-END
-
-IF
-	!Global("d2Player1initiate","GLOBAL",1)
-	GlobalTimerExpired("d2Player1start","GLOBAL")
-THEN
-	RESPONSE #100
-		SetGlobal("d2Player1initiate","GLOBAL",1)
-		Continue()
-END
-
-IF
 	!Global("d2Player1prep","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player1start","GLOBAL")
+	Exists(Player1)
 	NumItems("STAF01",Player1,1)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2Player1equip","GLOBAL",6)
-		Continue()
-END
-
-IF
-	!Global("d2Player1prep","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
-THEN
-	RESPONSE #100
-		SetGlobal("d2Player1prep","GLOBAL",1)
 		Continue()
 END
 
@@ -53,7 +26,7 @@ IF
 	!HasItem("SHLD10",Player1)
 THEN
 	RESPONSE #50
-		ActionOverride(Player1,CreateItem("DAGG05",5,0,0))    // throwing daggers
+		ActionOverride(Player1,CreateItem("DAGG05",10,0,0))    // throwing daggers
 		SetGlobal("d2Player1random","GLOBAL",1)
 		Continue()
 	RESPONSE #50
@@ -83,4 +56,24 @@ THEN
 		ActionOverride(Player1,CreateItem("d2#ngrb0",0,0,0))    // worn garment
 		SetGlobal("d2Player1robe","GLOBAL",1)
 		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerExpired("d2Player1equip","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robe","GLOBAL",0)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItem("d2#ngrb0",Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1robe","GLOBAL",0)
 END

@@ -42,6 +42,8 @@ END
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
+ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
+
   COPY ~%MOD_FOLDER%/ngbag/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
     SAY NAME2 @730 SAY DESC @732
@@ -55,11 +57,15 @@ ACTION_IF (GAME_IS ~iwdee~) BEGIN
   END
   
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  
+END
 END
 
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
+ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
+
   COPY ~%MOD_FOLDER%/ngbag/d2hbid2.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @722
     SAY NAME2 @730 SAY DESC @736
@@ -73,11 +79,15 @@ ACTION_IF (GAME_IS ~iwd2~) BEGIN
   END
   
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  
+END
 END
 
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~how totlm~) BEGIN
+ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
+
   COPY ~%MOD_FOLDER%/ngbag/d2hbid1.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
     SAY NAME2 @730 SAY DESC @732
@@ -91,11 +101,15 @@ ACTION_IF (GAME_IS ~how totlm~) BEGIN
   END
   
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  
+END
 END
 
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
+ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
+
   COPY ~%MOD_FOLDER%/ngbag/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
     SAY NAME2 @730 SAY DESC @732
@@ -109,6 +123,8 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
   END
   
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  
+END
 END
 
 ////////////////////////////////////////////////////////////
@@ -146,6 +162,29 @@ ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc ca~) BEGIN
   END
   
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+END
+
+////////////////////////////////////////////////////////////
+
+//IWD games: Patch existing bag if added by another component
+
+ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN  
+  COPY_EXISTING ~d2#ngbag.STO.BAK~ ~override/d2#ngbag.STO~    // revert edits to store file
+  COPY_EXISTING ~d2#ngbag.STO~ ~override~
+    PATCH_IF (GAME_IS ~iwd2 how totlm~) BEGIN
+      WRITE_SHORT 0x9c 50    // set to 50 capacity
+    END
+	
+    PATCH_IF (GAME_IS ~iwdee iwd_in_bg2~) BEGIN
+      WRITE_SHORT 0x22 50    // set to 50 capacity
+    END
+  BUT_ONLY
+
+  COPY_EXISTING ~d2#ngbag.ITM.BAK~ ~override/d2#ngbag.ITM~    // revert edits to item file
+  COPY_EXISTING ~d2#ngbag.ITM~ ~override~
+    PATCH_IF (GAME_IS ~iwd2~) BEGIN SAY DESC @736 END
+    ELSE BEGIN SAY DESC @732 END
+  BUT_ONLY
 END
 
 ////////////////////////////////////////////////////////////

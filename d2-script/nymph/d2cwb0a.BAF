@@ -40,6 +40,7 @@ IF
 	Allegiance(Myself,GOODCUTOFF)
 THEN
 	RESPONSE #100
+		DisplayString(Myself,@1002)
 		SetGlobalTimer("d2cooldown","LOCALS",18)
 		Continue()
 END
@@ -49,6 +50,7 @@ IF
 	Allegiance(Myself,GOODCUTOFF)
 THEN
 	RESPONSE #100
+		DisplayString(Myself,@1003)
 		SetGlobalTimer("d2cooldown","LOCALS",0)
 		Continue()
 END

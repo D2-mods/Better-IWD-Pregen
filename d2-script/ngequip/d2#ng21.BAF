@@ -548,7 +548,7 @@ THEN
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player1,CreateItem("00DAGG06",5,0,0))    // throwing dagger
+		ActionOverride(Player1,CreateItem("00DAGG06",10,0,0))    // throwing dagger
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END
@@ -584,7 +584,7 @@ THEN
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #50
-		ActionOverride(Player1,CreateItem("00DAGG06",5,0,0))    // throwing dagger
+		ActionOverride(Player1,CreateItem("00DAGG06",10,0,0))    // throwing dagger
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END
@@ -634,7 +634,7 @@ THEN
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player1,CreateItem("00DAGG06",5,0,0))    // throwing dagger
+		ActionOverride(Player1,CreateItem("00DAGG06",10,0,0))    // throwing dagger
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END

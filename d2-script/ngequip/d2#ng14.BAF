@@ -1,37 +1,10 @@
 IF
-	!Global("d2Player4initiate","GLOBAL",1)
-	Exists(Player4)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2Player4start","GLOBAL",6)
-		Continue()
-END
-
-IF
-	!Global("d2Player4initiate","GLOBAL",1)
-	GlobalTimerExpired("d2Player4start","GLOBAL")
-THEN
-	RESPONSE #100
-		SetGlobal("d2Player4initiate","GLOBAL",1)
-		Continue()
-END
-
-IF
 	!Global("d2Player4prep","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player4start","GLOBAL")
+	Exists(Player4)
 	NumItems("STAF01",Player4,1)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2Player4equip","GLOBAL",6)
-		Continue()
-END
-
-IF
-	!Global("d2Player4prep","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player4equip","GLOBAL")
-THEN
-	RESPONSE #100
-		SetGlobal("d2Player4prep","GLOBAL",1)
 		Continue()
 END
 
@@ -41,7 +14,7 @@ IF
 	!HasItem("SCIMITA",Player2)
 	!HasItem("HALB01",Player2)
 	!HasItem("AX1H04",Player2)
-	!HasItem("HQDAGG",Player2)
+	!HasItem("SW1H04",Player2)
 THEN
 	RESPONSE #25
 		ActionOverride(Player2,CreateItem("SCIMITA",0,0,0))    // scimitar
@@ -52,12 +25,41 @@ THEN
 		SetGlobal("d2Player4random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("AX1H04",5,0,0))    // throwing axes
+		ActionOverride(Player2,CreateItem("AX1H04",5,0,0))    // throwing axe
 		SetGlobal("d2Player4random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("HQDAGG",0,0,0))    // dagger
+		ActionOverride(Player2,CreateItem("SW1H04",0,0,0))    // long sword
 		SetGlobal("d2Player4random","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player4ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player4equip","GLOBAL")
+	!HasItem("BOW05",Player2)
+	!HasItem("XBOW04",Player2)
+	!HasItem("SLNG01",Player2)
+	!HasItem("DART01",Player2)
+THEN
+	RESPONSE #25
+		ActionOverride(Player2,CreateItem("BOW05",0,0,0))    // shortbow
+		ActionOverride(Player2,CreateItem("AROW01",20,0,0))
+		SetGlobal("d2Player4ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player2,CreateItem("XBOW04",0,0,0))    // crossbow
+		ActionOverride(Player2,CreateItem("BOLT01",20,0,0))
+		SetGlobal("d2Player4ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player2,CreateItem("SLNG01",0,0,0))    // sling
+		ActionOverride(Player2,CreateItem("BULL01",20,0,0))
+		SetGlobal("d2Player4ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		ActionOverride(Player2,CreateItem("DART01",20,0,0))    // darts
+		SetGlobal("d2Player4ranged","GLOBAL",1)
 		Continue()
 END
 
@@ -70,4 +72,24 @@ THEN
 		ActionOverride(Player4,CreateItem("d2#ngrb0",0,0,0))    // worn garment
 		SetGlobal("d2Player4robe","GLOBAL",1)
 		Continue()
+END
+
+IF
+	!Global("d2Player4prep","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player4equip","GLOBAL")
+		GlobalTimerExpired("d2Player4equip","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player4prep","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player4robe","GLOBAL",0)
+	GlobalTimerNotExpired("d2Player4equip","GLOBAL")
+	!HasItem("d2#ngrb0",Player4)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player4robe","GLOBAL",0)
 END

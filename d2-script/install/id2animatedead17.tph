@@ -7,8 +7,8 @@ LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=13 END
 LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=15 END
 LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=17 END
 
-LPF ALTER_EFFECT INT_VAR header=1 match_probability1=50 STR_VAR probability1=49 END
-LPF ALTER_EFFECT INT_VAR header=1 match_probability2=51 STR_VAR probability2=50 END
+LPF ALTER_EFFECT INT_VAR header=1 match_probability1=50 probability1=49 END
+LPF ALTER_EFFECT INT_VAR header=1 match_probability2=51 probability2=50 END
 
 LPF ~CD_EXTEND-O-MATIC~
   INT_VAR

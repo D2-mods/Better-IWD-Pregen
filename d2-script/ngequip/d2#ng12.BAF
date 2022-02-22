@@ -1,37 +1,10 @@
 IF
-	!Global("d2Player2initiate","GLOBAL",1)
-	Exists(Player2)
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2Player2start","GLOBAL",6)
-		Continue()
-END
-
-IF
-	!Global("d2Player2initiate","GLOBAL",1)
-	GlobalTimerExpired("d2Player2start","GLOBAL")
-THEN
-	RESPONSE #100
-		SetGlobal("d2Player2initiate","GLOBAL",1)
-		Continue()
-END
-
-IF
 	!Global("d2Player2prep","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player2start","GLOBAL")
+	Exists(Player2)
 	NumItems("STAF01",Player2,1)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2Player2equip","GLOBAL",6)
-		Continue()
-END
-
-IF
-	!Global("d2Player2prep","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player2equip","GLOBAL")
-THEN
-	RESPONSE #100
-		SetGlobal("d2Player2prep","GLOBAL",1)
 		Continue()
 END
 
@@ -62,6 +35,24 @@ THEN
 END
 
 IF
+	!Global("d2Player2ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player2equip","GLOBAL")
+	!HasItem("BOW05",Player2)
+	!HasItem("XBOW04",Player2)
+THEN
+	RESPONSE #50
+		ActionOverride(Player2,CreateItem("BOW05",0,0,0))    // shortbow
+		ActionOverride(Player2,CreateItem("AROW01",20,0,0))
+		SetGlobal("d2Player2ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #50
+		ActionOverride(Player2,CreateItem("XBOW04",0,0,0))    // crossbow
+		ActionOverride(Player2,CreateItem("BOLT01",20,0,0))
+		SetGlobal("d2Player2ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
 	!Global("d2Player2robe","GLOBAL",1)
 	GlobalTimerNotExpired("d2Player2equip","GLOBAL")
 	!HasItem("d2#ngrb0",Player2)
@@ -70,4 +61,24 @@ THEN
 		ActionOverride(Player2,CreateItem("d2#ngrb0",0,0,0))    // worn garment
 		SetGlobal("d2Player2robe","GLOBAL",1)
 		Continue()
+END
+
+IF
+	!Global("d2Player2prep","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player2equip","GLOBAL")
+		GlobalTimerExpired("d2Player2equip","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player2prep","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player2robe","GLOBAL",0)
+	GlobalTimerNotExpired("d2Player2equip","GLOBAL")
+	!HasItem("d2#ngrb0",Player2)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player2robe","GLOBAL",0)
 END

@@ -285,7 +285,7 @@ IF
 	ProficiencyGT(Player1,96,0)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("DAGG05",5,0,0))    // thowing dagger
+		ActionOverride(Player1,CreateItem("DAGG05",10,0,0))    // throwing dagger
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 END
 

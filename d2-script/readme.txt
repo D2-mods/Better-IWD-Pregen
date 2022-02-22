@@ -93,8 +93,27 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v3.3
+Small upate to scripts:
+- the B and E hotkeys (Cooldown Mode) now give feedback in the dialogue box
+
+Call Woodland Beings script
+- will now be skipped if the atweaks PNP Fey component is installed. It's not impossible to make it compatible, but I don't have time for that right now.
+
+Changes/fixes for the "Give party starting equipment" tweak:
+- IWD-in-BG2: greataxe was set to wrong item resource
+- classic IWD1 (with component 1):
+	- improved scripting
+	- more ranged weapons can spawn
+	
+- Added a new subcomponent:
+	- Component 1: This is the original component. It auto-equips or adds weapons to inventory. The way items are chosen is game-dependent. For IWDEE, it's based on proficiencies, and currently only supports the unmodded prof system.
+	- Component 2: Instead of adding to inventory, this component will give the party a bag, containing a selection of weapons. A single bag is given and the player can choose what to do with unwanted items (i.e. sell or throw away).
+	
+NOTE: If the separate "Give party a Bag of Holding" component is not installed, then items can only be taken out of the weapon bag. If it is installed, then the bag is changed to a normal Bag of Holding. You only have one bag with both installed, and install order doesn't matter.
+
 v3.2
-- Added component: Auto-assign script to new characters. This is a one-time action for each character when starting a new game, when NPCs join, or when loading an existing save.
+- Added component: Auto-assign script to new characters. This is a one-time action for each character in the party. Joinable NPCs in the EEs will also have their starting script changed.
 
 - Added the following tweaks:
 	- Misc fixes for backstab-related 2DA files (EEs)

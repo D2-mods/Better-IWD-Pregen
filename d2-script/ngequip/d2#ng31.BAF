@@ -53,7 +53,7 @@ IF
 	CheckStatGT(Player1,0,111)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("AX2H01",0,0,0))
+		ActionOverride(Player1,CreateItem("2HAXE",0,0,0))
 		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // 2-handed axe
 		SetGlobal("d2Player1melee","GLOBAL",1)
 END
@@ -285,7 +285,7 @@ IF
 	CheckStatGT(Player1,0,96)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("DAGG05",5,0,0))    // thowing dagger
+		ActionOverride(Player1,CreateItem("DAGG05",10,0,0))    // throwing dagger
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 END
 

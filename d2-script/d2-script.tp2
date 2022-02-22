@@ -1,11 +1,12 @@
 BACKUP ~d2-script/backup~
 AUTHOR ~Dan_P~
-VERSION ~3.2~
+VERSION ~3.3~
 
 ALWAYS
   INCLUDE ~%MOD_FOLDER%/lib/d2_movement_effects.tpa~
   INCLUDE ~%MOD_FOLDER%/lib/2da_find_row.tpa~
   INCLUDE ~%MOD_FOLDER%/lib/weapprof_quick_edit.tpa~
+  INCLUDE ~%MOD_FOLDER%/lib/d2_store_functions.tpa~
   INCLUDE ~%MOD_FOLDER%/lib/CD_EXTEND-O-MATIC.tpa~
   INCLUDE ~%MOD_FOLDER%/lib/2da_missing_cols.tpa~
 END
@@ -31,11 +32,12 @@ INCLUDE ~%MOD_FOLDER%/install/iwdpgen.tph~
 
 ////////////////////////////////////////////////////////////
 
-//Better AI for Call Woodland Beings (BGEE, BG2EE, EET, IWDEE)
+//Better AI for Call Woodland Beings (EEs)
 
 BEGIN @3
 DESIGNATED 20
-REQUIRE_PREDICATE GAME_IS ~bgee bg2ee iwdee eet~ @4
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/rr#fdrya.bcs~) @5    // not compatible with atweaks Fey/CWB revisions
 LABEL ~D2-SCRIPT-NYMPH~
 INCLUDE ~%MOD_FOLDER%/install/nymph.tph~
 
@@ -45,7 +47,7 @@ INCLUDE ~%MOD_FOLDER%/install/nymph.tph~
 
 BEGIN @9999
 DESIGNATED 9999
-REQUIRE_COMPONENT ~d2-script.tp2~ ~10~ @5
+REQUIRE_COMPONENT ~d2-script.tp2~ ~10~ @6
 LABEL ~D2-SCRIPT-NGAUTO~
 INCLUDE ~%MOD_FOLDER%/install/ngauto.tph~
 
@@ -103,7 +105,7 @@ INCLUDE ~%MOD_FOLDER%/install/id2animatedead9.tph~
 
 BEGIN @412    // Movement bonuses bypass Free Action
 DESIGNATED 60
-REQUIRE_PREDICATE GAME_IS ~bgee bg2ee iwdee eet~ @4
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
 SUBCOMPONENT @411
 LABEL ~D2-TWEAKS-PLYMOVEBONUS1~
 INCLUDE ~%MOD_FOLDER%/install/plymovebonus1.tph~
@@ -119,7 +121,7 @@ INCLUDE ~%MOD_FOLDER%/install/plymovebonus0.tph~
 
 BEGIN @415    // for Druids and Polymorph Self
 DESIGNATED 70
-REQUIRE_PREDICATE GAME_IS ~iwdee~ @417
+REQUIRE_PREDICATE (GAME_IS ~iwdee~) @417
 SUBCOMPONENT @414
 LABEL ~D2-IWDEE-FASTERDRUIDS1~
 INCLUDE ~%MOD_FOLDER%/install/fasterdruids1.tph~
@@ -133,11 +135,18 @@ INCLUDE ~%MOD_FOLDER%/install/fasterdruids0.tph~
 
 //Give party starting equipment (IWD games)
 
-BEGIN @418
+BEGIN @448    // Items are auto-equipped or added to inventory
 DESIGNATED 80
 REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 iwd how totlm iwd_in_bg2~) @419
+SUBCOMPONENT @418
 LABEL ~D2-TWEAKS-NGEQUIP~
 INCLUDE ~%MOD_FOLDER%/install/ngequip.tph~
+
+BEGIN @449    // Start with a bag, containing a mix of weapons
+REQUIRE_PREDICATE !(GAME_IS ~iwd~) @425
+SUBCOMPONENT @418
+LABEL ~D2-TWEAKS-NGITEMBAG~
+INCLUDE ~%MOD_FOLDER%/install/ngitembag.tph~
 
 ////////////////////////////////////////////////////////////
 
@@ -146,21 +155,17 @@ INCLUDE ~%MOD_FOLDER%/install/ngequip.tph~
 BEGIN @421    // "Bottomless" bag (same as Tweaks Anthology component)
 DESIGNATED 90
 REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
-                   (NOT GAME_IS ~bg1 totsc iwd pst pstee~)) @425
+                   !(GAME_IS ~bg1 totsc iwd pst pstee~)) @425
 SUBCOMPONENT @420
 LABEL ~D2-TWEAKS-NGBAGA~
 INCLUDE ~%MOD_FOLDER%/install/ngbagA.tph~
 
 BEGIN @422    // Capacity = 50 items (IWD2 default)
-REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
-                   (NOT GAME_IS ~bg1 totsc iwd pst pstee~)) @425
 SUBCOMPONENT @420
 LABEL ~D2-TWEAKS-NGBAGB~
 INCLUDE ~%MOD_FOLDER%/install/ngbagB.tph~
 
 BEGIN @423    // Capacity = 100 items (BG2 default)
-REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
-                   (NOT GAME_IS ~bg1 totsc iwd pst pstee~)) @425
 SUBCOMPONENT @420
 LABEL ~D2-TWEAKS-NGBAGC~
 INCLUDE ~%MOD_FOLDER%/install/ngbagC.tph~
@@ -196,7 +201,7 @@ INCLUDE ~%MOD_FOLDER%/install/conbon3e.tph~
 
 BEGIN @430
 DESIGNATED 110
-REQUIRE_PREDICATE GAME_IS ~bgee bg2ee iwdee eet~ @4
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
 LABEL ~D2-TWEAKS-BACKSTABCHECK~
 INCLUDE ~%MOD_FOLDER%/install/backstabcheck.tph~
 

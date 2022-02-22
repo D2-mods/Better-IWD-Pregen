@@ -52,7 +52,7 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~DPLAYER3.BCS~) BEGIN
 END
 
 //classic BG1: Imoen in "Mission-Pack-Save" doesn't have DPLAYER2 script
-ACTION_IF (GAME_IS ~bgee totsc~) BEGIN
+ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN
   COPY ~scripts/default.bs~ ~override/default.bcs~
   EXTEND_TOP ~default.BCS~ ~.../d2-script/temp/d2#ngbs.baf~
   COPY ~override/default.bcs~ ~scripts/default.bs~

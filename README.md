@@ -45,14 +45,12 @@ Also, I'm normally not a fan of auto-using of abilities (for PCs), but Search is
 - will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance
 - will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (for example, from a contingency or area invisibility spell)
 - will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
-- ***REMOVED*** -> Calls for help (Shout action/response)
 
 v2.0: added an improved AI script for the nymph summon (Call Woodland Beings)
 
 #### Cooldown hotkeys:
-- if the B key is pressed, the character will enter a Cooldown mode for 5 rounds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active
+- if the B key is pressed, the character will enter a Cooldown mode for 30 seconds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active
 - if the E key is pressed, the Cooldown mode will be deactivated
-- both these keys can also be used as "stop action" buttons, as they will override other actions
 - if the game is saved while a character is in Cooldown mode, it will be deactivated on reload
 
 Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering
@@ -148,7 +146,8 @@ Info:
 - Cooldown hotkeys to delay spellcasting
   ```
 
-Compatible with BG:EE, BG2:EE, IWD:EE and EET.
+Compatible with BG:EE, BG2:EE, IWD:EE and EET.  
+Not compatible with atweaks PNP Fey (will be skipped during installation)
 
 > DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
 

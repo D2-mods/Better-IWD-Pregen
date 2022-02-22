@@ -65,14 +65,18 @@ Give party starting equipment (IWD games)
 ==================================================
 This component gives player characters basic starting weapons, because my characters aren't idiots who travel to Icewind Dale unprepared. The pre-made parties in IWD2 also start out equipped, so this just makes it more fair for custom parties.
 
-On a technical level, this is a global script that runs once per character per game. It can theoretically take effect for games that are already started, but unless you're still at the beginning, you should have better equipment already.
+This is a global script that runs once per character per game. It can theoretically take effect for games that are already started, but unless you're still at the beginning, you should have better equipment already.
+
+NOTE: For IWDEE, if using a proficiency overhaul mod, component 2 should usually be chosen, as the scripts for component 1 do not currently adjust for other mods.
+
+
+Component 1 (auto-equip)
 
 Instructions:
 - after installing, start a new game with new characters (you can also load one saved at the start)
 - wait a few seconds for the script to run for each character
 - that's it, the items will be either equipped or in the inventory
-- for IWD1, if loading an existing save, you may need to open and close the Inventory or Record screen 1-2 times to make the script run
-
+- for classic IWD, if loading an existing save, you may need to open/close the Inventory or Record screen 1-2 times to make the script run
 
 Info/Known issues:
 
@@ -99,7 +103,14 @@ IWD2
 IWD-in-BG2
 - works the same as in IWD:EE
 - quickslot icon (in main game screen) is not auto-updated
-- to update the icon requires picking up and re-equipping each weapon (save/reload doesn't work)
+- to update the icon, pick up and re-equip each weapon (save/reload doesn't work)
+
+
+Component 2 (weapon bag)
+
+This component will give the party a bag, containing a selection of weapons. A single bag is given and the player can choose what to do with unwanted items (i.e. sell or throw away). The contents is the same regardless of party size. For IWDEE, the bag contains at least one weapon from each BG2 proficiency, so it should be compatible with any proficiency overhauls.
+
+NOTE: If the separate "Give party a Bag of Holding" component is not installed, then items can only be taken out of the weapon bag. If it is installed, then the bag is changed to a normal Bag of Holding. You only have one bag with both installed, and install order doesn't matter.
 
 
 ==================================================

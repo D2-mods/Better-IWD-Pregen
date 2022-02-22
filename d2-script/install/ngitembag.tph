@@ -17,15 +17,15 @@ ACTION_IF (GAME_IS ~iwdee~) BEGIN
   COPY ~%MOD_FOLDER%/ngequip/d2#ngrb0.ITM~ ~override~
     SAY NAME1 @710 SAY NAME2 @710 SAY UNIDENTIFIED_DESC @711
 
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng01.BAF~ ~%MOD_FOLDER%/temp/d2#ng02.BAF~    // create baf files for each PC
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb0.BAF~ ~%MOD_FOLDER%/temp/d2#ng02.BAF~    // create baf files for each PC
     REPLACE_TEXTUALLY ~Player1~ ~Player2~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng01.BAF~ ~%MOD_FOLDER%/temp/d2#ng03.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb0.BAF~ ~%MOD_FOLDER%/temp/d2#ng03.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player3~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng01.BAF~ ~%MOD_FOLDER%/temp/d2#ng04.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb0.BAF~ ~%MOD_FOLDER%/temp/d2#ng04.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player4~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng01.BAF~ ~%MOD_FOLDER%/temp/d2#ng05.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb0.BAF~ ~%MOD_FOLDER%/temp/d2#ng05.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player5~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng01.BAF~ ~%MOD_FOLDER%/temp/d2#ng06.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb0.BAF~ ~%MOD_FOLDER%/temp/d2#ng06.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player6~
 
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng06.BAF~    // add scripts to baldur.BCS
@@ -33,23 +33,36 @@ ACTION_IF (GAME_IS ~iwdee~) BEGIN
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng04.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng03.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng02.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ng01.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#nga1.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ngb0.BAF~
   
 END
 
 ////////////////////////////////////////////////////////////
 
-ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
+ACTION_IF (GAME_IS ~how totlm~) BEGIN
   COPY ~%MOD_FOLDER%/ngequip/d2#ngrb0.BAM~ ~override~
   COPY ~%MOD_FOLDER%/ngequip/d2#ngrb0.ITM~ ~override~
     SAY NAME1 @710 SAY NAME2 @710 SAY UNIDENTIFIED_DESC @712
 
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ng16.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ng15.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ng14.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ng13.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ng12.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ng11.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb1.BAF~ ~%MOD_FOLDER%/temp/d2#ng12.BAF~
+    REPLACE_TEXTUALLY ~Player1~ ~Player2~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb1.BAF~ ~%MOD_FOLDER%/temp/d2#ng13.BAF~
+    REPLACE_TEXTUALLY ~Player1~ ~Player3~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb1.BAF~ ~%MOD_FOLDER%/temp/d2#ng14.BAF~
+    REPLACE_TEXTUALLY ~Player1~ ~Player4~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb1.BAF~ ~%MOD_FOLDER%/temp/d2#ng15.BAF~
+    REPLACE_TEXTUALLY ~Player1~ ~Player5~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb1.BAF~ ~%MOD_FOLDER%/temp/d2#ng16.BAF~
+    REPLACE_TEXTUALLY ~Player1~ ~Player6~
+
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng16.BAF~    // add scripts to baldur.BCS
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng15.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng14.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng13.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng12.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#nga1.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ngb1.BAF~
 END
 
 ////////////////////////////////////////////////////////////
@@ -59,15 +72,15 @@ ACTION_IF (GAME_IS ~iwd2~) BEGIN
   COPY ~%MOD_FOLDER%/ngequip/d2#ngrb2.ITM~ ~override~
     SAY NAME1 @710 SAY NAME2 @710 SAY UNIDENTIFIED_DESC @713
 	
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng21.BAF~ ~%MOD_FOLDER%/temp/d2#ng22.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb2.BAF~ ~%MOD_FOLDER%/temp/d2#ng22.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player2~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng21.BAF~ ~%MOD_FOLDER%/temp/d2#ng23.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb2.BAF~ ~%MOD_FOLDER%/temp/d2#ng23.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player3~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng21.BAF~ ~%MOD_FOLDER%/temp/d2#ng24.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb2.BAF~ ~%MOD_FOLDER%/temp/d2#ng24.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player4~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng21.BAF~ ~%MOD_FOLDER%/temp/d2#ng25.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb2.BAF~ ~%MOD_FOLDER%/temp/d2#ng25.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player5~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng21.BAF~ ~%MOD_FOLDER%/temp/d2#ng26.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb2.BAF~ ~%MOD_FOLDER%/temp/d2#ng26.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player6~
 	
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng26.BAF~
@@ -75,7 +88,8 @@ ACTION_IF (GAME_IS ~iwd2~) BEGIN
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng24.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng23.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng22.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ng21.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#nga2.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ngb2.BAF~
 END
 
 ////////////////////////////////////////////////////////////
@@ -96,16 +110,16 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
   COPY ~%MOD_FOLDER%/ngequip/d2#ngrb0.BAM~ ~override~
   COPY ~%MOD_FOLDER%/ngequip/d2#ngrb0.ITM~ ~override~
     SAY NAME1 @710 SAY NAME2 @710 SAY UNIDENTIFIED_DESC @712
-  
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng31.BAF~ ~%MOD_FOLDER%/temp/d2#ng32.BAF~
+	
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb3.BAF~ ~%MOD_FOLDER%/temp/d2#ng32.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player2~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng31.BAF~ ~%MOD_FOLDER%/temp/d2#ng33.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb3.BAF~ ~%MOD_FOLDER%/temp/d2#ng33.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player3~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng31.BAF~ ~%MOD_FOLDER%/temp/d2#ng34.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb3.BAF~ ~%MOD_FOLDER%/temp/d2#ng34.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player4~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng31.BAF~ ~%MOD_FOLDER%/temp/d2#ng35.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb3.BAF~ ~%MOD_FOLDER%/temp/d2#ng35.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player5~
-  COPY - ~%MOD_FOLDER%/ngequip/d2#ng31.BAF~ ~%MOD_FOLDER%/temp/d2#ng36.BAF~
+  COPY - ~%MOD_FOLDER%/ngequip/d2#ngb3.BAF~ ~%MOD_FOLDER%/temp/d2#ng36.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player6~
 	
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng36.BAF~
@@ -113,7 +127,8 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng34.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng33.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/temp/d2#ng32.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ng31.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#nga1.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngequip/d2#ngb3.BAF~
 
   COPY_EXISTING ~xbow04.ITM~ ~override~    // fixing text for light crossbows (was annoying to look at while testing)
     SAY NAME1 @150 SAY NAME2 @150 SAY UNIDENTIFIED_DESC @250
@@ -132,6 +147,39 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
   COPY_EXISTING ~ULXBW5A.ITM~ ~override~
     SAY NAME1 @150 SAY NAME2 @157 SAY UNIDENTIFIED_DESC @250 SAY DESC @257
 
+END
+
+////////////////////////////////////////////////////////////
+
+//Add and fill bag, or just fill if it already exists
+
+ACTION_IF (FILE_EXISTS ~override/d2#ngbag.STO~) BEGIN
+  INCLUDE ~%MOD_FOLDER%/install/ngitembagfill.tph~  
+  COPY_EXISTING ~d2#ngbag.STO~ ~override/d2#ngbag.STO.BAK~    // backup just in case
+  COPY_EXISTING ~d2#ngbag.ITM~ ~override/d2#ngbag.ITM.BAK~    // backup just in case
+END
+
+ACTION_IF !(FILE_EXISTS ~override/d2#ngbag.STO~) BEGIN
+  INCLUDE ~%MOD_FOLDER%/install/ngbagA.tph~
+  INCLUDE ~%MOD_FOLDER%/install/ngitembagfill.tph~
+  COPY_EXISTING ~d2#ngbag.STO~ ~override/d2#ngbag.STO.BAK~    // backup to make it easy to revert changes
+  COPY_EXISTING ~d2#ngbag.STO~ ~override~
+    SAY 0xc @726  /* Weapon Sack */
+    LPF cannot_add_items END    // make it so items cannot be placed in the bag
+  BUT_ONLY
+  
+  COPY_EXISTING ~d2#ngbag.ITM~ ~override/d2#ngbag.ITM.BAK~    // backup to make it easy to revert changes
+  COPY_EXISTING ~d2#ngbag.ITM~ ~override~
+    SAY NAME1 @726 SAY NAME2 @726
+    PATCH_IF (GAME_IS ~iwdee iwd_in_bg2~) BEGIN SAY DESC @727 END
+    PATCH_IF (GAME_IS ~how totlm~) BEGIN SAY DESC @728 END
+    PATCH_IF (GAME_IS ~iwd2~) BEGIN SAY DESC @729 END
+    WRITE_ASCII 0x3a ~iholding~ #8    // set inventory icon
+  BUT_ONLY
+  
+  ACTION_IF !(FILE_EXISTS_IN_GAME ~IHOLDING.BAM~) BEGIN
+    COPY ~%MOD_FOLDER%/ngequip/IHOLDING.BAM~ ~override~
+  END
 END
 
 ////////////////////////////////////////////////////////////
