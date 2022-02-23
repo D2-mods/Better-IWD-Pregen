@@ -286,7 +286,7 @@ COPY_EXISTING ~backstab.2DA~ ~override~
   FOR (row = 1; row < row_count; ++row) BEGIN    // checks %row% if less than %row_count%, ++row increments by +1
     READ_2DA_ENTRY row 0 2 ~match~    // read table entry, and stores in variable %match%
     PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%row_name%~) OR 
-	          (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+              (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
       REMOVE_2DA_ROW %row% 2
     END
   END
@@ -297,7 +297,7 @@ COPY_EXISTING ~crippstr.2DA~ ~override~
   FOR (row = 1; row < row_count; ++row) BEGIN    // checks %row% if less than %row_count%, ++row increments by +1
     READ_2DA_ENTRY row 0 2 ~match~    // read table entry, and stores in variable %match%
     PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%row_name%~) OR 
-	          (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+              (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
       REMOVE_2DA_ROW %row% 2
     END
   END
@@ -308,7 +308,7 @@ COPY_EXISTING ~sneakatt.2DA~ ~override~
   FOR (row = 1; row < row_count; ++row) BEGIN    // checks %row% if less than %row_count%, ++row increments by +1
     READ_2DA_ENTRY row 0 2 ~match~    // read table entry, and stores in variable %match%
     PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%row_name%~) OR 
-	          (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+              (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
       REMOVE_2DA_ROW %row% 2
     END
   END

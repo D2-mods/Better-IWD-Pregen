@@ -93,6 +93,11 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v3.3.1
+- for "Give party starting equipment" - bag option:
+	- IWD2: minor fix + added a greatsword to the bag
+	- IWDEE: added a scimitar to the bag (the ninjato is still there)
+
 v3.3
 Small upate to scripts:
 - the B and E hotkeys (Cooldown Mode) now give feedback in the dialogue box

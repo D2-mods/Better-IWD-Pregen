@@ -10,7 +10,7 @@ Info:
 - Cooldown hotkeys to delay spellcasting
 
 Compatible with BG:EE, BG2:EE, IWD:EE and EET.
-Not compatible with atweaks PNP Fey (will be skipped during installation)
+Not compatible with atweaks PNP Fey (will be skipped during installation).
 
 DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
 

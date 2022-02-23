@@ -1,6 +1,6 @@
 BACKUP ~d2-script/backup~
 AUTHOR ~Dan_P~
-VERSION ~3.3~
+VERSION ~3.3.1~
 
 ALWAYS
   INCLUDE ~%MOD_FOLDER%/lib/d2_movement_effects.tpa~

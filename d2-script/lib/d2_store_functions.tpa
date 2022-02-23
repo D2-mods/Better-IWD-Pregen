@@ -6,7 +6,7 @@ cannot_add_items
 
 ////////////////////////////////////////////////////////////
 
-// removes the ability to sell to stores or place items in bags
+//removes the ability to sell to stores or place items in bags
 
 DEFINE_PATCH_FUNCTION cannot_add_items
  

@@ -47,7 +47,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -87,7 +87,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -127,7 +127,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -180,7 +180,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -233,7 +233,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -282,7 +282,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -331,7 +331,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -375,7 +375,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -419,7 +419,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -463,7 +463,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -507,7 +507,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -555,7 +555,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -603,7 +603,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -648,7 +648,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -693,7 +693,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -742,7 +742,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -791,7 +791,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -842,7 +842,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -899,7 +899,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -956,7 +956,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -1008,7 +1008,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -1047,7 +1047,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -1086,7 +1086,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -1126,7 +1126,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -1166,7 +1166,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -1210,7 +1210,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -1254,7 +1254,7 @@ BEGIN
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END
@@ -1294,7 +1294,7 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
     FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
       READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
       PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-	            (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
         SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
       END
     END

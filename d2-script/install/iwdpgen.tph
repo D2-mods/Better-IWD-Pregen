@@ -11,9 +11,10 @@ COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~    // copy to scripts folder
 
 ACTION_IF (FILE_EXISTS_IN_GAME ~iwdpgen.BCS~) BEGIN
   COPY_EXISTING ~iwdpgen.BCS~ ~override/iwdpgen.BAK~    // backup iwdpgen.BCS
-  COPY_EXISTING ~d2bsee.BCS~ ~override/iwdpgen.BCS~    // replace iwdpgen.BCS
   PRINT @50
 END
+
+COPY_EXISTING ~d2bsee.BCS~ ~override/iwdpgen.BCS~    // replace iwdpgen.BCS
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // update text
   LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
