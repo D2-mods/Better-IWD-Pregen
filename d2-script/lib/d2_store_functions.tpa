@@ -15,12 +15,8 @@ BEGIN
   WRITE_LONG 0x10 (THIS BAND BNOT BIT1)    // cannot click Sell button (store screen)
 
   PATCH_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-    FOR (cat = 0; cat < 28; ++cat) BEGIN
+    FOR (cat = 0; cat < 38; ++cat) BEGIN
       LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END    // cannot add item type (including to bags)
-    END
-  
-    FOR (cat = 29; cat < 38; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
     END
 	
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 51 END
@@ -110,12 +106,8 @@ COPY_EXISTING ~%store%.STO~ ~override~
   WRITE_LONG 0x10 (THIS BAND BNOT BIT1)    // cannot click Sell button (store screen)
 
   PATCH_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-    FOR (cat = 0; cat < 28; ++cat) BEGIN
+    FOR (cat = 0; cat < 38; ++cat) BEGIN
       LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END    // cannot add item type (including to bags)
-    END
-  
-    FOR (cat = 29; cat < 38; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
     END
 	
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 51 END

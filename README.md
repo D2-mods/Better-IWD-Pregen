@@ -57,16 +57,6 @@ Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldo
 
 #### Additional info:
 <details>
-  <summary>A few notes on version differences</summary>
-  
-> v0.6: Similar to the vanilla IWD Pregen, except it accounts for Shaman abilities (Dance and Search); Mages and Sorcerers (single class only) have reduced melee aggro range
-
-> v1.x: Uses the AttackOneRound() action to retarget every round, regardless of enemy; many of the core features of the script are implemented in some form
-
-> v2.0+: Uses both Attack() and AttackReevaluate() + setting timers; retargeting only occurs if relevant enemies are in sight; characters will enter or exit an "autobattle" mode, depending on conditions, which will activate or deactivate parts of the script
-  
-</details>
-<details>
   <summary>Auto-attack breakdown</summary>
   
 #### EEs:

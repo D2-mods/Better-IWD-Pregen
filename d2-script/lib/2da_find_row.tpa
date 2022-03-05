@@ -165,7 +165,7 @@ BEGIN
   COUNT_2DA_ROWS columns row_count    // row_count = # rows with the required amount of columns
   SET row_number = (row_count)
   
-  FOR (row = 1; row < row_count; ++row) BEGIN    // checks %row% if less than %row_count%, ++row increments by +1
+  FOR (row = (row_count - 1); row > 0; row -= 1) BEGIN    // checks %row%, starting from bottom
     READ_2DA_ENTRY row %col_read% columns ~match~    // read table entry, and stores in variable %match%
     PATCH_IF ~%match%~ STRING_EQUAL_CASE ~%row_name%~ BEGIN
       REMOVE_2DA_ROW %row% %columns%
@@ -197,7 +197,7 @@ COPY_EXISTING ~%2da%.2DA~ ~override~
   COUNT_2DA_ROWS columns row_count    // row_count = # rows with the required amount of columns
   SET row_number = (row_count)
   
-  FOR (row = 1; row < row_count; ++row) BEGIN    // checks %row% if less than %row_count%, ++row increments by +1
+  FOR (row = (row_count - 1); row > 0; row -= 1) BEGIN    // checks %row%, starting from bottom
     READ_2DA_ENTRY row %col_read% columns ~match~    // read table entry, and stores in variable %match%
     PATCH_IF ~%match%~ STRING_EQUAL_CASE ~%row_name%~ BEGIN
       REMOVE_2DA_ROW %row% %columns%
