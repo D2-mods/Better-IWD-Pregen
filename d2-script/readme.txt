@@ -42,6 +42,7 @@ Tweak components:
 11. Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
 12. Weapon Style tweak for Deities of Faerun (EEs)
 13. Allow Minsc to use his Berserk ability at will (BG games)
+14. Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
 
 All components can be installed independently and in any order, except for auto-assigning the script.
 
@@ -93,6 +94,11 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v3.4
+- minor adjustments to party scripts
+- added tweak: Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
+- IWD2: minor update to "starting equipment" - bag option
+
 v3.3.1
 - for "Give party starting equipment" - bag option:
 	- IWD2: minor fix + added a greatsword to the bag

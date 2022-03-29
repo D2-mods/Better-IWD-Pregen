@@ -204,6 +204,16 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Heard([GOODCUTOFF],400)
+	!Range([EVILCUTOFF],30)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
@@ -380,7 +390,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2retarget3","LOCALS",18)
-		Attack(LastSeenBy())
+		AttackOneRound(LastSeenBy())
 END
 
 IF

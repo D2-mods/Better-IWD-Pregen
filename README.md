@@ -24,8 +24,9 @@ Tweak components:
 11. Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
 12. Weapon Style tweak for Deities of Faerun (EEs)
 13. Allow Minsc to use his Berserk ability at will (BG games)
+14. Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
   ```
-All components can be installed independently and in any order. Most of the options in the installer are pretty self-explanatory, but the mod folder also contains a readme detailing the tweaks, in case there's any confusion.
+All components can be installed independently and in any order, except for auto-assigning the script. Most of the options in the installer are pretty self-explanatory, but the mod folder also contains a readme detailing the tweaks, in case there's any confusion.
 
 #### Overview (party script):
 This script manages auto-attack, while giving more nuanced control of the characters, so the player can focus on tactics and usage of spells and abilities to win battles. The script will never use your consumable items, spells, or abilities. What it does is put you in position to better use these abilities, while reducing some of the more frustrating aspects of auto-attack.

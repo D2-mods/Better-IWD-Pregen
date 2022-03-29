@@ -64,6 +64,7 @@
 
 @448 = ~Items are auto-equipped or added to inventory~
 @449 = ~Start with a bag, containing a mix of weapons~
+@450 = ~Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)~
 
 
 
@@ -515,3 +516,8 @@ Minsc becomes enraged for 1 turn. While enraged, he gains a +2 bonus to his Stre
 @903 = ~Berserk
 
 Minsc becomes enraged for 2 turns. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
+
+
+
+//Biography from Black Pits 2 (for biofix)
+@99 = ~%name%... you wanted to be an adventurer for as long as you can remember. Even as a small child, you knew there was a vast world beyond the simple life you witnessed around you every day. Traveling bards fanned the flames of your determination to escape your mundane existence with tales of dragons and monsters, wizards and knights, legendary heroes and infamous villains. And you knew then that one day your deeds... your name... would be known throughout the realms.~

@@ -220,6 +220,16 @@ THEN
 END
 
 IF
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	Heard([GOODCUTOFF],400)
+	!LOS([EVILCUTOFF],30)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	!CheckSpellState(Myself,SANCTUARY)

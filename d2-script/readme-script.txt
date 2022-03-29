@@ -22,7 +22,7 @@ Other features
 ==================================================
 Cooldown hotkeys
 ==================================================
-- if the B key is pressed, the character will enter a Cooldown mode for 5 rounds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active
+- if the B key is pressed, the character will enter a Cooldown mode for 30 seconds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active
 - if the E key is pressed, the Cooldown mode will be deactivated
 - both these keys can also be used as "stop action" buttons, as they will override other actions
 - if the game is saved while a character is in Cooldown mode, it will be deactivated on reload

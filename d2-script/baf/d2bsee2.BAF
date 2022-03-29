@@ -251,7 +251,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2retarget3","LOCALS",18)
-		Attack(LastSeenBy())
+		AttackOneRound(LastSeenBy())
 END
 
 IF

@@ -1,6 +1,6 @@
 BACKUP ~d2-script/backup~
 AUTHOR ~Dan_P~
-VERSION ~3.3.1~
+VERSION ~3.4~
 
 ALWAYS
   INCLUDE ~%MOD_FOLDER%/lib/d2_movement_effects.tpa~
@@ -293,6 +293,16 @@ REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp
                    !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE120~))) @447
 LABEL ~D2-TWEAKS-MINSCRAGE0~
 INCLUDE ~%MOD_FOLDER%/install/minscrage0.tph~
+
+////////////////////////////////////////////////////////////
+
+//Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
+
+BEGIN @450
+DESIGNATED 160
+REQUIRE_PREDICATE GAME_IS ~iwdee iwd_in_bg2~ @447
+LABEL ~D2-TWEAKS-IWDSHORTBOWFIX~
+INCLUDE ~%MOD_FOLDER%/install/iwdshortbowfix.tph~
 
 ////////////////////////////////////////////////////////////
 

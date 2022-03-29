@@ -199,3 +199,12 @@ Allow Minsc to use Berserk at will (BG games)
 
 NOTE: Will be skipped if Rashemi Berserker (Artisan's Kitpack) is installed
 
+
+==================================================
+Patch visuals for weapon types (game-specific)
+==================================================
+- IWDEE: Patch shortbows to use shortbow appearance (as in classic IWD)
+- IWD-in-BG2: Patch scimitars to use scimitar appearance (was long sword)
+
+NOTE: Shortbow appearance can't be set for IWD-in-BG2
+

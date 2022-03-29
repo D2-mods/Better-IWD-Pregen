@@ -307,7 +307,7 @@ DEFINE_ACTION_FUNCTION delete_movement_effects
   
 BEGIN
 
-ACTION_IF (FILE_EXISTS_IN_GAME ~%item%.itm~) BEGIN
+ACTION_IF (FILE_EXISTS ~%item%.itm~) BEGIN
   COPY_EXISTING ~%item%.itm~ ~override~
     LPF DELETE_EFFECT INT_VAR match_opcode=126 END
     LPF DELETE_EFFECT INT_VAR match_opcode=176 END
@@ -325,7 +325,7 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~%item%.itm~) BEGIN
   BUT_ONLY
 END
 
-ACTION_IF (FILE_EXISTS_IN_GAME ~%spell%.spl~) BEGIN
+ACTION_IF (FILE_EXISTS ~%spell%.spl~) BEGIN
   COPY_EXISTING ~%spell%.spl~ ~override~
     LPF DELETE_EFFECT INT_VAR match_opcode=126 END
     LPF DELETE_EFFECT INT_VAR match_opcode=176 END

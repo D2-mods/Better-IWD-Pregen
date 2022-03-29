@@ -27,14 +27,11 @@ THEN
 END
 
 IF
+	!Global("d2Player1prep","GLOBAL",1)
 	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 	HasItem("00STAF01",Player1)
-	OR(2)
-		!Global("d2Player1robe","GLOBAL",1)
-		NumItemsGT("00STAF01",Player1,1)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,DestroyItem("00STAF01"))
 		SetGlobal("d2Player1prep","GLOBAL",1)
 		Continue()
 END
