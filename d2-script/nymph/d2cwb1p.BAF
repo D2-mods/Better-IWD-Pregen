@@ -44,6 +44,7 @@ END
 IF
 	ActionListEmpty()
 	Allegiance(Myself,GOODCUTOFF)
+	!HasItem("RR#DINV",Myself)
 	See(NearestEnemyOf())
 	OR(2)
 		StateCheck(Myself,STATE_INVISIBLE)
@@ -57,6 +58,7 @@ END
 IF
 	ActionListEmpty()
 	Allegiance(Myself,GOODCUTOFF)
+	!HasItem("RR#DINV",Myself)
 	OR(2)
 		StateCheck(Myself,STATE_INVISIBLE)
 		CheckStat(Myself,1,SANCTUARY)

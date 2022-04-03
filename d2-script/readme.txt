@@ -94,6 +94,11 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v3.6
+- Call Woodland Beings - patch option (EEs)
+	- atweaks summons will correctly have the item RR#DINV.ITM destroyed automatically when summoned
+	- was being prevented because my patch prevents AI actions while invisible (the item makes them invisible)
+
 v3.5
 - Call Woodland Beings AI (EEs)
 	- added subcomponent: Use existing script, but patch in a few actions
