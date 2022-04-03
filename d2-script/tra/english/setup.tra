@@ -3,9 +3,13 @@
 @2 = ~Installs on BG(EE), BG2(EE), IWD(EE), IWD2, and any mods built on these engines~
 @3 = ~Better AI for Call Woodland Beings (EEs)~
 @4 = ~Installs on BG:EE, BG2:EE, IWD:EE, and EET~
-@5 = ~This option is not available for atweaks PNP Fey or CWB revisions~
+@5 = ~This option is not available for atweaks PNP Fey~
 @9999 = ~Auto-assign script to new characters~
 @6 = ~Requires installing the Better IWD Pregen script~
+
+@7 = ~Use Revised script for nymph summon~
+@8 = ~Use existing script, but patch in a few actions~
+@9 = ~Use existing script, but patch in a few actions (atweaks)~
 
 
 //Tweaks
@@ -46,7 +50,7 @@
 @431 = ~Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)~
 @432 = ~Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)~
 @433 = ~Can Sneak Attack a target once every 30 seconds (stat reduction does not stack)~
-@434 = ~Uncap Crippling Strike, but do not change delay~
+@434 = ~Uncap Crippling Strike, but do not change delay (420 seconds)~
 @435 = ~Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)~
 @436 = ~Cannot detect files that this component has fixes for~
 @437 = ~Weapon Style tweak for Deities of Faerun (EEs)~
@@ -60,7 +64,7 @@
 @444 = ~This option is not available for Rashemi Berserker (Artisan's Kitpack)~
 @445 = ~Timing fix for Minsc's Berserk ability (EEs)~
 @446 = ~Installs on BG:EE, BG2:EE, and EET~
-@447 = ~This component is not needed for the current installation~
+@447 = ~This component is not needed or available for the current game~
 
 @448 = ~Items are auto-equipped or added to inventory~
 @449 = ~Start with a bag, containing a mix of weapons~
@@ -78,6 +82,10 @@
 @53 = ~NOTE: See the readme-tweaks file in the mod folder for summon list and additional info.
 ~
 @54 = ~NOTE: See the readme-tweaks file for additional info, as well as how to avoid (or use) an exploit.
+~
+@55 = ~The script is not currently compatible with the "Extended Items/Quest/Spell messages" tweak (Improved GUI mod). Please uninstall this component if you would like to install Better IWD Pregen.
+~
+@56 = ~NOTE: This patch makes the nymph AI preserve invisibility, as well as make usable the D key (Dimension Door to the summoner when no enemies are in sight).
 ~
 
 

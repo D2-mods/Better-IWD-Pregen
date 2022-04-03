@@ -1,0 +1,34 @@
+//compatible with atweaks PNP Fey
+//compatible with the SCS script, if you prefer that to my script
+
+
+ACTION_IF (GAME_IS ~iwdee~) BEGIN
+  COPY - ~%MOD_FOLDER%/nymph/d2cwb0p.BAF~ ~%MOD_FOLDER%/temp/cwblight.baf~
+END
+ELSE BEGIN
+  COPY - ~%MOD_FOLDER%/nymph/d2cwb1p.BAF~ ~%MOD_FOLDER%/temp/cwblight.baf~
+END
+
+
+
+//atweaks PNP Fey scripts
+ACTION_IF (FILE_EXISTS_IN_GAME ~rr#sdrya.BCS~) BEGIN
+  EXTEND_TOP ~rr#sdrya.BCS~ ~%MOD_FOLDER%/temp/cwblight.baf~
+END
+
+ACTION_IF (FILE_EXISTS_IN_GAME ~rr#shama.BCS~) BEGIN
+  EXTEND_TOP ~rr#shama.BCS~ ~%MOD_FOLDER%/temp/cwblight.baf~
+END
+
+ACTION_IF (FILE_EXISTS_IN_GAME ~rr#snymp.BCS~) BEGIN
+  EXTEND_TOP ~rr#snymp.BCS~ ~%MOD_FOLDER%/temp/cwblight.baf~
+END
+
+
+//regular nymph script (also used for SCS AI)
+ACTION_IF (FILE_EXISTS_IN_GAME ~NYMPH.BCS~) BEGIN
+  EXTEND_TOP ~NYMPH.BCS~ ~%MOD_FOLDER%/temp/cwblight.baf~
+END
+
+
+PRINT @56    // info on patch features (D key and preserve invisibility)

@@ -1,6 +1,6 @@
 BACKUP ~d2-script/backup~
 AUTHOR ~Dan_P~
-VERSION ~3.4~
+VERSION ~3.5~
 
 ALWAYS
   INCLUDE ~%MOD_FOLDER%/lib/d2_movement_effects.tpa~
@@ -34,12 +34,24 @@ INCLUDE ~%MOD_FOLDER%/install/iwdpgen.tph~
 
 //Better AI for Call Woodland Beings (EEs)
 
-BEGIN @3
+BEGIN @7    // Use Revised script for nymph summon
 DESIGNATED 20
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/rr#fdrya.bcs~) @5    // not compatible with atweaks Fey/CWB revisions
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/rr#snymp.bcs~) @5    // skip if atweaks PNP Fey is installed
+SUBCOMPONENT @3
 LABEL ~D2-SCRIPT-NYMPH~
 INCLUDE ~%MOD_FOLDER%/install/nymph.tph~
+
+BEGIN @8    // Use existing script, but patch in a few actions
+SUBCOMPONENT @3
+LABEL ~D2-SCRIPT-NYMPHLIGHT~
+INCLUDE ~%MOD_FOLDER%/install/nymphlight.tph~
+
+BEGIN @9    // same as above, but standalone component for atweaks
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
+REQUIRE_PREDICATE (FILE_EXISTS ~override/rr#snymp.bcs~) ~~
+LABEL ~D2-SCRIPT-NYMPHATWEAKS~
+INCLUDE ~%MOD_FOLDER%/install/nymphlight.tph~
 
 ////////////////////////////////////////////////////////////
 
@@ -138,6 +150,11 @@ INCLUDE ~%MOD_FOLDER%/install/fasterdruids0.tph~
 BEGIN @448    // Items are auto-equipped or added to inventory
 DESIGNATED 80
 REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 iwd how totlm iwd_in_bg2~) @419
+REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2161) AND
+                   !(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2162) AND
+                   !(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2163) AND
+                   !(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2164) AND
+                   !(MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf~))) @447
 SUBCOMPONENT @418
 LABEL ~D2-TWEAKS-NGEQUIP~
 INCLUDE ~%MOD_FOLDER%/install/ngequip.tph~
@@ -146,6 +163,16 @@ BEGIN @449    // Start with a bag, containing a mix of weapons
 REQUIRE_PREDICATE !(GAME_IS ~iwd~) @425
 SUBCOMPONENT @418
 LABEL ~D2-TWEAKS-NGITEMBAG~
+INCLUDE ~%MOD_FOLDER%/install/ngitembag.tph~
+
+BEGIN @449    // same as above, but standalone if tweaks incompatible with first option are detected
+REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 how totlm iwd_in_bg2~) @419
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2161) OR
+                   (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2162) OR
+                   (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2163) OR
+                   (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2164) OR
+                   (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf~))) ~~
+LABEL ~D2-TWEAKS-NGITEMBAGTWEAK~
 INCLUDE ~%MOD_FOLDER%/install/ngitembag.tph~
 
 ////////////////////////////////////////////////////////////
@@ -223,7 +250,7 @@ SUBCOMPONENT @431
 LABEL ~D2-TWEAKS-CRIPPSTR30~
 INCLUDE ~%MOD_FOLDER%/install/crippstr30.tph~
 
-BEGIN @434    // Uncap Crippling Strike, but do not change delay
+BEGIN @434    // Uncap Crippling Strike, but do not change delay (420 seconds)
 SUBCOMPONENT @431
 LABEL ~D2-TWEAKS-CRIPPSTR16~
 INCLUDE ~%MOD_FOLDER%/install/crippstr16.tph~
@@ -286,7 +313,7 @@ SUBCOMPONENT @439
 LABEL ~D2-TWEAKS-MINSCRAGE120~
 INCLUDE ~%MOD_FOLDER%/install/minscrage120.tph~
 
-BEGIN @445    // Timing fix for Minsc's Berserk ability (EEs)
+BEGIN @445    // Timing fix for Minsc's Berserk ability (already included in above components)
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet~) @446
 REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE30~)) AND
                    !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE60~)) AND

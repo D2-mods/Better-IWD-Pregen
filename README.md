@@ -127,18 +127,16 @@ Characters will not use or respond to a Shout if under the effects of Invisibili
 <details>
   <summary>Nymph AI script (Call Woodland Beings)</summary>
   
-  ```
-Info:
-- not as wasteful with spells
+#### Option 1 - Revised script:
+- smarter spellcasting (better targeting and not as wasteful)
 - won't cast statuses on undead or enemies with high magic resist
 - will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
 - is more cautious at low HP if it has spells remaining
 - will not attack or cast spells at enemies if invisible
 - Cooldown hotkeys to delay spellcasting
-  ```
 
 Compatible with BG:EE, BG2:EE, IWD:EE and EET.  
-Not compatible with atweaks PNP Fey (will be skipped during installation)
+Not compatible with atweaks PNP Fey (will be skipped during installation).
 
 > DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
 
@@ -148,18 +146,29 @@ Hotkeys:
 - if the D key is pressed outside of combat, and not in visual range of enemies, the nymph will teleport to its summoner (or other PC)
 - if the B key is pressed, the nymph will enter Cooldown for 3 rounds; will not cast offensive spells or teleport to an enemy in Cooldown mode
 - if the E key is pressed, the Cooldown timer is set to 0 (deactivated)
+
+
+
+#### Option 2 - Patch existing script:
+- adds Cooldown hotkeys (B to enable, E to disable)
+- adds D hotkey to teleport to party
+- will teleport to party if not in visual range (and not invisible)
+- will preserve invisibility
+- usable with atweaks PNP Fey, as well as AI mods that still use NYMPH.BCS (ex. SCS)
+
+NOTE: Dimension Door is more limited with this patch. Will only teleport to the summoner or Player1.
   
 </details>
 <details>
   <summary>Baldur's Gate (in BG1 engine)</summary>
   
-  ```
+#### BG1 script features
 - characters will preserve Hide/Invisibility/Sanctuary
 - melee aggro ranges working
 - Calls for help working (REMOVED, but theoretically, I could add it back in)
 - Cooldown hotkeys working
 - no auto-Search (the FindTraps() script action doesn't work)
-  ```
-> NOTE: Bard Song, Turn Undead, and Search won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
+
+NOTE: Bard Song, Turn Undead, and Search won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
   
 </details>

@@ -94,6 +94,7 @@ END
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN
+ACTION_IF (MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1200) BEGIN ABORT @55 END    // abort if Extended Text is installed (GUI mod)
 
 COMPILE ~%MOD_FOLDER%/baf/d2bsbg2.BAF~
 COPY_EXISTING ~d2bsbg2.BCS~ ~scripts/iwdpgen.BS~

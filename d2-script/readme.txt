@@ -94,6 +94,24 @@ Tools and Resources used:
 ==================================================
 VERSION INFO
 ==================================================
+v3.5
+- Call Woodland Beings AI (EEs)
+	- added subcomponent: Use existing script, but patch in a few actions
+	- adds Cooldown hotkeys (B to enable, E to disable)
+	- adds D hotkey to teleport to party
+	- will teleport to party if not in visual range (and not invisible)
+	- will preserve invisibility
+	- usable with atweaks PNP Fey, as well as AI mods that still use NYMPH.BCS (ex. SCS)
+- Give party starting equipment (IWD games)
+	- Option 1 (auto-equip) is now skipped if certain tweaks are installed
+	- Option 2 (start with items in a bag) can be used with any tweaks
+	- detects BG/IWD-style profs (from cdtweaks) and Proficiency Overhaul (from Skill and Abilities mod)
+- classic BG2
+	- the party script will fail to install if the Extended Event Text component from Improved GUI mod is detected (also called Extended messages/sounds or Extended Items/Quest/Spell messages)
+	- installing these together will crash the game when attempting to load a save
+- fixed/added info in readme, relating to the experimental gold-exchanging Bag of Holding option (EEs)
+
+
 v3.4
 - minor adjustments to party scripts
 - added tweak: Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
@@ -164,6 +182,7 @@ v3.0
 - Tested and confirmed that the BG2 script is working with various conversion mods, including IWD-in-BG2, Classic Adventures, and Epic Endeavors. The Bag of Holding tweak is also working with these.
 
 - This mod is pretty much finished now besides bug fixes, or making minor adjustments. The only TODO I have planned in my notes is PsT:EE support, which I'll probably only add if/when I get around to replaying it.
+
 
 v2.5
 - added Beta support for original BG2/Tutu/BGT and IWD1; a few incompatible triggers or blocks had to be removed for each game (the core features of the script are in); I'm calling this a Beta because I only did very limited testing + made sure they look okay in NearInfinity

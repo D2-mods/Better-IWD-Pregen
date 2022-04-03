@@ -1,7 +1,7 @@
 ==================================================
 Better AI for Call Woodland Beings
 ==================================================
-Info:
+Option 1 - Revised script:
 - smarter spellcasting (better targeting and not as wasteful)
 - won't cast statuses on undead or enemies with high magic resist
 - will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
@@ -21,3 +21,14 @@ Hotkeys:
 - if the B key is pressed, the nymph will enter Cooldown for 3 rounds; will not cast offensive spells or teleport to an enemy in Cooldown mode
 - if the E key is pressed, the Cooldown timer is set to 0 (deactivated)
 
+
+
+Option 2 - Patch existing script:
+- adds Cooldown hotkeys (B to enable, E to disable)
+- adds D hotkey to teleport to party
+- will teleport to party if not in visual range (and not invisible)
+- will preserve invisibility
+
+NOTE: Dimension Door is more limited with this patch. Will only teleport to the summoner or Player1.
+
+Usable with atweaks PNP Fey, as well as AI mods that still use NYMPH.BCS (ex. SCS).
