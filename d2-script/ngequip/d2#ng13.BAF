@@ -17,19 +17,19 @@ IF
 	!HasItem("BLUN01",Player2)
 THEN
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("BLUN04",0,0,0))    // mace
+		GiveItemCreate("BLUN04",Player2,0,0,0)    // mace
 		SetGlobal("d2Player3melee","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("MAUL",0,0,0))    // hammer
+		GiveItemCreate("MAUL",Player2,0,0,0)    // hammer
 		SetGlobal("d2Player3melee","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("BLUN06",0,0,0))    // morning star
+		GiveItemCreate("BLUN06",Player2,0,0,0)    // morning star
 		SetGlobal("d2Player3melee","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("BLUN01",0,0,0))    // club
+		GiveItemCreate("BLUN01",Player2,0,0,0)    // club
 		SetGlobal("d2Player3melee","GLOBAL",1)
 		Continue()
 END
@@ -40,7 +40,7 @@ IF
 	!HasItem("d2#ngrb0",Player3)
 THEN
 	RESPONSE #100
-		ActionOverride(Player3,CreateItem("d2#ngrb0",0,0,0))    // worn garment
+		GiveItemCreate("d2#ngrb0",Player3,0,0,0)    // worn garment
 		SetGlobal("d2Player3robe","GLOBAL",1)
 		Continue()
 END

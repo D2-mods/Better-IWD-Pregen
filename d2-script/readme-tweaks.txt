@@ -67,7 +67,6 @@ This component gives player characters basic starting weapons, because my charac
 
 This is a global script that runs once per character per game. It can theoretically take effect for games that are already started, but unless you're still at the beginning, you should have better equipment already.
 
-NOTE: For IWDEE, if using a proficiency overhaul mod, component 2 should usually be chosen, as the scripts for component 1 do not currently adjust for other mods.
 
 
 Component 1 (auto-equip)
@@ -76,9 +75,12 @@ Instructions:
 - after installing, start a new game with new characters (you can also load one saved at the start)
 - wait a few seconds for the script to run for each character
 - that's it, the items will be either equipped or in the inventory
-- for classic IWD, if loading an existing save, you may need to open/close the Inventory or Record screen 1-2 times to make the script run
+- for classic IWD, if using an existing save, you may need to open/close the Inventory or Record screen 1-2 times to make the script run
 
-Info/Known issues:
+NOTE: If using BG or IWD-style proficiencies (cdtweaks) or Proficiency Overhaul (Skills and Abilities mod), this component won't be available.
+
+
+Additional info:
 
 IWD:EE
 - items are created based on proficiencies
@@ -98,12 +100,13 @@ IWD2
 - each character recieves one melee and one ranged weapon
 - items are slightly randomized and based on character class
 - weapons are moved to the quickslots, but are not auto-equipped
-- saving/reloading will properly equip them, as will manually picking up and re-equipping the weapons
+- saving/reloading will properly equip them, as will clicking on and re-equipping each weapon
 
 IWD-in-BG2
 - works the same as in IWD:EE
-- quickslot icon (in main game screen) is not auto-updated
+- quickslot icon is not automatically updated
 - to update the icon, pick up and re-equip each weapon (save/reload doesn't work)
+
 
 
 Component 2 (weapon bag)

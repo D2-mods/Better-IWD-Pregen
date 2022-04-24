@@ -14,7 +14,7 @@ IF
 	!HasItem("SW1H04",Player1)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("SW1H04",0,0,0))    // longsword
+		GiveItemCreate("SW1H04",Player1,0,0,0)    // longsword
 		SetGlobal("d2Player1melee","GLOBAL",1)
 		Continue()
 END
@@ -26,11 +26,11 @@ IF
 	!HasItem("SHLD10",Player1)
 THEN
 	RESPONSE #50
-		ActionOverride(Player1,CreateItem("DAGG05",10,0,0))    // throwing daggers
+		GiveItemCreate("DAGG05",Player1,0,0,0)    // throwing daggers
 		SetGlobal("d2Player1random","GLOBAL",1)
 		Continue()
 	RESPONSE #50
-		ActionOverride(Player1,CreateItem("SHLD10",0,0,0))    // buckler
+		GiveItemCreate("SHLD10",Player1,0,0,0)    // buckler
 		SetGlobal("d2Player1random","GLOBAL",1)
 		Continue()
 END
@@ -41,8 +41,8 @@ IF
 	!HasItem("SLNG01",Player1)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("SLNG01",0,0,0))    // sling
-		ActionOverride(Player1,CreateItem("BULL01",20,0,0))
+		GiveItemCreate("SLNG01",Player1,0,0,0)    // sling
+		GiveItemCreate("BULL01",Player1,20,0,0)
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END
@@ -53,7 +53,7 @@ IF
 	!HasItem("d2#ngrb0",Player1)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("d2#ngrb0",0,0,0))    // worn garment
+		GiveItemCreate("d2#ngrb0",Player1,0,0,0)    // worn garment
 		SetGlobal("d2Player1robe","GLOBAL",1)
 		Continue()
 END

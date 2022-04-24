@@ -14,7 +14,7 @@ IF
 	!HasItem("d2#ngrb0",Player1)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("d2#ngrb0",0,0,0))    // worn garment
+		GiveItemCreate("d2#ngrb0",Player1,0,0,0)    // worn garment
 		SetGlobal("d2Player1robe","GLOBAL",1)
 		Continue()
 END

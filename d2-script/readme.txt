@@ -25,7 +25,7 @@ Extract to game folder and run the setup to install or uninstall. I'm not famili
 
 Script components:
 1. Better IWD Pregen (appears in-game as "IWD PREGEN")
-2. EEs: Better AI for Call Woodland Beings (should be installed after SCS)
+2. Better AI for Call Woodland Beings (EEs, BG2), install after AI mods (ex. SCS or atweaks)
 3. Auto-assign script to new characters
 
 Tweak components:
@@ -44,19 +44,22 @@ Tweak components:
 13. Allow Minsc to use his Berserk ability at will (BG games)
 14. Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
 
-All components can be installed independently and in any order, except for auto-assigning the script.
+Additional info:
+- All components can be installed independently and in any order, except for auto-assigning the script.
+- Any similar components in this mod and my other mods should have no conflicts if installed together.
+- see readmes for detailed info on components
 
 
 ==================================================
-COMPATIBILITY (v3.0+)
+SCRIPT COMPATIBILITY (v3.0+)
 ==================================================
-EEs: BG:EE, SoD, BG2:EE, IWD:EE, EET (v2.5/v2.6)
+EEs: BG:EE, SoD, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
 Classic: BG1, BG2, IWD1, IWD2 (tested with GOG versions)
 
-TobEx (v26/v28): If TobEx is installed, the BG2 script will deactivate the Expanded Actions hack (because it breaks the script for some classes). The issue is caused by Expanded Actions changing the behavior of the NoAction() script action to disable Modal states (ex. Bard Song). Note that the normal behavior in all IE games, from classic BG1 to the EEs, is that NoAction() does not disable Modal states. If TobEx files are added as a part of other mods, Expanded Actions will not be deactivated, unless issues are observed/reported with a specific mod.
+TobEx (v26/v28): Compatibility issues should be fixed (3.7 and later).
 
-IWD-in-BG2: Tested and working.
 Tutu/BGT: Untested but installable.
+IWD-in-BG2: Tested and working.
 Classic Adventures: Tested and working.
 Epic Endeavors: Tested and working.
 
@@ -76,24 +79,39 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 ==================================================
 CREDITS
 ==================================================
-Coding, Testing: Dan_P
+Mod Author: Dan_P
 
 Custom Functions:
 - CD_EXTEND-O-MATIC, by CamDawg (https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220)
 - 2DA_MISSING_COLS - by K4thos (https://github.com/K4thos/IE-code-repository)
 
 Tools and Resources used:  
-- WeiDU v249 https://github.com/WeiDUorg/weidu  
-- NearInfinity v2.2-20211218 https://github.com/Argent77/NearInfinity  
-- Notepad++ https://notepad-plus-plus.org/  
-- Git Bash https://git-scm.com/downloads  
-- Infinity Auto Packager https://github.com/InfinityTools/InfinityAutoPackager  
-- IESDP https://gibberlings3.github.io/iesdp/index.htm
+- WeiDU (https://github.com/WeiDUorg/weidu)
+- NearInfinity (https://github.com/Argent77/NearInfinity)
+- Notepad++ (https://notepad-plus-plus.org/)
+- Git Bash (https://git-scm.com/downloads)
+- Infinity Auto Packager (https://github.com/InfinityTools/InfinityAutoPackager)
+- IESDP (https://gibberlings3.github.io/iesdp/main.htm)
+
+TobEx.dll:
+- fixed file provided by Insomniator (not for this mod specifically but as part of forum discussion)
+- http://www.shsforums.net/topic/61135-question-about-featurebug-change-to-the-noaction-script-action/#entry612382
 
 
 ==================================================
 VERSION INFO
 ==================================================
+v3.7
+- classic BG2 (script):
+	- added fixed DLL file if TobEx is detected (made by Insomniator from Spellhold Studios forum)
+	- fixed compatibility issue with Extended Event Text component from Improved GUI mod
+- Better AI for Call Woodland Beings
+	- now compatible with original BG2 engine
+	- as with the EEs, the patch option is compatible with atweaks PnP Fey
+- "Give party starting equipment" tweak:
+	- IWD-in-BG2: fixed potential issues caused by AR1006.BCS (starting area script)
+	- classic IWD1: fixed items sometimes not being added if using an existing save
+
 v3.6
 - Call Woodland Beings - patch option (EEs)
 	- atweaks summons will correctly have the item RR#DINV.ITM destroyed automatically when summoned

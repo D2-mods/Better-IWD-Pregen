@@ -17,19 +17,19 @@ IF
 	!HasItem("SW1H04",Player2)
 THEN
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("SCIMITA",0,0,0))    // scimitar
+		GiveItemCreate("SCIMITA",Player2,0,0,0)    // scimitar
 		SetGlobal("d2Player4random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("HALB01",0,0,0))    // halberd
+		GiveItemCreate("HALB01",Player2,0,0,0)    // halberd
 		SetGlobal("d2Player4random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("AX1H04",5,0,0))    // throwing axe
+		GiveItemCreate("AX1H04",Player2,5,0,0)    // throwing axe
 		SetGlobal("d2Player4random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("SW1H04",0,0,0))    // long sword
+		GiveItemCreate("SW1H04",Player2,0,0,0)    // long sword
 		SetGlobal("d2Player4random","GLOBAL",1)
 		Continue()
 END
@@ -43,22 +43,22 @@ IF
 	!HasItem("DART01",Player2)
 THEN
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("BOW05",0,0,0))    // shortbow
-		ActionOverride(Player2,CreateItem("AROW01",20,0,0))
+		GiveItemCreate("BOW05",Player2,0,0,0)    // shortbow
+		GiveItemCreate("AROW01",Player2,20,0,0)
 		SetGlobal("d2Player4ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("XBOW04",0,0,0))    // crossbow
-		ActionOverride(Player2,CreateItem("BOLT01",20,0,0))
+		GiveItemCreate("XBOW04",Player2,0,0,0)    // crossbow
+		GiveItemCreate("BOLT01",Player2,20,0,0)
 		SetGlobal("d2Player4ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("SLNG01",0,0,0))    // sling
-		ActionOverride(Player2,CreateItem("BULL01",20,0,0))
+		GiveItemCreate("SLNG01",Player2,0,0,0)    // sling
+		GiveItemCreate("BULL01",Player2,20,0,0)
 		SetGlobal("d2Player4ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("DART01",20,0,0))    // darts
+		GiveItemCreate("DART01",Player2,20,0,0)    // darts
 		SetGlobal("d2Player4ranged","GLOBAL",1)
 		Continue()
 END
@@ -69,7 +69,7 @@ IF
 	!HasItem("d2#ngrb0",Player4)
 THEN
 	RESPONSE #100
-		ActionOverride(Player4,CreateItem("d2#ngrb0",0,0,0))    // worn garment
+		GiveItemCreate("d2#ngrb0",Player4,0,0,0)    // worn garment
 		SetGlobal("d2Player4robe","GLOBAL",1)
 		Continue()
 END

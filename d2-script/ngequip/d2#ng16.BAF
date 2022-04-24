@@ -15,11 +15,11 @@ IF
 	!HasItem("SHLD03",Player2)
 THEN
 	RESPONSE #50
-		ActionOverride(Player2,CreateItem("SHLD05",0,0,0))    // large shield
+		GiveItemCreate("SHLD05",Player2,0,0,0)    // large shield
 		SetGlobal("d2Player6random","GLOBAL",1)
 		Continue()
 	RESPONSE #50
-		ActionOverride(Player2,CreateItem("SHLD03",0,0,0))    // medium shield
+		GiveItemCreate("SHLD03",Player2,0,0,0)    // medium shield
 		SetGlobal("d2Player6random","GLOBAL",1)
 		Continue()
 END
@@ -31,13 +31,13 @@ IF
 	!HasItem("XBOW04",Player2)
 THEN
 	RESPONSE #50
-		ActionOverride(Player2,CreateItem("BOW05",0,0,0))    // shortbow
-		ActionOverride(Player2,CreateItem("AROW01",20,0,0))
+		GiveItemCreate("BOW05",Player2,0,0,0)    // shortbow
+		GiveItemCreate("AROW01",Player2,20,0,0)
 		SetGlobal("d2Player6ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #50
-		ActionOverride(Player2,CreateItem("XBOW04",0,0,0))    // crossbow
-		ActionOverride(Player2,CreateItem("BOLT01",20,0,0))
+		GiveItemCreate("XBOW04",Player2,0,0,0)    // crossbow
+		GiveItemCreate("BOLT01",Player2,20,0,0)
 		SetGlobal("d2Player6ranged","GLOBAL",1)
 		Continue()
 END
@@ -48,7 +48,7 @@ IF
 	!HasItem("d2#ngrb0",Player6)
 THEN
 	RESPONSE #100
-		ActionOverride(Player6,CreateItem("d2#ngrb0",0,0,0))    // worn garment
+		GiveItemCreate("d2#ngrb0",Player6,0,0,0)    // worn garment
 		SetGlobal("d2Player6robe","GLOBAL",1)
 		Continue()
 END

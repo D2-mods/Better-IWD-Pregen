@@ -17,19 +17,19 @@ IF
 	!HasItem("AX1H01",Player2)
 THEN
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("SW1H01",0,0,0))    // bastard sword
+		GiveItemCreate("SW1H01",Player2,0,0,0)    // bastard sword
 		SetGlobal("d2Player2random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("2HAXE",0,0,0))    // 2-handed axe
+		GiveItemCreate("2HAXE",Player2,0,0,0)    // 2-handed axe
 		SetGlobal("d2Player2random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("BLUN02",0,0,0))    // flail
+		GiveItemCreate("BLUN02",Player2,0,0,0)    // flail
 		SetGlobal("d2Player2random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("AX1H01",0,0,0))    // battle axe
+		GiveItemCreate("AX1H01",Player2,0,0,0)    // battle axe
 		SetGlobal("d2Player2random","GLOBAL",1)
 		Continue()
 END
@@ -41,13 +41,13 @@ IF
 	!HasItem("XBOW04",Player2)
 THEN
 	RESPONSE #50
-		ActionOverride(Player2,CreateItem("BOW05",0,0,0))    // shortbow
-		ActionOverride(Player2,CreateItem("AROW01",20,0,0))
+		GiveItemCreate("BOW05",Player2,0,0,0)    // shortbow
+		GiveItemCreate("AROW01",Player2,20,0,0)
 		SetGlobal("d2Player2ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #50
-		ActionOverride(Player2,CreateItem("XBOW04",0,0,0))    // crossbow
-		ActionOverride(Player2,CreateItem("BOLT01",20,0,0))
+		GiveItemCreate("XBOW04",Player2,0,0,0)    // crossbow
+		GiveItemCreate("BOLT01",Player2,20,0,0)
 		SetGlobal("d2Player2ranged","GLOBAL",1)
 		Continue()
 END
@@ -58,7 +58,7 @@ IF
 	!HasItem("d2#ngrb0",Player2)
 THEN
 	RESPONSE #100
-		ActionOverride(Player2,CreateItem("d2#ngrb0",0,0,0))    // worn garment
+		GiveItemCreate("d2#ngrb0",Player2,0,0,0)    // worn garment
 		SetGlobal("d2Player2robe","GLOBAL",1)
 		Continue()
 END

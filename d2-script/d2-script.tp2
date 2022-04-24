@@ -1,6 +1,6 @@
 BACKUP ~d2-script/backup~
 AUTHOR ~Dan_P~
-VERSION ~3.6~
+VERSION ~3.7~
 
 ALWAYS
   INCLUDE ~%MOD_FOLDER%/lib/d2_movement_effects.tpa~
@@ -32,12 +32,12 @@ INCLUDE ~%MOD_FOLDER%/install/iwdpgen.tph~
 
 ////////////////////////////////////////////////////////////
 
-//Better AI for Call Woodland Beings (EEs)
+//Better AI for Call Woodland Beings (EEs, BG2)
 
 BEGIN @7    // Use Revised script for nymph summon
 DESIGNATED 20
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
 REQUIRE_PREDICATE !(FILE_EXISTS ~override/rr#snymp.bcs~) @5    // skip if atweaks PNP Fey is installed
+REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~NYMPHSU.CRE~) @4
 SUBCOMPONENT @3
 LABEL ~D2-SCRIPT-NYMPH~
 INCLUDE ~%MOD_FOLDER%/install/nymph.tph~
@@ -48,8 +48,8 @@ LABEL ~D2-SCRIPT-NYMPHLIGHT~
 INCLUDE ~%MOD_FOLDER%/install/nymphlight.tph~
 
 BEGIN @9    // same as above, but standalone component for atweaks
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
 REQUIRE_PREDICATE (FILE_EXISTS ~override/rr#snymp.bcs~) ~~
+REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~NYMPHSU.CRE~) @4
 LABEL ~D2-SCRIPT-NYMPHATWEAKS~
 INCLUDE ~%MOD_FOLDER%/install/nymphlight.tph~
 

@@ -6,7 +6,7 @@ Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built o
 Script components:
   ```
 1. Better IWD Pregen (appears in-game as "IWD PREGEN")
-2. EEs: Better AI for Call Woodland Beings (should be installed after SCS)
+2. Better AI for Call Woodland Beings (EEs, BG2), install after AI mods (ex. SCS or atweaks)
 3. Auto-assign script to new characters
   ```
 Tweak components:
@@ -47,8 +47,6 @@ Also, I'm normally not a fan of auto-using of abilities (for PCs), but Search is
 - will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (for example, from a contingency or area invisibility spell)
 - will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
 
-v2.0: added an improved AI script for the nymph summon (Call Woodland Beings)
-
 #### Cooldown hotkeys:
 - if the B key is pressed, the character will enter a Cooldown mode for 30 seconds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active
 - if the E key is pressed, the Cooldown mode will be deactivated
@@ -60,7 +58,7 @@ Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldo
 <details>
   <summary>Auto-attack breakdown</summary>
   
-#### EEs:
+#### BG(EE), BG2(EE), IWD(EE):
   ```
 Class: Fighter, Ranger, Paladin, including any multiclass combinations
 	Conditions (one must be met to auto-attack)
@@ -135,8 +133,8 @@ Characters will not use or respond to a Shout if under the effects of Invisibili
 - will not attack or cast spells at enemies if invisible
 - Cooldown hotkeys to delay spellcasting
 
-Compatible with BG:EE, BG2:EE, IWD:EE and EET.  
-Not compatible with atweaks PNP Fey (will be skipped during installation).
+Compatible with EEs and original BG2 engine.  
+Not compatible with atweaks PnP Fey (will be skipped during installation).
 
 > DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
 
@@ -154,7 +152,7 @@ Hotkeys:
 - adds D hotkey to teleport to party
 - will teleport to party if not in visual range (and not invisible)
 - will preserve invisibility
-- usable with atweaks PNP Fey, as well as AI mods that still use NYMPH.BCS (ex. SCS)
+- usable with atweaks PnP Fey, as well as AI mods that still use NYMPH.BCS (ex. SCS)
 
 NOTE: Dimension Door is more limited with this patch. Will only teleport to the summoner or Player1.
   

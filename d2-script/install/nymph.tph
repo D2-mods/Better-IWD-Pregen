@@ -64,6 +64,38 @@ END
 
 ////////////////////////////////////////////////////////////
 
+ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN
+
+COMPILE ~%MOD_FOLDER%/nymph/d2cwb2.BAF~
+COPY_EXISTING ~d2cwb2.BCS~ ~override/NYMPH.BCS~
+
+COPY - ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~ ~%MOD_FOLDER%/temp/d2cwb2b.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player2~
+  REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2c~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~ ~%MOD_FOLDER%/temp/d2cwb2c.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player3~
+  REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2d~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~ ~%MOD_FOLDER%/temp/d2cwb2d.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player4~
+  REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2e~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~ ~%MOD_FOLDER%/temp/d2cwb2e.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player5~
+  REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2f~
+COPY - ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~ ~%MOD_FOLDER%/temp/d2cwb2f.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player6~
+  REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2a~
+  
+COMPILE ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb2b.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb2c.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb2d.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb2e.BAF~
+COMPILE ~%MOD_FOLDER%/temp/d2cwb2f.BAF~
+
+END
+
+////////////////////////////////////////////////////////////
+
 COPY_EXISTING ~NYMPHSU.CRE~ ~override~    // set script for nymph (if another mod changed it)
   PATCH_IF (SOURCE_SIZE > 0x2d3) BEGIN
   WRITE_ASCII 0x248 NYMPH #8

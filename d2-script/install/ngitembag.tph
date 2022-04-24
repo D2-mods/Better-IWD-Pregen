@@ -147,6 +147,29 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
   COPY_EXISTING ~ULXBW5A.ITM~ ~override~
     SAY NAME1 @150 SAY NAME2 @157 SAY UNIDENTIFIED_DESC @250 SAY DESC @257
 
+  COPY_EXISTING ~AR1006.BCS~ ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player1,0,0,0)~ ~ActionOverride(Player1,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player2,0,0,0)~ ~ActionOverride(Player2,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player3,0,0,0)~ ~ActionOverride(Player3,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player4,0,0,0)~ ~ActionOverride(Player4,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player5,0,0,0)~ ~ActionOverride(Player5,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player6,0,0,0)~ ~ActionOverride(Player6,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~ActionOverride(Player1,FillSlot(SLOT_WEAPON0))~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player2,FillSlot(SLOT_WEAPON0))~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player3,FillSlot(SLOT_WEAPON0))~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player4,FillSlot(SLOT_WEAPON0))~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player5,FillSlot(SLOT_WEAPON0))~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player6,FillSlot(SLOT_WEAPON0))~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player1,EquipMostDamagingMelee())~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player2,EquipMostDamagingMelee())~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player3,EquipMostDamagingMelee())~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player4,EquipMostDamagingMelee())~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player5,EquipMostDamagingMelee())~ ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player6,EquipMostDamagingMelee())~ ~~
+    END
+  BUT_ONLY
+  
 END
 
 ////////////////////////////////////////////////////////////

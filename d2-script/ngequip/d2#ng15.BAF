@@ -17,19 +17,19 @@ IF
 	!HasItem("SW2H01",Player2)
 THEN
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("SPER01",0,0,0))    // spear
+		GiveItemCreate("SPER01",Player2,0,0,0)    // spear
 		SetGlobal("d2Player5random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("SW1H07",0,0,0))    // short sword
+		GiveItemCreate("SW1H07",Player2,0,0,0)    // short sword
 		SetGlobal("d2Player5random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("HQDAGG",0,0,0))    // dagger
+		GiveItemCreate("HQDAGG",Player2,0,0,0)    // dagger
 		SetGlobal("d2Player5random","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player2,CreateItem("SW2H01",0,0,0))    // greatsword
+		GiveItemCreate("SW2H01",Player2,0,0,0)    // greatsword
 		SetGlobal("d2Player5random","GLOBAL",1)
 		Continue()
 END
@@ -40,7 +40,7 @@ IF
 	!HasItem("d2#ngrb0",Player5)
 THEN
 	RESPONSE #100
-		ActionOverride(Player5,CreateItem("d2#ngrb0",0,0,0))    // worn garment
+		GiveItemCreate("d2#ngrb0",Player5,0,0,0)    // worn garment
 		SetGlobal("d2Player5robe","GLOBAL",1)
 		Continue()
 END

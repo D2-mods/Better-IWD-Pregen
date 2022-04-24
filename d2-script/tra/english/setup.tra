@@ -1,7 +1,7 @@
 //Scripts
 @1 = ~Better IWD Pregen~
 @2 = ~Installs on BG(EE), BG2(EE), IWD(EE), IWD2, and any mods built on these engines~
-@3 = ~Better AI for Call Woodland Beings (EEs)~
+@3 = ~Better AI for Call Woodland Beings (EEs, BG2)~
 @4 = ~Installs on BG:EE, BG2:EE, IWD:EE, and EET~
 @5 = ~This option is not available for atweaks PNP Fey~
 @9999 = ~Auto-assign script to new characters~
@@ -85,8 +85,10 @@
 ~
 @55 = ~The script is not currently compatible with the "Extended Items/Quest/Spell messages" tweak (Improved GUI mod). Please uninstall this component if you would like to install Better IWD Pregen.
 ~
-@56 = ~NOTE: This patch makes the nymph AI preserve invisibility, as well as make usable the D key (Dimension Door to the summoner when no enemies are in sight).
+@56 = ~NOTE: This patch makes the AI for CWB summons preserve invisibility, as well as make usable the B, E, and D hotkeys (Cooldown mode controls and Dimension Door when out-of-battle).
 ~
+
+//@51 was used in pre-v3.7 versions of this mod
 
 
 
