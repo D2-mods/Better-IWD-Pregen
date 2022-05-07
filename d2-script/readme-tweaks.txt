@@ -22,7 +22,7 @@ Avarine Decanter (IWD2)
 ==================================================
 Animate Dead (IWD2)
 ==================================================
-- this is a patching component; should be safe to install before or after any spell tweaks
+- this is a patching component; should be safe to install after any spell tweaks
 - nerfed version caps at the Level 9 summons
 - Clerics also use SPWI501.SPL (the similar spell SPPR301.SPL exists, but is unused)
 - also corrects the chance of each creature type to 50/50 (was 51/49)
@@ -43,9 +43,9 @@ You can also manually unnerf this spell by deleting SPWI501.SPL from the overrid
 
 
 ==================================================
-Shapeshift - movement bonus patch (EEs)
+Shapeshift - movement patch (EEs)
 ==================================================
-This lets you set all movement bonuses to bypass Free Action, or be blocked by Free Action. Note that a Free Action applied afterwards can still reset movement rate back to the base value. This component will also set all movement bonuses from polymorphs to the stacking multiplier. The EEs, especially IWD:EE, are inconsistent with these effects, and there are also difference between EE v2.5 and v2.6.
+This lets you set all movement bonuses from shapeshifts to bypass Free Action, or be blocked by Free Action. Note that a Free Action applied afterwards can still reset movement rate back to the base value. This component will also set all movement bonuses to the stacking multiplier. The EEs, especially IWD:EE, are inconsistent with these effects, and there are also differences between EE v2.5 and v2.6.
 
 This component is similar to the one in my Polymorph fixes mod for IWD:EE, except it applies also to the BG:EE games. There are no known issues if installed together. If differing options are chosen, the game will use whichever is installed last.
 
@@ -53,7 +53,7 @@ This component is similar to the one in my Polymorph fixes mod for IWD:EE, excep
 ==================================================
 Winter Wolf and Polar Bear speed (IWD:EE)
 ==================================================
-This is something I decided to add while testing my AI script in classic IWD1. The winter wolf form in the original moves noticeably faster than the IWD:EE version. This isn't boots of speed fast, but it's a little faster than in human form. The bear is painfully slow in all versions of the game, but I don't think a speed increase is overpowered. It's still inferior to the Boring Beetle's high defenses.
+This is something I decided to add while testing the AI script in classic IWD1. The winter wolf form in the original moves noticeably faster than the IWD:EE version. This isn't boots of speed fast, but it's a little faster than in human form. The bear is painfully slow in all versions of the game, but I don't think a speed increase is overpowered. It's still inferior to the Boring Beetle's high defenses.
 
 NOTE: This component will also remove the erroneous Haste effect from the Polymorph Self versions of the Druid animals (with wolf and bear forms getting the movement bonus instead).
 

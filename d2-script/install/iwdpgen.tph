@@ -110,7 +110,14 @@ BUT_ONLY
 //fixed TobEx DLL, from Insomniator
 //http://www.shsforums.net/topic/61135-question-about-featurebug-change-to-the-noaction-script-action/#entry612382
 ACTION_IF (MOD_IS_INSTALLED ~TobEx.tp2~ 100) BEGIN
-  COPY ~%MOD_FOLDER%/tobex/TobEx.dll~ ~TobEx.dll~
+  ACTION_IF (!(MOD_IS_INSTALLED ~TobEx_AfterLife.tp2~ 200) AND
+             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1000) AND
+             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1200) AND
+             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1400) AND
+             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 2200) AND
+             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 3400)) BEGIN
+    COPY ~%MOD_FOLDER%/tobex/TobEx.dll~ ~TobEx.dll~
+  END
 END
 
 END

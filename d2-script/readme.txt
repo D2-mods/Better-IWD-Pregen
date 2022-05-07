@@ -1,4 +1,4 @@
-Better IWD Pregen (v3.0+)
+Better IWD Pregen (v3.8)
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built on these engines
 
@@ -10,12 +10,7 @@ The IWD Pregen script from IWD:EE basically does what I want an AI script to do,
 
 What this mod does is take IWD Pregen, and finetune the auto-attack and auto-Search scripting (based on my own preferences), while keeping it minimalist. Spells, abilities, item use, etc., are for the player to micromanage.
 
-The biggest difference you'll notice from the vanilla IWD Pregen is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle and more options for placement of characters, without needing to turn AI off.
-
-UPDATE v2.0:
-- rework of auto-attack, main thing is improved retargeting scripting
-- added Cooldown hotkeys (B to enter for 5 rounds, E to deactivate); reduces melee aggro range to 5 ft.
-- EEs: added an improved AI script for the nymph summon (Call Woodland Beings)
+The biggest difference you'll notice from standard auto-attack scripts is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle and more options for placement of characters, without needing to turn AI off.
 
 
 ==================================================
@@ -51,17 +46,17 @@ Additional info:
 
 
 ==================================================
-SCRIPT COMPATIBILITY (v3.0+)
+SCRIPT COMPATIBILITY (v3.8+)
 ==================================================
-EEs: BG:EE, SoD, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
+EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
 Classic: BG1, BG2, IWD1, IWD2 (tested with GOG versions)
 
-TobEx (v26/v28): Compatibility issues should be fixed (3.7 and later).
+Also compatible with any BG2 conversion mods (ex. BGT or Classic Adventures).
 
-Tutu/BGT: Untested but installable.
-IWD-in-BG2: Tested and working.
-Classic Adventures: Tested and working.
-Epic Endeavors: Tested and working.
+Classic BG2 engine:
+TobEx (v26/v28): Compatibility issues should be fixed (v3.7 and later).
+TobEx Afterlife: Use v29.10 or later. (http://www.shsforums.net/files/file/1274-tobex-afterlife)
+Improved GUI mod: Use v5.1 or later. (http://www.shsforums.net/files/file/1265-bg2-improved-gui)
 
 NOTE: I'm not 100% sure the scripts work with expansionless versions of the classic games.
 
@@ -81,7 +76,7 @@ CREDITS
 ==================================================
 Mod Author: Dan_P
 
-Custom Functions:
+Custom Functions (from other people):
 - CD_EXTEND-O-MATIC, by CamDawg (https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220)
 - 2DA_MISSING_COLS - by K4thos (https://github.com/K4thos/IE-code-repository)
 
@@ -101,6 +96,11 @@ TobEx.dll:
 ==================================================
 VERSION INFO
 ==================================================
+v3.8
+- classic BG2 (script)
+	- TobEx Afterlife was updated since the v3.7. I changed it so that the DLL packaged with this mod will not be added if TobEx Afterlife is detected. This also means that starting from this version, you must be using the latest version of TobEx Afterlife (v29.10 or later). Older versions are missing the DLL fixes.
+	- Improved GUI mod was also updated. I did some testing and didn't notice any issues, but just in case, I added a check for a few components to skip copying the DLL. Use v5.1 or later.
+
 v3.7
 - classic BG2 (script):
 	- added fixed DLL file if TobEx is detected (made by Insomniator from Spellhold Studios forum)
