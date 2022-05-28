@@ -96,6 +96,9 @@ TobEx.dll:
 ==================================================
 VERSION INFO
 ==================================================
+v3.9
+- Auto-assign script works smoother. It will only trigger now if the character is idle. In previous versions, it was interrupting movement if the player moved before the script was set. This only happened once or twice per character, but it should no longer happen.
+
 v3.8
 - classic BG2 (script)
 	- TobEx Afterlife was updated since the v3.7. I changed it so that the DLL packaged with this mod will not be added if TobEx Afterlife is detected. This also means that starting from this version, you must be using the latest version of TobEx Afterlife (v29.10 or later). Older versions are missing the DLL fixes.

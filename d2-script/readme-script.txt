@@ -31,6 +31,17 @@ Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldo
 
 
 ==================================================
+Auto-assign script (separate component)
+==================================================
+- assigns character with the Better IWD Pregen script
+- will only trigger once per character file
+- NPC party members will have AI changed before casting any spells
+
+
+
+Additional info:
+
+==================================================
 Auto-attack breakdown (BG(EE), BG2(EE), IWD(EE))
 ==================================================
 Class: Fighter, Ranger, Paladin, including any multiclass combinations

@@ -97,7 +97,7 @@ END
 
 DEFINE_ACTION_FUNCTION cannot_add_items
 
-  STR_VAR store = ~~    // resname to STO file
+  STR_VAR store = ~~    // resname of STO file
    
 BEGIN
 

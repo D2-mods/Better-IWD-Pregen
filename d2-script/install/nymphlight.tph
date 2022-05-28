@@ -1,4 +1,4 @@
-//compatible with atweaks PNP Fey
+//compatible with atweaks PnP Fey
 //compatible with the SCS script, if you prefer that to my script
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
@@ -10,7 +10,7 @@ END
 
 
 
-//atweaks PNP Fey scripts
+//atweaks PnP Fey scripts
 
 ACTION_IF (FILE_EXISTS_IN_GAME ~rr#sdrya.BCS~) BEGIN
   EXTEND_TOP ~rr#sdrya.BCS~ ~%MOD_FOLDER%/temp/cwblight.baf~
@@ -33,4 +33,4 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~NYMPH.BCS~) BEGIN
 END
 
 
-PRINT @56    // info on patch features (D key and preserve invisibility)
+PRINT @56    // info on patch features (see nymph readme)

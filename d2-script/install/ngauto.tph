@@ -4,6 +4,7 @@ ACTION_IF (GAME_IS ~iwd2 iwd how totlm~) BEGIN
 
 <<<<<<<< .../d2-script/temp/d2#ngbs.baf
 IF
+	ActionListEmpty()
 	!Global("d2ngauto","LOCALS",1)
 	InParty(Myself)
 THEN
@@ -19,6 +20,7 @@ ELSE BEGIN
 
 <<<<<<<< .../d2-script/temp/d2#ngbs.baf
 IF
+	ActionListEmpty()
 	!Global("d2ngauto","LOCALS",1)
 	InParty(Myself)
 THEN
