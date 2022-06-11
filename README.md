@@ -11,7 +11,7 @@ Script components:
   ```
 Tweak components:
   ```
-1. Adjust enemy damage at higher difficulties (IWD1)
+1. Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
 4. Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)
@@ -31,15 +31,13 @@ All components can be installed independently and in any order, except for auto-
 #### Overview (party script):
 This script manages auto-attack, while giving more nuanced control of the characters, so the player can focus on tactics and usage of spells and abilities to win battles. The script will never use your consumable items, spells, or abilities. What it does is put you in position to better use these abilities, while reducing some of the more frustrating aspects of auto-attack.
 
-Also, I'm normally not a fan of auto-using of abilities (for PCs), but Search is non-intrusive, and it's not unrealistic for characters trained in it to keep an eye on surroundings whenever possible, including during battle when not attacking.
-
 #### Auto-attack features:
 - melee aggro range is dependent on class (see readme for full breakdown); range from 3 ft. (mages) to 25 ft.
 - will not attack if under the effects of Invisibility or Sanctuary
 - will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance
 - EEs: active retargeting if a character's current weapon cannot hit or damage an enemy
 - priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon)
-- Cooldown hotkeys to reduce melee aggro range to 5 ft. for 5 rounds, or set back to normal instantly
+- Cooldown hotkeys to reduce melee aggro range to 5 ft. for 30 seconds, or set back to normal instantly
 
 #### Other features:
 - classes with Search will use it whenever not attacking (note: IWD2 is hardcoded for only Rogues and Monks to be able to auto-Search)
@@ -55,6 +53,23 @@ Also, I'm normally not a fan of auto-using of abilities (for PCs), but Search is
 Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering
 
 #### Additional info:
+<details>
+  <summary>Script Compatibility</summary>
+  
+#### Info:
+EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)  
+Classic: BG1, BG2, IWD, IWD2 (tested with GOG versions)
+
+Also compatible with any BG2 conversion mods (ex. BGT or Classic Adventures).
+
+Classic BG2 engine:  
+TobEx (v26/v28): Compatibility issues should be fixed (v3.7 and later).  
+TobEx Afterlife: Use v29.10 or later. (http://www.shsforums.net/files/file/1274-tobex-afterlife)  
+Improved GUI mod: Use v5.1 or later. (http://www.shsforums.net/files/file/1265-bg2-improved-gui)
+
+NOTE: I'm not 100% sure the scripts work with expansionless versions of the classic games.
+  
+</details>
 <details>
   <summary>Auto-attack breakdown</summary>
   
@@ -111,18 +126,6 @@ Class: Wizard or Sorcerer
   
 </details>
 <details>
-  <summary>Calls for help (Shout action/response)</summary>
-  
-> NOTE: This feature was added in v2.0 and removed in the v3.0. It actually works pretty good, but I decided it's too active of an action for a minimalist script, even with being able to disable it with the Cooldown mode.
-  
-A Shout action is made when initially seeing an enemy, immediately after responding to a Shout, or repeatedly if idling in battle (i.e. standing outside melee range).
-
-Response: If not in sight of enemies, the character can respond to a Shout, moving towards the caller. This action continues until either the character reaches the caller, or an enemy is within 15 feet.
-
-Characters will not use or respond to a Shout if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. A character in Cooldown mode can make a Shout, but will not respond to one.
-  
-</details>
-<details>
   <summary>Nymph AI script (Call Woodland Beings)</summary>
   
 #### Option 1 - Revised script:
@@ -160,13 +163,13 @@ NOTE: Dimension Door is more limited with this patch. Will only teleport to the 
 <details>
   <summary>Baldur's Gate (in BG1 engine)</summary>
   
-#### BG1 script features
+#### BG1 script features:
 - characters will preserve Hide/Invisibility/Sanctuary
 - melee aggro ranges working
 - Calls for help working (REMOVED, but theoretically, I could add it back in)
 - Cooldown hotkeys working
 - no auto-Search (the FindTraps() script action doesn't work)
 
-NOTE: Bard Song, Turn Undead, and Search won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
+NOTE: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
   
 </details>

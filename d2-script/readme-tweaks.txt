@@ -1,5 +1,5 @@
 ==================================================
-Adjust enemy damage at higher difficulties (IWD1)
+Adjust enemy damage at Insane/HoF (classic IWD, IWD2)
 ==================================================
 - be default, your characters take 2x damage on Insane/HoF (or 1.5x on Very Hard, which no one uses)
 - you usually end up relying on summons or cheap tactics like abusing invisibility
@@ -7,7 +7,7 @@ Adjust enemy damage at higher difficulties (IWD1)
 
 Suppress Extra Difficulty Damage=1
 
-NOTE: IWD2 has a similar INI option, but I couldn't get it to work. The game resets it to 0 when loading a game or opening the Options menu.
+NOTE: For IWD2, this setting doesn't work in the unmodded game. Thanks to an exe patch by Bubb, the option can be enabled. This patch is used with Bubb's permission.
 
 
 ==================================================

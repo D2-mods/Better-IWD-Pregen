@@ -33,8 +33,8 @@ Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldo
 ==================================================
 Auto-assign script (separate component)
 ==================================================
-- assigns character with the Better IWD Pregen script
-- will only trigger once per character file
+- assigns characters with the Better IWD Pregen script
+- will trigger once for each character
 - NPC party members will have AI changed before casting any spells
 
 

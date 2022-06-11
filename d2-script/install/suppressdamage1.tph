@@ -1,4 +1,21 @@
 ACTION_IF (FILE_EXISTS ~icewind.ini~) BEGIN
-COPY ~icewind.ini~ ~icewind.ini~
-  REPLACE_TEXTUALLY ~Damage=0~ ~Damage=1~
+  COPY ~icewind.ini~ ~icewind.ini~
+    REPLACE_TEXTUALLY ~Damage=0~ ~Damage=1~
+  BUT_ONLY
+END
+
+
+ACTION_IF (FILE_EXISTS ~icewind2.ini~) BEGIN
+  OUTER_SPRINT exe_name ~iwd2.exe~    // exe edit is by Bubb
+  COPY ~%exe_name%~ ~%exe_name%~
+    WRITE_BYTE 0x1AA1E5 0x89
+    WRITE_BYTE 0x1AA1EB 0x90
+    WRITE_BYTE 0x1AA1EC 0x90
+    WRITE_BYTE 0x1AA1ED 0x90
+    WRITE_BYTE 0x1AA1EE 0x90
+  BUT_ONLY
+  
+  COPY ~icewind2.ini~ ~icewind2.ini~
+    REPLACE_TEXTUALLY ~Damage=0~ ~Damage=1~
+  BUT_ONLY
 END

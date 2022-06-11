@@ -6,6 +6,7 @@ on:
     types: [published]
 jobs:
   InfinityAutoPackager:
+    if: github.ref_type == 'tag'
     runs-on: ubuntu-latest
     steps:
 
@@ -26,7 +27,6 @@ jobs:
 
       - name: Upload iemod package to latest release
         uses: svenstaro/upload-release-action@v1-release
-        if: github.ref != 'refs/heads/master'
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.CreateIEModZipPackage.outputs.PackageBaseName }}.iemod
@@ -36,7 +36,6 @@ jobs:
 
       - name: Upload zip package to latest release
         uses: svenstaro/upload-release-action@v1-release
-        if: github.ref != 'refs/heads/master'
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ${{ steps.CreateIEModZipPackage.outputs.PackageBaseName }}.zip

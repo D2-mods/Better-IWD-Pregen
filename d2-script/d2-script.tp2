@@ -1,19 +1,31 @@
-BACKUP ~d2-script/backup~
+BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~3.9~
+VERSION ~4.0~
 
 ALWAYS
-  INCLUDE ~%MOD_FOLDER%/lib/d2_movement_effects.tpa~
-  INCLUDE ~%MOD_FOLDER%/lib/2da_find_row.tpa~
-  INCLUDE ~%MOD_FOLDER%/lib/weapprof_quick_edit.tpa~
-  INCLUDE ~%MOD_FOLDER%/lib/d2_store_functions.tpa~
-  INCLUDE ~%MOD_FOLDER%/lib/CD_EXTEND-O-MATIC.tpa~
-  INCLUDE ~%MOD_FOLDER%/lib/2da_missing_cols.tpa~
+  ACTION_BASH_FOR ~%MOD_FOLDER%/lib~ ~.*.tpa~ BEGIN    // function list
+    INCLUDE ~%BASH_FOR_FILESPEC%~
+  END
+  
+  ACTION_DEFINE_ARRAY d2noconvert BEGIN setup END
+  ACTION_DEFINE_ARRAY d2reload BEGIN main END
+  LAF HANDLE_CHARSETS
+    INT_VAR
+      from_utf8        = 1
+      infer_charsets   = 1
+    STR_VAR
+      default_language = ~english~
+      tra_path         = EVAL ~%MOD_FOLDER%/tra~
+      out_path         = EVAL ~weidu_external/lang/%MOD_FOLDER%~
+      noconvert_array  = ~d2noconvert~
+      reload_array     = ~d2reload~
+  END
 END
 
 LANGUAGE ~English~ 
          ~english~ 
          ~d2-script/tra/english/setup.tra~
+         ~d2-script/tra/english/main.tra~
 
 
 ////////////////////////////////////////////////////////////
@@ -65,11 +77,11 @@ INCLUDE ~%MOD_FOLDER%/install/ngauto.tph~
 
 ////////////////////////////////////////////////////////////
 
-//Adjust enemy damage at higher difficulties (IWD1)
+//Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 
 BEGIN @401    // enemies don't do extra damage
 DESIGNATED 30
-REQUIRE_PREDICATE (GAME_IS ~iwd how totlm~) @403
+REQUIRE_PREDICATE (GAME_IS ~iwd how totlm iwd2~) @403
 SUBCOMPONENT @400
 LABEL ~D2-TWEAKS-SUPPRESSDAMAGE1~
 INCLUDE ~%MOD_FOLDER%/install/suppressdamage1.tph~

@@ -1,4 +1,4 @@
-Better IWD Pregen (v3.8)
+Better IWD Pregen (v4.0)
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built on these engines
 
@@ -6,11 +6,7 @@ Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built o
 ==================================================
 OVERVIEW
 ==================================================
-The IWD Pregen script from IWD:EE basically does what I want an AI script to do, which is auto-attack, but not when invisible/hiding or using certain class abilities, like Bard Song or Turn Undead. It's a minimalist script that reduces some of the more frustrating aspects of auto-attacking.
-
-What this mod does is take IWD Pregen, and finetune the auto-attack and auto-Search scripting (based on my own preferences), while keeping it minimalist. Spells, abilities, item use, etc., are for the player to micromanage.
-
-The biggest difference you'll notice from standard auto-attack scripts is that non-warrior classes won't rush into melee combat unless they get closer to the enemy (range depending on class). This gives the player more control over the battle and more options for placement of characters, without needing to turn AI off.
+A minimalist script and tweak pack. This mod was started as an attempt to make an improved version of the IWD Pregen script from IWD:EE. Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2.
 
 
 ==================================================
@@ -24,7 +20,7 @@ Script components:
 3. Auto-assign script to new characters
 
 Tweak components:
-1. Adjust enemy damage at higher difficulties (IWD1)
+1. Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
 4. Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)
@@ -76,26 +72,39 @@ CREDITS
 ==================================================
 Mod Author: Dan_P
 
-Custom Functions (from other people):
+Custom Functions:
 - CD_EXTEND-O-MATIC, by CamDawg (https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220)
 - 2DA_MISSING_COLS - by K4thos (https://github.com/K4thos/IE-code-repository)
+- The other files include simple functions I put together to do stuff.
 
-Tools and Resources used:  
+Tools and Resources used:
 - WeiDU (https://github.com/WeiDUorg/weidu)
 - NearInfinity (https://github.com/Argent77/NearInfinity)
 - Notepad++ (https://notepad-plus-plus.org/)
 - Git Bash (https://git-scm.com/downloads)
 - Infinity Auto Packager (https://github.com/InfinityTools/InfinityAutoPackager)
 - IESDP (https://gibberlings3.github.io/iesdp/main.htm)
+- LibIconv for Windows (http://gnuwin32.sourceforge.net/packages/libiconv.htm)
 
 TobEx.dll:
-- fixed file provided by Insomniator (not for this mod specifically but as part of forum discussion)
+- Patched DLL file was made by Insomniator and used with permission.
 - http://www.shsforums.net/topic/61135-question-about-featurebug-change-to-the-noaction-script-action/#entry612382
+
+IWD2 exe patch:
+- Patch for the enemy damage component was written by Bubb and used with permission.
+- https://www.gibberlings3.net/forums/topic/35670-adjusting-difficulty-levels-iwd2/#comment-311240
 
 
 ==================================================
 VERSION INFO
 ==================================================
+v4.0
+- Moved backup folder to weidu_external (instead of mod folder).
+- Added HANDLE_CHARSETS function for installing on non-EE games.
+- Adjust enemy damage at higher difficulties (classic IWD, IWD2):
+	- now compatible with IWD2 (take normal damage on Insane/HoF, instead of double damage)
+	- requires patching iwd2.exe (code by Bubb, used with permission)
+
 v3.9
 - Auto-assign script works smoother. It will only trigger now if the character is idle. In previous versions, it was interrupting movement if the player moved before the script was set. This only happened once or twice per character, but it should no longer happen.
 
