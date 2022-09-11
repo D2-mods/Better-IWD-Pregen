@@ -30,10 +30,8 @@ Tweak components:
 8. All classes get full HP bonuses from Constitution (classic and EEs)
 9. Misc fixes for backstab-related 2DA files (EEs)
 10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
-11. Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
-12. Weapon Style tweak for Deities of Faerun (EEs)
-13. Allow Minsc to use his Berserk ability at will (BG games)
-14. Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
+11. Allow Minsc to use his Berserk ability at will (BG games)
+12. Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
 
 Additional info:
 - All components can be installed independently and in any order, except for auto-assigning the script.
@@ -70,7 +68,7 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 ==================================================
 CREDITS
 ==================================================
-Mod Author: Dan_P
+Modder: Dan_P
 
 Custom Functions:
 - CD_EXTEND-O-MATIC, by CamDawg (https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220)
@@ -98,6 +96,12 @@ IWD2 exe patch:
 ==================================================
 VERSION INFO
 ==================================================
+v4.1
+- Removed the following components:
+	- Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
+	- Weapon Style tweak for Deities of Faerun (EEs)
+- I still use these, but I decided they didn't fit in this mod. I have an informal mod that still has these components. It can be downloaded from this post in the Beamdog forums: https://forums.beamdog.com/discussion/comment/1182256/#Comment_1182256
+
 v4.0
 - Moved backup folder to weidu_external (instead of mod folder).
 - Added HANDLE_CHARSETS function for installing on non-EE games.

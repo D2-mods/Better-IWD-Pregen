@@ -176,23 +176,6 @@ Uncap Crippling Strike
 
 
 ==================================================
-Fix weapon styles for some kits (mod-specific)
-==================================================
-- installable for: Rogue Rebalancing by aVENGER
-                   3.5e Weapon Style Rebalance by Reddbane
-- these tweaks raise max slots for certain kits that probably shouldn't get the boost
-- currently affects 4 archer Thief kits and Loremaster (from Might and Guile)
-
-
-==================================================
-Weapon Style tweak for Deities of Faerun (EEs)
-==================================================
-- allows base-game Druid/Shaman kits to place 2 slots in Two-Weapon Style
-- this just brings them up to the level of Raduziel's own divine kits (including from I Hate Undead kitpack)
-- also affects a few mod-added kits (need to be added individually)
-
-
-==================================================
 Allow Minsc to use Berserk at will (BG games)
 ==================================================
 - can set duration to 30, 60, or 120 seconds

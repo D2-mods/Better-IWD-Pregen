@@ -21,10 +21,8 @@ Tweak components:
 8. All classes get full HP bonuses from Constitution (classic and EEs)
 9. Misc fixes for backstab-related 2DA files (EEs)
 10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
-11. Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
-12. Weapon Style tweak for Deities of Faerun (EEs)
-13. Allow Minsc to use his Berserk ability at will (BG games)
-14. Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
+11. Allow Minsc to use his Berserk ability at will (BG games)
+12. Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
   ```
 All components can be installed independently and in any order, except for auto-assigning the script. Most of the options in the installer are pretty self-explanatory, but the mod folder also contains a readme detailing the tweaks, in case there's any confusion.
 

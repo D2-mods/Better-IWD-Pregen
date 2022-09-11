@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~4.0~
+VERSION ~4.1~
 
 ALWAYS
   ACTION_BASH_FOR ~%MOD_FOLDER%/lib~ ~.*.tpa~ BEGIN    // function list
@@ -269,39 +269,6 @@ INCLUDE ~%MOD_FOLDER%/install/crippstr16.tph~
 
 ////////////////////////////////////////////////////////////
 
-//Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
-//reverts changes by: Rogue Rebalancing by aVENGER
-//                    3.5e Weapon Style Rebalance by Reddbane
-//currently affects 4 archer Thief kits and Loremaster (from Might and Guile)
-
-BEGIN @435
-DESIGNATED 130
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
-REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~Setup-35weaponstyle.tp2~ 1) OR
-                   (FILE_EXISTS ~override/RR#DWF.RR~)) @436
-REQUIRE_PREDICATE ((FILE_EXISTS ~override/c0advent.2da~) OR
-                   (FILE_EXISTS ~override/claba7t1.2da~) OR
-                   (FILE_EXISTS ~override/D5_LORMA.2da~) OR
-                   (FILE_EXISTS ~override/CLABUSAT.2da~) OR
-                   (FILE_EXISTS ~override/D5_SNIPE.2da~)) @436
-LABEL ~D2-MODFIXES-WEAPONSTYLEFIX~
-INCLUDE ~%MOD_FOLDER%/install/weaponstylefix.tph~
-
-////////////////////////////////////////////////////////////
-
-//Weapon Style tweak for Deities of Faerun (EEs)
-//allows base-game druid and shaman kits to place 2 slots in two-weapon style
-//this is the way Raduziel's own kits work (including from I Hate Undead kitpack)
-
-BEGIN @437
-DESIGNATED 140
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
-REQUIRE_COMPONENT ~DeitiesOfFaerun.tp2~ 0 @438
-LABEL ~D2-MODFIXES-DOFPROFS~
-INCLUDE ~%MOD_FOLDER%/install/dofprofs.tph~
-
-////////////////////////////////////////////////////////////
-
 //Allow Minsc to use his Berserk ability at will (BG games)
 
 BEGIN @440    // Use at will, and reduce duration to 5 rounds (30 seconds)
@@ -348,7 +315,37 @@ INCLUDE ~%MOD_FOLDER%/install/iwdshortbowfix.tph~
 
 
 
-/*
+/* Stuff in here is not used
 
+//Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
+//reverts changes by: Rogue Rebalancing by aVENGER
+//                    3.5e Weapon Style Rebalance by Reddbane
+//currently affects 4 archer Thief kits and Loremaster (from Might and Guile)
+
+BEGIN @435
+DESIGNATED 130
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~Setup-35weaponstyle.tp2~ 1) OR
+                   (FILE_EXISTS ~override/RR#DWF.RR~)) @436
+REQUIRE_PREDICATE ((FILE_EXISTS ~override/c0advent.2da~) OR
+                   (FILE_EXISTS ~override/claba7t1.2da~) OR
+                   (FILE_EXISTS ~override/D5_LORMA.2da~) OR
+                   (FILE_EXISTS ~override/CLABUSAT.2da~) OR
+                   (FILE_EXISTS ~override/D5_SNIPE.2da~)) @436
+LABEL ~D2-MODFIXES-WEAPONSTYLEFIX~
+INCLUDE ~%MOD_FOLDER%/install/weaponstylefix.tph~
+
+////////////////////////////////////////////////////////////
+
+//Weapon Style tweak for Deities of Faerun (EEs)
+//allows base-game druid and shaman kits to place 2 slots in two-weapon style
+//this is the way Raduziel's own kits work (including from I Hate Undead kitpack)
+
+BEGIN @437
+DESIGNATED 140
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
+REQUIRE_COMPONENT ~DeitiesOfFaerun.tp2~ 0 @438
+LABEL ~D2-MODFIXES-DOFPROFS~
+INCLUDE ~%MOD_FOLDER%/install/dofprofs.tph~
 
 */
