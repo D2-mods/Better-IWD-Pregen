@@ -14,20 +14,22 @@ Tweak components:
 1. Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
-4. Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)
+4. Shapeshift movement bonuses bypass Free Action (EEs)
 5. Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)
 6. Give party starting equipment (IWD games)
 7. Give party a Bag of Holding at game start (classic and EEs)
 8. All classes get full HP bonuses from Constitution (classic and EEs)
-9. Misc fixes for backstab-related 2DA files (EEs)
+9. Fixes for backstab-related 2DA files (EEs)
 10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
 11. Allow Minsc to use his Berserk ability at will (BG games)
-12. Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
+12. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
+13. Remove alignment restrictions for classes (classic and EEs)
+14. Paladins and Rangers do not fall at low rep (EEs)
   ```
 All components can be installed independently and in any order, except for auto-assigning the script. Most of the options in the installer are pretty self-explanatory, but the mod folder also contains a readme detailing the tweaks, in case there's any confusion.
 
 #### Overview (party script):
-This script manages auto-attack, while giving more nuanced control of the characters, so the player can focus on tactics and usage of spells and abilities to win battles. The script will never use your consumable items, spells, or abilities. What it does is put you in position to better use these abilities, while reducing some of the more frustrating aspects of auto-attack.
+This script manages auto-attack, while giving more nuanced control of the characters. The script will never use your consumable items, spells, or abilities. What it does is put you in position to better use these abilities, while reducing some of the more frustrating aspects of auto-attack.
 
 #### Auto-attack features:
 - melee aggro range is dependent on class (see readme for full breakdown); range from 3 ft. (mages) to 25 ft.

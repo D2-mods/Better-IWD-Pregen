@@ -16,6 +16,8 @@ For Project Infinity, you can check both options if using (will automatically sk
 @10260 = ~This component is not available for atweaks PnP Fey~
 
 @9999 = ~Auto-assign script to new characters~
+@1 = ~Yes~
+@2 = ~No~
 
 
 
@@ -32,16 +34,16 @@ For Project Infinity, you can check both options if using (will automatically sk
 	@40301 = ~Use unnerfed Animate Dead, and correct chance of each creature type to 50/50~
 	@40302 = ~Use nerfed Animate Dead, but correct chance of each creature type to 50/50~
 
-@40400 = ~Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)~
-	@40401 = ~Movement bonuses bypass Free Action~
-	@40402 = ~Movement bonuses are blocked by Free Action~
+@40400 = ~Shapeshift movement bonuses bypass Free Action (EEs)~
+	@40401 = ~Bypass Free Action~
+	@40402 = ~Blocked by Free Action~
 
 @40500 = ~Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)~
 	@40501 = ~for Druids and Polymorph Self~
 	@40502 = ~for Druids only~
 
 @40600 = ~Give party starting equipment (IWD games)~
-	@40601 = ~Items are auto-equipped or added to inventory (for unmodded proficiencies)~
+	@40601 = ~Items are auto-equipped or added to inventory~
 	@40602 = ~Start with a bag, containing a mix of weapons~
 @40630 = ~Start with a bag, containing a mix of weapons~    // standalone component
 
@@ -55,9 +57,9 @@ For Project Infinity, you can check both options if using (will automatically sk
 	@40801 = ~2e-style HP bonuses (i.e. BG-style)~
 	@40802 = ~3e-style bonuses (+1 for every 2 stat points above 10)~
 
-@40900 = ~Misc fixes for backstab-related 2DA files (EEs)~
-	@40901 = ~~
-	@40902 = ~~
+@40900 = ~Fixes for backstab-related 2DA files (EEs)~
+	@40901 = ~Check files and fix (incorrect lines, etc.)~
+	@40902 = ~Do nothing~
 
 @41000 = ~Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)~
 	@41001 = ~Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)~
@@ -80,13 +82,36 @@ For Project Infinity, you can check both options if using (will automatically sk
 @41360 = ~This component is not available for Rashemi Berserker (Artisan's Kitpack)~
 
 @41400 = ~Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)~
-	@41401 = ~~
-	@41402 = ~~
+	@41401 = ~Yes~
+	@41402 = ~No~
+
+@41500 = ~Remove alignment restrictions for classes (classic and EEs)~
+	@41501 = ~Yes~
+	@41502 = ~No~
+
+@41600 = ~Paladins and Rangers do not fall at low rep (EEs)~
+	@41601 = ~Yes~
+	@41602 = ~No~
+@41690 = ~NOTE: Could not find FALLEN.2DA. No changes were made.~
+
+@41700 = ~~
+	@41701 = ~~
+	@41702 = ~~
+
+@41800 = ~~
+	@41801 = ~~
+	@41802 = ~~
 
 
 
 
 //WeiDU Messages
+
+/*
+These are older messages from before I reorganized reference numbers.
+I'll probably move these to above sections at some point.
+*/
+
 @50 = ~NOTE: This component replaces both iwdpgen.BCS and iwdpgen.BS. The existing iwdpgen.BCS is backed up as iwdpgen.BAK in the override folder, and can be viewed in Near Infinity.
 ~
 @51 = ~NOTE: Disabled the ToBEx "Expanded Actions" hack. If using ToBEx v26/v28, the Expanded Actions hack alters the NoAction() script action to remove Modal states, making this script unusable for some classes.

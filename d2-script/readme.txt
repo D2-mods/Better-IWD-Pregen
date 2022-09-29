@@ -1,4 +1,4 @@
-Better IWD Pregen (v4.0)
+Better IWD Pregen (v4.3)
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built on these engines
 
@@ -23,15 +23,17 @@ Tweak components:
 1. Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
-4. Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)
+4. Shapeshift movement bonuses bypass Free Action (EEs)
 5. Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)
 6. Give party starting equipment (IWD games)
 7. Give party a Bag of Holding at game start (classic and EEs)
 8. All classes get full HP bonuses from Constitution (classic and EEs)
-9. Misc fixes for backstab-related 2DA files (EEs)
+9. Fixes for backstab-related 2DA files (EEs)
 10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
 11. Allow Minsc to use his Berserk ability at will (BG games)
-12. Patch visuals for shortbows (IWD:EE) and scimitars (IWD-in-BG2)
+12. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
+13. Remove alignment restrictions for classes (classic and EEs)
+14. Paladins and Rangers do not fall at low rep (EEs)
 
 Additional info:
 - All components can be installed independently and in any order, except for auto-assigning the script.
@@ -40,7 +42,7 @@ Additional info:
 
 
 ==================================================
-SCRIPT COMPATIBILITY (v3.8+)
+SCRIPT COMPATIBILITY (v4.0)
 ==================================================
 EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
 Classic: BG1, BG2, IWD1, IWD2 (tested with GOG versions)
@@ -96,6 +98,13 @@ IWD2 exe patch:
 ==================================================
 VERSION INFO
 ==================================================
+v4.3
+- All tweak components now have at least 2 subcomponents (even if just a simple "Yes" or "No")
+- Added 2 components:
+	- Remove alignment restrictions for classes (classic and EEs)
+	- Paladins and Rangers do not fall at low rep (EEs)
+- Both components affect all kits as well, including mod-added ones
+
 v4.2
 - Cleaned up the setup.tra file (the text that appears in the weidu installer). The file's actually readable now.
 - Classic BG2: fixed small bug with nymph scripts, relating to using Cause Serious Wounds spell.

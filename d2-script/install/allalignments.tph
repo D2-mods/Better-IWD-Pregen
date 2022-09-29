@@ -1,0 +1,15 @@
+//All classes can be any alignment
+
+
+COPY_EXISTING ~ALIGNMNT.2DA~  ~override~
+  COUNT_2DA_ROWS 3 rows
+
+  FOR (r = 1; r < rows; ++r) BEGIN
+    FOR (c = 1; c < 10; ++c) BEGIN    // columns 1-9 should always be for alignments
+      SET_2DA_ENTRY_LATER ~d2makeedits~ r c 1
+    END
+  END
+
+  SET_2DA_ENTRIES_NOW ~d2makeedits~ 3
+  PRETTY_PRINT_2DA
+BUT_ONLY

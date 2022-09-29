@@ -1,5 +1,5 @@
 ==================================================
-Adjust enemy damage at Insane/HoF (classic IWD, IWD2)
+Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 ==================================================
 - be default, your characters take 2x damage on Insane/HoF (or 1.5x on Very Hard, which no one uses)
 - you usually end up relying on summons or cheap tactics like abusing invisibility
@@ -11,7 +11,7 @@ NOTE: For IWD2, this setting doesn't work in the unmodded game. Thanks to an exe
 
 
 ==================================================
-Avarine Decanter (IWD2)
+Add or remove Avarine Decanter (IWD2)
 ==================================================
 - this component adds or hides this item from the seller's store
 - allows you to obtain some useful items relatively early
@@ -20,7 +20,7 @@ Avarine Decanter (IWD2)
 
 
 ==================================================
-Animate Dead (IWD2)
+Unnerf Animate Dead (IWD2)
 ==================================================
 - this is a patching component; should be safe to install after any spell tweaks
 - nerfed version caps at the Level 9 summons
@@ -43,7 +43,7 @@ You can also manually unnerf this spell by deleting SPWI501.SPL from the overrid
 
 
 ==================================================
-Shapeshift - movement patch (EEs)
+Shapeshift movement bonuses bypass Free Action (EEs)
 ==================================================
 This lets you set all movement bonuses from shapeshifts to bypass Free Action, or be blocked by Free Action. Note that a Free Action applied afterwards can still reset movement rate back to the base value. This component will also set all movement bonuses to the stacking multiplier. The EEs, especially IWD:EE, are inconsistent with these effects, and there are also differences between EE v2.5 and v2.6.
 
@@ -51,7 +51,7 @@ This component is similar to the one in my Polymorph fixes mod for IWD:EE, excep
 
 
 ==================================================
-Winter Wolf and Polar Bear speed (IWD:EE)
+Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)
 ==================================================
 This is something I decided to add while testing the AI script in classic IWD1. The winter wolf form in the original moves noticeably faster than the IWD:EE version. This isn't boots of speed fast, but it's a little faster than in human form. The bear is painfully slow in all versions of the game, but I don't think a speed increase is overpowered. It's still inferior to the Boring Beetle's high defenses.
 
@@ -117,7 +117,7 @@ NOTE: If the separate "Give party a Bag of Holding" component is not installed, 
 
 
 ==================================================
-Give party a Bag of Holding (classic and EEs)
+Give party a Bag of Holding at game start (classic and EEs)
 ==================================================
 This is pretty self-explanatory. You start the game with a bag. The first 3 components just give a Bag of Holding with differing max capacities. The "Bottomless" option has a capacity of 32767 items, same number used by Tweaks Anthology.
 
@@ -145,7 +145,7 @@ Issues/Exploits:
 
 
 ==================================================
-All classes get full HP from CON (classic and EEs)
+All classes get full HP bonuses from Constitution (classic and EEs)
 ==================================================
 - yet another universal CON bonus mod
 - choice between 2e/BG-style, or the more even HP curve of later editions
@@ -153,7 +153,7 @@ All classes get full HP from CON (classic and EEs)
 
 
 ==================================================
-Misc fixes for backstab-related 2DA files (EEs)
+Fixes for backstab-related 2DA files (EEs)
 ==================================================
 - fixes problematic lines in backstab-related 2das (added by some mod kits)
 - also makes sure base-game kits have correct progression to level 40 or 50
@@ -161,7 +161,7 @@ Misc fixes for backstab-related 2DA files (EEs)
 
 
 ==================================================
-Sneak Attack tweak + Crippling Strike fix (EEs)
+Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
 ==================================================
 Reduce delay for Sneak Attacks
 - default delay is 420 seconds (i.e. immunity effect on target)
@@ -176,7 +176,7 @@ Uncap Crippling Strike
 
 
 ==================================================
-Allow Minsc to use Berserk at will (BG games)
+Allow Minsc to use his Berserk ability at will (BG games)
 ==================================================
 - can set duration to 30, 60, or 120 seconds
 - the way it works differs by game:
@@ -190,10 +190,25 @@ NOTE: Will be skipped if Rashemi Berserker (Artisan's Kitpack) is installed
 
 
 ==================================================
-Patch visuals for weapon types (game-specific)
+Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 ==================================================
 - IWDEE: Patch shortbows to use shortbow appearance (as in classic IWD)
 - IWD-in-BG2: Patch scimitars to use scimitar appearance (was long sword)
 
 NOTE: Shortbow appearance can't be set for IWD-in-BG2
+
+
+==================================================
+Remove alignment restrictions for classes (classic and EEs)
+==================================================
+- All classes can be any alignment
+- affects all kits as well, including mod kits
+
+
+==================================================
+Paladins and Rangers do not fall at low rep (EEs)
+==================================================
+- Paladins and Rangers do not fall at low rep
+- affects all kits as well, including mod kits
+
 

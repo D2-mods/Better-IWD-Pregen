@@ -1,0 +1,46 @@
+//Paladins and Rangers do not fall at low rep
+//for EEs
+
+
+ACTION_IF (FILE_EXISTS_IN_GAME ~fallen.2da~) BEGIN
+
+  COPY_EXISTING - ~clastext.2da~  ~~
+    COUNT_2DA_ROWS 3 rows
+    READ_2DA_ENTRIES_NOW ~d2checkkits~ 3
+
+    FOR (r = 1; r < rows; ++r) BEGIN
+      READ_2DA_ENTRY_FORMER ~d2checkkits~ r 1 baseclass
+      PATCH_IF ((baseclass = 6) OR (baseclass = 12)) BEGIN    // if paladin or ranger
+        READ_2DA_ENTRY_FORMER ~d2checkkits~ r 7 fallen
+        PATCH_IF (fallen = 0) BEGIN    // if not a fallen kit
+          INNER_ACTION BEGIN
+            COPY_EXISTING ~fallen.2da~  ~override~
+              READ_2DA_ENTRY_FORMER ~d2checkkits~ r 0 kitname
+              COUNT_REGEXP_INSTANCES ~%kitname%~ count
+              PATCH_IF (count = 0) BEGIN    // if not already listed
+                COUNT_2DA_ROWS 1 fallenrows
+                INSERT_2DA_ROW fallenrows 1 ~%kitname% 0~
+                PRETTY_PRINT_2DA
+              END
+            BUT_ONLY
+          END
+        END
+      END
+    END
+  BUT_ONLY
+
+END
+ELSE BEGIN
+  PRINT @41690    // message that file not found so can't edit
+END
+
+
+
+
+/*
+class numbers
+6
+12
+18 (cleric/ranger)
+
+*/

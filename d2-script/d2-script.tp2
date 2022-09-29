@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~4.2~
+VERSION ~4.3~
 
 ALWAYS
   ACTION_BASH_FOR ~%MOD_FOLDER%/lib~ ~.*\.tpa~ BEGIN    // function list
@@ -71,11 +71,17 @@ INCLUDE ~%MOD_FOLDER%/install/nymphlight.tph~
 
 //Auto-assign script to new characters
 
-BEGIN @9999
+BEGIN @1
 DESIGNATED 9999
 REQUIRE_COMPONENT ~d2-script.tp2~ ~10~ ~Component not available~
+SUBCOMPONENT @9999
 LABEL ~D2-SCRIPT-NGAUTO~
 INCLUDE ~%MOD_FOLDER%/install/ngauto.tph~
+
+BEGIN @2
+REQUIRE_COMPONENT ~d2-script.tp2~ ~10~ ~Component not available~
+SUBCOMPONENT @9999
+LABEL ~D2-SCRIPT-NONGAUTO~
 
 ////////////////////////////////////////////////////////////
 
@@ -127,16 +133,16 @@ INCLUDE ~%MOD_FOLDER%/install/id2animatedead9.tph~
 
 ////////////////////////////////////////////////////////////
 
-//Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)
+//Shapeshift movement bonuses bypass Free Action (EEs)
 
-BEGIN @40401    // Movement bonuses bypass Free Action
+BEGIN @40401    // Bypass Free Action
 DESIGNATED 60
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
 SUBCOMPONENT @40400
 LABEL ~D2-TWEAKS-PLYMOVEBONUS1~
 INCLUDE ~%MOD_FOLDER%/install/plymovebonus1.tph~
 
-BEGIN @40402    // Movement bonuses are blocked by Free Action
+BEGIN @40402    // Blocked by Free Action
 SUBCOMPONENT @40400
 LABEL ~D2-TWEAKS-PLYMOVEBONUS0~
 INCLUDE ~%MOD_FOLDER%/install/plymovebonus0.tph~
@@ -196,7 +202,7 @@ INCLUDE ~%MOD_FOLDER%/install/ngitembag.tph~
 BEGIN @40701    // "Bottomless" bag (same as Tweaks Anthology component)
 DESIGNATED 90
 REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
-                   !(GAME_IS ~bg1 totsc iwd pst pstee~)) ~Game not supported~
+                  !(GAME_IS ~bg1 totsc iwd pst pstee~)) ~Game not supported~
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGA~
 INCLUDE ~%MOD_FOLDER%/install/ngbagA.tph~
@@ -238,13 +244,18 @@ INCLUDE ~%MOD_FOLDER%/install/conbon3e.tph~
 
 ////////////////////////////////////////////////////////////
 
-//Misc fixes for backstab-related 2DA files (EEs)
+//Fixes for backstab-related 2DA files (EEs)
 
-BEGIN @40900
+BEGIN @40901    // Check files and fix (incorrect lines, etc.)
 DESIGNATED 110
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
+SUBCOMPONENT @40900
 LABEL ~D2-TWEAKS-BACKSTABCHECK~
 INCLUDE ~%MOD_FOLDER%/install/backstabcheck.tph~
+
+BEGIN @40902    // Do nothing
+SUBCOMPONENT @40900
+LABEL ~D2-TWEAKS-NOBACKSTABCHECK~
 
 ////////////////////////////////////////////////////////////
 
@@ -306,13 +317,51 @@ INCLUDE ~%MOD_FOLDER%/install/minscrage0.tph~
 
 //Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 
-BEGIN @41400
+BEGIN @41401    // Yes
 DESIGNATED 160
-REQUIRE_PREDICATE GAME_IS ~iwdee iwd_in_bg2~ ~Game not supported~
+REQUIRE_PREDICATE (GAME_IS ~iwdee iwd_in_bg2~) ~Game not supported~
+SUBCOMPONENT @41400
 LABEL ~D2-TWEAKS-IWDSHORTBOWFIX~
 INCLUDE ~%MOD_FOLDER%/install/iwdshortbowfix.tph~
 
+BEGIN @41402    // No
+SUBCOMPONENT @41400
+LABEL ~D2-TWEAKS-NOSHORTBOWFIX~
+
 ////////////////////////////////////////////////////////////
+
+//Remove alignment restrictions for classes (classic and EEs)
+
+BEGIN @41501    // Yes
+DESIGNATED 170
+REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
+                  !(GAME_IS ~pst pstee~)) ~Game not supported~
+SUBCOMPONENT @41500
+LABEL ~D2-TWEAKS-ALIGNMENTS1~
+INCLUDE ~%MOD_FOLDER%/install/allalignments.tph~
+
+BEGIN @41502    // No
+SUBCOMPONENT @41500
+LABEL ~D2-TWEAKS-ALIGNMENTS0~
+
+////////////////////////////////////////////////////////////
+
+//Paladins and Rangers do not fall at low rep (EEs)
+
+BEGIN @41601    // Yes
+DESIGNATED 180
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
+SUBCOMPONENT @41600
+LABEL ~D2-TWEAKS-NOFALLING1~
+INCLUDE ~%MOD_FOLDER%/install/nofalling.tph~
+
+BEGIN @41602    // No
+SUBCOMPONENT @41600
+LABEL ~D2-TWEAKS-NOFALLING0~
+
+////////////////////////////////////////////////////////////
+
+
 
 
 
@@ -321,9 +370,6 @@ INCLUDE ~%MOD_FOLDER%/install/iwdshortbowfix.tph~
 
 
 //Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
-//reverts changes by: Rogue Rebalancing by aVENGER
-//                    3.5e Weapon Style Rebalance by Reddbane
-//currently affects 4 archer Thief kits and Loremaster (from Might and Guile)
 
 BEGIN @435
 DESIGNATED 130
@@ -341,8 +387,6 @@ INCLUDE ~%MOD_FOLDER%/install/weaponstylefix.tph~
 ////////////////////////////////////////////////////////////
 
 //Weapon Style tweak for Deities of Faerun (EEs)
-//allows base-game druid and shaman kits to place 2 slots in two-weapon style
-//this is the way Raduziel's own kits work (including from I Hate Undead kitpack)
 
 BEGIN @437
 DESIGNATED 140
