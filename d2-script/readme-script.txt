@@ -14,9 +14,8 @@ Other features
 ==================================================
 - classes with Search will use it whenever not attacking (note: IWD2 is hardcoded for only Rogues and Monks to be able to auto-Search)
 - will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance
-- will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (for example, from a contingency or area invisibility spell)
+- will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (ex. from a contingency or area invisibility spell)
 - will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
-- ***REMOVED*** Calls for help (Shout action/response)
 
 
 ==================================================
@@ -108,7 +107,7 @@ Baldur's Gate (in BG1 engine) - script info
 ==================================================
 Calls for help info (Shout action/response)
 ==================================================
-NOTE: This feature was added in v2.0 and removed in the v3.0. It actually works pretty good, but I decided it's too active of an action for a minimalist script, even with being able to disable it with the Cooldown mode.
+NOTE: This feature was added in v2.0 and removed in the v3.0. I decided it's too active of an action for a minimalist script, even with being able to disable it with the Cooldown mode.
 
 
 A Shout action is made when initially seeing an enemy, immediately after responding to a Shout, or repeatedly if idling in battle (i.e. standing outside melee range).

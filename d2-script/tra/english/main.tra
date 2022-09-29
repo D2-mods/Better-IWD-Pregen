@@ -1,3 +1,6 @@
+//This file contains any text displayed in the game
+
+
 //SCRPDESC.2DA entries (script descriptions)
 @100 = ~IWD PREGEN:~
 
@@ -177,7 +180,130 @@ Weight:  3 lb.~
 
 
 
+//Bag of Holding - unidentified (for ngbag)
+@720 = ~Bag~
+
+//iwd1
+@721 = ~This bag has seen better days. Dirt and soot cover the outside of the bag, and a foul stench can be detected, even when placed at a distance.
+
+STATISTICS:
+
+Weight: 5~
+
+//iwd2
+@722 = ~This is a common cloth sack of about 2 feet by 4 feet in size.
+
+STATISTICS:
+
+Weight: 5 lb.~
+
+
+
+//Bag of Holding - identified (for ngitembag without ngbag)
+@726 = ~Weapon Sack~
+
+//iwdee (ngitembag)
+@727 = ~This magical sack was prepared for <CHARNAME> and <PRO_HISHER> allies. It contains an assortment of weapons, and any or all can be taken out. However, a magical force prevents the party from placing items into the bag.
+
+STATISTICS:
+
+Weight: 5~
+
+//iwd1 (ngitembag)
+@728 = ~This magical sack was prepared for <CHARNAME> and <PROTAGONIST_HISHER> allies. It contains an assortment of weapons, and any or all can be taken out. However, a magical force prevents the party from placing items into the bag.
+
+STATISTICS:
+
+Weight: 5~
+
+//iwd2 (ngitembag)
+@729 = ~This magical sack was prepared for <CHARNAME> and <PROTAGONIST_HISHER> allies. It contains an assortment of weapons, and any or all can be taken out. However, a magical force prevents the party from placing items into the bag.
+
+STATISTICS:
+
+Weight: 5 lb.~
+
+
+
+//Bag of Holding - identified (for ngbag)
+@730 = ~Bag of Holding~
+
+//bg1, bg2, iwd1
+@731 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Weight: 5~
+
+@732 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Capacity: 50 items
+Weight: 5~
+
+@733 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Capacity: 100 items
+Weight: 5~
+
+@734 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Special: Gold is exchanged when adding or removing an item
+
+Weight: 5~
+
+//iwd2
+@735 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Weight: 5 lb.~
+
+@736 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Capacity: 50 items
+Weight: 5 lb.~
+
+@737 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+
+STATISTICS:
+
+Capacity: 100 items
+Weight: 5 lb.~
+
+
+
+//for Minsc Berserk tweak
+@900 = ~Berserk~
+@901 = ~Berserk
+
+Minsc becomes enraged for 5 rounds. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
+
+@902 = ~Berserk
+
+Minsc becomes enraged for 1 turn. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
+
+@903 = ~Berserk
+
+Minsc becomes enraged for 2 turns. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
+
+
+
+
+
 //light crossbow descriptions for IWD-in-BG2 (for ngequip)
+
+/*
+These descriptions are missing from the game by default.
+*/
+
 @150 = ~Light Crossbow~
 @250 = ~A crossbow is a bow mounted crosswise on a wooden or metal shaft, the latter called a tiller.  The bow is usually made of ash or yew.  The crossbow fires a quarrel (also called a bolt). 
 
@@ -319,121 +445,5 @@ Not Usable By:
 
 
 
-//Bag of Holding - unidentified (for ngbag)
-@720 = ~Bag~
-
-//iwd1
-@721 = ~This bag has seen better days. Dirt and soot cover the outside of the bag, and a foul stench can be detected, even when placed at a distance.
-
-STATISTICS:
-
-Weight: 5~
-
-//iwd2
-@722 = ~This is a common cloth sack of about 2 feet by 4 feet in size.
-
-STATISTICS:
-
-Weight: 5 lb.~
-
-
-
-//Bag of Holding - identified (for ngitembag without ngbag)
-@726 = ~Weapon Sack~
-
-//iwdee (ngitembag)
-@727 = ~This magical sack was prepared for <CHARNAME> and <PRO_HISHER> allies. It contains an assortment of weapons, and any or all can be taken out. However, a magical force prevents the party from placing items into the bag.
-
-STATISTICS:
-
-Weight: 5~
-
-//iwd1 (ngitembag)
-@728 = ~This magical sack was prepared for <CHARNAME> and <PROTAGONIST_HISHER> allies. It contains an assortment of weapons, and any or all can be taken out. However, a magical force prevents the party from placing items into the bag.
-
-STATISTICS:
-
-Weight: 5~
-
-//iwd2 (ngitembag)
-@729 = ~This magical sack was prepared for <CHARNAME> and <PROTAGONIST_HISHER> allies. It contains an assortment of weapons, and any or all can be taken out. However, a magical force prevents the party from placing items into the bag.
-
-STATISTICS:
-
-Weight: 5 lb.~
-
-
-
-//Bag of Holding - identified (for ngbag)
-@730 = ~Bag of Holding~
-
-//bg1, bg2, iwd1
-@731 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
-
-STATISTICS:
-
-Weight: 5~
-
-@732 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
-
-STATISTICS:
-
-Capacity: 50 items
-Weight: 5~
-
-@733 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
-
-STATISTICS:
-
-Capacity: 100 items
-Weight: 5~
-
-@734 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
-
-STATISTICS:
-
-Special: Gold is exchanged when adding or removing an item
-
-Weight: 5~
-
-//iwd2
-@735 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
-
-STATISTICS:
-
-Weight: 5 lb.~
-
-@736 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
-
-STATISTICS:
-
-Capacity: 50 items
-Weight: 5 lb.~
-
-@737 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
-
-STATISTICS:
-
-Capacity: 100 items
-Weight: 5 lb.~
-
-
-
-//for Minsc Berserk tweak
-@900 = ~Berserk~
-@901 = ~Berserk
-
-Minsc becomes enraged for 5 rounds. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
-
-@902 = ~Berserk
-
-Minsc becomes enraged for 1 turn. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
-
-@903 = ~Berserk
-
-Minsc becomes enraged for 2 turns. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
-
-
-
-//Biography from Black Pits 2 (for biofix)
-@99 = ~%name%... you wanted to be an adventurer for as long as you can remember. Even as a small child, you knew there was a vast world beyond the simple life you witnessed around you every day. Traveling bards fanned the flames of your determination to escape your mundane existence with tales of dragons and monsters, wizards and knights, legendary heroes and infamous villains. And you knew then that one day your deeds... your name... would be known throughout the realms.~
+/*
+*/

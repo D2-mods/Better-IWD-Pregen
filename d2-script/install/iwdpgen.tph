@@ -16,7 +16,7 @@ END
 
 COPY_EXISTING ~d2bsee.BCS~ ~override/iwdpgen.BCS~    // replace iwdpgen.BCS
 
-COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // update text
+COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // update script description
   LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
   INSERT_2DA_ROW %row_number% %columns% ~IWDPGEN @100 @101~
   REPLACE ~@100~ @100
@@ -34,31 +34,31 @@ COPY - ~%MOD_FOLDER%/baf/d2bsee1.BAF~ ~%MOD_FOLDER%/temp/d2bsee.BAF~
 COMPILE ~%MOD_FOLDER%/temp/d2bsee.BAF~
 
 ACTION_IF ((GAME_IS ~bgee~) AND (NOT GAME_INCLUDES ~sod~)) BEGIN
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#bgee.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
-COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#bgee.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
+  COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
 END
 
 ACTION_IF ((GAME_IS ~bgee~) AND (GAME_INCLUDES ~sod~)) BEGIN
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#sod.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
-COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#sod.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
+  COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
 END
 
 ACTION_IF (GAME_IS ~bg2ee~) BEGIN
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#bg2ee.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
-COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#bg2ee.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
+  COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
 END
 
 ACTION_IF (GAME_IS ~eet~) BEGIN
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#eet.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
-COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/game/d2#eet.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee2.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%MOD_FOLDER%/baf/d2bsee3.BAF~
+  COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
 END
 
 APPEND ~SCRPDESC.2DA~    // add line to 2DA (with placeholder values)
@@ -107,8 +107,8 @@ COPY_EXISTING ~SCRPDESC.2DA~ ~override~
   PRETTY_PRINT_2DA
 BUT_ONLY
 
-//fixed TobEx DLL, from Insomniator
-//http://www.shsforums.net/topic/61135-question-about-featurebug-change-to-the-noaction-script-action/#entry612382
+//fixed TobEx DLL, by Insomniator (used with permission)
+//this is only installed if TobEx Afterlife or BG2 Improved GUI is not installed
 ACTION_IF (MOD_IS_INSTALLED ~TobEx.tp2~ 100) BEGIN
   ACTION_IF (!(MOD_IS_INSTALLED ~TobEx_AfterLife.tp2~ 200) AND
              !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1000) AND

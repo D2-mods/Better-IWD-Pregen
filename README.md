@@ -40,7 +40,7 @@ This script manages auto-attack, while giving more nuanced control of the charac
 #### Other features:
 - classes with Search will use it whenever not attacking (note: IWD2 is hardcoded for only Rogues and Monks to be able to auto-Search)
 - will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance
-- will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (for example, from a contingency or area invisibility spell)
+- will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (ex. from a contingency or area invisibility spell)
 - will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
 
 #### Cooldown hotkeys:
@@ -161,7 +161,7 @@ NOTE: Dimension Door is more limited with this patch. Will only teleport to the 
 <details>
   <summary>Baldur's Gate (in BG1 engine)</summary>
   
-#### BG1 script features:
+#### BG1 script info:
 - characters will preserve Hide/Invisibility/Sanctuary
 - melee aggro ranges working
 - Calls for help working (REMOVED, but theoretically, I could add it back in)

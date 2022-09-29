@@ -2,10 +2,10 @@
 //compatible with the SCS script, if you prefer that to my script
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-  COPY - ~%MOD_FOLDER%/nymph/d2cwb1p.BAF~ ~%MOD_FOLDER%/temp/cwblight.baf~
+  COPY - ~%MOD_FOLDER%/nymph/d2cwb1p.BAF~ ~%MOD_FOLDER%/temp/cwblight.baf~    // BGEE games
 END
 ELSE BEGIN
-  COPY - ~%MOD_FOLDER%/nymph/d2cwb0p.BAF~ ~%MOD_FOLDER%/temp/cwblight.baf~
+  COPY - ~%MOD_FOLDER%/nymph/d2cwb0p.BAF~ ~%MOD_FOLDER%/temp/cwblight.baf~    // IWDEE or classic BG2
 END
 
 

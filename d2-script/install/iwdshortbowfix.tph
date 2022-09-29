@@ -1,6 +1,6 @@
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
 
-COPY_EXISTING_REGEXP GLOB ~.*.itm~ override
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
   PATCH_IF (SOURCE_SIZE > 0x71) BEGIN    // skip if not a valid .ITM
   PATCH_IF !(~%SOURCE_RES%~ STRING_EQUAL_CASE ~GODBOW~) BEGIN    // skip if Godbow
   
@@ -31,7 +31,7 @@ END
 
 ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
 
-COPY_EXISTING_REGEXP GLOB ~.*.itm~ override
+COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
   PATCH_IF (SOURCE_SIZE > 0x71) BEGIN    // skip files smaller than .ITM
     READ_BYTE 0x31 prof    // checks weapon proficiency
     PATCH_IF (prof = 95) BEGIN    //scimitar prof

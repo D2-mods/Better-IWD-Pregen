@@ -1,13 +1,13 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~4.1~
+VERSION ~4.2~
 
 ALWAYS
-  ACTION_BASH_FOR ~%MOD_FOLDER%/lib~ ~.*.tpa~ BEGIN    // function list
+  ACTION_BASH_FOR ~%MOD_FOLDER%/lib~ ~.*\.tpa~ BEGIN    // function list
     INCLUDE ~%BASH_FOR_FILESPEC%~
   END
   
-  ACTION_DEFINE_ARRAY d2noconvert BEGIN setup END
+  ACTION_DEFINE_ARRAY d2noconvert BEGIN setup END    // tra stuff for classic games
   ACTION_DEFINE_ARRAY d2reload BEGIN main END
   LAF HANDLE_CHARSETS
     INT_VAR
@@ -20,6 +20,8 @@ ALWAYS
       noconvert_array  = ~d2noconvert~
       reload_array     = ~d2reload~
   END
+
+  CLEAR_INLINED
 END
 
 LANGUAGE ~English~ 
@@ -32,13 +34,13 @@ LANGUAGE ~English~
 
 //Better IWD Pregen (appears in-game as "IWD PREGEN")
 
-BEGIN @1
+BEGIN @10100
 DESIGNATED 10
 REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
                    (GAME_INCLUDES ~bg2~) OR
                    (GAME_INCLUDES ~iwd~) OR
                    (GAME_INCLUDES ~iwd2~) OR
-                   (GAME_IS ~ca~ )) @2
+                   (GAME_IS ~ca~ )) ~Game not supported~
 LABEL ~D2-SCRIPT-IWDPGEN~
 INCLUDE ~%MOD_FOLDER%/install/iwdpgen.tph~
 
@@ -46,22 +48,22 @@ INCLUDE ~%MOD_FOLDER%/install/iwdpgen.tph~
 
 //Better AI for Call Woodland Beings (EEs, BG2)
 
-BEGIN @7    // Use Revised script for nymph summon
+BEGIN @10201    // Use Revised script for nymph summon
 DESIGNATED 20
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/rr#snymp.bcs~) @5    // skip if atweaks PNP Fey is installed
-REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~NYMPHSU.CRE~) @4
-SUBCOMPONENT @3
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/rr#snymp.bcs~) @10260    // skip if atweaks PNP Fey is detected
+REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~NYMPHSU.CRE~) ~Game not supported~
+SUBCOMPONENT @10200
 LABEL ~D2-SCRIPT-NYMPH~
 INCLUDE ~%MOD_FOLDER%/install/nymph.tph~
 
-BEGIN @8    // Use existing script, but patch in a few actions
-SUBCOMPONENT @3
+BEGIN @10202    // Use existing script, but patch in a few actions
+SUBCOMPONENT @10200
 LABEL ~D2-SCRIPT-NYMPHLIGHT~
 INCLUDE ~%MOD_FOLDER%/install/nymphlight.tph~
 
-BEGIN @9    // same as above, but standalone component for atweaks
-REQUIRE_PREDICATE (FILE_EXISTS ~override/rr#snymp.bcs~) ~~
-REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~NYMPHSU.CRE~) @4
+BEGIN @10230    // same as above, but standalone component for atweaks
+REQUIRE_PREDICATE (FILE_EXISTS ~override/rr#snymp.bcs~) ~~         // can install if atweaks PNP Fey is detected
+REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~NYMPHSU.CRE~) ~Game not supported~
 LABEL ~D2-SCRIPT-NYMPHATWEAKS~
 INCLUDE ~%MOD_FOLDER%/install/nymphlight.tph~
 
@@ -71,7 +73,7 @@ INCLUDE ~%MOD_FOLDER%/install/nymphlight.tph~
 
 BEGIN @9999
 DESIGNATED 9999
-REQUIRE_COMPONENT ~d2-script.tp2~ ~10~ @6
+REQUIRE_COMPONENT ~d2-script.tp2~ ~10~ ~Component not available~
 LABEL ~D2-SCRIPT-NGAUTO~
 INCLUDE ~%MOD_FOLDER%/install/ngauto.tph~
 
@@ -79,15 +81,15 @@ INCLUDE ~%MOD_FOLDER%/install/ngauto.tph~
 
 //Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 
-BEGIN @401    // enemies don't do extra damage
+BEGIN @40101    // enemies don't do extra damage
 DESIGNATED 30
-REQUIRE_PREDICATE (GAME_IS ~iwd how totlm iwd2~) @403
-SUBCOMPONENT @400
+REQUIRE_PREDICATE (GAME_IS ~iwd how totlm iwd2~) ~Game not supported~
+SUBCOMPONENT @40100
 LABEL ~D2-TWEAKS-SUPPRESSDAMAGE1~
 INCLUDE ~%MOD_FOLDER%/install/suppressdamage1.tph~
 
-BEGIN @402    // enemies do extra damage (game default)
-SUBCOMPONENT @400
+BEGIN @40102    // enemies do extra damage (game default)
+SUBCOMPONENT @40100
 LABEL ~D2-TWEAKS-SUPPRESSDAMAGE0~
 INCLUDE ~%MOD_FOLDER%/install/suppressdamage0.tph~
 
@@ -95,15 +97,15 @@ INCLUDE ~%MOD_FOLDER%/install/suppressdamage0.tph~
 
 //Add or remove Avarine Decanter (IWD2)
 
-BEGIN @405    // add Avarine Decanter
+BEGIN @40201    // add Avarine Decanter
 DESIGNATED 40
-REQUIRE_PREDICATE (GAME_IS ~iwd2~) @407
-SUBCOMPONENT @404
+REQUIRE_PREDICATE (GAME_IS ~iwd2~) ~Game not supported~
+SUBCOMPONENT @40200
 LABEL ~D2-TWEAKS-NYMBONUS1~
 INCLUDE ~%MOD_FOLDER%/install/nymbonus1.tph~
 
-BEGIN @406    // remove Avarine Decanter
-SUBCOMPONENT @404
+BEGIN @40202    // remove Avarine Decanter
+SUBCOMPONENT @40200
 LABEL ~D2-TWEAKS-NYMBONUS0~
 INCLUDE ~%MOD_FOLDER%/install/nymbonus0.tph~
 
@@ -111,15 +113,15 @@ INCLUDE ~%MOD_FOLDER%/install/nymbonus0.tph~
 
 //Unnerf Animate Dead (IWD2)
 
-BEGIN @409    // Use unnerfed Animate Dead
+BEGIN @40301    // Use unnerfed Animate Dead
 DESIGNATED 50
-REQUIRE_PREDICATE (GAME_IS ~iwd2~) @407
-SUBCOMPONENT @408
+REQUIRE_PREDICATE (GAME_IS ~iwd2~) ~Game not supported~
+SUBCOMPONENT @40300
 LABEL ~D2-TWEAKS-ID2ANIMATEDEAD17~
 INCLUDE ~%MOD_FOLDER%/install/id2animatedead17.tph~
 
-BEGIN @410    // Use nerfed Animate Dead
-SUBCOMPONENT @408
+BEGIN @40302    // Use nerfed Animate Dead
+SUBCOMPONENT @40300
 LABEL ~D2-TWEAKS-ID2ANIMATEDEAD9~
 INCLUDE ~%MOD_FOLDER%/install/id2animatedead9.tph~
 
@@ -127,15 +129,15 @@ INCLUDE ~%MOD_FOLDER%/install/id2animatedead9.tph~
 
 //Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)
 
-BEGIN @412    // Movement bonuses bypass Free Action
+BEGIN @40401    // Movement bonuses bypass Free Action
 DESIGNATED 60
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
-SUBCOMPONENT @411
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
+SUBCOMPONENT @40400
 LABEL ~D2-TWEAKS-PLYMOVEBONUS1~
 INCLUDE ~%MOD_FOLDER%/install/plymovebonus1.tph~
 
-BEGIN @413    // Movement bonuses are blocked by Free Action
-SUBCOMPONENT @411
+BEGIN @40402    // Movement bonuses are blocked by Free Action
+SUBCOMPONENT @40400
 LABEL ~D2-TWEAKS-PLYMOVEBONUS0~
 INCLUDE ~%MOD_FOLDER%/install/plymovebonus0.tph~
 
@@ -143,15 +145,15 @@ INCLUDE ~%MOD_FOLDER%/install/plymovebonus0.tph~
 
 //Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)
 
-BEGIN @415    // for Druids and Polymorph Self
+BEGIN @40501    // for Druids and Polymorph Self
 DESIGNATED 70
-REQUIRE_PREDICATE (GAME_IS ~iwdee~) @417
-SUBCOMPONENT @414
+REQUIRE_PREDICATE (GAME_IS ~iwdee~) ~Game not supported~
+SUBCOMPONENT @40500
 LABEL ~D2-IWDEE-FASTERDRUIDS1~
 INCLUDE ~%MOD_FOLDER%/install/fasterdruids1.tph~
 
-BEGIN @416    // for Druids only
-SUBCOMPONENT @414
+BEGIN @40502    // for Druids only
+SUBCOMPONENT @40500
 LABEL ~D2-IWDEE-FASTERDRUIDS0~
 INCLUDE ~%MOD_FOLDER%/install/fasterdruids0.tph~
 
@@ -159,28 +161,28 @@ INCLUDE ~%MOD_FOLDER%/install/fasterdruids0.tph~
 
 //Give party starting equipment (IWD games)
 
-BEGIN @448    // Items are auto-equipped or added to inventory
+BEGIN @40601    // Items are auto-equipped or added to inventory
 DESIGNATED 80
-REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 iwd how totlm iwd_in_bg2~) @419
+REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 iwd how totlm iwd_in_bg2~) ~Game not supported~
 REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2161) AND
                    !(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2162) AND
                    !(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2163) AND
                    !(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2164) AND
-                   !(MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf~))) @447
-SUBCOMPONENT @418
+                   !(MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf~))) ~Component not available~
+SUBCOMPONENT @40600
 LABEL ~D2-TWEAKS-NGEQUIP~
 INCLUDE ~%MOD_FOLDER%/install/ngequip.tph~
 
-BEGIN @449    // Start with a bag, containing a mix of weapons
-REQUIRE_PREDICATE !(GAME_IS ~iwd~) @425
-SUBCOMPONENT @418
+BEGIN @40602    // Start with a bag, containing a mix of weapons
+REQUIRE_PREDICATE !(GAME_IS ~iwd~) ~Game not supported~
+SUBCOMPONENT @40600
 LABEL ~D2-TWEAKS-NGITEMBAG~
 INCLUDE ~%MOD_FOLDER%/install/ngitembag.tph~
 
-BEGIN @449    // same as above, but standalone if tweaks incompatible with first option are detected
-REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 how totlm iwd_in_bg2~) @419
-REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2161) OR
-                   (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2162) OR
+BEGIN @40630    // same as above, but standalone for cdtweaks or "Skills and Abilities" revisions
+REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 how totlm iwd_in_bg2~) ~Game not supported~
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2161) OR    // may switch to labels later
+                   (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2162) OR    // older versions of cdtweaks did not use labels
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2163) OR
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2164) OR
                    (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf~))) ~~
@@ -191,27 +193,27 @@ INCLUDE ~%MOD_FOLDER%/install/ngitembag.tph~
 
 //Give party a Bag of Holding at game start (classic and EEs)
 
-BEGIN @421    // "Bottomless" bag (same as Tweaks Anthology component)
+BEGIN @40701    // "Bottomless" bag (same as Tweaks Anthology component)
 DESIGNATED 90
 REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
-                   !(GAME_IS ~bg1 totsc iwd pst pstee~)) @425
-SUBCOMPONENT @420
+                   !(GAME_IS ~bg1 totsc iwd pst pstee~)) ~Game not supported~
+SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGA~
 INCLUDE ~%MOD_FOLDER%/install/ngbagA.tph~
 
-BEGIN @422    // Capacity = 50 items (IWD2 default)
-SUBCOMPONENT @420
+BEGIN @40702    // Capacity = 50 items (IWD2 default)
+SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGB~
 INCLUDE ~%MOD_FOLDER%/install/ngbagB.tph~
 
-BEGIN @423    // Capacity = 100 items (BG2 default)
-SUBCOMPONENT @420
+BEGIN @40703    // Capacity = 100 items (BG2 default)
+SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGC~
 INCLUDE ~%MOD_FOLDER%/install/ngbagC.tph~
 
-BEGIN @424    // Bottomless, and Gold is exchanged when adding/removing items (experimental)
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @425
-SUBCOMPONENT @420
+BEGIN @40704    // Bottomless, and Gold is exchanged when adding/removing items (experimental)
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
+SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGD~
 INCLUDE ~%MOD_FOLDER%/install/ngbagD.tph~
 
@@ -219,18 +221,18 @@ INCLUDE ~%MOD_FOLDER%/install/ngbagD.tph~
 
 //All classes get full HP bonuses from Constitution (classic and EEs)
 
-BEGIN @427    // 2E-style HP bonuses (i.e. BG-style)
+BEGIN @40801    // 2E-style HP bonuses (i.e. BG-style)
 DESIGNATED 100
 REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
                    (GAME_INCLUDES ~bg2~) OR
                    (GAME_INCLUDES ~iwd~) OR
-                   (GAME_IS ~ca~ )) @429
-SUBCOMPONENT @426
+                   (GAME_IS ~ca~ )) ~Game not supported~
+SUBCOMPONENT @40800
 LABEL ~D2-TWEAKS-CONBON2E~
 INCLUDE ~%MOD_FOLDER%/install/conbon2e.tph~
 
-BEGIN @428    // 3e/4e/5e-style bonuses (+1 for every 2 stat points above 10)
-SUBCOMPONENT @426
+BEGIN @40802    // 3e-style bonuses (+1 for every 2 stat points above 10)
+SUBCOMPONENT @40800
 LABEL ~D2-TWEAKS-CONBON3E~
 INCLUDE ~%MOD_FOLDER%/install/conbon3e.tph~
 
@@ -238,9 +240,9 @@ INCLUDE ~%MOD_FOLDER%/install/conbon3e.tph~
 
 //Misc fixes for backstab-related 2DA files (EEs)
 
-BEGIN @430
+BEGIN @40900
 DESIGNATED 110
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
 LABEL ~D2-TWEAKS-BACKSTABCHECK~
 INCLUDE ~%MOD_FOLDER%/install/backstabcheck.tph~
 
@@ -250,20 +252,20 @@ INCLUDE ~%MOD_FOLDER%/install/backstabcheck.tph~
 //default delay is 420 seconds
 //default cap for stat reduction is -7 (IWD:EE v2.5 and v2.6.6)
 
-BEGIN @432    // Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)
+BEGIN @41001    // Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)
 DESIGNATED 120
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @4
-SUBCOMPONENT @431
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
+SUBCOMPONENT @41000
 LABEL ~D2-TWEAKS-CRIPPSTR6~
 INCLUDE ~%MOD_FOLDER%/install/crippstr6.tph~
 
-BEGIN @433    // Can Sneak Attack a target once every 30 seconds (stat reduction does not stack)
-SUBCOMPONENT @431
+BEGIN @41002    // Can Sneak Attack a target once every 30 seconds (stat reduction does not stack)
+SUBCOMPONENT @41000
 LABEL ~D2-TWEAKS-CRIPPSTR30~
 INCLUDE ~%MOD_FOLDER%/install/crippstr30.tph~
 
-BEGIN @434    // Uncap Crippling Strike, but do not change delay (420 seconds)
-SUBCOMPONENT @431
+BEGIN @41003    // Uncap Crippling Strike, but do not change delay (420 seconds)
+SUBCOMPONENT @41000
 LABEL ~D2-TWEAKS-CRIPPSTR16~
 INCLUDE ~%MOD_FOLDER%/install/crippstr16.tph~
 
@@ -271,32 +273,32 @@ INCLUDE ~%MOD_FOLDER%/install/crippstr16.tph~
 
 //Allow Minsc to use his Berserk ability at will (BG games)
 
-BEGIN @440    // Use at will, and reduce duration to 5 rounds (30 seconds)
+BEGIN @41301    // Use at will, and reduce duration to 5 rounds (30 seconds)
 DESIGNATED 150
 REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
-                   (GAME_INCLUDES ~bg2~)) @443
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @444    // skip if Rashemi kit (Artisan's Kitpack) is detected
-SUBCOMPONENT @439
+                   (GAME_INCLUDES ~bg2~)) ~Game not supported~
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if Rashemi kit (Artisan's Kitpack) is detected
+SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE30~
 INCLUDE ~%MOD_FOLDER%/install/minscrage30.tph~
 
-BEGIN @441    // Use at will, and reduce duration to 1 turn (60 seconds)
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @444    // skip if Rashemi kit (Artisan's Kitpack) is detected
-SUBCOMPONENT @439
+BEGIN @41302    // Use at will, and reduce duration to 1 turn (60 seconds)
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if Rashemi kit (Artisan's Kitpack) is detected
+SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE60~
 INCLUDE ~%MOD_FOLDER%/install/minscrage60.tph~
 
-BEGIN @442    // Use at will, but do not lower duration (120 seconds)
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @444    // skip if Rashemi kit (Artisan's Kitpack) is detected
-SUBCOMPONENT @439
+BEGIN @41303    // Use at will, but do not lower duration (120 seconds)
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if Rashemi kit (Artisan's Kitpack) is detected
+SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE120~
 INCLUDE ~%MOD_FOLDER%/install/minscrage120.tph~
 
-BEGIN @445    // Timing fix for Minsc's Berserk ability (already included in above components)
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet~) @446
+BEGIN @41330    // Timing fix for Minsc's Berserk ability (already included in above components)
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet~) ~Game not supported~
 REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE30~)) AND
                    !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE60~)) AND
-                   !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE120~))) @447
+                   !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE120~))) ~Component not available~
 LABEL ~D2-TWEAKS-MINSCRAGE0~
 INCLUDE ~%MOD_FOLDER%/install/minscrage0.tph~
 
@@ -304,9 +306,9 @@ INCLUDE ~%MOD_FOLDER%/install/minscrage0.tph~
 
 //Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 
-BEGIN @450
+BEGIN @41400
 DESIGNATED 160
-REQUIRE_PREDICATE GAME_IS ~iwdee iwd_in_bg2~ @447
+REQUIRE_PREDICATE GAME_IS ~iwdee iwd_in_bg2~ ~Game not supported~
 LABEL ~D2-TWEAKS-IWDSHORTBOWFIX~
 INCLUDE ~%MOD_FOLDER%/install/iwdshortbowfix.tph~
 
@@ -316,6 +318,7 @@ INCLUDE ~%MOD_FOLDER%/install/iwdshortbowfix.tph~
 
 
 /* Stuff in here is not used
+
 
 //Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
 //reverts changes by: Rogue Rebalancing by aVENGER

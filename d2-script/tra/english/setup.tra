@@ -1,74 +1,88 @@
-//Scripts
-@1 = ~Better IWD Pregen~
-@2 = ~Installs on BG(EE), BG2(EE), IWD(EE), IWD2, and any mods built on these engines~
-@3 = ~Better AI for Call Woodland Beings (EEs, BG2)~
-@4 = ~Installs on BG:EE, BG2:EE, IWD:EE, and EET~
-@5 = ~This option is not available for atweaks PnP Fey~
-@9999 = ~Auto-assign script to new characters~
-@6 = ~Requires installing the Better IWD Pregen script~
+//This file contains text shown in weidu installer
 
-@7 = ~Use Revised script for nymph summon~
-@8 = ~Use existing script, but patch in a few actions~
-@9 = ~Use existing script, but patch in a few actions (atweaks)~
+/*
+Components with near-identical names are mutually exclusive.
+For Project Infinity, you can check both options if using (will automatically skip if incompatible).
+*/
+
+
+//Scripts
+@10100 = ~Better IWD Pregen~
+
+@10200 = ~Better AI for Call Woodland Beings (EEs, BG2)~
+	@10201 = ~Use Revised script for nymph summon~
+	@10202 = ~Use existing script, but patch in a few actions~
+@10230 = ~Use existing script, but patch in a few actions (atweaks)~
+@10260 = ~This component is not available for atweaks PnP Fey~
+
+@9999 = ~Auto-assign script to new characters~
+
 
 
 //Tweaks
-@400 = ~Adjust enemy damage at higher difficulties (classic IWD, IWD2)~
-@401 = ~Enemies don't do extra damage~
-@402 = ~Enemies do extra damage (game default)~
-@403 = ~This component is for classic IWD and IWD2~
-@404 = ~Add or remove Avarine Decanter (IWD2)~
-@405 = ~Add Avarine Decanter~
-@406 = ~Remove Avarine Decanter~
-@407 = ~This component is for IWD2~
-@408 = ~Unnerf Animate Dead (IWD2)~
-@409 = ~Use unnerfed Animate Dead, and correct chance of each creature type to 50/50~
-@410 = ~Use nerfed Animate Dead, but correct chance of each creature type to 50/50~
+@40100 = ~Adjust enemy damage at higher difficulties (classic IWD, IWD2)~
+	@40101 = ~Enemies don't do extra damage~
+	@40102 = ~Enemies do extra damage (game default)~
 
-@411 = ~Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)~
-@412 = ~Movement bonuses bypass Free Action~
-@413 = ~Movement bonuses are blocked by Free Action~
-@414 = ~Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)~
-@415 = ~for Druids and Polymorph Self~
-@416 = ~for Druids only~
-@417 = ~This component is for IWD:EE~
-@418 = ~Give party starting equipment (IWD games)~
-@419 = ~Installs on IWD:EE, IWD1, IWD2, and IWD-in-BG2~
+@40200 = ~Add or remove Avarine Decanter (IWD2)~
+	@40201 = ~Add Avarine Decanter~
+	@40202 = ~Remove Avarine Decanter~
 
-@420 = ~Give party a Bag of Holding at game start (classic and EEs)~
-@421 = ~"Bottomless" bag (same as Tweaks Anthology component)~
-@422 = ~Capacity = 50 items (IWD2 default)~
-@423 = ~Capacity = 100 items (BG2 default)~
-@424 = ~Bottomless, and Gold is exchanged when adding/removing items (experimental)~
-@425 = ~This option does not currently support this game~
-@426 = ~All classes get full HP bonuses from Constitution (classic and EEs)~
-@427 = ~2e-style HP bonuses (i.e. BG-style)~
-@428 = ~3e/4e/5e-style bonuses (+1 for every 2 stat points above 10)~
-@429 = ~Installs on BG(EE), BG2(EE), IWD(EE), and any mods built on these engines~
+@40300 = ~Unnerf Animate Dead (IWD2)~
+	@40301 = ~Use unnerfed Animate Dead, and correct chance of each creature type to 50/50~
+	@40302 = ~Use nerfed Animate Dead, but correct chance of each creature type to 50/50~
 
-@430 = ~Misc fixes for backstab-related 2DA files (EEs)~
-@431 = ~Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)~
-@432 = ~Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)~
-@433 = ~Can Sneak Attack a target once every 30 seconds (stat reduction does not stack)~
-@434 = ~Uncap Crippling Strike, but do not change delay (420 seconds)~
-@435 = ~Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)~
-@436 = ~Cannot detect files that this component has fixes for~
-@437 = ~Weapon Style tweak for Deities of Faerun (EEs)~
-@438 = ~This component requires the Deities of Faerun mod~
+@40400 = ~Allow movement bonuses from shapeshift forms to bypass Free Action (EEs)~
+	@40401 = ~Movement bonuses bypass Free Action~
+	@40402 = ~Movement bonuses are blocked by Free Action~
 
-@439 = ~Allow Minsc to use his Berserk ability at will (BG games)~
-@440 = ~Use at will, and reduce duration to 5 rounds (30 seconds)~
-@441 = ~Use at will, and reduce duration to 1 turn (60 seconds)~
-@442 = ~Use at will, but do not lower duration (120 seconds)~
-@443 = ~This component is for BG(EE) and BG2(EE)~
-@444 = ~This option is not available for Rashemi Berserker (Artisan's Kitpack)~
-@445 = ~Timing fix for Minsc's Berserk ability (EEs)~
-@446 = ~Installs on BG:EE, BG2:EE, and EET~
-@447 = ~This component is not needed or available for the current game~
+@40500 = ~Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)~
+	@40501 = ~for Druids and Polymorph Self~
+	@40502 = ~for Druids only~
 
-@448 = ~Items are auto-equipped or added to inventory~
-@449 = ~Start with a bag, containing a mix of weapons~
-@450 = ~Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)~
+@40600 = ~Give party starting equipment (IWD games)~
+	@40601 = ~Items are auto-equipped or added to inventory (for unmodded proficiencies)~
+	@40602 = ~Start with a bag, containing a mix of weapons~
+@40630 = ~Start with a bag, containing a mix of weapons~    // standalone component
+
+@40700 = ~Give party a Bag of Holding at game start (classic and EEs)~
+	@40701 = ~"Bottomless" bag (same as Tweaks Anthology component)~
+	@40702 = ~Capacity = 50 items (IWD2 default)~
+	@40703 = ~Capacity = 100 items (BG2 default)~
+	@40704 = ~Bottomless, and Gold is exchanged when adding/removing items (experimental)~
+
+@40800 = ~All classes get full HP bonuses from Constitution (classic and EEs)~
+	@40801 = ~2e-style HP bonuses (i.e. BG-style)~
+	@40802 = ~3e-style bonuses (+1 for every 2 stat points above 10)~
+
+@40900 = ~Misc fixes for backstab-related 2DA files (EEs)~
+	@40901 = ~~
+	@40902 = ~~
+
+@41000 = ~Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)~
+	@41001 = ~Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)~
+	@41002 = ~Can Sneak Attack a target once every 30 seconds (stat reduction does not stack)~
+	@41003 = ~Uncap Crippling Strike, but do not change delay (420 seconds)~
+
+@41100 = ~~
+	@41101 = ~~
+	@41102 = ~~
+
+@41200 = ~~
+	@41201 = ~~
+	@41202 = ~~
+
+@41300 = ~Allow Minsc to use his Berserk ability at will (BG games)~    // includes the timing fix component
+	@41301 = ~Use at will, and reduce duration to 5 rounds (30 seconds)~
+	@41302 = ~Use at will, and reduce duration to 1 turn (60 seconds)~
+	@41303 = ~Use at will, but do not lower duration (120 seconds)~
+@41330 = ~Timing fix for Minsc's Berserk ability (EEs)~    // if previous component is not installed
+@41360 = ~This component is not available for Rashemi Berserker (Artisan's Kitpack)~
+
+@41400 = ~Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)~
+	@41401 = ~~
+	@41402 = ~~
+
 
 
 

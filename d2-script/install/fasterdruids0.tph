@@ -23,7 +23,7 @@ ACTION_IF ((MOD_IS_INSTALLED ~d2-iwdee-fixes.tp2~ %movebonus0%) OR
   END
   ELSE BEGIN
   
-  COPY_EXISTING_REGEXP ~ply.*.itm~ ~override~
+  COPY_EXISTING_REGEXP ~ply.*\.itm~ ~override~
     LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=176 opcode=126 END
   BUT_ONLY
 

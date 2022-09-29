@@ -96,6 +96,11 @@ IWD2 exe patch:
 ==================================================
 VERSION INFO
 ==================================================
+v4.2
+- Cleaned up the setup.tra file (the text that appears in the weidu installer). The file's actually readable now.
+- Classic BG2: fixed small bug with nymph scripts, relating to using Cause Serious Wounds spell.
+- a few other small edits to various installer files
+
 v4.1
 - Removed the following components:
 	- Fix weapon styles for some kits, if incorrectly changed by a tweak (EEs)
