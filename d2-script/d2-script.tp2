@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~4.3~
+VERSION ~4.4~
 
 ALWAYS
   ACTION_BASH_FOR ~%MOD_FOLDER%/lib~ ~.*\.tpa~ BEGIN    // function list
@@ -57,15 +57,25 @@ LABEL ~D2-SCRIPT-NYMPH~
 INCLUDE ~%MOD_FOLDER%/install/nymph.tph~
 
 BEGIN @10202    // Use existing script, but patch in a few actions
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/rr#snymp.bcs~) @10260
 SUBCOMPONENT @10200
 LABEL ~D2-SCRIPT-NYMPHLIGHT~
 INCLUDE ~%MOD_FOLDER%/install/nymphlight.tph~
 
-BEGIN @10230    // same as above, but standalone component for atweaks
+
+//same as above, but standalone component if atweaks detected
+
+BEGIN @10231    // Yes
 REQUIRE_PREDICATE (FILE_EXISTS ~override/rr#snymp.bcs~) ~~         // can install if atweaks PNP Fey is detected
 REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~NYMPHSU.CRE~) ~Game not supported~
+SUBCOMPONENT @10230
 LABEL ~D2-SCRIPT-NYMPHATWEAKS~
 INCLUDE ~%MOD_FOLDER%/install/nymphlight.tph~
+
+BEGIN @10232    // No
+REQUIRE_PREDICATE (FILE_EXISTS ~override/rr#snymp.bcs~) ~~
+SUBCOMPONENT @10230
+LABEL ~D2-SCRIPT-NONYMPH~
 
 ////////////////////////////////////////////////////////////
 
@@ -185,15 +195,28 @@ SUBCOMPONENT @40600
 LABEL ~D2-TWEAKS-NGITEMBAG~
 INCLUDE ~%MOD_FOLDER%/install/ngitembag.tph~
 
-BEGIN @40630    // same as above, but standalone for cdtweaks or "Skills and Abilities" revisions
+
+//same as above, but standalone if cdtweaks or "Skills and Abilities" detected
+
+BEGIN @40631    // Yes
 REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 how totlm iwd_in_bg2~) ~Game not supported~
 REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2161) OR    // may switch to labels later
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2162) OR    // older versions of cdtweaks did not use labels
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2163) OR
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2164) OR
                    (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf~))) ~~
+SUBCOMPONENT @40630
 LABEL ~D2-TWEAKS-NGITEMBAGTWEAK~
 INCLUDE ~%MOD_FOLDER%/install/ngitembag.tph~
+
+BEGIN @40632    // No
+REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2161) OR    // may switch to labels later
+                   (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2162) OR    // older versions of cdtweaks did not use labels
+                   (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2163) OR
+                   (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2164) OR
+                   (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf~))) ~~
+SUBCOMPONENT @40630
+LABEL ~D2-TWEAKS-NONGITEMBAG~
 
 ////////////////////////////////////////////////////////////
 
@@ -237,7 +260,7 @@ SUBCOMPONENT @40800
 LABEL ~D2-TWEAKS-CONBON2E~
 INCLUDE ~%MOD_FOLDER%/install/conbon2e.tph~
 
-BEGIN @40802    // 3e-style bonuses (+1 for every 2 stat points above 10)
+BEGIN @40802    // 3e-style bonuses (+1 for every 2 CON above 10)
 SUBCOMPONENT @40800
 LABEL ~D2-TWEAKS-CONBON3E~
 INCLUDE ~%MOD_FOLDER%/install/conbon3e.tph~
@@ -305,13 +328,24 @@ SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE120~
 INCLUDE ~%MOD_FOLDER%/install/minscrage120.tph~
 
-BEGIN @41330    // Timing fix for Minsc's Berserk ability (already included in above components)
+
+// Timing fix for Minsc's Berserk ability (skipped if one of above is installed)
+
+BEGIN @41331    // Yes
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet~) ~Game not supported~
 REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE30~)) AND
                    !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE60~)) AND
                    !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE120~))) ~Component not available~
+SUBCOMPONENT @41330
 LABEL ~D2-TWEAKS-MINSCRAGE0~
 INCLUDE ~%MOD_FOLDER%/install/minscrage0.tph~
+
+BEGIN @41332    // No
+REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE30~)) AND
+                   !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE60~)) AND
+                   !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE120~))) ~Component not available~
+SUBCOMPONENT @41330
+LABEL ~D2-TWEAKS-NOMINSCRAGE~
 
 ////////////////////////////////////////////////////////////
 

@@ -12,12 +12,14 @@ For Project Infinity, you can check both options if using (will automatically sk
 @10200 = ~Better AI for Call Woodland Beings (EEs, BG2)~
 	@10201 = ~Use Revised script for nymph summon~
 	@10202 = ~Use existing script, but patch in a few actions~
-@10230 = ~Use existing script, but patch in a few actions (atweaks)~
+@10230 = ~Use existing script, but patch in a few actions (atweaks)~    // standalone component
+	@10231 = ~Yes~
+	@10232 = ~No~
 @10260 = ~This component is not available for atweaks PnP Fey~
 
 @9999 = ~Auto-assign script to new characters~
-@1 = ~Yes~
-@2 = ~No~
+	@1 = ~Yes~
+	@2 = ~No~
 
 
 
@@ -45,7 +47,9 @@ For Project Infinity, you can check both options if using (will automatically sk
 @40600 = ~Give party starting equipment (IWD games)~
 	@40601 = ~Items are auto-equipped or added to inventory~
 	@40602 = ~Start with a bag, containing a mix of weapons~
-@40630 = ~Start with a bag, containing a mix of weapons~    // standalone component
+@40630 = ~Start with a bag, containing a mix of weapons (tweak detected)~    // standalone component
+	@40631 = ~Yes~
+	@40632 = ~No~
 
 @40700 = ~Give party a Bag of Holding at game start (classic and EEs)~
 	@40701 = ~"Bottomless" bag (same as Tweaks Anthology component)~
@@ -55,7 +59,7 @@ For Project Infinity, you can check both options if using (will automatically sk
 
 @40800 = ~All classes get full HP bonuses from Constitution (classic and EEs)~
 	@40801 = ~2e-style HP bonuses (i.e. BG-style)~
-	@40802 = ~3e-style bonuses (+1 for every 2 stat points above 10)~
+	@40802 = ~3e-style bonuses (+1 for every 2 CON above 10)~
 
 @40900 = ~Fixes for backstab-related 2DA files (EEs)~
 	@40901 = ~Check files and fix (incorrect lines, etc.)~
@@ -79,6 +83,8 @@ For Project Infinity, you can check both options if using (will automatically sk
 	@41302 = ~Use at will, and reduce duration to 1 turn (60 seconds)~
 	@41303 = ~Use at will, but do not lower duration (120 seconds)~
 @41330 = ~Timing fix for Minsc's Berserk ability (EEs)~    // if previous component is not installed
+	@41331 = ~Yes~
+	@41332 = ~No~
 @41360 = ~This component is not available for Rashemi Berserker (Artisan's Kitpack)~
 
 @41400 = ~Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)~

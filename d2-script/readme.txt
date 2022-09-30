@@ -98,6 +98,9 @@ IWD2 exe patch:
 ==================================================
 VERSION INFO
 ==================================================
+v4.4
+- all tweaks really have at least 2 subcomponents now (missed a few in the v4.3)
+
 v4.3
 - All tweak components now have at least 2 subcomponents (even if just a simple "Yes" or "No")
 - Added 2 components:
