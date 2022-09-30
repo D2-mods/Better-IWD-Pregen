@@ -3,13 +3,13 @@
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-  COPY ~%MOD_FOLDER%/ngbag/d2#ngbag.BAM~ ~override~
-  COPY ~%MOD_FOLDER%/ngbag/d2hbee1.ITM~ ~override/d2#ngbag.ITM~
+  COPY ~%ngbag%/d2#ngbag.BAM~ ~override~
+  COPY ~%ngbag%/d2hbee1.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @730 SAY UNIDENTIFIED_DESC @734
     SAY NAME2 @730
     WRITE_ASCII 0x3a ~d2#ngbag~ #8    // set inventory icon
 	
-  COPY ~%MOD_FOLDER%/ngbag/d2hbee1.STO~ ~override/d2#ngbag.STO~
+  COPY ~%ngbag%/d2hbee1.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
     WRITE_LONG 0x10 THIS | BIT13    // make buy price ignore rep
     WRITE_LONG 0x14 180    // 180% markup when buying back items
@@ -17,14 +17,14 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     WRITE_SHORT 0x22 65535    // set storage to max
 	
   ACTION_IF (GAME_IS ~bg2ee~) BEGIN
-    EXTEND_BOTTOM ~AR0602.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbg2.BAF~
+    EXTEND_BOTTOM ~AR0602.BCS~ ~%ngbag%/d2#ngbg2.BAF~
   END
   
   ACTION_IF (GAME_IS ~eet~) BEGIN
-    COPY - ~%MOD_FOLDER%/ngbag/d2#ngbg2.BAF~ ~%MOD_FOLDER%/temp/d2#ngbg2.BAF~
+    COPY - ~%ngbag%/d2#ngbg2.BAF~ ~%workspace%/d2#ngbg2.BAF~
       REPLACE_TEXTUALLY ~InParty("Imoen")~ ~InParty("Imoen2")~
       REPLACE_TEXTUALLY ~"d2#ngbag","Imoen"~ ~"d2#ngbag","Imoen2"~
-    EXTEND_BOTTOM ~AR0602.BCS~ ~%MOD_FOLDER%/temp/d2#ngbg2.BAF~
+    EXTEND_BOTTOM ~AR0602.BCS~ ~%workspace%/d2#ngbg2.BAF~
   END
   
   ACTION_IF (GAME_INCLUDES ~sod~) BEGIN
@@ -37,7 +37,7 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     BUT_ONLY
   END
   
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/d2#ngbag.BAF~
 END
 
 ////////////////////////////////////////////////////////////
@@ -45,20 +45,20 @@ END
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
 ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
-  COPY ~%MOD_FOLDER%/ngbag/d2#ngbag.BAM~ ~override~
-  COPY ~%MOD_FOLDER%/ngbag/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
+  COPY ~%ngbag%/d2#ngbag.BAM~ ~override~
+  COPY ~%ngbag%/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
     SAY NAME2 @730 SAY DESC @734
     WRITE_ASCII 0x3a ~d2#ngbag~ #8    // set inventory icon
 	
-  COPY ~%MOD_FOLDER%/ngbag/d2hbee0.STO~ ~override/d2#ngbag.STO~
+  COPY ~%ngbag%/d2hbee0.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
     WRITE_LONG 0x10 THIS | BIT13    // make buy price ignore rep
     WRITE_LONG 0x14 180    // 180% markup when buying back items
     WRITE_LONG 0x18 65    // receive 65% of base price
     WRITE_SHORT 0x22 65535    // set storage to max
 	
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/d2#ngbag.BAF~
   
 END
 END
@@ -76,7 +76,7 @@ ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWE
     WRITE_SHORT 0x22 65535    // set storage to max
   BUT_ONLY
   
-  COPY ~%MOD_FOLDER%/ngbag/d2#ngbag.BAM~ ~override~
+  COPY ~%ngbag%/d2#ngbag.BAM~ ~override~
   COPY_EXISTING ~d2#ngbag.ITM.BAK~ ~override/d2#ngbag.ITM~    // revert edits to item file
   COPY_EXISTING ~d2#ngbag.ITM~ ~override~
     SAY DESC @734

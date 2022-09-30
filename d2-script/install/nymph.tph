@@ -2,31 +2,31 @@
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 
-COMPILE ~%MOD_FOLDER%/nymph/d2cwb1.BAF~
+COMPILE ~%nymph%/d2cwb1.BAF~
 COPY_EXISTING ~d2cwb1.BCS~ ~override/NYMPH.BCS~
 
-COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1b.BAF~
+COPY - ~%nymph%/d2cwb1a.BAF~ ~%workspace%/d2cwb1b.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player2~
   REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1c~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1c.BAF~
+COPY - ~%nymph%/d2cwb1a.BAF~ ~%workspace%/d2cwb1c.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player3~
   REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1d~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1d.BAF~
+COPY - ~%nymph%/d2cwb1a.BAF~ ~%workspace%/d2cwb1d.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player4~
   REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1e~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1e.BAF~
+COPY - ~%nymph%/d2cwb1a.BAF~ ~%workspace%/d2cwb1e.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player5~
   REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1f~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~ ~%MOD_FOLDER%/temp/d2cwb1f.BAF~
+COPY - ~%nymph%/d2cwb1a.BAF~ ~%workspace%/d2cwb1f.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player6~
   REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1a~
   
-COMPILE ~%MOD_FOLDER%/nymph/d2cwb1a.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb1b.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb1c.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb1d.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb1e.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb1f.BAF~
+COMPILE ~%nymph%/d2cwb1a.BAF~
+COMPILE ~%workspace%/d2cwb1b.BAF~
+COMPILE ~%workspace%/d2cwb1c.BAF~
+COMPILE ~%workspace%/d2cwb1d.BAF~
+COMPILE ~%workspace%/d2cwb1e.BAF~
+COMPILE ~%workspace%/d2cwb1f.BAF~
 
 END
 
@@ -34,31 +34,31 @@ END
 
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
 
-COMPILE ~%MOD_FOLDER%/nymph/d2cwb0.BAF~
+COMPILE ~%nymph%/d2cwb0.BAF~
 COPY_EXISTING ~d2cwb0.BCS~ ~override/NYMPH.BCS~
 
-COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0b.BAF~
+COPY - ~%nymph%/d2cwb0a.BAF~ ~%workspace%/d2cwb0b.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player2~
   REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0c~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0c.BAF~
+COPY - ~%nymph%/d2cwb0a.BAF~ ~%workspace%/d2cwb0c.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player3~
   REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0d~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0d.BAF~
+COPY - ~%nymph%/d2cwb0a.BAF~ ~%workspace%/d2cwb0d.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player4~
   REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0e~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0e.BAF~
+COPY - ~%nymph%/d2cwb0a.BAF~ ~%workspace%/d2cwb0e.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player5~
   REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0f~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~ ~%MOD_FOLDER%/temp/d2cwb0f.BAF~
+COPY - ~%nymph%/d2cwb0a.BAF~ ~%workspace%/d2cwb0f.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player6~
   REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0a~
   
-COMPILE ~%MOD_FOLDER%/nymph/d2cwb0a.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb0b.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb0c.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb0d.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb0e.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb0f.BAF~
+COMPILE ~%nymph%/d2cwb0a.BAF~
+COMPILE ~%workspace%/d2cwb0b.BAF~
+COMPILE ~%workspace%/d2cwb0c.BAF~
+COMPILE ~%workspace%/d2cwb0d.BAF~
+COMPILE ~%workspace%/d2cwb0e.BAF~
+COMPILE ~%workspace%/d2cwb0f.BAF~
 
 END
 
@@ -66,31 +66,31 @@ END
 
 ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN
 
-COMPILE ~%MOD_FOLDER%/nymph/d2cwb2.BAF~
+COMPILE ~%nymph%/d2cwb2.BAF~
 COPY_EXISTING ~d2cwb2.BCS~ ~override/NYMPH.BCS~
 
-COPY - ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~ ~%MOD_FOLDER%/temp/d2cwb2b.BAF~
+COPY - ~%nymph%/d2cwb2a.BAF~ ~%workspace%/d2cwb2b.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player2~
   REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2c~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~ ~%MOD_FOLDER%/temp/d2cwb2c.BAF~
+COPY - ~%nymph%/d2cwb2a.BAF~ ~%workspace%/d2cwb2c.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player3~
   REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2d~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~ ~%MOD_FOLDER%/temp/d2cwb2d.BAF~
+COPY - ~%nymph%/d2cwb2a.BAF~ ~%workspace%/d2cwb2d.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player4~
   REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2e~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~ ~%MOD_FOLDER%/temp/d2cwb2e.BAF~
+COPY - ~%nymph%/d2cwb2a.BAF~ ~%workspace%/d2cwb2e.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player5~
   REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2f~
-COPY - ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~ ~%MOD_FOLDER%/temp/d2cwb2f.BAF~
+COPY - ~%nymph%/d2cwb2a.BAF~ ~%workspace%/d2cwb2f.BAF~
   REPLACE_TEXTUALLY ~Player1~ ~Player6~
   REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2a~
   
-COMPILE ~%MOD_FOLDER%/nymph/d2cwb2a.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb2b.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb2c.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb2d.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb2e.BAF~
-COMPILE ~%MOD_FOLDER%/temp/d2cwb2f.BAF~
+COMPILE ~%nymph%/d2cwb2a.BAF~
+COMPILE ~%workspace%/d2cwb2b.BAF~
+COMPILE ~%workspace%/d2cwb2c.BAF~
+COMPILE ~%workspace%/d2cwb2d.BAF~
+COMPILE ~%workspace%/d2cwb2e.BAF~
+COMPILE ~%workspace%/d2cwb2f.BAF~
 
 END
 

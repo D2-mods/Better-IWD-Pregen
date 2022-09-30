@@ -98,6 +98,10 @@ IWD2 exe patch:
 ==================================================
 VERSION INFO
 ==================================================
+v4.5
+- some backend changes
+- CON bonus component now patches the file (won't change anything other than HP gains)
+
 v4.4
 - all tweaks really have at least 2 subcomponents now (missed a few in the v4.3)
 

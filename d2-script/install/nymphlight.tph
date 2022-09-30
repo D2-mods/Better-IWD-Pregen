@@ -2,10 +2,10 @@
 //compatible with the SCS script, if you prefer that to my script
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-  COPY - ~%MOD_FOLDER%/nymph/d2cwb1p.BAF~ ~%MOD_FOLDER%/temp/cwblight.baf~    // BGEE games
+  COPY - ~%nymph%/d2cwb1p.BAF~ ~%workspace%/cwblight.baf~    // BGEE games
 END
 ELSE BEGIN
-  COPY - ~%MOD_FOLDER%/nymph/d2cwb0p.BAF~ ~%MOD_FOLDER%/temp/cwblight.baf~    // IWDEE or classic BG2
+  COPY - ~%nymph%/d2cwb0p.BAF~ ~%workspace%/cwblight.baf~    // IWDEE or classic BG2
 END
 
 
@@ -13,15 +13,15 @@ END
 //atweaks PnP Fey scripts
 
 ACTION_IF (FILE_EXISTS_IN_GAME ~rr#sdrya.BCS~) BEGIN
-  EXTEND_TOP ~rr#sdrya.BCS~ ~%MOD_FOLDER%/temp/cwblight.baf~
+  EXTEND_TOP ~rr#sdrya.BCS~ ~%workspace%/cwblight.baf~
 END
 
 ACTION_IF (FILE_EXISTS_IN_GAME ~rr#shama.BCS~) BEGIN
-  EXTEND_TOP ~rr#shama.BCS~ ~%MOD_FOLDER%/temp/cwblight.baf~
+  EXTEND_TOP ~rr#shama.BCS~ ~%workspace%/cwblight.baf~
 END
 
 ACTION_IF (FILE_EXISTS_IN_GAME ~rr#snymp.BCS~) BEGIN
-  EXTEND_TOP ~rr#snymp.BCS~ ~%MOD_FOLDER%/temp/cwblight.baf~
+  EXTEND_TOP ~rr#snymp.BCS~ ~%workspace%/cwblight.baf~
 END
 
 
@@ -29,7 +29,7 @@ END
 //regular nymph script (also used for SCS AI)
 
 ACTION_IF (FILE_EXISTS_IN_GAME ~NYMPH.BCS~) BEGIN
-  EXTEND_TOP ~NYMPH.BCS~ ~%MOD_FOLDER%/temp/cwblight.baf~
+  EXTEND_TOP ~NYMPH.BCS~ ~%workspace%/cwblight.baf~
 END
 
 

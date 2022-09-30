@@ -4,7 +4,7 @@ ACTION_IF (FILE_EXISTS ~override/backstab.SPL~) BEGIN
 END
 
 //copy new spell to override and patch
-COPY ~%MOD_FOLDER%/crippstr/backstab16.SPL~ ~override/backstab.SPL~
+COPY ~%crippstr%/backstab16.SPL~ ~override/backstab.SPL~
   LPF ALTER_EFFECT INT_VAR match_opcode = 292 duration = 6 END
   
   LPF ADD_SPELL_EFFECT 

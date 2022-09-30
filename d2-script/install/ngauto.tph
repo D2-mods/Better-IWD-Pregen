@@ -37,11 +37,11 @@ END
 
 //fix SCRLEV.IDS for IWD games
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
-  COPY ~%MOD_FOLDER%/iwd2/SCRLEV2.IDS~ ~override/SCRLEV.IDS~
+  COPY ~%iwd2%/SCRLEV2.IDS~ ~override/SCRLEV.IDS~
 END
 
 ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
-  COPY ~%MOD_FOLDER%/iwd2/SCRLEV1.IDS~ ~override/SCRLEV.IDS~
+  COPY ~%iwd2%/SCRLEV1.IDS~ ~override/SCRLEV.IDS~
 END
 
 //add script block to bcs files
@@ -60,10 +60,8 @@ ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN
   COPY ~override/default.bcs~ ~scripts/default.bs~
 END
   
-//create iwdpgen.BCS (prevents needing to reload before the script is set)
-ACTION_IF !(GAME_IS ~iwdee~) BEGIN
-  COPY_EXISTING ~scripts/iwdpgen.BS~ ~override/iwdpgen.BCS~
-END
+//create iwdpgen.BCS (prevents needing to reload for the script to work)
+COPY ~scripts/iwdpgen.BS~  ~override/iwdpgen.BCS~
 
 ////////////////////////////////////////////////////////////
 

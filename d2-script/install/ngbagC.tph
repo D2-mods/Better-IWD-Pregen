@@ -3,27 +3,27 @@
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-  COPY ~%MOD_FOLDER%/ngbag/d2hbee1.ITM~ ~override/d2#ngbag.ITM~
+  COPY ~%ngbag%/d2hbee1.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @730 SAY UNIDENTIFIED_DESC @733
     SAY NAME2 @730
 	
-  COPY ~%MOD_FOLDER%/ngbag/d2hbee1.STO~ ~override/d2#ngbag.STO~
+  COPY ~%ngbag%/d2hbee1.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
     WRITE_SHORT 0x22 100    // set to 100 capacity
 	
   ACTION_IF (NOT FILE_EXISTS_IN_GAME ~ibag04.BAM~) BEGIN
-    COPY ~%MOD_FOLDER%/ngbag/icon-ee1.BAM~ ~override/ibag04.BAM~
+    COPY ~%ngbag%/icon-ee1.BAM~ ~override/ibag04.BAM~
   END
   
   ACTION_IF (GAME_IS ~bg2ee~) BEGIN
-    EXTEND_BOTTOM ~AR0602.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbg2.BAF~
+    EXTEND_BOTTOM ~AR0602.BCS~ ~%ngbag%/d2#ngbg2.BAF~
   END
   
   ACTION_IF (GAME_IS ~eet~) BEGIN
-    COPY - ~%MOD_FOLDER%/ngbag/d2#ngbg2.BAF~ ~%MOD_FOLDER%/temp/d2#ngbg2.BAF~
+    COPY - ~%ngbag%/d2#ngbg2.BAF~ ~%workspace%/d2#ngbg2.BAF~
       REPLACE_TEXTUALLY ~InParty("Imoen")~ ~InParty("Imoen2")~
       REPLACE_TEXTUALLY ~"d2#ngbag","Imoen"~ ~"d2#ngbag","Imoen2"~
-    EXTEND_BOTTOM ~AR0602.BCS~ ~%MOD_FOLDER%/temp/d2#ngbg2.BAF~
+    EXTEND_BOTTOM ~AR0602.BCS~ ~%workspace%/d2#ngbg2.BAF~
   END
   
   ACTION_IF (GAME_INCLUDES ~sod~) BEGIN
@@ -36,7 +36,7 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     BUT_ONLY
   END
   
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/d2#ngbag.BAF~
 END
 
 ////////////////////////////////////////////////////////////
@@ -44,19 +44,19 @@ END
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
 ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
-  COPY ~%MOD_FOLDER%/ngbag/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
+  COPY ~%ngbag%/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
     SAY NAME2 @730 SAY DESC @733
 	
-  COPY ~%MOD_FOLDER%/ngbag/d2hbee0.STO~ ~override/d2#ngbag.STO~
+  COPY ~%ngbag%/d2hbee0.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
     WRITE_SHORT 0x22 100    // set to 100 capacity
 	
   ACTION_IF (NOT FILE_EXISTS_IN_GAME ~ibaghold.BAM~) BEGIN
-    COPY ~%MOD_FOLDER%/ngbag/icon-ee0.BAM~ ~override/ibaghold.BAM~
+    COPY ~%ngbag%/icon-ee0.BAM~ ~override/ibaghold.BAM~
   END
   
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/d2#ngbag.BAF~
   
 END
 END
@@ -66,19 +66,19 @@ END
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
 ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
-  COPY ~%MOD_FOLDER%/ngbag/d2hbid2.ITM~ ~override/d2#ngbag.ITM~
+  COPY ~%ngbag%/d2hbid2.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @722
     SAY NAME2 @730 SAY DESC @737
 	
-  COPY ~%MOD_FOLDER%/ngbag/d2hbid2.STO~ ~override/d2#ngbag.STO~
+  COPY ~%ngbag%/d2hbid2.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
     WRITE_SHORT 0x9c 100    // set to 100 capacity
   
   ACTION_IF (NOT FILE_EXISTS_IN_GAME ~ibaghold.BAM~) BEGIN
-    COPY ~%MOD_FOLDER%/ngbag/icon-id2.BAM~ ~override/ibaghold.BAM~
+    COPY ~%ngbag%/icon-id2.BAM~ ~override/ibaghold.BAM~
   END
   
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/d2#ngbag.BAF~
   
 END
 END
@@ -88,19 +88,19 @@ END
 ACTION_IF (GAME_IS ~how totlm~) BEGIN
 ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
-  COPY ~%MOD_FOLDER%/ngbag/d2hbid1.ITM~ ~override/d2#ngbag.ITM~
+  COPY ~%ngbag%/d2hbid1.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
     SAY NAME2 @730 SAY DESC @733
 	
-  COPY ~%MOD_FOLDER%/ngbag/d2hbid1.STO~ ~override/d2#ngbag.STO~
+  COPY ~%ngbag%/d2hbid1.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
     WRITE_SHORT 0x9c 100    // set to 100 capacity
   
   ACTION_IF (NOT FILE_EXISTS_IN_GAME ~ibaghold.BAM~) BEGIN
-    COPY ~%MOD_FOLDER%/ngbag/icon-id1.BAM~ ~override/ibaghold.BAM~
+    COPY ~%ngbag%/icon-id1.BAM~ ~override/ibaghold.BAM~
   END
   
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/d2#ngbag.BAF~
   
 END
 END
@@ -110,19 +110,19 @@ END
 ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
 ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
-  COPY ~%MOD_FOLDER%/ngbag/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
+  COPY ~%ngbag%/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
     SAY NAME2 @730 SAY DESC @733
 	
-  COPY ~%MOD_FOLDER%/ngbag/d2hbee0.STO~ ~override/d2#ngbag.STO~
+  COPY ~%ngbag%/d2hbee0.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
     WRITE_SHORT 0x22 100    // set to 100 capacity
   
   ACTION_IF (NOT FILE_EXISTS_IN_GAME ~ibaghold.BAM~) BEGIN
-    COPY ~%MOD_FOLDER%/ngbag/icon-id1.BAM~ ~override/ibaghold.BAM~
+    COPY ~%ngbag%/icon-id1.BAM~ ~override/ibaghold.BAM~
   END
   
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/d2#ngbag.BAF~
   
 END
 END
@@ -130,38 +130,38 @@ END
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc ca~) BEGIN
-  COPY ~%MOD_FOLDER%/ngbag/d2hbbg2.ITM~ ~override/d2#ngbag.ITM~
+  COPY ~%ngbag%/d2hbbg2.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @730 SAY UNIDENTIFIED_DESC @733
     SAY NAME2 @730
 	
-  COPY ~%MOD_FOLDER%/ngbag/d2hbbg2.STO~ ~override/d2#ngbag.STO~
+  COPY ~%ngbag%/d2hbbg2.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
     WRITE_SHORT 0x22 100    // set to 100 capacity
   
   ACTION_IF (NOT FILE_EXISTS_IN_GAME ~ibag04.BAM~) BEGIN
-    COPY ~%MOD_FOLDER%/ngbag/icon-bg2.BAM~ ~override/ibag04.BAM~
+    COPY ~%ngbag%/icon-bg2.BAM~ ~override/ibag04.BAM~
   END
   
   ACTION_IF ((GAME_IS ~bg2 tob~) AND (NOT GAME_IS ~bgt~)) BEGIN
-    EXTEND_BOTTOM ~AR0602.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbg2.BAF~
+    EXTEND_BOTTOM ~AR0602.BCS~ ~%ngbag%/d2#ngbg2.BAF~
   END
   
   ACTION_IF (GAME_IS ~bgt~) BEGIN
-    COPY - ~%MOD_FOLDER%/ngbag/d2#ngbg2.BAF~ ~%MOD_FOLDER%/temp/d2#ngbg2.BAF~
+    COPY - ~%ngbag%/d2#ngbg2.BAF~ ~%workspace%/d2#ngbg2.BAF~
       REPLACE_TEXTUALLY ~InParty("Imoen")~ ~InParty("Imoen2")~
       REPLACE_TEXTUALLY ~"d2#ngbag","Imoen"~ ~"d2#ngbag","Imoen2"~
-    EXTEND_BOTTOM ~AR0602.BCS~ ~%MOD_FOLDER%/temp/d2#ngbg2.BAF~
+    EXTEND_BOTTOM ~AR0602.BCS~ ~%workspace%/d2#ngbg2.BAF~
   END
   
   ACTION_IF (FILE_EXISTS ~override/lhMIS0a.itm~) BEGIN
-    EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngepi.BAF~
+    EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/d2#ngepi.BAF~
   END
   
   ACTION_IF (GAME_IS ~ca~) BEGIN
-    EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngca.BAF~
+    EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/d2#ngca.BAF~
   END
   
-  EXTEND_TOP ~BALDUR.BCS~ ~%MOD_FOLDER%/ngbag/d2#ngbag.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/d2#ngbag.BAF~
 END
 
 ////////////////////////////////////////////////////////////

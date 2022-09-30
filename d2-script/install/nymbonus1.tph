@@ -4,5 +4,5 @@ PRINT @52    // Print message if script was already installed
 END
 ELSE BEGIN
 
-COPY ~%MOD_FOLDER%/iwd2/00BPak0.bcs~ ~override~    // add script (used only by Nym)
+COPY ~%iwd2%/00BPak0.bcs~ ~override~    // add script (used only by Nym)
 END

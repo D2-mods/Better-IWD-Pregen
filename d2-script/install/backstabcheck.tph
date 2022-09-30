@@ -4,7 +4,7 @@
 
 
 //Start by cleaning up the backstab 2das
-INCLUDE ~%MOD_FOLDER%/install/backstabprep.tph~
+INCLUDE ~%install%/backstabprep.tph~
 
 //Use column count from backstab.2da
 COPY_EXISTING ~backstab.2DA~ ~override~
