@@ -2,15 +2,15 @@
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
 Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built on these engines
 
-#### Components:
-Script components:
-  ```
+Components
+-
+
+**Script components:**
 1. Better IWD Pregen (appears in-game as "IWD PREGEN")
 2. Better AI for Call Woodland Beings (EEs, BG2), install after AI mods (ex. SCS or atweaks)
 3. Auto-assign script to new characters
-  ```
-Tweak components:
-  ```
+
+**Tweak components:**
 1. Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
@@ -25,10 +25,14 @@ Tweak components:
 12. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 13. Remove alignment restrictions for classes (classic and EEs)
 14. Paladins and Rangers do not fall at low rep (EEs)
-  ```
-All components can be installed independently and in any order, except for auto-assigning the script. Most of the options in the installer are pretty self-explanatory, but the mod folder also contains a readme detailing the tweaks, in case there's any confusion.
 
-#### Overview (party script):
+All components can be installed independently and in any order, except for auto-assigning the script. Most of the tweaks are pretty self-explanatory, but the mod folder also contains a readme describing some of the tweaks in more detail.
+
+NOTE: All tweaks have at least 2 subcomponents, even if just a simple "Yes" or "No". Some tweaks have 3-4 options.
+
+
+Overview (party script):
+-
 This script manages auto-attack, while giving more nuanced control of the characters. The script will never use your consumable items, spells, or abilities. What it does is put you in position to better use these abilities, while reducing some of the more frustrating aspects of auto-attack.
 
 #### Auto-attack features:
@@ -56,23 +60,29 @@ Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldo
 <details>
   <summary>Script Compatibility</summary>
   
+---
+
 #### Info:
-EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)  
-Classic: BG1, BG2, IWD, IWD2 (tested with GOG versions)
+- EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)  
+- Classic: BG1, BG2, IWD, IWD2 (tested with GOG versions)
 
 Also compatible with any BG2 conversion mods (ex. BGT or Classic Adventures).
 
-Classic BG2 engine:  
-TobEx (v26/v28): Compatibility issues should be fixed (v3.7 and later).  
-TobEx Afterlife: Use v29.10 or later. (http://www.shsforums.net/files/file/1274-tobex-afterlife)  
-Improved GUI mod: Use v5.1 or later. (http://www.shsforums.net/files/file/1265-bg2-improved-gui)
+#### Classic BG2 engine:  
+- TobEx (v26/v28): Compatibility issues should be fixed (v3.7 and later).  
+- TobEx Afterlife: Use v29.10 or later. (http://www.shsforums.net/files/file/1274-tobex-afterlife)  
+- Improved GUI mod: Use v5.1 or later. (http://www.shsforums.net/files/file/1265-bg2-improved-gui)
 
 NOTE: I'm not 100% sure the scripts work with expansionless versions of the classic games.
   
+---
+
 </details>
 <details>
   <summary>Auto-attack breakdown</summary>
   
+---
+
 #### BG(EE), BG2(EE), IWD(EE):
   ```
 Class: Fighter, Ranger, Paladin, including any multiclass combinations
@@ -124,10 +134,14 @@ Class: Wizard or Sorcerer
 	2. Enemy is within 3 ft.
   ```
   
+---
+
 </details>
 <details>
   <summary>Nymph AI script (Call Woodland Beings)</summary>
   
+---
+
 #### Option 1 - Revised script:
 - smarter spellcasting (better targeting and not as wasteful)
 - won't cast statuses on undead or enemies with high magic resist
@@ -159,10 +173,14 @@ Hotkeys:
 
 NOTE: Dimension Door is more limited with this patch. Will only teleport to the summoner or Player1.
   
+---
+
 </details>
 <details>
   <summary>Baldur's Gate (in BG1 engine)</summary>
   
+---
+
 #### BG1 script info:
 - characters will preserve Hide/Invisibility/Sanctuary
 - melee aggro ranges working
@@ -172,4 +190,6 @@ NOTE: Dimension Door is more limited with this patch. Will only teleport to the 
 
 NOTE: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
   
+---
+
 </details>
