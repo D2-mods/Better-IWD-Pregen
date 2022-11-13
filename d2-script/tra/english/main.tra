@@ -42,10 +42,10 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 
 
 //Cooldown mode feedback
-@1000 = ~Cooldown Mode activated for 60 seconds~
-@1001 = ~Cooldown Mode activated for 30 seconds~
-@1002 = ~Cooldown Mode activated for 18 seconds~
-@1003 = ~Cooldown Mode deactivated~
+@1000 = ~Cooldown mode activated for 60 seconds~
+@1001 = ~Cooldown mode activated for 30 seconds~
+@1002 = ~Cooldown mode activated for 18 seconds~
+@1003 = ~Cooldown mode deactivated~
 
 
 

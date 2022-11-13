@@ -100,22 +100,6 @@ Baldur's Gate (in BG1 engine) - script info
 - melee aggro ranges working
 - Cooldown hotkeys working
 - no auto-Search (the FindTraps() script action doesn't work)
-- Bard Song, Turn Undead, and Search won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
 
-
-
-
-Below here is not used
-
-==================================================
-Calls for help info (Shout action/response)
-==================================================
-NOTE: This feature was added in v2.0 and removed in the v3.0.
-
-
-A Shout action is made when initially seeing an enemy, immediately after responding to a Shout, or repeatedly if idling in battle (i.e. standing outside melee range).
-
-Response: If not in sight of enemies, the character can respond to a Shout, moving towards the caller. This action continues until either the character reaches the caller, or an enemy is within 15 feet.
-
-Characters will not use or respond to a Shout if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. A character in Cooldown mode can make a Shout, but will not respond to one.
+Note: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
 

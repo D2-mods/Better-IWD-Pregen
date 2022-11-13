@@ -1,8 +1,10 @@
-ACTION_IF ((FILE_EXISTS ~override/00BPak0.bcs~) OR (MOD_IS_INSTALLED ~Setup-IWD2-Ease.tp2~ 9)) BEGIN
-PRINT @52    // Print message if script was already installed
+// Copies script to override (used by Nym)
+// or print message if already added
 
+ACTION_IF ((FILE_EXISTS ~override/00BPak0.bcs~) OR 
+           (MOD_IS_INSTALLED ~Setup-IWD2-Ease.tp2~ 9)) BEGIN
+  PRINT @52
 END
 ELSE BEGIN
-
-COPY ~%iwd2%/00BPak0.bcs~ ~override~    // add script (used only by Nym)
+  COPY ~%iwd2%/00BPak0.bcs~ ~override~
 END

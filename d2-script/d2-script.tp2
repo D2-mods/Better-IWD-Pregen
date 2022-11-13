@@ -1,13 +1,13 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~4.5~
+VERSION ~5.0~
 
 ALWAYS
   ACTION_BASH_FOR ~%MOD_FOLDER%/lib~ ~.*\.tpa~ BEGIN    // function list
     INCLUDE ~%BASH_FOR_FILESPEC%~
   END
   
-  ACTION_IF !(DIRECTORY_EXISTS ~weidu_external/Workspace~) BEGIN    // make folder for edits
+  ACTION_IF !(DIRECTORY_EXISTS ~weidu_external/Workspace~) BEGIN    // external workspace
     MKDIR ~weidu_external/Workspace~
   END
 
@@ -25,10 +25,10 @@ ALWAYS
       reload_array     = ~d2reload~
   END
 
-  OUTER_TEXT_SPRINT baf        ~%MOD_FOLDER%/baf~    // folder variables
+  OUTER_TEXT_SPRINT install    ~%MOD_FOLDER%/install~    // folder variables
+  OUTER_TEXT_SPRINT baf        ~%MOD_FOLDER%/baf~
   OUTER_TEXT_SPRINT crippstr   ~%MOD_FOLDER%/crippstr~
   OUTER_TEXT_SPRINT game       ~%MOD_FOLDER%/game~
-  OUTER_TEXT_SPRINT install    ~%MOD_FOLDER%/install~
   OUTER_TEXT_SPRINT iwd2       ~%MOD_FOLDER%/iwd2~
   OUTER_TEXT_SPRINT ngbag      ~%MOD_FOLDER%/ngbag~
   OUTER_TEXT_SPRINT ngequip    ~%MOD_FOLDER%/ngequip~

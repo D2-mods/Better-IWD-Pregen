@@ -184,7 +184,6 @@ NOTE: Dimension Door is more limited with this patch. Will only teleport to the 
 #### BG1 script info:
 - characters will preserve Hide/Invisibility/Sanctuary
 - melee aggro ranges working
-- Calls for help working (REMOVED, but theoretically, I could add it back in)
 - Cooldown hotkeys working
 - no auto-Search (the FindTraps() script action doesn't work)
 

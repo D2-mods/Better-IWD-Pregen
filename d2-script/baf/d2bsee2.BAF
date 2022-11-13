@@ -56,7 +56,7 @@ IF
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Attack(SecondNearestEnemyOf())
+		AttackOneRound(SecondNearestEnemyOf())
 END
 
 IF
@@ -74,7 +74,7 @@ IF
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Attack(NearestEnemyOf())
+		AttackOneRound(NearestEnemyOf())
 END
 
 IF
@@ -95,7 +95,7 @@ IF
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Attack(ThirdNearestEnemyOf())
+		AttackOneRound(ThirdNearestEnemyOf())
 END
 
 IF
@@ -119,23 +119,7 @@ IF
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Attack(TenthNearestEnemyOf())
-END
-
-IF
-	ActionListEmpty()
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	OR(2)
-		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],5)
-	OR(2)
-		!WeaponEffectiveVs([EVILCUTOFF],MAINHAND)
-		!WeaponCanDamage([EVILCUTOFF],MAINHAND)
-	!InParty([EVILCUTOFF])
-THEN
-	RESPONSE #100
-		SetGlobalTimer("d2retarget1","LOCALS",6)
+		AttackOneRound(TenthNearestEnemyOf())
 END
 
 IF
@@ -148,7 +132,7 @@ IF
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.MAGE_ALL])
+		AttackReevaluate([EVILCUTOFF.0.0.MAGE_ALL],30)
 END
 
 IF
@@ -161,7 +145,7 @@ IF
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.CLERIC_ALL])
+		AttackReevaluate([EVILCUTOFF.0.0.CLERIC_ALL],30)
 END
 
 IF
@@ -174,7 +158,7 @@ IF
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.SHAMAN])
+		AttackReevaluate([EVILCUTOFF.0.0.SHAMAN],30)
 END
 
 IF
@@ -187,7 +171,7 @@ IF
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.DRUID_ALL])
+		AttackReevaluate([EVILCUTOFF.0.0.DRUID_ALL],30)
 END
 
 IF
@@ -200,7 +184,7 @@ IF
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
-		Attack([EVILCUTOFF.0.0.BARD_ALL])
+		AttackReevaluate([EVILCUTOFF.0.0.BARD_ALL],30)
 END
 
 IF

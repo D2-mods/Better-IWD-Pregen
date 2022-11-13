@@ -241,7 +241,7 @@ IF
 THEN
 	RESPONSE #100
 		EquipWeapon()
-		Attack([EVILCUTOFF.0.0.WIZARD])
+		AttackReevaluate([EVILCUTOFF.0.0.WIZARD],30)
 END
 
 IF
@@ -256,7 +256,7 @@ IF
 THEN
 	RESPONSE #100
 		EquipWeapon()
-		Attack([EVILCUTOFF.0.0.SORCERER])
+		AttackReevaluate([EVILCUTOFF.0.0.SORCERER],30)
 END
 
 IF
@@ -271,7 +271,7 @@ IF
 THEN
 	RESPONSE #100
 		EquipWeapon()
-		Attack([EVILCUTOFF.0.0.CLERIC])
+		AttackReevaluate([EVILCUTOFF.0.0.CLERIC],30)
 END
 
 IF
@@ -286,7 +286,7 @@ IF
 THEN
 	RESPONSE #100
 		EquipWeapon()
-		Attack([EVILCUTOFF.0.0.DRUID])
+		AttackReevaluate([EVILCUTOFF.0.0.DRUID],30)
 END
 
 IF
@@ -301,7 +301,7 @@ IF
 THEN
 	RESPONSE #100
 		EquipWeapon()
-		Attack([EVILCUTOFF.0.0.BARD])
+		AttackReevaluate([EVILCUTOFF.0.0.BARD],30)
 END
 
 IF

@@ -6,7 +6,6 @@ ACTION_IF (GAME_IS ~iwdee~) BEGIN
     COPY_EXISTING ~SW1H43.ITM~ ~override/d2#ngkat.ITM~
       SAY NAME1 @700 SAY NAME2 @700 SAY UNIDENTIFIED_DESC @701
       WRITE_LONG 0x34 100    // reduce base price to 100 gold
-    BUT_ONLY  
   END
   ELSE BEGIN
     COPY ~%ngequip%/d2#ngkat.ITM~ ~override~
@@ -100,7 +99,6 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
     COPY_EXISTING ~SW1H43.ITM~ ~override/d2#ngkat.ITM~
       SAY NAME1 @700 SAY NAME2 @700 SAY UNIDENTIFIED_DESC @702
       WRITE_LONG 0x34 100    // reduce base price to 100 gold
-    BUT_ONLY  
   END
   ELSE BEGIN
     COPY ~%ngequip%/d2#ngkat.ITM~ ~override~
