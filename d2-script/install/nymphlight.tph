@@ -1,11 +1,18 @@
-//compatible with atweaks PnP Fey
-//compatible with the SCS script, if you prefer that to my script
+/*
+Patch existing scripts for Call Woodland Beings
+*/
 
+
+//Prep
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
   COPY - ~%nymph%/d2cwb1p.BAF~ ~%workspace%/cwblight.baf~    // BGEE games
 END
 ELSE BEGIN
   COPY - ~%nymph%/d2cwb0p.BAF~ ~%workspace%/cwblight.baf~    // IWDEE or classic BG2
+END
+
+ACTION_IF !(FILE_EXISTS ~override/RR#DINV.ITM~) BEGIN
+  COPY_EXISTING ~SW1H01.ITM~  ~override/RR#DINV.ITM~
 END
 
 
@@ -26,7 +33,7 @@ END
 
 
 
-//regular nymph script (also used for SCS AI)
+//NYMPH.BCS - vanilla script file (also used by SCS)
 
 ACTION_IF (FILE_EXISTS_IN_GAME ~NYMPH.BCS~) BEGIN
   EXTEND_TOP ~NYMPH.BCS~ ~%workspace%/cwblight.baf~

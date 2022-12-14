@@ -1,13 +1,14 @@
-//functions that automate some simple actions with 2da files
-//all functions available as PATCH or ACTION (except no_backstab)
-//for ACTION, you need to set the 2da resname as a STR_VAR
+//search a 2da entry to find the row or column number
+//can auto-set new entry or auto-delete a row
+//no_backstab removes a kit from all 3 backstab-related files
+
 
 /*functions:
-2da_find_row
-2da_find_row_set
-2da_find_row_delete
-2da_find_column
-no_backstab
+2da_find_row			PATCH or ACTION
+2da_find_row_set		PATCH or ACTION
+2da_find_row_delete		PATCH or ACTION
+2da_find_column			PATCH or ACTION     
+no_backstab				ACTION
 */
 
 ////////////////////////////////////////////////////////////

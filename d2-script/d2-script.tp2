@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~5.0~
+VERSION ~5.1~
 
 ALWAYS
   ACTION_BASH_FOR ~%MOD_FOLDER%/lib~ ~.*\.tpa~ BEGIN    // function list
@@ -180,12 +180,12 @@ BEGIN @40501    // for Druids and Polymorph Self
 DESIGNATED 70
 REQUIRE_PREDICATE (GAME_IS ~iwdee~) ~Game not supported~
 SUBCOMPONENT @40500
-LABEL ~D2-IWDEE-FASTERDRUIDS1~
+LABEL ~D2-TWEAKS-FASTERDRUIDS1~
 INCLUDE ~%install%/fasterdruids1.tph~
 
 BEGIN @40502    // for Druids only
 SUBCOMPONENT @40500
-LABEL ~D2-IWDEE-FASTERDRUIDS0~
+LABEL ~D2-TWEAKS-FASTERDRUIDS0~
 INCLUDE ~%install%/fasterdruids0.tph~
 
 ////////////////////////////////////////////////////////////
@@ -397,20 +397,18 @@ LABEL ~D2-TWEAKS-ALIGNMENTS0~
 
 //Paladins and Rangers do not fall at low rep (EEs)
 
-BEGIN @41601    // Yes
+BEGIN @41601    // Yes, install it
 DESIGNATED 180
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
 SUBCOMPONENT @41600
 LABEL ~D2-TWEAKS-NOFALLING1~
 INCLUDE ~%install%/nofalling.tph~
 
-BEGIN @41602    // No
+BEGIN @41602    // No, do not install
 SUBCOMPONENT @41600
 LABEL ~D2-TWEAKS-NOFALLING0~
 
 ////////////////////////////////////////////////////////////
-
-
 
 
 /*

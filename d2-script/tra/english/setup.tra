@@ -96,8 +96,8 @@ For Project Infinity, you can check both options if using (will automatically sk
 	@41502 = ~No~
 
 @41600 = ~Paladins and Rangers do not fall at low rep (EEs)~
-	@41601 = ~Yes~
-	@41602 = ~No~
+	@41601 = ~Yes, install it~
+	@41602 = ~No, do not install~
 @41690 = ~NOTE: Could not find FALLEN.2DA. No changes were made.~
 
 @41700 = ~~

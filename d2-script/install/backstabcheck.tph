@@ -1,17 +1,19 @@
-//Set lines for base-game kits to correct values (if wrong)
-//also has misc fixes for the backstab-related 2das
-//main thing is fixing some mods messing up Sneak Attack lines
+/*
+Fixes lines for some problematic kits (can cause weidu errors)
+Set correct Sneak Attack and Crippling Strike values for base-game kits
+Fixes issue if ADD_KIT_EX is used after Thief kits from "Expanded Classes" mod.
+*/
 
 
-//Start by cleaning up the backstab 2das
+//Misc fixes
 INCLUDE ~%install%/backstabprep.tph~
 
 //Use column count from backstab.2da
-COPY_EXISTING ~backstab.2DA~ ~override~
+COPY_EXISTING - ~backstab.2DA~  ~~
   COUNT_2DA_COLS cols
 
-//Fix lines as necessary, scaled to level 40 or 50
-ACTION_IF (%cols% < 52) BEGIN
+//Set lines for base-game kits, scaled to level 40 or 50
+ACTION_IF (cols < 52) BEGIN
 
   COPY_EXISTING ~crippstr.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~THIEF~ RET row_number columns END
@@ -73,3 +75,7 @@ ELSE BEGIN
   BUT_ONLY
   
 END
+
+
+/*
+*/

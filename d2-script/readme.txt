@@ -1,6 +1,6 @@
 Better IWD Pregen (v5.0)
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
-Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built on these engines
+Compatibility: Classic and EE versions of BG1, BG2, IWD, and IWD2
 
 
 ==================================================
@@ -98,6 +98,10 @@ IWD2 exe patch:
 ==================================================
 VERSION INFO
 ==================================================
+v5.1
+- Cleaned up a few possible harmless warning messages.
+- Some minor adjustments (not to scripts)
+
 v5.0
 - EEs: Fixed retargeting against enemy casters. Retargeting should work now if an enemy uses Protection From Magical Weapons, or similar, during the battle.
 - Adjusted some attack actions in all scripts (classic and EEs).

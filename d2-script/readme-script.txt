@@ -1,30 +1,30 @@
 ==================================================
 Auto-attack features
 ==================================================
-- melee aggro range is dependent on class; range from 3 ft. (mages) to 25 ft.
-- will not attack if under the effects of Invisibility or Sanctuary
-- will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance
+- Melee aggro range is dependent on class; range from 3 ft. (mages) to 25 ft.
+- Will not attack if under the effects of Invisibility or Sanctuary
+- Will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance
 - EEs: active retargeting if a character's current weapon cannot hit or damage an enemy
-- priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon)
+- Priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon)
 - Cooldown hotkeys to reduce melee aggro range to 5 ft. for 5 rounds, or set back to normal instantly
 
 
 ==================================================
 Other features
 ==================================================
-- classes with Search will use it whenever not attacking (note: IWD2 is hardcoded for only Rogues and Monks to be able to auto-Search)
-- will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance
-- will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (for example, from a contingency or area invisibility spell)
-- will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
+- Classes with Search will use it whenever not attacking (note: IWD2 is hardcoded for only Rogues and Monks to be able to auto-Search).
+- Will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
+- Will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (for example, from a contingency or area invisibility spell).
+- Shaman Dance is NOT stopped if suddenly invisible. This is to preserve summons.
+- Will not auto-attack at under 15% HP, unless an enemy is in range of current weapon.
 
 
 ==================================================
 Cooldown hotkeys
 ==================================================
-- if the B key is pressed, the character will enter a Cooldown mode for 30 seconds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active
-- if the E key is pressed, the Cooldown mode will be deactivated
-- both these keys can also be used as "stop action" buttons, as they will override other actions
-- if the game is saved while a character is in Cooldown mode, it will be deactivated on reload
+- If the B key is pressed, the character will enter a Cooldown mode for 30 seconds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active.
+- If the E key is pressed, the Cooldown mode will be deactivated.
+- If the game is saved while a character is in Cooldown mode, it will be deactivated on reload.
 
 Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering
 
@@ -32,9 +32,9 @@ Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldo
 ==================================================
 Auto-assign script (separate component)
 ==================================================
-- assigns characters with the Better IWD Pregen script
-- will trigger once for each character
-- NPC party members will have AI changed before casting any spells
+- Gives new party members the Better IWD Pregen script.
+- Will trigger once for each character per game.
+- NPC characters will have AI changed before casting any spells.
 
 
 
@@ -96,10 +96,10 @@ Class: Wizard or Sorcerer
 ==================================================
 Baldur's Gate (in BG1 engine) - script info
 ==================================================
-- characters will preserve Hide/Invisibility/Sanctuary
-- melee aggro ranges working
+- Characters will preserve Hide/Invisibility/Sanctuary
+- Melee aggro ranges working
 - Cooldown hotkeys working
-- no auto-Search (the FindTraps() script action doesn't work)
+- No auto-Search (the FindTraps() script action doesn't work)
 
-Note: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
+Note: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped).
 
