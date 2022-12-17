@@ -27,7 +27,7 @@ ALWAYS
 
   OUTER_TEXT_SPRINT install    ~%MOD_FOLDER%/install~    // folder variables
   OUTER_TEXT_SPRINT baf        ~%MOD_FOLDER%/baf~
-  OUTER_TEXT_SPRINT crippstr   ~%MOD_FOLDER%/crippstr~
+  OUTER_TEXT_SPRINT files      ~%MOD_FOLDER%/files~
   OUTER_TEXT_SPRINT game       ~%MOD_FOLDER%/game~
   OUTER_TEXT_SPRINT iwd2       ~%MOD_FOLDER%/iwd2~
   OUTER_TEXT_SPRINT ngbag      ~%MOD_FOLDER%/ngbag~
@@ -55,7 +55,7 @@ REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
                    (GAME_INCLUDES ~bg2~) OR
                    (GAME_INCLUDES ~iwd~) OR
                    (GAME_INCLUDES ~iwd2~) OR
-                   (GAME_IS ~ca~ )) ~Game not supported~
+                   (GAME_IS ~ca~)) ~Game not supported~
 LABEL ~D2-SCRIPT-IWDPGEN~
 INCLUDE ~%install%/iwdpgen.tph~
 
@@ -81,7 +81,7 @@ INCLUDE ~%install%/nymphlight.tph~
 //same as above, but standalone component if atweaks detected
 
 BEGIN @10231    // Yes
-REQUIRE_PREDICATE (FILE_EXISTS ~override/rr#snymp.bcs~) ~~         // can install if atweaks PNP Fey is detected
+REQUIRE_PREDICATE (FILE_EXISTS ~override/rr#snymp.bcs~) ~~         // if atweaks PNP Fey is detected
 REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~NYMPHSU.CRE~) ~Game not supported~
 SUBCOMPONENT @10230
 LABEL ~D2-SCRIPT-NYMPHATWEAKS~
@@ -199,7 +199,10 @@ REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2161) AND
                    !(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2162) AND
                    !(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2163) AND
                    !(MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2164) AND
-                   !(MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf~))) ~Component not available~
+                   !(MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf1~)) AND
+                   !(MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf2~)) AND
+                   !(MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf3~))
+                  ) ~Component not available~
 SUBCOMPONENT @40600
 LABEL ~D2-TWEAKS-NGEQUIP~
 INCLUDE ~%install%/ngequip.tph~
@@ -219,7 +222,10 @@ REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2161) OR    // may swi
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2162) OR    // older versions of cdtweaks did not use labels
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2163) OR
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2164) OR
-                   (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf~))) ~~
+                   (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf1~)) OR
+                   (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf2~)) OR
+                   (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf3~))
+                  ) ~~
 SUBCOMPONENT @40630
 LABEL ~D2-TWEAKS-NGITEMBAGTWEAK~
 INCLUDE ~%install%/ngitembag.tph~
@@ -229,7 +235,10 @@ REQUIRE_PREDICATE ((MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2161) OR    // may swi
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2162) OR    // older versions of cdtweaks did not use labels
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2163) OR
                    (MOD_IS_INSTALLED ~setup-cdtweaks.tp2~ 2164) OR
-                   (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf~))) ~~
+                   (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf1~)) OR
+                   (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf2~)) OR
+                   (MOD_IS_INSTALLED ~skills-and-abilities.tp2~ (ID_OF_LABEL ~skills-and-abilities.tp2~ ~SkillsAndAbilitiesNewProf3~))
+                  ) ~~
 SUBCOMPONENT @40630
 LABEL ~D2-TWEAKS-NONGITEMBAG~
 
@@ -326,19 +335,19 @@ BEGIN @41301    // Use at will, and reduce duration to 5 rounds (30 seconds)
 DESIGNATED 150
 REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
                    (GAME_INCLUDES ~bg2~)) ~Game not supported~
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if Rashemi kit (Artisan's Kitpack) is detected
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if detected Minsc kit (Artisan's Kitpack)
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE30~
 INCLUDE ~%install%/minscrage30.tph~
 
 BEGIN @41302    // Use at will, and reduce duration to 1 turn (60 seconds)
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if Rashemi kit (Artisan's Kitpack) is detected
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if detected Minsc kit (Artisan's Kitpack)
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE60~
 INCLUDE ~%install%/minscrage60.tph~
 
 BEGIN @41303    // Use at will, but do not lower duration (120 seconds)
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if Rashemi kit (Artisan's Kitpack) is detected
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if detected Minsc kit (Artisan's Kitpack)
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE120~
 INCLUDE ~%install%/minscrage120.tph~
@@ -350,7 +359,8 @@ BEGIN @41331    // Yes
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet~) ~Game not supported~
 REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE30~)) AND
                    !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE60~)) AND
-                   !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE120~))) ~Component not available~
+                   !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE120~))
+                  ) ~Component not available~
 SUBCOMPONENT @41330
 LABEL ~D2-TWEAKS-MINSCRAGE0~
 INCLUDE ~%install%/minscrage0.tph~
@@ -358,7 +368,8 @@ INCLUDE ~%install%/minscrage0.tph~
 BEGIN @41332    // No
 REQUIRE_PREDICATE (!(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE30~)) AND
                    !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE60~)) AND
-                   !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE120~))) ~Component not available~
+                   !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-MINSCRAGE120~))
+                  ) ~Component not available~
 SUBCOMPONENT @41330
 LABEL ~D2-TWEAKS-NOMINSCRAGE~
 

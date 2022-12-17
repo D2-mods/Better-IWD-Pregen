@@ -82,7 +82,7 @@ For Project Infinity, you can check both options if using (will automatically sk
 	@41301 = ~Use at will, and reduce duration to 5 rounds (30 seconds)~
 	@41302 = ~Use at will, and reduce duration to 1 turn (60 seconds)~
 	@41303 = ~Use at will, but do not lower duration (120 seconds)~
-@41330 = ~Timing fix for Minsc's Berserk ability (EEs)~    // if previous component is not installed
+@41330 = ~Timing fix for Minsc's Berserk ability (EEs)~                 // if previous component is not installed
 	@41331 = ~Yes~
 	@41332 = ~No~
 @41360 = ~This component is not available for Rashemi Berserker (Artisan's Kitpack)~

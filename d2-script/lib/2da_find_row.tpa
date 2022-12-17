@@ -4,11 +4,11 @@
 
 
 /*functions:
-2da_find_row			PATCH or ACTION
-2da_find_row_set		PATCH or ACTION
-2da_find_row_delete		PATCH or ACTION
-2da_find_column			PATCH or ACTION     
-no_backstab				ACTION
+2da_find_row            PATCH or ACTION
+2da_find_row_set        PATCH or ACTION
+2da_find_row_delete     PATCH or ACTION
+2da_find_column         PATCH or ACTION     
+no_backstab             ACTION
 */
 
 ////////////////////////////////////////////////////////////

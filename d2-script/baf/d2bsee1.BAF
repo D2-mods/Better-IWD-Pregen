@@ -107,10 +107,9 @@ END
 IF
 	ActionListEmpty()
 	InWeaponRange([EVILCUTOFF])
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
+	OR(2)
+		CheckStatGT(Myself,0,TRAPS)
+		CheckStatGT(Myself,0,DETECTILLUSIONS)
 	OR(2)
 		StateCheck(Myself,STATE_INVISIBLE)
 		CheckStat(Myself,1,SANCTUARY)
@@ -149,10 +148,9 @@ END
 IF
 	ActionListEmpty()
 	HPPercentLT(Myself,15)
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
+	OR(2)
+		CheckStatGT(Myself,0,TRAPS)
+		CheckStatGT(Myself,0,DETECTILLUSIONS)
 	!ModalState(DETECTTRAPS)
 	!InWeaponRange([EVILCUTOFF])
 THEN

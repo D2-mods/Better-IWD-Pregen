@@ -112,10 +112,9 @@ END
 
 IF
 	ActionListEmpty()
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
+	OR(2)
+		CheckStatGT(Myself,0,TRAPS)
+		CheckStatGT(Myself,0,DETECTILLUSIONS)
 	!ModalState(DETECTTRAPS)
 THEN
 	RESPONSE #100

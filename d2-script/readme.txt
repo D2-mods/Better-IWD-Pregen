@@ -99,6 +99,7 @@ IWD2 exe patch:
 VERSION INFO
 ==================================================
 v5.1
+- EEs: Any character with skill points in detecting traps or illusions will not have auto-Search enabled. Previously, the feature was only for specific classes.
 - Cleaned up a few possible harmless warning messages.
 - Some minor adjustments (not to scripts)
 

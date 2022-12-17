@@ -5,15 +5,15 @@
 //Add files if missing
 
 ACTION_IF !(FILE_EXISTS_IN_GAME ~CRIPPSTR.2DA~) BEGIN
-  COPY ~%crippstr%/CRIPPSTR.2DA~ ~override~
+  COPY ~%files%/CRIPPSTR.2DA~ ~override~
 END
 
 ACTION_IF !(FILE_EXISTS_IN_GAME ~SNEAKATT.2DA~) BEGIN
-  COPY ~%crippstr%/SNEAKATT.2DA~ ~override~
+  COPY ~%files%/SNEAKATT.2DA~ ~override~
 END
 
 ACTION_IF !(FILE_EXISTS_IN_GAME ~backstab.SPL~) BEGIN
-  COPY ~%crippstr%/backstab.SPL~ ~override~
+  COPY ~%files%/backstab.SPL~ ~override~
 END
 
 ////////////////////////////////////////////////////////////

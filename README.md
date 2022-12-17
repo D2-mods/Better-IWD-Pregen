@@ -1,6 +1,7 @@
 # Better IWD Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
-Installs on: BG(EE), BG2(EE), IWD(EE), IWD2, EET, Tutu/BGT, and any mods built on these engines
+Compatibility: Classic and EE versions of BG1, BG2, IWD, and IWD2
+
 
 Components
 -
@@ -36,23 +37,23 @@ Overview (party script):
 This script manages auto-attack, while giving more nuanced control of the characters. The script will never use your consumable items, spells, or abilities. What it does is put you in position to better use these abilities, while reducing some of the more frustrating aspects of auto-attack.
 
 #### Auto-attack features:
-- melee aggro range is dependent on class (see readme for full breakdown); range from 3 ft. (mages) to 25 ft.
-- will not attack if under the effects of Invisibility or Sanctuary
-- will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance
+- Melee aggro range is dependent on class (see readme for full breakdown); range from 3 ft. (mages) to 25 ft.
+- Will not attack if under the effects of Invisibility or Sanctuary
+- Will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance
 - EEs: active retargeting if a character's current weapon cannot hit or damage an enemy
-- priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon)
+- Priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon)
 - Cooldown hotkeys to reduce melee aggro range to 5 ft. for 30 seconds, or set back to normal instantly
 
 #### Other features:
-- classes with Search will use it whenever not attacking (note: IWD2 is hardcoded for only Rogues and Monks to be able to auto-Search)
-- will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance
-- will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (ex. from a contingency or area invisibility spell)
-- will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
+- Classes with Search will use it whenever not attacking (note: IWD2 is hardcoded for only Rogues and Monks to be able to auto-Search)
+- Will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance
+- Will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (ex. from a contingency or area invisibility spell)
+- Will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
 
 #### Cooldown hotkeys:
-- if the B key is pressed, the character will enter a Cooldown mode for 30 seconds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active
-- if the E key is pressed, the Cooldown mode will be deactivated
-- if the game is saved while a character is in Cooldown mode, it will be deactivated on reload
+- If the B key is pressed, the character will enter a Cooldown mode for 30 seconds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active
+- If the E key is pressed, the Cooldown mode will be deactivated
+- If the game is saved while a character is in Cooldown mode, it will be deactivated on reload
 
 Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering
 
@@ -143,11 +144,11 @@ Class: Wizard or Sorcerer
 ---
 
 #### Option 1 - Revised script:
-- smarter spellcasting (better targeting and not as wasteful)
-- won't cast statuses on undead or enemies with high magic resist
-- will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
-- is more cautious at low HP if it has spells remaining
-- will not attack or cast spells at enemies if invisible
+- Smarter spellcasting (better targeting and not as wasteful)
+- Won't cast statuses on undead or enemies with high magic resist
+- Will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
+- Is more cautious at low HP if it has spells remaining
+- Will not attack or cast spells at enemies if invisible
 - Cooldown hotkeys to delay spellcasting
 
 Compatible with EEs and original BG2 engine.  
@@ -158,18 +159,18 @@ Not compatible with atweaks PnP Fey (will be skipped during installation).
 > Marking: The nymph "marks" a PC as an object for various actions (by default, this is the summoner). If the marked PC is not on the map for any reason, the nymph will choose another PC on the same map. The nymph will always switch back to its summoner if in visual range. Note that the summoner, as an identifier, is not saved if a summon is still on the map (so if reloading, the script will default to Player1 as the "marked" PC).
 
 Hotkeys:
-- if the D key is pressed outside of combat, and not in visual range of enemies, the nymph will teleport to its summoner (or other PC)
-- if the B key is pressed, the nymph will enter Cooldown for 3 rounds; will not cast offensive spells or teleport to an enemy in Cooldown mode
-- if the E key is pressed, the Cooldown timer is set to 0 (deactivated)
+- If the D key is pressed outside of combat, and not in visual range of enemies, the nymph will teleport to its summoner (or other PC)
+- If the B key is pressed, the nymph will enter Cooldown for 3 rounds; will not cast offensive spells or teleport to an enemy in Cooldown mode
+- If the E key is pressed, the Cooldown timer is set to 0 (deactivated)
 
 
 
 #### Option 2 - Patch existing script:
-- adds Cooldown hotkeys (B to enable, E to disable)
-- adds D hotkey to teleport to party
-- will teleport to party if not in visual range (and not invisible)
-- will preserve invisibility
-- usable with atweaks PnP Fey, as well as AI mods that still use NYMPH.BCS (ex. SCS)
+- Adds Cooldown hotkeys (B to enable, E to disable)
+- Adds D hotkey to teleport to party
+- Will teleport to party if not in visual range (and not invisible)
+- Will preserve invisibility
+- Usable with atweaks PnP Fey, as well as AI mods that still use NYMPH.BCS (ex. SCS)
 
 NOTE: Dimension Door is more limited with this patch. Will only teleport to the summoner or Player1.
   
@@ -182,10 +183,10 @@ NOTE: Dimension Door is more limited with this patch. Will only teleport to the 
 ---
 
 #### BG1 script info:
-- characters will preserve Hide/Invisibility/Sanctuary
-- melee aggro ranges working
+- Characters will preserve Hide/Invisibility/Sanctuary
+- Melee aggro ranges working
 - Cooldown hotkeys working
-- no auto-Search (the FindTraps() script action doesn't work)
+- No auto-Search (the FindTraps() script action doesn't work)
 
 NOTE: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
   
