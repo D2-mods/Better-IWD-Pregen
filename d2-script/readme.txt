@@ -99,9 +99,10 @@ IWD2 exe patch:
 VERSION INFO
 ==================================================
 v5.1
-- EEs: Any character with skill points in detecting traps or illusions will not have auto-Search enabled. Previously, the feature was only for specific classes.
+- EEs: Any character with skill points in detecting traps or illusions will now have auto-Search enabled. Previously, the feature was only for specific classes.
 - Cleaned up a few possible harmless warning messages.
 - Some minor adjustments (not to scripts)
+- Updated some of my old functions files.
 
 v5.0
 - EEs: Fixed retargeting against enemy casters. Retargeting should work now if an enemy uses Protection From Magical Weapons, or similar, during the battle.

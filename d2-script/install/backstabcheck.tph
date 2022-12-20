@@ -1,7 +1,6 @@
 /*
 Fixes lines for some problematic kits (can cause weidu errors)
 Set correct Sneak Attack and Crippling Strike values for base-game kits
-Fixes issue if ADD_KIT_EX is used after Thief kits from "Expanded Classes" mod.
 */
 
 
@@ -17,29 +16,29 @@ ACTION_IF (cols < 52) BEGIN
 
   COPY_EXISTING ~crippstr.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~THIEF~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~THIEF 0 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9~
+    INSERT_2DA_ROW row_number columns ~THIEF 0 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9~
     LPF 2da_find_row_delete STR_VAR row_name = ~SHADOWDANCER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~SHADOWDANCER 0 0 0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6~
+    INSERT_2DA_ROW row_number columns ~SHADOWDANCER 0 0 0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6~
     LPF 2da_find_row_delete STR_VAR row_name = ~ASSASIN~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~ASSASIN 0 0 0 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 11 11 11 12 12 12 13 13~
+    INSERT_2DA_ROW row_number columns ~ASSASIN 0 0 0 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 11 11 11 12 12 12 13 13~
     LPF 2da_find_row_delete STR_VAR row_name = ~BOUNTY_HUNTER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~BOUNTY_HUNTER 0 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9~
+    INSERT_2DA_ROW row_number columns ~BOUNTY_HUNTER 0 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9~
     LPF 2da_find_row_delete STR_VAR row_name = ~STALKER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~STALKER 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4~
+    INSERT_2DA_ROW row_number columns ~STALKER 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
   COPY_EXISTING ~sneakatt.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~THIEF~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~THIEF 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11~
+    INSERT_2DA_ROW row_number columns ~THIEF 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11~
     LPF 2da_find_row_delete STR_VAR row_name = ~SHADOWDANCER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~SHADOWDANCER 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7~
+    INSERT_2DA_ROW row_number columns ~SHADOWDANCER 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7~
     LPF 2da_find_row_delete STR_VAR row_name = ~ASSASIN~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~ASSASIN 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 11 11 11 12 12 12 13 13 13 14 14~
+    INSERT_2DA_ROW row_number columns ~ASSASIN 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 11 11 11 12 12 12 13 13 13 14 14~
     LPF 2da_find_row_delete STR_VAR row_name = ~BOUNTY_HUNTER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~BOUNTY_HUNTER 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11~
+    INSERT_2DA_ROW row_number columns ~BOUNTY_HUNTER 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11~
     LPF 2da_find_row_delete STR_VAR row_name = ~STALKER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~STALKER 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 6~
+    INSERT_2DA_ROW row_number columns ~STALKER 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 6~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
@@ -48,29 +47,29 @@ ELSE BEGIN
 
   COPY_EXISTING ~crippstr.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~THIEF~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~THIEF 0 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 12 12~
+    INSERT_2DA_ROW row_number columns ~THIEF 0 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 12 12~
     LPF 2da_find_row_delete STR_VAR row_name = ~SHADOWDANCER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~SHADOWDANCER 0 0 0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 8 8 8~
+    INSERT_2DA_ROW row_number columns ~SHADOWDANCER 0 0 0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 8 8 8~
     LPF 2da_find_row_delete STR_VAR row_name = ~ASSASIN~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~ASSASIN 0 0 0 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 11 11 11 12 12 12 13 13 13 14 14 14 15 15 15 16 16 16~
+    INSERT_2DA_ROW row_number columns ~ASSASIN 0 0 0 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 11 11 11 12 12 12 13 13 13 14 14 14 15 15 15 16 16 16~
     LPF 2da_find_row_delete STR_VAR row_name = ~BOUNTY_HUNTER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~BOUNTY_HUNTER 0 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 12 12~
+    INSERT_2DA_ROW row_number columns ~BOUNTY_HUNTER 0 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 12 12~
     LPF 2da_find_row_delete STR_VAR row_name = ~STALKER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~STALKER 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 6~
+    INSERT_2DA_ROW row_number columns ~STALKER 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 6~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
   COPY_EXISTING ~sneakatt.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~THIEF~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~THIEF 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 12 12 12 12 13 13 13~
+    INSERT_2DA_ROW row_number columns ~THIEF 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 12 12 12 12 13 13 13~
     LPF 2da_find_row_delete STR_VAR row_name = ~SHADOWDANCER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~SHADOWDANCER 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 8 8 8 8 8 8 9 9 9~
+    INSERT_2DA_ROW row_number columns ~SHADOWDANCER 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 8 8 8 8 8 8 9 9 9~
     LPF 2da_find_row_delete STR_VAR row_name = ~ASSASIN~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~ASSASIN 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 11 11 11 12 12 12 13 13 13 14 14 14 15 15 15 16 16 16 17 17 17~
+    INSERT_2DA_ROW row_number columns ~ASSASIN 1 1 1 2 2 2 3 3 3 4 4 4 5 5 5 6 6 6 7 7 7 8 8 8 9 9 9 10 10 10 11 11 11 12 12 12 13 13 13 14 14 14 15 15 15 16 16 16 17 17 17~
     LPF 2da_find_row_delete STR_VAR row_name = ~BOUNTY_HUNTER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~BOUNTY_HUNTER 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 12 12 12 12 13 13 13~
+    INSERT_2DA_ROW row_number columns ~BOUNTY_HUNTER 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 5 5 5 5 6 6 6 6 7 7 7 7 8 8 8 8 9 9 9 9 10 10 10 10 11 11 11 11 12 12 12 12 13 13 13~
     LPF 2da_find_row_delete STR_VAR row_name = ~STALKER~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~STALKER 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 7 7 7~
+    INSERT_2DA_ROW row_number columns ~STALKER 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 5 5 5 5 5 5 5 5 6 6 6 6 6 6 6 6 7 7 7~
     PRETTY_PRINT_2DA
   BUT_ONLY
   

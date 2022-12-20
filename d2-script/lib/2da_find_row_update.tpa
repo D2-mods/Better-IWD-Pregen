@@ -1,0 +1,308 @@
+//search a 2da entry to find the row or column number
+//can auto-set new entry or auto-delete a row
+//no_backstab removes a kit from all 3 backstab-related files
+
+
+/*functions:
+2da_find_row            PATCH or ACTION
+2da_find_row_set        PATCH or ACTION
+2da_find_row_delete     PATCH or ACTION
+2da_find_column         PATCH or ACTION     
+no_backstab             ACTION
+*/
+
+////////////////////////////////////////////////////////////
+
+//search an entry and find the %row_number%
+//set row_name to entry to match
+//set col_read to column to check
+
+DEFINE_PATCH_FUNCTION 2da_find_row
+
+  INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
+          col_count = 1     // required column count
+		  
+  STR_VAR row_name  = ~~    // name to search for in the column
+  
+  RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
+          columns           // required columns for row_number (set by col_count)
+   
+BEGIN
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (row = 0; row < rows; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STRING_EQUAL_CASE ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      SET row_number = row       // RET variable
+    END
+  END
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION 2da_find_row
+
+  INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
+          col_count = 1     // required column count
+		  
+  STR_VAR row_name  = ~~    // name to search for in the column
+          2da       = ~~    // 2da file to read
+  
+  RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
+          columns           // required columns for row_number (set by col_count)
+   
+BEGIN
+
+COPY_EXISTING - ~%2da%.2DA~ ~override~
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (row = 0; row < rows; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STRING_EQUAL_CASE ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      SET row_number = row       // RET variable
+    END
+  END
+
+END
+
+////////////////////////////////////////////////////////////
+
+//search an entry and write a new entry in the same row
+//you can even overwrite the entry being searched (read and write to same column)
+//will set entries for multiple rows if multiple matches are found
+
+DEFINE_PATCH_FUNCTION 2da_find_row_set
+
+  INT_VAR col_read  = 0      // 2da column to read, default = 0 (1st column)
+          col_count = 1      // required column count
+          col_write = 1      // column to add %entry%, default = 1 (2nd column)
+  
+  STR_VAR row_name  = ~~     // name to search for in the column
+          entry     = ~~    // new entry in column %col_write% of row with %row_name%
+		  
+  RET     row_number         // gives the row number with the row_name (returns final blank row if no match)
+          columns            // required columns for row_number (set by col_count)
+     
+BEGIN
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+  COUNT_2DA_COLS total_columns
+  PATCH_IF (col_write > total_columns) BEGIN SET col_write = total_columns END
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (row = 0; row < rows; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STRING_EQUAL_CASE ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      SET_2DA_ENTRY row col_write columns ~%entry%~
+      SET row_number = row       // RET variable
+    END
+  END
+
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION 2da_find_row_set
+
+  INT_VAR col_read  = 0      // 2da column to read, default = 0 (1st column)
+          col_count = 1      // required column count
+          col_write = 1      // column to add %entry%, default = 1 (2nd column)
+  
+  STR_VAR row_name  = ~~     // name to search for in the column
+          entry     = ~~    // new entry in column %col_write% of row with %row_name%
+          2da       = ~~     // 2da file to read
+		  
+  RET     row_number         // gives the row number with the row_name (returns final blank row if no match)
+          columns            // required columns for row_number (set by col_count)
+     
+BEGIN
+
+COPY_EXISTING ~%2da%.2DA~ ~override~
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+  COUNT_2DA_COLS total_columns
+  PATCH_IF (col_write > total_columns) BEGIN SET col_write = total_columns END
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (row = 0; row < rows; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STRING_EQUAL_CASE ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      SET_2DA_ENTRY row col_write columns ~%entry%~
+      SET row_number = row       // RET variable
+    END
+  END
+
+  PRETTY_PRINT_2DA
+
+BUT_ONLY
+
+END
+
+////////////////////////////////////////////////////////////
+
+//search an entry and delete the entire row
+//will delete multiple rows if multiple matches are found
+//can also return the row_number to add a new line at the same spot (with INSERT_2DA_ROW)
+
+DEFINE_PATCH_FUNCTION 2da_find_row_delete
+
+  INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
+          col_count = 1     // required column count
+		  
+  STR_VAR row_name  = ~~    // name to search for in the column
+  
+  RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
+          columns           // required columns for row_number (set by col_count)
+   
+BEGIN
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ columns
+  FOR (row = (rows - 1); row >= 0; row -= 1) BEGIN    // checks %row%, starting from bottom
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STRING_EQUAL_CASE ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      REMOVE_2DA_ROW row columns
+      SET row_number = row       // RET variable
+    END
+  END
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION 2da_find_row_delete
+
+  INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
+          col_count = 1     // required column count
+		  
+  STR_VAR row_name  = ~~    // name to search for in the column
+          2da       = ~~    // 2da file to read
+  
+  RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
+          columns           // required columns for row_number (set by col_count)
+     
+BEGIN
+
+COPY_EXISTING ~%2da%.2DA~ ~override~
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ columns
+  FOR (row = (rows - 1); row >= 0; row -= 1) BEGIN    // checks %row%, starting from bottom
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STRING_EQUAL_CASE ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      REMOVE_2DA_ROW row columns
+      SET row_number = row       // RET variable
+    END
+  END
+
+BUT_ONLY
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//search an entry and find the column number
+//default row will usually search the row with column headers
+//useful for finding mod-added columns in 2da files
+
+DEFINE_PATCH_FUNCTION 2da_find_column
+
+  INT_VAR row_read  = 0     // 2da row to read (default = row with headers)
+		  
+  STR_VAR col_name  = ~~    // name to search for in the column
+  
+  RET     col_number        // gives the column number of col_name (returns final blank column if no match)
+ 
+BEGIN
+
+  COUNT_2DA_COLS cols           // get column count of current 2da
+  SET col_count = (cols - 1)
+  SET col_number = cols         // set RET variable to final blank line as default
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (col = 0; col < col_count; ++col) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row_read col match
+    PATCH_IF (~%match%~ STRING_EQUAL_CASE ~%col_name%~) BEGIN    // if %match% is same as %col_name%
+      SET col_number = (col + 1)    // RET variable
+    END
+  END
+	
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION 2da_find_column
+
+  INT_VAR row_read  = 0     // 2da row to read (default = row with headers)
+		  
+  STR_VAR col_name  = ~~    // name to search for in the column
+          2da       = ~~    // 2da file to read
+  
+  RET     col_number        // gives the column number of col_name (returns final blank column if no match)
+ 
+BEGIN
+
+COPY_EXISTING - ~%2da%.2DA~ ~override~
+
+  COUNT_2DA_COLS cols           // get column count of current 2da
+  SET col_count = (cols - 1)
+  SET col_number = cols         // set RET variable to final blank line as default
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (col = 0; col < col_count; ++col) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row_read col match
+    PATCH_IF (~%match%~ STRING_EQUAL_CASE ~%col_name%~) BEGIN    // if %match% is same as %col_name%
+      SET col_number = (col + 1)    // RET variable
+    END
+  END
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//this function removes a kit from all 3 backstab-related 2das
+//you can use the variable %kit% as a synonym for %row_name%
+
+DEFINE_ACTION_FUNCTION no_backstab
+  
+  STR_VAR row_name = ~~    // internal kit name
+          kit      = ~~    // same as above (will check for both)
+     
+BEGIN
+
+COPY_EXISTING ~backstab.2DA~ ~override~
+              ~crippstr.2DA~ ~override~
+              ~sneakatt.2DA~ ~override~
+  COUNT_2DA_ROWS 1 rows
+  READ_2DA_ENTRIES_NOW ~2da_table~ 1
+  FOR (row = (rows - 1); row >= 0; row -= 1) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row 0 match
+    PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%row_name%~) OR 
+              (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+      REMOVE_2DA_ROW row 1
+    END
+  END
+BUT_ONLY
+
+END
+
+////////////////////////////////////////////////////////////

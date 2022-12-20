@@ -18,13 +18,6 @@ END
 
 ////////////////////////////////////////////////////////////
 
-//Add a few 0's if a mod added a single column line (yes, this happens)
-LAF 2DA_MISSING_COLS INT_VAR cols = 3 STR_VAR 2da = ~BACKSTAB~ END
-LAF 2DA_MISSING_COLS INT_VAR cols = 3 STR_VAR 2da = ~CRIPPSTR~ END
-LAF 2DA_MISSING_COLS INT_VAR cols = 3 STR_VAR 2da = ~SNEAKATT~ END
-
-////////////////////////////////////////////////////////////
-
 //Delete kits that don't need rows (cleanest way to set to 0 for EEs)
 LAF no_backstab STR_VAR kit = ~C0ADVENT~ END           // Rogue Archer from Artisan's Kitpack
 LAF no_backstab STR_VAR kit = ~USAT00~ END             // Archer (Thief) from Expanded Classes
@@ -35,7 +28,7 @@ LAF no_backstab STR_VAR kit = ~D5ALCHM~ END            // Alchemist (thief) from
 
 //fix lines for some Expanded Classes kits
 //these lines were causing some issues (including for ADD_KIT_EX)
-//this will shorten these lines to 40, with corrected numbers
+//This first part sets lines to level 40, with corrected numbers
 
 ACTION_IF !(MOD_IS_INSTALLED ~d2-modfixes.tp2~ 2) BEGIN    // skip if expanded classes component is installed
 
@@ -43,19 +36,19 @@ ACTION_IF !(MOD_IS_INSTALLED ~d2-modfixes.tp2~ 2) BEGIN    // skip if expanded c
 ACTION_IF FILE_EXISTS ~override/CLABUSKT.2DA~ BEGIN
   COPY_EXISTING ~BACKSTAB.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USKT00~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USKT00 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4~
+    INSERT_2DA_ROW row_number columns ~USKT00 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
   COPY_EXISTING ~CRIPPSTR.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USKT00~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USKT00 0 0 0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6~
+    INSERT_2DA_ROW row_number columns ~USKT00 0 0 0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
   COPY_EXISTING ~SNEAKATT.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USKT00~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USKT00 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7~
+    INSERT_2DA_ROW row_number columns ~USKT00 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7~
     PRETTY_PRINT_2DA
   BUT_ONLY
 END
@@ -64,19 +57,19 @@ END
 ACTION_IF FILE_EXISTS ~override/CLABUSVA.2DA~ BEGIN
   COPY_EXISTING ~BACKSTAB.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USVA00~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USVA00 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2~
+    INSERT_2DA_ROW row_number columns ~USVA00 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
   COPY_EXISTING ~CRIPPSTR.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USVA00~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USVA00 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3~
+    INSERT_2DA_ROW row_number columns ~USVA00 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
   COPY_EXISTING ~SNEAKATT.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USVA00~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USVA00 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4~
+    INSERT_2DA_ROW row_number columns ~USVA00 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4~
     PRETTY_PRINT_2DA
   BUT_ONLY
 END
@@ -85,19 +78,19 @@ END
 ACTION_IF FILE_EXISTS ~override/CLABUSSD.2DA~ BEGIN
   COPY_EXISTING ~BACKSTAB.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USSD77~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USSD77 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2~
+    INSERT_2DA_ROW row_number columns ~USSD77 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
   COPY_EXISTING ~CRIPPSTR.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USSD77~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USSD77 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3~
+    INSERT_2DA_ROW row_number columns ~USSD77 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
   COPY_EXISTING ~SNEAKATT.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USSD77~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USSD77 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4~
+    INSERT_2DA_ROW row_number columns ~USSD77 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4~
     PRETTY_PRINT_2DA
   BUT_ONLY
 END
@@ -106,19 +99,117 @@ END
 ACTION_IF FILE_EXISTS ~override/CLABUSSC.2DA~ BEGIN
   COPY_EXISTING ~BACKSTAB.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USSC00~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USSC00 1 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4~
+    INSERT_2DA_ROW row_number columns ~USSC00 1 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
   COPY_EXISTING ~CRIPPSTR.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USSC00~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USSC00 0 0 0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6~
+    INSERT_2DA_ROW row_number columns ~USSC00 0 0 0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6~
     PRETTY_PRINT_2DA
   BUT_ONLY
   
   COPY_EXISTING ~SNEAKATT.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USSC00~ RET row_number columns END
-    INSERT_2DA_ROW %row_number% %columns% ~USSC00 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7~
+    INSERT_2DA_ROW row_number columns ~USSC00 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+END
+
+END
+
+////////////////////////////////////////////////////////////
+
+//Scale to level 50, if backstab.2da extends to 50
+//Needs to be after the level 40 lines to workaround some issues
+
+//Get column count from backstab.2da
+COPY_EXISTING - ~backstab.2DA~  ~~
+  COUNT_2DA_COLS cols
+
+
+ACTION_IF (cols = 52) BEGIN
+
+//Kensai (Thief)
+ACTION_IF (FILE_EXISTS ~override/CLABUSKT.2DA~) BEGIN
+  COPY_EXISTING ~BACKSTAB.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USKT00~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USKT00 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+  
+  COPY_EXISTING ~CRIPPSTR.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USKT00~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USKT00 0 0 0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 8 8 8~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+  
+  COPY_EXISTING ~SNEAKATT.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USKT00~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USKT00 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 8 8 8 8 8 8 9 9 9~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+END
+
+//Vampyre
+ACTION_IF (FILE_EXISTS ~override/CLABUSVA.2DA~) BEGIN
+  COPY_EXISTING ~BACKSTAB.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USVA00~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USVA00 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+  
+  COPY_EXISTING ~CRIPPSTR.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USVA00~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USVA00 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+  
+  COPY_EXISTING ~SNEAKATT.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USVA00~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USVA00 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 5 5 5~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+END
+
+//Seducer
+ACTION_IF (FILE_EXISTS ~override/CLABUSSD.2DA~) BEGIN
+  COPY_EXISTING ~BACKSTAB.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USSD77~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USSD77 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+  
+  COPY_EXISTING ~CRIPPSTR.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USSD77~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USSD77 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+  
+  COPY_EXISTING ~SNEAKATT.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USSD77~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USSD77 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 5 5 5~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+END
+
+//Shapechanger
+ACTION_IF (FILE_EXISTS ~override/CLABUSSC.2DA~) BEGIN
+  COPY_EXISTING ~BACKSTAB.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USSC00~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USSC00 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+  
+  COPY_EXISTING ~CRIPPSTR.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USSC00~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USSC00 0 0 0 0 0 0 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 8 8 8~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+  
+  COPY_EXISTING ~SNEAKATT.2DA~ ~override~
+    LPF 2da_find_row_delete STR_VAR row_name = ~USSC00~ RET row_number columns END
+    INSERT_2DA_ROW row_number columns ~USSC00 1 1 1 1 1 1 2 2 2 2 2 2 3 3 3 3 3 3 4 4 4 4 4 4 5 5 5 5 5 5 6 6 6 6 6 6 7 7 7 7 7 7 8 8 8 8 8 8 9 9 9~
     PRETTY_PRINT_2DA
   BUT_ONLY
 END

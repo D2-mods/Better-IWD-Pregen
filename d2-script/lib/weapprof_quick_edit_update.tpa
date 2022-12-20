@@ -1,9 +1,10 @@
-//Easy-to-use functions for editing weapprof.2da (proficiencies)
-//search by col_number or col_name
-//all functions available as PATCH or ACTION
+//Quick editing of weapprof.2da (proficiencies)
+//Only supports vanilla profs (use before overhaul tweaks)
+//Search by kit or set a specific column number
+
 
 /*functions:
-weapprof_set_types
+weapprof_set_types       PATCH or ACTION (all functions)
 weapprof_thief
 weapprof_not_thief
 weapprof_crushing
@@ -38,17 +39,18 @@ DEFINE_PATCH_FUNCTION weapprof_set_types
  
  
 BEGIN
-  
+
   PATCH_IF (col_number = 0) BEGIN
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -80,15 +82,16 @@ BEGIN
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
   PATCH_IF (col_number = 0) BEGIN
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -99,6 +102,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -119,16 +124,17 @@ DEFINE_PATCH_FUNCTION weapprof_thief
  
 BEGIN
     
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -172,16 +178,17 @@ BEGIN
   
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -206,6 +213,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
 	
+BUT_ONLY
+
 END
 
 ////////////////////////////////////////////////////////////
@@ -225,16 +234,17 @@ DEFINE_PATCH_FUNCTION weapprof_not_thief
  
 BEGIN
     
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -274,16 +284,17 @@ BEGIN
   
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -304,6 +315,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
 	
+BUT_ONLY
+
 END
 
 ////////////////////////////////////////////////////////////
@@ -323,16 +336,17 @@ DEFINE_PATCH_FUNCTION weapprof_crushing
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -367,16 +381,17 @@ BEGIN
   
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -391,6 +406,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -411,16 +428,17 @@ DEFINE_PATCH_FUNCTION weapprof_ranged
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -455,16 +473,17 @@ BEGIN
   
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -479,6 +498,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -499,16 +520,17 @@ DEFINE_PATCH_FUNCTION weapprof_2handed
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -547,16 +569,17 @@ BEGIN
   
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -575,6 +598,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -595,16 +620,17 @@ DEFINE_PATCH_FUNCTION weapprof_swords
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -640,16 +666,17 @@ BEGIN
   
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -665,6 +692,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -685,16 +714,17 @@ DEFINE_PATCH_FUNCTION weapprof_druid
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -734,16 +764,17 @@ BEGIN
   
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -763,6 +794,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -783,16 +816,17 @@ DEFINE_PATCH_FUNCTION weapprof_shaman
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -834,16 +868,17 @@ BEGIN
   
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -865,6 +900,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -891,16 +928,17 @@ DEFINE_PATCH_FUNCTION weapprof_set_styles
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -948,16 +986,17 @@ BEGIN
 
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -981,6 +1020,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -1000,16 +1041,17 @@ DEFINE_PATCH_FUNCTION weapprof_bard
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -1039,16 +1081,17 @@ BEGIN
 
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -1059,6 +1102,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -1078,16 +1123,17 @@ DEFINE_PATCH_FUNCTION weapprof_fighter2
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -1118,16 +1164,17 @@ BEGIN
 
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -1139,6 +1186,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   SET_2DA_ENTRY_LATER ~weapprof_quick_edit~ 34 col_number 3    // set two weapon style (row 34) to 3 slots  
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -1158,16 +1207,17 @@ DEFINE_PATCH_FUNCTION weapprof_fighter5
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -1202,16 +1252,17 @@ BEGIN
   
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -1227,6 +1278,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
@@ -1246,16 +1299,17 @@ DEFINE_PATCH_FUNCTION weapprof_fighter_styles
  
 BEGIN
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -1286,16 +1340,17 @@ BEGIN
   
 COPY_EXISTING ~weapprof.2DA~ ~override~
   
-  PATCH_IF (col_number = 0) BEGIN  
-    COUNT_2DA_COLS cols    // stores total column # in %cols%
-    SET col_total = (%cols% - 1)    // reduce %col_total% by 1 to account for starting at column 0
-    SET col_number = (%cols%)
+  PATCH_IF (col_number = 0) BEGIN
+    COUNT_2DA_COLS cols           // get column count of current 2da
+    SET col_count = (cols - 1)
+    SET col_number = cols         // set RET variable to final blank line as default
   
-    FOR (col = 1; col < col_total; ++col) BEGIN    // checks %col% if less than %col_total%
-      READ_2DA_ENTRY 1 col 2 ~match~    // read table entry, and stores in variable %match%
-      PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
-                (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
-        SET col_number = (%col% + 1)    // plus 1 to add column 0 to %col_number%
+    READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+    FOR (col = 0; col < col_count; ++col) BEGIN
+      READ_2DA_ENTRY_FORMER ~2da_table~ 0 col match
+        PATCH_IF ((~%match%~ STRING_EQUAL_CASE ~%col_name%~) OR 
+                  (~%match%~ STRING_EQUAL_CASE ~%kit%~)) BEGIN
+        SET col_number = (col + 1)    // RET variable
       END
     END
   END
@@ -1307,6 +1362,8 @@ COPY_EXISTING ~weapprof.2DA~ ~override~
   
   SET_2DA_ENTRIES_NOW ~weapprof_quick_edit~ 1
   PRETTY_PRINT_2DA
+
+BUT_ONLY
 	
 END
 
