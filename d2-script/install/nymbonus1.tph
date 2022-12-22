@@ -1,10 +1,10 @@
-// Copies script to override (used by Nym)
-// or print message if already added
+//Copies script to override (used by Nym)
 
 ACTION_IF ((FILE_EXISTS ~override/00BPak0.bcs~) OR 
-           (MOD_IS_INSTALLED ~Setup-IWD2-Ease.tp2~ 9)) BEGIN
-  PRINT @52
+           (MOD_IS_INSTALLED ~Setup-IWD2-Ease.tp2~ 9)
+          ) BEGIN
+  PRINT @52    // "NOTE: The Avarine Decanter was already added. No changes were made to the game."
 END
 ELSE BEGIN
-  COPY ~%iwd2%/00BPak0.bcs~ ~override~
+  COPY ~%iwd2%/00BPak0.bcs~  ~override~
 END

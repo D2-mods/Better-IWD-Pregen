@@ -1,8 +1,5 @@
-//This file contains text shown in weidu installer
-
 /*
-Components with near-identical names are mutually exclusive.
-For Project Infinity, you can check both options if using (will automatically skip if incompatible).
+This file contains text shown in weidu installer
 */
 
 
@@ -10,12 +7,8 @@ For Project Infinity, you can check both options if using (will automatically sk
 @10100 = ~Better IWD Pregen~
 
 @10200 = ~Better AI for Call Woodland Beings (EEs, BG2)~
-	@10201 = ~Use Revised script for nymph summon~
-	@10202 = ~Use existing script, but patch in a few actions~
-@10230 = ~Use existing script, but patch in a few actions (atweaks)~    // standalone component
-	@10231 = ~Yes~
-	@10232 = ~No~
-@10260 = ~This component is not available for atweaks PnP Fey~
+	@10201 = ~Use revised script for nymph summon (compatible with SCS)~
+	@10202 = ~Use existing script, but patch in a few actions (choose this if using a revision mod, such as atweaks PnP Fey)~
 
 @9999 = ~Auto-assign script to new characters~
 	@1 = ~Yes~
@@ -46,10 +39,7 @@ For Project Infinity, you can check both options if using (will automatically sk
 
 @40600 = ~Give party starting equipment (IWD games)~
 	@40601 = ~Items are auto-equipped or added to inventory~
-	@40602 = ~Start with a bag, containing a mix of weapons~
-@40630 = ~Start with a bag, containing a mix of weapons (tweak detected)~    // standalone component
-	@40631 = ~Yes~
-	@40632 = ~No~
+	@40602 = ~Start with a bag, containing a mix of weapons (choose this if using a Proficiencies overhaul)~
 
 @40700 = ~Give party a Bag of Holding at game start (classic and EEs)~
 	@40701 = ~"Bottomless" bag (same as Tweaks Anthology component)~
@@ -82,9 +72,7 @@ For Project Infinity, you can check both options if using (will automatically sk
 	@41301 = ~Use at will, and reduce duration to 5 rounds (30 seconds)~
 	@41302 = ~Use at will, and reduce duration to 1 turn (60 seconds)~
 	@41303 = ~Use at will, but do not lower duration (120 seconds)~
-@41330 = ~Timing fix for Minsc's Berserk ability (EEs)~                 // if previous component is not installed
-	@41331 = ~Yes~
-	@41332 = ~No~
+	@41304 = ~Only install timing fix, no change to ability duration (EEs)~
 @41360 = ~This component is not available for Rashemi Berserker (Artisan's Kitpack)~
 
 @41400 = ~Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)~
@@ -96,9 +84,8 @@ For Project Infinity, you can check both options if using (will automatically sk
 	@41502 = ~No~
 
 @41600 = ~Paladins and Rangers do not fall at low rep (EEs)~
-	@41601 = ~Yes, install it~
-	@41602 = ~No, do not install~
-@41690 = ~NOTE: Could not find FALLEN.2DA. No changes were made.~
+	@41601 = ~Yes~
+	@41602 = ~No~
 
 @41700 = ~~
 	@41701 = ~~
@@ -113,24 +100,18 @@ For Project Infinity, you can check both options if using (will automatically sk
 
 //WeiDU Messages
 
-/*
-These are older messages from before I reorganized reference numbers.
-I'll probably move these to above sections at some point.
-*/
-
-@50 = ~NOTE: This component replaces both iwdpgen.BCS and iwdpgen.BS. The existing iwdpgen.BCS is backed up as iwdpgen.BAK in the override folder, and can be viewed in Near Infinity.
-~
-@51 = ~NOTE: Disabled the ToBEx "Expanded Actions" hack. If using ToBEx v26/v28, the Expanded Actions hack alters the NoAction() script action to remove Modal states, making this script unusable for some classes.
-~
-@52 = ~NOTE: The Avarine Decanter was already installed. This component made no changes to the override.
+@50 = ~Component not available~
+@51 = ~~
+@52 = ~NOTE: The Avarine Decanter was already added. No changes were made to the game.
 ~
 @53 = ~NOTE: See the readme-tweaks file in the mod folder for summon list and additional info.
 ~
-@54 = ~NOTE: See the readme-tweaks file for additional info, as well as how to avoid (or use) an exploit.
+@54 = ~NOTE: See the readme-tweaks file for additional info, including known issues/exploits.
 ~
-@55 = ~The script is not currently compatible with the "Extended Items/Quest/Spell messages" tweak (Improved GUI mod). Please uninstall this component if you would like to install Better IWD Pregen.
-~
+@55 = ~~
 @56 = ~NOTE: This patch makes the AI for CWB summons preserve invisibility, as well as make usable the B, E, and D hotkeys (Cooldown mode controls and Dimension Door when out-of-battle).
 ~
 
-//@51 and @55 were used in pre-v3.7 versions of this mod
+
+/*
+*/

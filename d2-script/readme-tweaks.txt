@@ -91,14 +91,14 @@ IWD:EE
 
 Classic IWD
 - This game doesn't have a way to detect proficiencies from a script.
-- The party recieves a randomized set of items (a few items are non-random).
-- Total amount of items recieved is based on size of the initial party.
+- The party receives a randomized set of items (a few items are non-random).
+- Total amount of items received is based on size of the initial party.
 - For organization, all weapons will be in the inventories of Player1 or Player2.
 - Characters will keep the starting staff (removing it can lead to a possible crash).
 
 IWD2
 - This game doesn't have a way to detect Feats from a script.
-- Each character recieves one melee and one ranged weapon.
+- Each character receives one melee and one ranged weapon.
 - Items are slightly randomized. Possible items are based on character class.
 - Weapons are moved to the quickslots, but are NOT auto-equipped.
 - Do one of the following to equip weapons:
@@ -131,7 +131,7 @@ Option 4 (EEs) - Bottomless, and Gold is exchanged when adding/removing items (e
 ----------------------------------------------------------------------------------------------------
 You start with a bottomless bag (60000+ capacity), but unlike other bags, gold is added or taken away whenever items are transferred. Otherwise, it works like a regular bag.
 
-Note that taking items out of the bag isn't cheap. I set to a 180% markup, so comparable to the more expensive merchants. However, the gold you get for putting items into the bag is higher than what you'd get from most stores, and there's no depreciation. In BG2, the amounts are comparable to the best ToB merchants. In IWD, there are several merchants that will pay more, but most will only accept certain item types.
+Note that taking items out of the bag isn't cheap. I set to a 180% markup, so comparable to the more expensive merchants. However, the gold you get for putting items into the bag is higher than what you'd get from most stores and there's no depreciation. In BG2, the amounts are comparable to the best ToB merchants. In IWD, there are several merchants that will pay more, but most will only accept certain item types.
 
 
 Additional info:
@@ -211,7 +211,7 @@ Remove alignment restrictions for classes (classic and EEs)
 ==================================================
 Paladins and Rangers do not fall at low rep (EEs)
 ==================================================
-- No falling at low rep
+- Prevent falling at low rep
 - Affects all kits as well, including mod kits
 
 

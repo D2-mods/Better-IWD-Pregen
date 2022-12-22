@@ -2,23 +2,22 @@
 
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
 
-COPY - ~%baf%/d2bsee1.BAF~ ~%workspace%/d2bsee.BAF~    // rename and compile script
+COPY - ~%iwdpgen%/d2bsee1.BAF~ ~%workspace%/d2bsee.BAF~    // rename and compile script
 COMPILE ~%workspace%/d2bsee.BAF~
 EXTEND_BOTTOM ~d2bsee.BCS~ ~%game%/d2#iwdee.BAF~    // game-specific blocks
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%baf%/d2bsee2.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%baf%/d2bsee3.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee2.BAF~
+EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee3.BAF~
 COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~    // copy to scripts folder
 
 ACTION_IF (FILE_EXISTS_IN_GAME ~iwdpgen.BCS~) BEGIN
   COPY_EXISTING ~iwdpgen.BCS~ ~override/iwdpgen.BAK~    // backup iwdpgen.BCS
-  PRINT @50
 END
 
 COPY_EXISTING ~d2bsee.BCS~ ~override/iwdpgen.BCS~    // replace iwdpgen.BCS
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
   LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW %row_number% %columns% ~IWDPGEN @name @desc~
+  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
   REPLACE ~@name~ @100
   REPLACE ~@desc~ @101
   PRETTY_PRINT_2DA
@@ -30,40 +29,40 @@ END
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 
-COPY - ~%baf%/d2bsee1.BAF~ ~%workspace%/d2bsee.BAF~
+COPY - ~%iwdpgen%/d2bsee1.BAF~ ~%workspace%/d2bsee.BAF~
 COMPILE ~%workspace%/d2bsee.BAF~
 
 ACTION_IF ((GAME_IS ~bgee~) AND (NOT GAME_INCLUDES ~sod~)) BEGIN
   EXTEND_BOTTOM ~d2bsee.BCS~ ~%game%/d2#bgee.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%baf%/d2bsee2.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%baf%/d2bsee3.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee2.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee3.BAF~
   COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
 END
 
 ACTION_IF ((GAME_IS ~bgee~) AND (GAME_INCLUDES ~sod~)) BEGIN
   EXTEND_BOTTOM ~d2bsee.BCS~ ~%game%/d2#sod.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%baf%/d2bsee2.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%baf%/d2bsee3.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee2.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee3.BAF~
   COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
 END
 
 ACTION_IF (GAME_IS ~bg2ee~) BEGIN
   EXTEND_BOTTOM ~d2bsee.BCS~ ~%game%/d2#bg2ee.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%baf%/d2bsee2.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%baf%/d2bsee3.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee2.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee3.BAF~
   COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
 END
 
 ACTION_IF (GAME_IS ~eet~) BEGIN
   EXTEND_BOTTOM ~d2bsee.BCS~ ~%game%/d2#eet.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%baf%/d2bsee2.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%baf%/d2bsee3.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee2.BAF~
+  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee3.BAF~
   COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
 END
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
   LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW %row_number% %columns% ~IWDPGEN @name @desc~
+  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
   REPLACE ~@name~ @100
   REPLACE ~@desc~ @101
   PRETTY_PRINT_2DA
@@ -76,12 +75,12 @@ END
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
 
 COPY ~%iwd2%/attstyle.ids~ ~override~    // copy dummy file, prevents error message
-COMPILE ~%baf%/d2bsid2.BAF~
+COMPILE ~%iwdpgen%/d2bsid2.BAF~
 COPY_EXISTING ~d2bsid2.BCS~ ~scripts/iwdpgen.BS~
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
   LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW %row_number% %columns% ~IWDPGEN @name @desc~
+  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
   REPLACE ~@name~ @100
   REPLACE ~@desc~ @102
   PRETTY_PRINT_2DA
@@ -93,12 +92,12 @@ END
 
 ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN
 
-COMPILE ~%baf%/d2bsbg2.BAF~
+COMPILE ~%iwdpgen%/d2bsbg2.BAF~
 COPY_EXISTING ~d2bsbg2.BCS~ ~scripts/iwdpgen.BS~
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
   LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW %row_number% %columns% ~IWDPGEN @name @desc~
+  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
   REPLACE ~@name~ @100
   REPLACE ~@desc~ @103
   PRETTY_PRINT_2DA
@@ -123,12 +122,12 @@ END
 
 ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
 
-COMPILE ~%baf%/d2bsid1.BAF~
+COMPILE ~%iwdpgen%/d2bsid1.BAF~
 COPY_EXISTING ~d2bsid1.BCS~ ~scripts/iwdpgen.BS~
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
   LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW %row_number% %columns% ~IWDPGEN @name @desc~
+  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
   REPLACE ~@name~ @100
   REPLACE ~@desc~ @104
   PRETTY_PRINT_2DA
@@ -140,12 +139,12 @@ END
 
 ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN
 
-COMPILE ~%baf%/d2bsbg1.BAF~
+COMPILE ~%iwdpgen%/d2bsbg1.BAF~
 COPY_EXISTING ~d2bsbg1.BCS~ ~scripts/iwdpgen.BS~
 
 COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
   LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW %row_number% %columns% ~IWDPGEN @name @desc~
+  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
   REPLACE ~@name~ @100
   REPLACE ~@desc~ @105
   PRETTY_PRINT_2DA

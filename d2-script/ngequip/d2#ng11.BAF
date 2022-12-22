@@ -42,7 +42,7 @@ IF
 THEN
 	RESPONSE #100
 		GiveItemCreate("SLNG01",Player1,0,0,0)    // sling
-		GiveItemCreate("BULL01",Player1,20,0,0)
+		GiveItemCreate("BULL01",Player1,40,0,0)
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END

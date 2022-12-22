@@ -30,17 +30,3 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~fallen.2da~) BEGIN
   BUT_ONLY
 
 END
-ELSE BEGIN
-  PRINT @41690    // message that file not found so can't edit
-END
-
-
-
-
-/*
-class numbers
-6
-12
-18 (cleric/ranger)
-
-*/

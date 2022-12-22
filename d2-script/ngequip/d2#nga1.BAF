@@ -3,7 +3,7 @@ IF
 	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("BOLT01",20,0,0))    // bolts
+		ActionOverride(Player1,CreateItem("BOLT01",40,0,0))    // bolts
 		SetGlobal("d2ngbolt","GLOBAL",1)
 		Continue()
 END
@@ -13,7 +13,7 @@ IF
 	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("AROW01",20,0,0))    // arrows
+		ActionOverride(Player1,CreateItem("AROW01",40,0,0))    // arrows
 		SetGlobal("d2ngarrow","GLOBAL",1)
 		Continue()
 END
@@ -23,7 +23,7 @@ IF
 	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("DART01",20,0,0))    // darts
+		ActionOverride(Player1,CreateItem("DART01",40,0,0))    // darts
 		SetGlobal("d2ngdart","GLOBAL",1)
 		Continue()
 END
@@ -33,7 +33,7 @@ IF
 	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("BULL01",20,0,0))    // bullets
+		ActionOverride(Player1,CreateItem("BULL01",40,0,0))    // bullets
 		SetGlobal("d2ngbullet","GLOBAL",1)
 		Continue()
 END

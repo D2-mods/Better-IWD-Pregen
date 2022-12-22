@@ -1,3 +1,5 @@
+//for Druids and Polymorph Self
+
 LAF add_movement_equip INT_VAR speed=180 STR_VAR item = plywwolf END
 LAF add_movement_equip INT_VAR speed=180 STR_VAR item = cdpolyww END
 LAF add_movement_equip INT_VAR speed=180 STR_VAR item = PLYWOLF1 END
@@ -15,23 +17,25 @@ OUTER_SET plymovebonus1 = ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-PLYMOVEBONUS1~
 OUTER_SET plymovebonus0 = ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-PLYMOVEBONUS0~
 
 ACTION_IF ((MOD_IS_INSTALLED ~d2-iwdee-fixes.tp2~ %movebonus0%) OR
-           (MOD_IS_INSTALLED ~d2-script.tp2~ %plymovebonus0%)) BEGIN
+           (MOD_IS_INSTALLED ~d2-script.tp2~ %plymovebonus0%)
+          ) BEGIN
 
   ACTION_IF (((MOD_IS_INSTALLED ~d2-script.tp2~ %plymovebonus1%) AND
               (INSTALL_ORDER ~d2-script.tp2~ %plymovebonus1% AFTER ~d2-iwdee-fixes.tp2~ %movebonus0%)) OR
              ((MOD_IS_INSTALLED ~d2-iwdee-fixes.tp2~ %movebonus1%) AND
-              (INSTALL_ORDER ~d2-iwdee-fixes.tp2~ %movebonus1% AFTER ~d2-script.tp2~ %plymovebonus0%))) BEGIN		 
+              (INSTALL_ORDER ~d2-iwdee-fixes.tp2~ %movebonus1% AFTER ~d2-script.tp2~ %plymovebonus0%))
+            ) BEGIN		 
   
   END
   ELSE BEGIN
   
-  COPY_EXISTING_REGEXP ~ply.*\.itm~ ~override~
-    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=176 opcode=126 END
-  BUT_ONLY
+    COPY_EXISTING_REGEXP ~ply.*\.itm~ ~override~
+      LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=176 opcode=126 END
+    BUT_ONLY
 
-  COPY_EXISTING_REGEXP ~cdpoly.*\.itm~ ~override~
-    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=176 opcode=126 END
-  BUT_ONLY
+    COPY_EXISTING_REGEXP ~cdpoly.*\.itm~ ~override~
+      LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=176 opcode=126 END
+    BUT_ONLY
 
   END
 END

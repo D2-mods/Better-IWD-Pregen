@@ -78,7 +78,7 @@ IF
 THEN
 	RESPONSE #100
 		ActionOverride(Player1,CreateItem("00BOWS01",0,0,0))    // shortbow
-		ActionOverride(Player1,CreateItem("00AROW01",20,0,0))
+		ActionOverride(Player1,CreateItem("00AROW01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END
@@ -116,7 +116,7 @@ IF
 THEN
 	RESPONSE #100
 		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
-		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BULL01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END
@@ -131,7 +131,7 @@ IF
 THEN
 	RESPONSE #100
 		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
-		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BOLT01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END
@@ -447,17 +447,17 @@ IF
 THEN
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00BOWS01",0,0,0))    // shortbow
-		ActionOverride(Player1,CreateItem("00AROW01",20,0,0))
+		ActionOverride(Player1,CreateItem("00AROW01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
-		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BOLT01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
-		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BULL01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
@@ -481,12 +481,12 @@ THEN
 		Continue()
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00BOWS01",0,0,0))    // shortbow
-		ActionOverride(Player1,CreateItem("00AROW01",20,0,0))
+		ActionOverride(Player1,CreateItem("00AROW01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
-		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BULL01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
@@ -510,16 +510,16 @@ THEN
 		Continue()
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
-		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BULL01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player1,CreateItem("00DART01",20,0,0))    // dart
+		ActionOverride(Player1,CreateItem("00DART01",40,0,0))    // dart
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
-		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BOLT01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END
@@ -535,16 +535,16 @@ IF
 THEN
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00BOWS01",0,0,0))    // shortbow
-		ActionOverride(Player1,CreateItem("00AROW01",20,0,0))
+		ActionOverride(Player1,CreateItem("00AROW01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
-		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BOLT01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player1,CreateItem("00DART01",20,0,0))    // dart
+		ActionOverride(Player1,CreateItem("00DART01",40,0,0))    // dart
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
@@ -562,11 +562,11 @@ IF
 THEN
 	RESPONSE #50
 		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
-		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BULL01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #50
-		ActionOverride(Player1,CreateItem("00DART01",20,0,0))    // dart
+		ActionOverride(Player1,CreateItem("00DART01",40,0,0))    // dart
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END
@@ -580,7 +580,7 @@ IF
 THEN
 	RESPONSE #50
 		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
-		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BOLT01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #50
@@ -598,12 +598,12 @@ IF
 THEN
 	RESPONSE #50
 		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
-		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BULL01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #50
 		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
-		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BOLT01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 END
@@ -621,16 +621,16 @@ IF
 THEN
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00BWLX01",0,0,0))    // light crossbow
-		ActionOverride(Player1,CreateItem("00BOLT01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BOLT01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
 		ActionOverride(Player1,CreateItem("00SLNG01",0,0,0))    // sling
-		ActionOverride(Player1,CreateItem("00BULL01",20,0,0))
+		ActionOverride(Player1,CreateItem("00BULL01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		ActionOverride(Player1,CreateItem("00DART01",20,0,0))    // dart
+		ActionOverride(Player1,CreateItem("00DART01",40,0,0))    // dart
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25

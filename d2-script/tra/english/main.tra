@@ -1,4 +1,6 @@
-//This file contains any text displayed in the game
+/*
+This file contains text displayed in the game
+*/
 
 
 //SCRPDESC.2DA entries (script descriptions)
@@ -46,6 +48,13 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 @1001 = ~Cooldown mode activated for 30 seconds~
 @1002 = ~Cooldown mode activated for 18 seconds~
 @1003 = ~Cooldown mode deactivated~
+
+
+//IWD auto-equip messages
+@1010 = ~The party has been given starting weapons. All items are equipped or in the inventories.~
+@1011 = ~The party has been given starting weapons. All items can be found in the inventories.~
+@1012 = ~The party has been given starting weapons. Please save and reload to update the quick icons.~
+@1013 = ~The party has been given starting weapons. Weapons must be re-equipped to update the quick icons.~
 
 
 
@@ -146,9 +155,9 @@ Not Usable By:
  Druid
  Cleric
  Mage~
- 
- 
- 
+
+
+
 //Worn Garment descriptions (for ngequip)
 @710 = ~Worn Garment~
 @711 = ~A plain robe, worn by travelers on extended journeys. Provides some modest protection from the elements.
@@ -297,7 +306,6 @@ Minsc becomes enraged for 2 turns. While enraged, he gains a +2 bonus to his Str
 
 
 
-
 //light crossbow descriptions for IWD-in-BG2 (for ngequip)
 
 /*
@@ -442,7 +450,6 @@ Not Usable By:
  Cleric
  Mage
  Thief~
-
 
 
 /*

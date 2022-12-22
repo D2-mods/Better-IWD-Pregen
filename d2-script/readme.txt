@@ -98,11 +98,21 @@ IWD2 exe patch:
 ==================================================
 VERSION INFO
 ==================================================
-v5.1
-- EEs: Any character with skill points in detecting traps or illusions will now have auto-Search enabled. Previously, the feature was only for specific classes.
-- Cleaned up a few possible harmless warning messages.
-- Some minor adjustments (not to scripts)
-- Updated some of my old functions files.
+v6.0
+- Script update:
+	- EEs: Any character with skill points in detecting traps or illusions will now have auto-Search enabled. Previously, the feature was only for specific classes.
+- "Give party starting equipment" (auto-equip):
+	- for IWD2 and IWD-in-BG2, it will now give a reminder in the dialogue box to update the quick weapon icons by saving/reloading or re-equipping weapons.
+	- Increased ammo stacks given to 40 (was 20)
+- "Give party starting equipment" (item bag):
+	- will now have at least 1 of every weapon type (i.e. battle axe, greataxe, and throwing axe are 3 different weapons)
+	- Increased ammo stacks given to 40 (was 20)
+	- if Thrown Hammers mod is installed, 5 Throwing Hammers are added to the bag
+- Fixed compatibility issues or install issues with a few other mods.
+- Updated install files for several other components.
+- Made some of the component info during install more descriptive (i.e. compatibility with other mods).
+	- Related to this, also removed redundant components.
+- Updated GitHub page with all the info from the Tweaks readme.
 
 v5.0
 - EEs: Fixed retargeting against enemy casters. Retargeting should work now if an enemy uses Protection From Magical Weapons, or similar, during the battle.

@@ -223,7 +223,7 @@ THEN
 	RESPONSE #100
 		ActionOverride(Player1,CreateItem("XBOW04",0,0,0))
 		ActionOverride(Player1,XEquipItem("XBOW04",Player1,SLOT_WEAPON1,EQUIP))    // crossbow
-		ActionOverride(Player1,CreateItem("BOLT01",20,0,0))
+		ActionOverride(Player1,CreateItem("BOLT01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 END
 
@@ -236,7 +236,7 @@ THEN
 	RESPONSE #100
 		ActionOverride(Player1,CreateItem("BOW03",0,0,0))
 		ActionOverride(Player1,XEquipItem("BOW03",Player1,SLOT_WEAPON1,EQUIP))    // longbow
-		ActionOverride(Player1,CreateItem("AROW01",20,0,0))
+		ActionOverride(Player1,CreateItem("AROW01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 END
 
@@ -249,7 +249,7 @@ THEN
 	RESPONSE #100
 		ActionOverride(Player1,CreateItem("BOW05",0,0,0))
 		ActionOverride(Player1,XEquipItem("BOW05",Player1,SLOT_WEAPON1,EQUIP))    // shortbow
-		ActionOverride(Player1,CreateItem("AROW01",20,0,0))
+		ActionOverride(Player1,CreateItem("AROW01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 END
 
@@ -260,7 +260,7 @@ IF
 	ProficiencyGT(Player1,106,0)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("DART01",20,0,0))
+		ActionOverride(Player1,CreateItem("DART01",40,0,0))
 		ActionOverride(Player1,XEquipItem("DART01",Player1,SLOT_WEAPON1,EQUIP))    // darts
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 END
@@ -274,7 +274,7 @@ THEN
 	RESPONSE #100
 		ActionOverride(Player1,CreateItem("SLNG01",0,0,0))
 		ActionOverride(Player1,XEquipItem("SLNG01",Player1,SLOT_WEAPON1,EQUIP))    // sling
-		ActionOverride(Player1,CreateItem("BULL01",20,0,0))
+		ActionOverride(Player1,CreateItem("BULL01",40,0,0))
 		SetGlobal("d2Player1ranged","GLOBAL",1)
 END
 

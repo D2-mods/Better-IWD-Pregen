@@ -1,6 +1,6 @@
 //edit Nym's script
 
-COPY_EXISTING ~50NYM.DLG~ ~override~
+COPY_EXISTING ~50NYM.DLG~  ~override~
   DECOMPILE_AND_PATCH BEGIN
     REPLACE_TEXTUALLY ~50Nym2~ ~50Nym~
   END

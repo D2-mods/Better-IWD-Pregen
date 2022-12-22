@@ -1,20 +1,25 @@
+//Start with a bag, containing a mix of weapons
+
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
   
-  ACTION_IF (FILE_EXISTS_IN_GAME ~SW1H43.ITM~) BEGIN    // add katana
+  ACTION_IF (FILE_EXISTS_IN_GAME ~SW1H43.ITM~) BEGIN          // add katana
     COPY_EXISTING ~SW1H43.ITM~ ~override/d2#ngkat.ITM~
-      SAY NAME1 @700 SAY NAME2 @700 SAY UNIDENTIFIED_DESC @701
+      SAY NAME1 @700 SAY UNIDENTIFIED_DESC @701
+      SAY NAME2 @700
       WRITE_LONG 0x34 100    // reduce base price to 100 gold
   END
   ELSE BEGIN
     COPY ~%ngequip%/d2#ngkat.ITM~ ~override~
-      SAY NAME1 @700 SAY NAME2 @700 SAY UNIDENTIFIED_DESC @701
+      SAY NAME1 @700 SAY UNIDENTIFIED_DESC @701
+      SAY NAME2 @700
   END
 	
-  COPY ~%ngequip%/d2#ngrb0.BAM~ ~override~    // add starting robe
+  COPY ~%ngequip%/d2#ngrb0.BAM~ ~override~                    // add starting robe
   COPY ~%ngequip%/d2#ngrb0.ITM~ ~override~
-    SAY NAME1 @710 SAY NAME2 @710 SAY UNIDENTIFIED_DESC @711
+    SAY NAME1 @710 SAY UNIDENTIFIED_DESC @711
+    SAY NAME2 @710
 
   COPY - ~%ngequip%/d2#ngb0.BAF~ ~%workspace%/d2#ng02.BAF~    // create baf files for each PC
     REPLACE_TEXTUALLY ~Player1~ ~Player2~
@@ -27,7 +32,7 @@ ACTION_IF (GAME_IS ~iwdee~) BEGIN
   COPY - ~%ngequip%/d2#ngb0.BAF~ ~%workspace%/d2#ng06.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player6~
 
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng06.BAF~    // add scripts to baldur.BCS
+  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng06.BAF~           // add scripts to baldur.BCS
   EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng05.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng04.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng03.BAF~
@@ -42,7 +47,8 @@ END
 ACTION_IF (GAME_IS ~how totlm~) BEGIN
   COPY ~%ngequip%/d2#ngrb0.BAM~ ~override~
   COPY ~%ngequip%/d2#ngrb0.ITM~ ~override~
-    SAY NAME1 @710 SAY NAME2 @710 SAY UNIDENTIFIED_DESC @712
+    SAY NAME1 @710 SAY UNIDENTIFIED_DESC @712
+    SAY NAME2 @710
 
   COPY - ~%ngequip%/d2#ngb1.BAF~ ~%workspace%/d2#ng12.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player2~
@@ -55,7 +61,7 @@ ACTION_IF (GAME_IS ~how totlm~) BEGIN
   COPY - ~%ngequip%/d2#ngb1.BAF~ ~%workspace%/d2#ng16.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player6~
 
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng16.BAF~    // add scripts to baldur.BCS
+  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng16.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng15.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng14.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng13.BAF~
@@ -69,7 +75,8 @@ END
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
   COPY ~%ngequip%/d2#ngrb0.BAM~ ~override~
   COPY ~%ngequip%/d2#ngrb2.ITM~ ~override~
-    SAY NAME1 @710 SAY NAME2 @710 SAY UNIDENTIFIED_DESC @713
+    SAY NAME1 @710 SAY UNIDENTIFIED_DESC @713
+    SAY NAME2 @710
 	
   COPY - ~%ngequip%/d2#ngb2.BAF~ ~%workspace%/d2#ng22.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player2~
@@ -97,17 +104,20 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
 
   ACTION_IF (FILE_EXISTS_IN_GAME ~SW1H43.ITM~) BEGIN
     COPY_EXISTING ~SW1H43.ITM~ ~override/d2#ngkat.ITM~
-      SAY NAME1 @700 SAY NAME2 @700 SAY UNIDENTIFIED_DESC @702
+      SAY NAME1 @700 SAY UNIDENTIFIED_DESC @702
+      SAY NAME2 @700
       WRITE_LONG 0x34 100    // reduce base price to 100 gold
   END
   ELSE BEGIN
     COPY ~%ngequip%/d2#ngkat.ITM~ ~override~
-      SAY NAME1 @700 SAY NAME2 @700 SAY UNIDENTIFIED_DESC @702
+      SAY NAME1 @700 SAY UNIDENTIFIED_DESC @702
+      SAY NAME2 @700
   END
   
   COPY ~%ngequip%/d2#ngrb0.BAM~ ~override~
   COPY ~%ngequip%/d2#ngrb0.ITM~ ~override~
-    SAY NAME1 @710 SAY NAME2 @710 SAY UNIDENTIFIED_DESC @712
+    SAY NAME1 @710 SAY UNIDENTIFIED_DESC @712
+    SAY NAME2 @710
 	
   COPY - ~%ngequip%/d2#ngb3.BAF~ ~%workspace%/d2#ng32.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player2~
@@ -128,22 +138,31 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
   EXTEND_TOP ~BALDUR.BCS~ ~%ngequip%/d2#nga1.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%ngequip%/d2#ngb3.BAF~
 
-  COPY_EXISTING ~xbow04.ITM~ ~override~    // fixing text for light crossbows (was annoying to look at while testing)
-    SAY NAME1 @150 SAY NAME2 @150 SAY UNIDENTIFIED_DESC @250
+//fixing text for light crossbows (was annoying to look at while testing)
+  COPY_EXISTING ~xbow04.ITM~ ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @150
   COPY_EXISTING ~hqlxbow.ITM~ ~override~
-    SAY NAME1 @151 SAY NAME2 @151 SAY UNIDENTIFIED_DESC @251
+    SAY NAME1 @151 SAY UNIDENTIFIED_DESC @251
+    SAY NAME2 @151
   COPY_EXISTING ~xbow05.ITM~ ~override~
-    SAY NAME1 @150 SAY NAME2 @152 SAY UNIDENTIFIED_DESC @250 SAY DESC @252
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @152 SAY DESC @252
   COPY_EXISTING ~xbow06.ITM~ ~override~
-    SAY NAME1 @150 SAY NAME2 @153 SAY UNIDENTIFIED_DESC @250 SAY DESC @253
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @153 SAY DESC @253
   COPY_EXISTING ~ULXBW2A.ITM~ ~override~
-    SAY NAME1 @150 SAY NAME2 @154 SAY UNIDENTIFIED_DESC @250 SAY DESC @254
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @154 SAY DESC @254
   COPY_EXISTING ~ULXBW3A.ITM~ ~override~
-    SAY NAME1 @150 SAY NAME2 @155 SAY UNIDENTIFIED_DESC @250 SAY DESC @255
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @155 SAY DESC @255
   COPY_EXISTING ~ULXBW3B.ITM~ ~override~
-    SAY NAME1 @150 SAY NAME2 @156 SAY UNIDENTIFIED_DESC @250 SAY DESC @256
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @156 SAY DESC @256
   COPY_EXISTING ~ULXBW5A.ITM~ ~override~
-    SAY NAME1 @150 SAY NAME2 @157 SAY UNIDENTIFIED_DESC @250 SAY DESC @257
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @157 SAY DESC @257
 
   COPY_EXISTING ~AR1006.BCS~ ~override~
     DECOMPILE_AND_PATCH BEGIN

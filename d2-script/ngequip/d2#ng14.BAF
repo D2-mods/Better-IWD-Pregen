@@ -44,21 +44,21 @@ IF
 THEN
 	RESPONSE #25
 		GiveItemCreate("BOW05",Player2,0,0,0)    // shortbow
-		GiveItemCreate("AROW01",Player2,20,0,0)
+		GiveItemCreate("AROW01",Player2,40,0,0)
 		SetGlobal("d2Player4ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
 		GiveItemCreate("XBOW04",Player2,0,0,0)    // crossbow
-		GiveItemCreate("BOLT01",Player2,20,0,0)
+		GiveItemCreate("BOLT01",Player2,40,0,0)
 		SetGlobal("d2Player4ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
 		GiveItemCreate("SLNG01",Player2,0,0,0)    // sling
-		GiveItemCreate("BULL01",Player2,20,0,0)
+		GiveItemCreate("BULL01",Player2,40,0,0)
 		SetGlobal("d2Player4ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #25
-		GiveItemCreate("DART01",Player2,20,0,0)    // darts
+		GiveItemCreate("DART01",Player2,40,0,0)    // darts
 		SetGlobal("d2Player4ranged","GLOBAL",1)
 		Continue()
 END

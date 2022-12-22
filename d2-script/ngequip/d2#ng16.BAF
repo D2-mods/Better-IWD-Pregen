@@ -32,12 +32,12 @@ IF
 THEN
 	RESPONSE #50
 		GiveItemCreate("BOW05",Player2,0,0,0)    // shortbow
-		GiveItemCreate("AROW01",Player2,20,0,0)
+		GiveItemCreate("AROW01",Player2,40,0,0)
 		SetGlobal("d2Player6ranged","GLOBAL",1)
 		Continue()
 	RESPONSE #50
 		GiveItemCreate("XBOW04",Player2,0,0,0)    // crossbow
-		GiveItemCreate("BOLT01",Player2,20,0,0)
+		GiveItemCreate("BOLT01",Player2,40,0,0)
 		SetGlobal("d2Player6ranged","GLOBAL",1)
 		Continue()
 END
