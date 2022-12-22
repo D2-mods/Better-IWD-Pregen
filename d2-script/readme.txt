@@ -1,12 +1,13 @@
-Better IWD Pregen (v5.0)
+Better IWD Pregen (v6.0)
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
-Compatibility: Classic and EE versions of BG1, BG2, IWD, and IWD2
+Download: https://github.com/D2-mods/Better-IWD-Pregen/releases
+Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2.
 
 
 ==================================================
 OVERVIEW
 ==================================================
-A minimalist script and tweak pack. This mod was started as an attempt to make an improved version of the IWD Pregen script from IWD:EE. Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2.
+A minimalist script and tweak pack. This mod was started as an attempt to make an improved version of the IWD Pregen script from IWD:EE.
 
 
 ==================================================
