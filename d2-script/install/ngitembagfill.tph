@@ -6,7 +6,7 @@
 
 ACTION_IF (FILE_EXISTS ~override/t-hamm03.ITM~) BEGIN
   COPY_EXISTING ~d2#ngbag.STO~  ~override~
-    LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 5 STR_VAR item_name = ~t-hamm03~ flags = identified END     // throwing hammer
+    LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 5 STR_VAR item_name = ~t-hamm03~ flags = identified END    // throwing hammer
   BUT_ONLY
 END
 

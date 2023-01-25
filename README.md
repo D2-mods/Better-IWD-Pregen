@@ -405,7 +405,7 @@ NOTE: Items cannot be taken out of the bag if party lacks the gold to buy it bac
   
 ---
 
-- Choice between 2e/BG-style, or the more even HP curve of later editions.
+- Choice between 2e/BG-style or the more even HP curve of later editions.
 - Usable with all versions of BG1, BG2, and IWD, including conversion mods.
   
 ---

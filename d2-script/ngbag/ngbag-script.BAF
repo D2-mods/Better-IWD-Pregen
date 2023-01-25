@@ -7,3 +7,12 @@ THEN
 		SetGlobal("d2ngbag","GLOBAL",1)
 		Continue()
 END
+
+IF
+	!Global("d2ngbag","GLOBAL",1)
+	PartyHasItem("d2#ngbag")
+THEN
+	RESPONSE #100
+		SetGlobal("d2ngbag","GLOBAL",1)
+		Continue()
+END

@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~6.0~
+VERSION ~6.1~
 
 ALWAYS
   ACTION_BASH_FOR ~%MOD_FOLDER%/lib~ ~.*\.tpa~ BEGIN    // function list

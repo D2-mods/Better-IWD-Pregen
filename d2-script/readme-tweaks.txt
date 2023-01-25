@@ -151,7 +151,7 @@ Issues/Exploits:
 ==================================================
 All classes get full HP bonuses from Constitution (classic and EEs)
 ==================================================
-- Choice between 2e/BG-style, or the more even HP curve of later editions.
+- Choice between 2e/BG-style or the more even HP curve of later editions.
 - Usable with all versions of BG1, BG2, and IWD, including conversion mods.
 
 

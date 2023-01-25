@@ -99,6 +99,12 @@ IWD2 exe patch:
 ==================================================
 VERSION INFO
 ==================================================
+v6.1
+- Changes for "Give party a Bag of Holding":
+	- Improved scripting for adding the bag, based on work with the D2-Mira mod.
+	- Option D (gold is exchanged) will now also add the bag if starting a new game in ToB. The other options won't give a bag in ToB because you already start with one.
+	- All options now compatible with Black Pits 1 & 2.
+
 v6.0
 - Script update:
 	- EEs: Any character with skill points in detecting traps or illusions will now have auto-Search enabled. Previously, the feature was only for specific classes.
