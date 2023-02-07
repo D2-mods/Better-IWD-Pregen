@@ -1,5 +1,9 @@
 //for Druids only
 
+
+ACTION_IF (GAME_IS ~iwdee~) BEGIN
+
+
 LAF add_movement_equip INT_VAR speed=180 STR_VAR item = plywwolf END
 LAF add_movement_equip INT_VAR speed=250 STR_VAR item = plypbear END
 LAF delete_movement_effects STR_VAR item = cdpolyww END
@@ -41,3 +45,6 @@ COPY_EXISTING ~SPCL107.SPL~ ~override~
   
 COPY_EXISTING ~SPCL101.SPL~ ~override~
   SAY NAME1 @141 SAY UNIDENTIFIED_DESC @241
+
+
+END

@@ -49,17 +49,25 @@ Shapeshift movement bonuses bypass Free Action (EEs)
 ==================================================
 This lets you set all movement bonuses from shapeshifts to bypass Free Action, or be blocked by Free Action. Note that a Free Action applied afterwards can still reset movement rate back to the base value. This component will also set all movement bonuses to the stacking multiplier. The EEs, especially IWD:EE, are inconsistent with these effects, and there are also differences between EE v2.5 and v2.6.
 
-This component is similar to the one in my Polymorph fixes mod for IWD:EE, except it applies also to the BG:EE games. There are no known issues if installed together. If differing options are chosen, the game will use whichever is installed last.
+This component is similar to the one in my Polymorph fixes mod for IWD:EE, except it applies also to the BG:EE games. If differing options are chosen, the game will use whichever is installed last.
 
 
 ==================================================
-Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)
+Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
 ==================================================
-This is something I decided to add while testing the AI script in classic IWD1. The winter wolf form in the original moves noticeably faster than the IWD:EE version. This isn't boots of speed fast, but it's a little faster than in human form. The bear is painfully slow in all versions of the game, but I don't think a speed increase is overpowered. It's still inferior to the Boring Beetle's high defenses.
+- IWDEE: 
+	- Increases movement of polar bear and winter wolf forms. 
+	- Both will move slightly faster than in human form.
 
-NOTE: This component will also remove the erroneous Haste effect from the Polymorph Self versions of the Druid animals (with wolf and bear forms getting the movement bonus instead).
+- Classic: 
+	- Increases movement of all Druid shapeshifts. 
+	- The winter wolf moves faster than in natural form. 
+	- Polar Bear gets a huge increase. It now moves similar speed to natural form, instead of ridiculously slow.
+	- The boring beetle and elementals move slightly slower than in natural form.
 
-This component is 100% identical to the one in my Polymorph fixes mod, but they are safe to install together. If differing options are chosen, the game will use whichever is installed last.
+- Additional info:
+	- There are no conflicts with this tweak and the similar tweak in my Polymorph fixes mod. If differing options are chosen, the game will use whichever is installed last.
+	- Classic: All installer options are identical. Game doesn't have a polymorph spell.
 
 
 ==================================================

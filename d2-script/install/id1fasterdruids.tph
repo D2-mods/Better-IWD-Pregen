@@ -1,0 +1,23 @@
+//for classic IWD
+
+ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
+
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY iwd1_druid_movement BEGIN    // ability => modifier
+    spin107 => 6    // polar bear
+    spin110 => 4    // winter wolf
+    spin111 => 1    // boring beetle
+    spin141 => 2    // fire elemental
+    spin142 => 2    // earth elemental
+    spin143 => 2    // water elemental
+  END
+
+  ACTION_PHP_EACH iwd1_druid_movement AS ability => modifier BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%ability%.SPL~) BEGIN
+      COPY_EXISTING ~%ability%.SPL~  ~override~
+        LPF DELETE_EFFECT INT_VAR match_opcode=176 END
+        LPF CLONE_EFFECT INT_VAR match_opcode=135 opcode=176 parameter1=~%modifier%~ STR_VAR insert=~below~ END
+      BUT_ONLY
+    END
+  END
+
+END

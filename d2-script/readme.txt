@@ -25,7 +25,7 @@ Tweak components:
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
 4. Shapeshift movement bonuses bypass Free Action (EEs)
-5. Increase movement speed of Winter Wolf and Polar Bear forms (IWD:EE)
+5. Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
 6. Give party starting equipment (IWD games)
 7. Give party a Bag of Holding at game start (classic and EEs)
 8. All classes get full HP bonuses from Constitution (classic and EEs)
@@ -104,6 +104,11 @@ v6.1
 	- Improved scripting for adding the bag, based on work with the D2-Mira mod.
 	- Option D (gold is exchanged) will now also add the bag if starting a new game in ToB. The other options won't give a bag in ToB because you already start with one.
 	- All options now compatible with Black Pits 1 & 2.
+- Changes for "Increase movement speed of IWD shapeshifts":
+	- Can now install on classic IWD.
+	- Will increase speed of all shapeshift forms (game only has the 6 Druid shapeshifts).
+	- The Winter Wolf will move faster than natural form.
+	- Other shapeshifts will move at the same speed or slightly slower.
 
 v6.0
 - Script update:
