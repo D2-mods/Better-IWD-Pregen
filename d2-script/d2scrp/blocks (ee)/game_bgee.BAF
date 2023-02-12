@@ -6,11 +6,8 @@ IF
 		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
 		Range(NearestEnemyOfType([0.0.TROLL]),10)
 	HP(NearestEnemyOfType([0.0.TROLL]),1)
-	OR(4)
-		HasItemEquipedReal("sw1h24",Myself)    // all fire
+	OR(%troll%)
 		HasItem("melfmet",Myself)
-		HasItem("fblade",Myself)
-		HasItem("plyflind",Myself)
 THEN
 	RESPONSE #100
 		Attack(NearestEnemyOfType([0.0.TROLL]))

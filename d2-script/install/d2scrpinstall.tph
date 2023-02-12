@@ -1,0 +1,41 @@
+//Better IWD Pregen
+//
+
+
+//Prep
+ACTION_IF (GAME_IS ~bgee bg2ee iwdee eet~)                  BEGIN OUTER_TEXT_SPRINT game ~ee~ END
+ACTION_IF (GAME_IS ~bg1 totsc~)                             BEGIN OUTER_TEXT_SPRINT game ~bg1~ END
+ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN OUTER_TEXT_SPRINT game ~bg2~ END
+ACTION_IF (GAME_IS ~iwd how totlm~)                         BEGIN OUTER_TEXT_SPRINT game ~iwd1~ END
+ACTION_IF (GAME_IS ~iwd2~)                                  BEGIN OUTER_TEXT_SPRINT game ~iwd2~ END
+
+OUTER_TEXT_SPRINT blocks  ~%d2scrp%/blocks (%game%)~
+INCLUDE ~%install%/d2scrpgame.tph~        // creates #game.BAF file (inlined)
+
+//dummy file for IWD2 (prevents weidu message)
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
+  COPY ~%iwd2%/attstyle.ids~  ~override~    // copy dummy file, prevents error message
+END
+
+//fixed TobEx DLL (skipped if TobEx Afterlife or BG2 Improved GUI is installed)
+ACTION_IF (MOD_IS_INSTALLED ~TobEx.tp2~ 100) BEGIN
+  ACTION_IF (!(MOD_IS_INSTALLED ~TobEx_AfterLife.tp2~ 200) AND
+             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1000) AND
+             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1200) AND
+             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1400) AND
+             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 2200) AND
+             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 3400)
+            ) BEGIN
+    COPY ~%tobex%/TobEx.dll~  ~TobEx.dll~
+  END
+END
+
+
+//Install
+INCLUDE ~%install%/d2scrp.tph~
+INCLUDE ~%install%/d2scrp-.tph~
+INCLUDE ~%install%/d2scrp+.tph~
+
+
+/*
+*/

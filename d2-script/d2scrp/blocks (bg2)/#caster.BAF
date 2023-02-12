@@ -1,0 +1,51 @@
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
+		Range([EVILCUTOFF.0.0.MAGE_ALL],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF.0.0.MAGE_ALL],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
+		Range([EVILCUTOFF.0.0.CLERIC_ALL],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF.0.0.CLERIC_ALL],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
+		Range([EVILCUTOFF.0.0.DRUID_ALL],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF.0.0.DRUID_ALL],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
+		Range([EVILCUTOFF.0.0.BARD_ALL],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF.0.0.BARD_ALL],30)
+END

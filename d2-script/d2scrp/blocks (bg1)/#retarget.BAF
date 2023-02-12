@@ -1,0 +1,161 @@
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.MAGE])
+	!Class(NearestEnemyOf(),MAGE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.DRUID])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.MAGE_THIEF])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),MAGE_THIEF)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC_MAGE])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),CLERIC_MAGE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_MAGE])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),FIGHTER_MAGE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_MAGE_THIEF])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),FIGHTER_MAGE_THIEF)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_MAGE_CLERIC])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),FIGHTER_MAGE_CLERIC)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_CLERIC])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),FIGHTER_CLERIC)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC_RANGER])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),CLERIC_RANGER)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.FIGHTER_DRUID])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),FIGHTER_DRUID)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.BARD])
+	!Class(NearestEnemyOf(),MAGE)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),BARD)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END

@@ -1,4 +1,4 @@
-Better IWD Pregen (v6.0)
+Better IWD Pregen (v7.0)
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases
 Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2.
@@ -16,8 +16,8 @@ INSTALL
 Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform). It's best to install this mod near the end of the order.
 
 Script components:
-1. Better IWD Pregen (appears in-game as "IWD PREGEN")
-2. Better AI for Call Woodland Beings (EEs, BG2), install after AI mods (ex. SCS or atweaks)
+1. Better IWD Pregen
+2. Better AI for Call Woodland Beings (EEs, BG2)
 3. Auto-assign script to new characters
 
 Tweak components:
@@ -36,14 +36,15 @@ Tweak components:
 13. Remove alignment restrictions for classes (classic and EEs)
 14. Paladins and Rangers do not fall at low rep (EEs)
 
+
 Additional info:
 - All components can be installed independently and in any order, except for auto-assigning the script.
-- Any similar components in this mod and my other mods should have no conflicts if installed together.
-- All tweak components have at least 2 subcomponents (even if just a simple "Yes" or "No")
+- Script components should be installed after AI mods (ex. SCS or atweaks).
+- All tweaks have at least 2 subcomponents, even if just a simple "Yes" or "No". Some have 3-4 options.
 
 
 ==================================================
-SCRIPT COMPATIBILITY (v4.0)
+SCRIPT COMPATIBILITY (v4.0+)
 ==================================================
 EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
 Classic: BG1, BG2, IWD1, IWD2 (tested with GOG versions)
@@ -61,7 +62,7 @@ NOTE: I'm not 100% sure the scripts work with expansionless versions of the clas
 ==================================================
 IN-GAME DESCRIPTION (adjusted for each game)
 ==================================================
-IWD PREGEN: The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
+The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a character with skill invested will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
 
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
@@ -99,7 +100,18 @@ IWD2 exe patch:
 ==================================================
 VERSION INFO
 ==================================================
-v6.1
+v7.0
+- Fix for "Auto-assign script" with classic BG1:
+	- It was firing every time loading the game, due to using a local variable (which don't get saved in BG1).
+	- I've changed it to use a Global variable. However, it won't run for every character.
+	- It will now run once per party slot per playthrough (Player1, Player2, etc.).
+- Changes for "Better IWD Pregen":
+	- Main Script file renamed to d2scrp.BS (changed from iwdpgen.BS).
+	- Added D2SCRP-: Same as base script, except some retargeting actions are disabled.
+	- Added D2SCRP+: Same as base script, except calls for help are enabled.
+	- IWDEE: Will patch the vanilla IWD Pregen script to include shaman abilities (basically what the v0.1 of this mod did).
+	- BGEE/BG2EE/EET: Will also install the vanilla IWD Pregen script (with shaman added) as iwdpgen.BS.
+	- Rewrote the install. Easier to edit or insert new script blocks.
 - Changes for "Give party a Bag of Holding":
 	- Improved scripting for adding the bag, based on work with the D2-Mira mod.
 	- Option D (gold is exchanged) will now also add the bag if starting a new game in ToB. The other options won't give a bag in ToB because you already start with one.
@@ -107,8 +119,7 @@ v6.1
 - Changes for "Increase movement speed of IWD shapeshifts":
 	- Can now install on classic IWD.
 	- Will increase speed of all shapeshift forms (game only has the 6 Druid shapeshifts).
-	- The Winter Wolf will move faster than natural form.
-	- Other shapeshifts will move at the same speed or slightly slower.
+	- Wolf is faster than normal speed. Other forms are same speed or slower (but faster than unmodded).
 
 v6.0
 - Script update:

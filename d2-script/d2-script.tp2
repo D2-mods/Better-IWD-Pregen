@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~6.1~
+VERSION ~7.0~
 AUTO_EVAL_STRINGS
 
 ALWAYS
@@ -27,10 +27,9 @@ ALWAYS
   END
 
   OUTER_TEXT_SPRINT install    ~%MOD_FOLDER%/install~    // folder variables
+  OUTER_TEXT_SPRINT d2scrp     ~%MOD_FOLDER%/d2scrp~
   OUTER_TEXT_SPRINT files      ~%MOD_FOLDER%/files~
-  OUTER_TEXT_SPRINT game       ~%MOD_FOLDER%/game~
   OUTER_TEXT_SPRINT iwd2       ~%MOD_FOLDER%/iwd2~
-  OUTER_TEXT_SPRINT iwdpgen    ~%MOD_FOLDER%/iwdpgen~
   OUTER_TEXT_SPRINT ngbag      ~%MOD_FOLDER%/ngbag~
   OUTER_TEXT_SPRINT ngequip    ~%MOD_FOLDER%/ngequip~
   OUTER_TEXT_SPRINT nymph      ~%MOD_FOLDER%/nymph~
@@ -59,6 +58,7 @@ REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
                    (GAME_IS ~ca~)) ~Game not supported~
 LABEL ~D2-SCRIPT-IWDPGEN~
 INCLUDE ~%install%/iwdpgen.tph~
+INCLUDE ~%install%/d2scrpinstall.tph~
 
 ////////////////////////////////////////////////////////////
 

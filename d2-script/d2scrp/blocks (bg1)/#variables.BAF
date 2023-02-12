@@ -1,0 +1,164 @@
+IF
+	OnCreation()
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2cooldown","LOCALS",0)
+END
+
+IF
+	HotKey(B)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,@1001)
+		SetGlobalTimer("d2cooldown","LOCALS",30)
+		Continue()
+END
+
+IF
+	HotKey(E)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,@1003)
+		SetGlobalTimer("d2cooldown","LOCALS",0)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!Class(Myself,BARD)
+	!Class(Myself,CLERIC)
+	!Class(Myself,CLERIC_THIEF)
+	!Class(Myself,FIGHTER_CLERIC)
+	!Class(Myself,FIGHTER_MAGE_CLERIC)
+	!Class(Myself,CLERIC_MAGE)
+	!Class(Myself,THIEF)
+	!Class(Myself,FIGHTER_THIEF)
+	!Class(Myself,MAGE_THIEF)
+	!Class(Myself,FIGHTER_MAGE_THIEF)
+	!Class(Myself,PALADIN)
+	!Class(Myself,CLERIC_RANGER)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!Class(Myself,BARD)
+	!Class(Myself,CLERIC)
+	!Class(Myself,CLERIC_THIEF)
+	!Class(Myself,CLERIC_MAGE)
+	!Class(Myself,THIEF)
+	!Class(Myself,MAGE_THIEF)
+	Range([EVILCUTOFF],25)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	CheckStat(Myself,1,POLYMORPHED)
+	Range([EVILCUTOFF],18)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!Class(Myself,CLERIC_MAGE)
+	!Class(Myself,MAGE_THIEF)
+	Range([EVILCUTOFF],12)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	Class(Myself,CLERIC_MAGE)
+	CheckStatLT(Myself,5,THAC0)
+	Range([EVILCUTOFF],12)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Class(Myself,MAGE_THIEF)
+	CheckStatLT(Myself,5,THAC0)
+	Range([EVILCUTOFF],12)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Range([EVILCUTOFF],3)
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!Detect([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(400)
+		SetGlobal("d2autobattle","LOCALS",0)
+		Continue()
+END

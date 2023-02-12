@@ -1,0 +1,46 @@
+IF
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Heard([GOODCUTOFF],400)
+	!Range([EVILCUTOFF],30)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	Or(4)
+		ClassEx(Myself,FIGHTER)
+		ClassEx(Myself,PALADIN)
+		ClassEx(Myself,RANGER)
+		CheckStat(Myself,1,POLYMORPHED)
+	Heard([GOODCUTOFF],600)
+	!Range(LastHeardBy(),6)
+	!See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2assist","LOCALS",30)
+		Shout(600)
+		MoveToObject(LastHeardBy())
+		Continue()
+END
+
+IF
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	GlobalTimerNotExpired("d2assist","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	OR(2)
+		Range([EVILCUTOFF],15)
+		Range(LastHeardBy(),3)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobalTimer("d2assist","LOCALS",0)
+		Continue()
+END

@@ -1,0 +1,122 @@
+IF
+	ActionListEmpty()
+	OR(2)
+		CheckStatGT(Myself,0,TRAPS)
+		CheckStatGT(Myself,0,DETECTILLUSIONS)
+	!ModalState(DETECTTRAPS)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF])
+		Range([EVILCUTOFF],5)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackOneRound(SecondNearestEnemyOf())
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF])
+		Range([EVILCUTOFF],5)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackOneRound(NearestEnemyOf())
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF])
+		Range([EVILCUTOFF],5)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackOneRound(ThirdNearestEnemyOf())
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF])
+		Range([EVILCUTOFF],5)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackOneRound(TenthNearestEnemyOf())
+END

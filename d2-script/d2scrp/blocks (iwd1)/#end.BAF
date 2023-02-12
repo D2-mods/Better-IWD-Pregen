@@ -1,0 +1,19 @@
+IF
+	ActionListEmpty()
+	ClassEx(Myself,THIEF)
+	!ModalState(Myself,DETECTTRAPS)
+THEN
+	RESPONSE #100
+		Wait(2)
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,DETECTTRAPS)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END

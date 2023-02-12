@@ -1,0 +1,82 @@
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	IsWeaponRanged(Myself)
+	AttackedBy([EVILCUTOFF],DEFAULT)
+	Range(NearestEnemyOf(),3)
+	!IsWeaponRanged(NearestEnemyOf())
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget1","LOCALS",6)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	OR(2)
+		InWeaponRange([NOTGOOD.0.TROLL])
+		Range([NOTGOOD.0.TROLL],5)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget1","LOCALS",6)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget1","LOCALS",6)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
+		InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
+	!ClassEx(NearestEnemyOf(),MAGE)
+	!ClassEx(NearestEnemyOf(),CLERIC)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
+		InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
+	!ClassEx(NearestEnemyOf(),MAGE)
+	!ClassEx(NearestEnemyOf(),CLERIC)
+	!ClassEx(NearestEnemyOf(),DRUID)
+	!ClassEx(NearestEnemyOf(),BARD)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END

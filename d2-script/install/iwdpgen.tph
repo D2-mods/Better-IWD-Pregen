@@ -1,171 +1,85 @@
-////////////////////////////////////////////////////////////
+//Better IWD Pregen
+//
 
-ACTION_IF (GAME_IS ~iwdee~) BEGIN
 
-COPY - ~%iwdpgen%/d2bsee1.BAF~ ~%workspace%/d2bsee.BAF~    // rename and compile script
-COMPILE ~%workspace%/d2bsee.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%game%/d2#iwdee.BAF~    // game-specific blocks
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee2.BAF~
-EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee3.BAF~
-COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~    // copy to scripts folder
+ACTION_IF (GAME_IS ~iwdee bgee bg2ee eet~) BEGIN
 
+  OUTER_SET was_it_patched = 0
+
+
+//Patch existing file (for IWDEE)
 ACTION_IF (FILE_EXISTS_IN_GAME ~iwdpgen.BCS~) BEGIN
-  COPY_EXISTING ~iwdpgen.BCS~ ~override/iwdpgen.BAK~    // backup iwdpgen.BCS
+
+  COPY_EXISTING ~iwdpgen.BCS~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~Class(Myself,THIEF_ALL)~  ~CheckStatGT(Myself,0,TRAPS)~
+      REPLACE_TEXTUALLY ~Class(Myself,MONK)~       ~CheckStatGT(Myself,0,DETECTILLUSIONS)~
+      REPLACE_TEXTUALLY ~!ModalState(STEALTH)~     ~!ModalState(STEALTH) !ModalState(SHAMANDANCE)~
+      COUNT_REGEXP_INSTANCES ~SHAMANDANCE~ was_it_patched
+    END
+  BUT_ONLY
+
+  COPY ~override/iwdpgen.BCS~  ~scripts/iwdpgen.BS~
+
 END
 
-COPY_EXISTING ~d2bsee.BCS~ ~override/iwdpgen.BCS~    // replace iwdpgen.BCS
 
-COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
+//or make new file (for BGEE games)
+ACTION_IF ((was_it_patched = 0) OR 
+          !(FILE_EXISTS_IN_GAME ~iwdpgen.BCS~)
+  ) BEGIN
+
+<<<<<<<< .../temp/iwdpgen.BAF
+IF
+	ActionListEmpty()
+	OR(2)
+		CheckStatGT(Myself,0,TRAPS)
+		CheckStatGT(Myself,0,DETECTILLUSIONS)
+	!ModalState(TURNUNDEAD)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+	!Range([EVILCUTOFF],30)
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+	See([EVILCUTOFF])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		AttackReevaluate([EVILCUTOFF],30)
+END
+>>>>>>>>
+
+COMPILE ~.../temp/iwdpgen.BAF~
+COPY ~override/iwdpgen.BCS~  ~scripts/iwdpgen.BS~
+
+END
+
+
+//Script text
+OUTER_SET name = RESOLVE_STR_REF (@99100)
+OUTER_SET desc = RESOLVE_STR_REF (@99101)
+
+COPY_EXISTING ~SCRPDESC.2DA~  ~override~
   LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
-  REPLACE ~@name~ @100
-  REPLACE ~@desc~ @101
+  INSERT_2DA_ROW row_number columns ~iwdpgen %name% %desc%~
   PRETTY_PRINT_2DA
 BUT_ONLY
 
-END
-
-////////////////////////////////////////////////////////////
-
-ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-
-COPY - ~%iwdpgen%/d2bsee1.BAF~ ~%workspace%/d2bsee.BAF~
-COMPILE ~%workspace%/d2bsee.BAF~
-
-ACTION_IF ((GAME_IS ~bgee~) AND (NOT GAME_INCLUDES ~sod~)) BEGIN
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%game%/d2#bgee.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee2.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee3.BAF~
-  COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
-END
-
-ACTION_IF ((GAME_IS ~bgee~) AND (GAME_INCLUDES ~sod~)) BEGIN
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%game%/d2#sod.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee2.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee3.BAF~
-  COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
-END
-
-ACTION_IF (GAME_IS ~bg2ee~) BEGIN
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%game%/d2#bg2ee.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee2.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee3.BAF~
-  COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
-END
-
-ACTION_IF (GAME_IS ~eet~) BEGIN
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%game%/d2#eet.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee2.BAF~
-  EXTEND_BOTTOM ~d2bsee.BCS~ ~%iwdpgen%/d2bsee3.BAF~
-  COPY_EXISTING ~d2bsee.BCS~ ~scripts/iwdpgen.BS~
-END
-
-COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
-  LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
-  REPLACE ~@name~ @100
-  REPLACE ~@desc~ @101
-  PRETTY_PRINT_2DA
-BUT_ONLY
 
 END
 
-////////////////////////////////////////////////////////////
 
-ACTION_IF (GAME_IS ~iwd2~) BEGIN
-
-COPY ~%iwd2%/attstyle.ids~ ~override~    // copy dummy file, prevents error message
-COMPILE ~%iwdpgen%/d2bsid2.BAF~
-COPY_EXISTING ~d2bsid2.BCS~ ~scripts/iwdpgen.BS~
-
-COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
-  LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
-  REPLACE ~@name~ @100
-  REPLACE ~@desc~ @102
-  PRETTY_PRINT_2DA
-BUT_ONLY
-
-END
-
-////////////////////////////////////////////////////////////
-
-ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN
-
-COMPILE ~%iwdpgen%/d2bsbg2.BAF~
-COPY_EXISTING ~d2bsbg2.BCS~ ~scripts/iwdpgen.BS~
-
-COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
-  LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
-  REPLACE ~@name~ @100
-  REPLACE ~@desc~ @103
-  PRETTY_PRINT_2DA
-BUT_ONLY
-
-//fixed TobEx DLL, by Insomniator (used with permission)
-//this is only installed if TobEx Afterlife or BG2 Improved GUI is not installed
-ACTION_IF (MOD_IS_INSTALLED ~TobEx.tp2~ 100) BEGIN
-  ACTION_IF (!(MOD_IS_INSTALLED ~TobEx_AfterLife.tp2~ 200) AND
-             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1000) AND
-             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1200) AND
-             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1400) AND
-             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 2200) AND
-             !(MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 3400)) BEGIN
-    COPY ~%tobex%/TobEx.dll~  ~TobEx.dll~
-  END
-END
-
-END
-
-////////////////////////////////////////////////////////////
-
-ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
-
-COMPILE ~%iwdpgen%/d2bsid1.BAF~
-COPY_EXISTING ~d2bsid1.BCS~ ~scripts/iwdpgen.BS~
-
-COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
-  LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
-  REPLACE ~@name~ @100
-  REPLACE ~@desc~ @104
-  PRETTY_PRINT_2DA
-BUT_ONLY
-
-END
-
-////////////////////////////////////////////////////////////
-
-ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN
-
-COMPILE ~%iwdpgen%/d2bsbg1.BAF~
-COPY_EXISTING ~d2bsbg1.BCS~ ~scripts/iwdpgen.BS~
-
-COPY_EXISTING ~SCRPDESC.2DA~ ~override~    // add or update script description
-  LPF 2da_find_row_delete STR_VAR row_name = ~iwdpgen~ RET row_number columns END
-  INSERT_2DA_ROW row_number columns ~IWDPGEN @name @desc~
-  REPLACE ~@name~ @100
-  REPLACE ~@desc~ @105
-  PRETTY_PRINT_2DA
-BUT_ONLY
-
-END
-
-////////////////////////////////////////////////////////////
-
-
-
-
-/*REMOVED from classic BG2 section, replaced with fixed DLL file
-
-ACTION_IF (MOD_IS_INSTALLED ~bg2improvedgui.tp2~ 1200) BEGIN ABORT @55 END    // abort if Extended Text is installed (GUI mod)
-
-//disable Expanded Actions hack (if ToBEx detected)
-ACTION_IF (MOD_IS_INSTALLED ~TobEx.tp2~ 100) BEGIN
-  COPY ~TobEx_ini/TobExCore.ini~ ~TobEx_ini/TobExCore.ini~
-    REPLACE_TEXTUALLY ~Expanded Actions=1~ ~Expanded Actions=0~
-  PRINT @51
-END
-
+/*
 */

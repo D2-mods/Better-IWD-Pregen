@@ -1,0 +1,92 @@
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	HPPercentLT(Myself,15)
+	!Class(Myself,BARD)
+	!Class(Myself,CLERIC)
+	!Class(Myself,CLERIC_THIEF)
+	!Class(Myself,FIGHTER_CLERIC)
+	!Class(Myself,FIGHTER_MAGE_CLERIC)
+	!Class(Myself,CLERIC_MAGE)
+	!Class(Myself,THIEF)
+	!Class(Myself,FIGHTER_THIEF)
+	!Class(Myself,MAGE_THIEF)
+	!Class(Myself,FIGHTER_MAGE_THIEF)
+	!Class(Myself,PALADIN)
+	!Class(Myself,CLERIC_RANGER)
+	See([EVILCUTOFF])
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END
+
+IF
+	ActionListEmpty()
+	HPPercentLT(Myself,15)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	Class(Myself,MAGE)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	See([EVILCUTOFF])
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END
+
+IF
+	ActionListEmpty()
+	Class(Myself,MAGE)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Class(Myself,MAGE_THIEF)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Class(Myself,CLERIC_MAGE)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Heard([GOODCUTOFF],400)
+	!Range([EVILCUTOFF],30)
+THEN
+	RESPONSE #100
+		NoAction()
+END

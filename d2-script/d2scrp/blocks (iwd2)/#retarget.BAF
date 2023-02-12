@@ -1,0 +1,54 @@
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	IsWeaponRanged(Myself)
+	AttackedBy([EVILCUTOFF],DEFAULT)
+	LOS(NearestEnemyOf(),3)
+	!IsWeaponRanged(NearestEnemyOf())
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget1","LOCALS",6)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	OR(3)
+		InWeaponRange([EVILCUTOFF.0.0.SORCERER])
+		InWeaponRange([EVILCUTOFF.0.0.WIZARD])
+		InWeaponRange([EVILCUTOFF.0.0.CLERIC])
+	!Class(NearestEnemyOf(),SORCERER)
+	!Class(NearestEnemyOf(),WIZARD)
+	!Class(NearestEnemyOf(),CLERIC)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.DRUID])
+		InWeaponRange([EVILCUTOFF.0.0.BARD])
+	!Class(NearestEnemyOf(),SORCERER)
+	!Class(NearestEnemyOf(),WIZARD)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+	!Class(NearestEnemyOf(),BARD)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END

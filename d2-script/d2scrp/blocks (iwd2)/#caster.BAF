@@ -1,0 +1,74 @@
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.WIZARD])
+		LOS([EVILCUTOFF.0.0.WIZARD],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF.0.0.WIZARD],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.SORCERER])
+		LOS([EVILCUTOFF.0.0.SORCERER],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF.0.0.SORCERER],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.CLERIC])
+		LOS([EVILCUTOFF.0.0.CLERIC],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF.0.0.CLERIC],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.DRUID])
+		LOS([EVILCUTOFF.0.0.DRUID],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF.0.0.DRUID],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.0.BARD])
+		LOS([EVILCUTOFF.0.0.BARD],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF.0.0.BARD],30)
+END

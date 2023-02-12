@@ -1,32 +1,43 @@
 ==================================================
+Script - Quick Info
+==================================================
+- Better IWD Pregen (D2SCRP): Base script. Includes all features listed below.
+- D2SCRP-: Same as base script, except retargeting actions are disabled.
+- D2SCRP+: Same as base script, except calls for help are enabled.
+- IWD Pregen (IWDPGEN): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only).
+
+
+==================================================
 Auto-attack features
 ==================================================
-- Melee aggro range is dependent on class; range from 3 ft. (mages) to 25 ft.
-- Will not attack if under the effects of Invisibility or Sanctuary
-- Will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance
-- EEs: active retargeting if a character's current weapon cannot hit or damage an enemy
-- Priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon)
-- Cooldown hotkeys to reduce melee aggro range to 5 ft. for 5 rounds, or set back to normal instantly
+- Melee aggro range is dependent on class (see below for full breakdown).
+- Will not attack if under the effects of Invisibility or Sanctuary.
+- Will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
+- EEs: Active retargeting if a character's current weapon cannot hit or damage an enemy.
+- Priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon).
+- Cooldown hotkeys to reduce melee aggro range to 5 ft. for 30 seconds, or set back to normal instantly.
 
 
 ==================================================
 Other features
 ==================================================
-- Classes with Search will use it whenever not attacking (note: IWD2 is hardcoded for only Rogues and Monks to be able to auto-Search).
+- Classes with Search will use it when not attacking (note: for IWD2, auto-Search only works if a character has Rogue and Monk levels).
 - Will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
-- Will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (for example, from a contingency or area invisibility spell).
-- Shaman Dance is NOT stopped if suddenly invisible. This is to preserve summons.
+- Will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (ex. from a contingency or area invisibility spell).
+- Shamanic Dance is NOT stopped if suddenly invisible. This is to preserve summons.
 - Will not auto-attack at under 15% HP, unless an enemy is in range of current weapon.
 
 
 ==================================================
 Cooldown hotkeys
 ==================================================
-- If the B key is pressed, the character will enter a Cooldown mode for 30 seconds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active.
+- If the B key is pressed, the character will enter a Cooldown mode for 30 seconds.
+	- Reduces melee aggro range to 5 ft..
+	- Also disables some of the retargeting actions.
 - If the E key is pressed, the Cooldown mode will be deactivated.
 - If the game is saved while a character is in Cooldown mode, it will be deactivated on reload.
 
-Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering
+Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering.
 
 
 ==================================================
@@ -34,7 +45,9 @@ Auto-assign script (separate component)
 ==================================================
 - Gives new party members the Better IWD Pregen script.
 - Will trigger once for each character per game.
-- NPC characters will have AI changed before casting any spells.
+- NPC characters should have AI changed before casting any spells.
+
+Note: For BG1, this will trigger once per party slot per playthrough (Player1, Player2, etc.).
 
 
 
@@ -98,6 +111,7 @@ Baldur's Gate (in BG1 engine) - script info
 ==================================================
 - Characters will preserve Hide/Invisibility/Sanctuary
 - Melee aggro ranges working
+- Calls for help working (D2SCRP+)
 - Cooldown hotkeys working
 - No auto-Search (the FindTraps() script action doesn't work)
 

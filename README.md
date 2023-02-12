@@ -2,15 +2,15 @@
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
 Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2
 
-**Readme is accurate for v6.1**
+**Readme is accurate for v7.0**
 
 
 Components
 -
 
 **Script components:**
-1. Better IWD Pregen (appears in-game as "IWD PREGEN")
-2. Better AI for Call Woodland Beings (EEs, BG2), install after AI mods (ex. SCS or atweaks)
+1. Better IWD Pregen
+2. Better AI for Call Woodland Beings (EEs, BG2)
 3. Auto-assign script to new characters
 
 **Tweak components:**
@@ -29,36 +29,51 @@ Components
 13. Remove alignment restrictions for classes (classic and EEs)
 14. Paladins and Rangers do not fall at low rep (EEs)
 
-All components can be installed independently and in any order, except for auto-assigning the script.  
+
+**Additional info:**
+- All components can be installed independently and in any order, except for auto-assigning the script.
+- Script components should be installed after AI mods (ex. SCS or atweaks).
+- All tweaks have at least 2 subcomponents, even if just a simple "Yes" or "No". Some have 3-4 options.
+
 Scroll down for additional info on tweaks.
 
-NOTE: All tweaks have at least 2 subcomponents, even if just a simple "Yes" or "No". Some have 3-4 options.
-
+---
+---
 
 Overview (party script):
 -
-This script manages auto-attack, while giving more nuanced control of the characters. The script will never use your consumable items, spells, or abilities. What it does is put you in position to better use these abilities, while reducing some of the more frustrating aspects of auto-attack.
+This script manages auto-attack, while giving more nuanced control of the characters. The script will never use your consumable items, spells, or abilities. The main aim is to (hopefully) reduce some of the more frustrating aspects of auto-attack.
+
+#### Script - Quick Info:
+- Better IWD Pregen (D2SCRP): Base script. Includes all features listed below.
+- D2SCRP-: Same as base script, except some retargeting actions are disabled.
+- D2SCRP+: Same as base script, except calls for help are enabled.
+- IWD Pregen (IWDPGEN): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only).
 
 #### Auto-attack features:
-- Melee aggro range is dependent on class (see readme for full breakdown); range from 3 ft. (mages) to 25 ft.
-- Will not attack if under the effects of Invisibility or Sanctuary
-- Will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance
-- EEs: active retargeting if a character's current weapon cannot hit or damage an enemy
-- Priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon)
-- Cooldown hotkeys to reduce melee aggro range to 5 ft. for 30 seconds, or set back to normal instantly
+- Melee aggro range is dependent on class (see readme for full breakdown); range from 3 ft. (mages) to 25 ft..
+- Will not attack if under the effects of Invisibility or Sanctuary.
+- Will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
+- EEs: Active retargeting if a character's current weapon cannot hit or damage an enemy.
+- Priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon).
+- Cooldown hotkeys to reduce melee aggro range to 5 ft. for 30 seconds, or set back to normal instantly.
 
 #### Other features:
-- Classes with Search will use it whenever not attacking (note: for IWD2, auto-Search only works if a character has Rogue and Monk levels)
-- Will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance
-- Will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (ex. from a contingency or area invisibility spell)
-- Will not auto-attack at under 15% HP, unless an enemy is in range of current weapon
+- Classes with Search will use it when not attacking (note: for IWD2, auto-Search only works if a character has Rogue and Monk levels).
+- Will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
+- Will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (ex. from a contingency or area invisibility spell).
+- Shamanic Dance is NOT stopped if suddenly invisible. This is to preserve summons.
+- Will not auto-attack at under 15% HP, unless an enemy is in range of current weapon.
 
 #### Cooldown hotkeys:
-- If the B key is pressed, the character will enter a Cooldown mode for 30 seconds, during which melee aggro range is reduced to 5 ft.; also deactivates some (but not all) of the retargeting actions; this mode can be set again at any time, even while active
-- If the E key is pressed, the Cooldown mode will be deactivated
-- If the game is saved while a character is in Cooldown mode, it will be deactivated on reload
+- If the B key is pressed, the character will enter a Cooldown mode for 30 seconds.
+	- Reduces melee aggro range to 5 ft..
+	- Also disables some of the retargeting actions.
+- If the E key is pressed, the Cooldown mode will be deactivated.
+- If the game is saved while a character is in Cooldown mode, it will be deactivated on reload.
 
-Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering
+Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering.
+
 
 Additional info:
 -
@@ -68,7 +83,7 @@ Additional info:
 ---
 
 **Info:**
-- EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)  
+- EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
 - Classic: BG1, BG2, IWD, IWD2 (tested with GOG versions)
 
 Also compatible with any BG2 conversion mods (ex. BGT or Classic Adventures).
@@ -192,6 +207,7 @@ NOTE: Dimension Door is more limited with this patch. Will only teleport to the 
 #### BG1 script info:
 - Characters will preserve Hide/Invisibility/Sanctuary
 - Melee aggro ranges working
+- Calls for help working (D2SCRP+)
 - Cooldown hotkeys working
 - No auto-Search (the FindTraps() script action doesn't work)
 
@@ -213,6 +229,9 @@ NOTE: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep t
   
 ---
 
+Adjust enemy damage at higher difficulties (classic IWD, IWD2)
+-
+
 - The party normally takes 2x damage on Insane/HoF (or 1.5x on Very Hard).
 - This component removes the damage bonus by setting this option in the game INI:
 
@@ -229,6 +248,9 @@ NOTE: For IWD2, this setting doesn't work in the unmodded game. Thanks to an exe
   
 ---
 
+Add or remove Avarine Decanter (IWD2)
+-
+
 - This component adds or hides this item from the seller's store.
 - Official patches added the other bonus items, but not this one.
 - GOG version includes it by default.
@@ -241,6 +263,9 @@ NOTE: For IWD2, this setting doesn't work in the unmodded game. Thanks to an exe
   <summary>Unnerf Animate Dead (IWD2)</summary>
   
 ---
+
+Unnerf Animate Dead (IWD2)
+-
 
 - This is a patching component. Should be safe to install after spell tweaks.
 - The nerfed version caps at the Level 9 summons.
@@ -270,6 +295,9 @@ You can also manually unnerf this spell by deleting SPWI501.SPL from the overrid
   
 ---
 
+Shapeshift movement bonuses bypass Free Action (EEs)
+-
+
 This lets you set all movement bonuses from shapeshifts to bypass Free Action, or be blocked by Free Action. Note that a Free Action applied afterwards can still reset movement rate back to the base value. This component will also set all movement bonuses to the stacking multiplier. The EEs, especially IWD:EE, are inconsistent with these effects, and there are also differences between EE v2.5 and v2.6.
 
 This component is similar to the one in my Polymorph fixes mod for IWD:EE, except it applies also to the BG:EE games. If differing options are chosen, the game will use whichever is installed last.
@@ -283,19 +311,23 @@ This component is similar to the one in my Polymorph fixes mod for IWD:EE, excep
   
 ---
 
+Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
+-
+
 - IWDEE: 
 	- Increases movement of polar bear and winter wolf forms. 
-	- Both will move slightly faster than in human form.
+	- Winter wolf will move slightly faster than in natural form.
+	- Polar bear is similar speed or slightly slower (depending on angle of movement).
 
 - Classic: 
 	- Increases movement of all Druid shapeshifts. 
 	- The winter wolf moves faster than in natural form. 
-	- Polar Bear gets a huge increase. It now moves similar speed to natural form, instead of ridiculously slow.
-	- The boring beetle and elementals move slightly slower than in natural form.
+	- Polar bear gets a huge increase. It now moves similar speed to natural form (instead of ridiculously slow).
+	- The boring beetle and elementals are slightly slower than natural form.
 
 - Additional info:
 	- There are no conflicts with this tweak and the similar tweak in my Polymorph fixes mod. If differing options are chosen, the game will use whichever is installed last.
-	- Classic: All installer options are identical. Game doesn't have a polymorph spell.
+	- Classic: Installer options are identical. Game doesn't have a polymorph spell.
   
 ---
 
@@ -305,6 +337,9 @@ This component is similar to the one in my Polymorph fixes mod for IWD:EE, excep
   <summary>Give party starting equipment (IWD games)</summary>
   
 ---
+
+Give party starting equipment (IWD games)
+-
 
 This component gives player characters basic starting weapons, because my characters aren't idiots who travel to Icewind Dale unprepared. For IWD2, the pre-made parties already start out equipped, so this just makes it more fair for custom parties.
 
@@ -374,6 +409,9 @@ NOTE: If the separate "Give party a Bag of Holding" component is not installed, 
   
 ---
 
+Give party a Bag of Holding at game start (classic and EEs)
+-
+
 - The first 3 components give a Bag of Holding with differing max capacities. 
 - The "Bottomless" option has a capacity of 32767 items, same number used by Tweaks Anthology.
 - Compatible with all IE games that support Bags of Holding (except PsT:EE for now).
@@ -415,6 +453,9 @@ NOTE: Items cannot be taken out of the bag if party lacks the gold to buy it bac
   
 ---
 
+All classes get full HP bonuses from Constitution (classic and EEs)
+-
+
 - Choice between 2e/BG-style or the more even HP curve of later editions.
 - Usable with all versions of BG1, BG2, and IWD, including conversion mods.
   
@@ -426,6 +467,9 @@ NOTE: Items cannot be taken out of the bag if party lacks the gold to buy it bac
   <summary>Fixes for backstab-related 2DA files (EEs)</summary>
   
 ---
+
+Fixes for backstab-related 2DA files (EEs)
+-
 
 - Fixes problematic lines in backstab-related 2das (added by some mod kits).
 - Also makes sure base-game kits have correct progression to level 40 or 50.
@@ -439,6 +483,9 @@ NOTE: Items cannot be taken out of the bag if party lacks the gold to buy it bac
   <summary>Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)</summary>
   
 ---
+
+Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+-
 
 Reduce delay for Sneak Attacks:
 - Default delay is 420 seconds (i.e. immunity effect on target).
@@ -460,6 +507,9 @@ Uncap Crippling Strike:
   
 ---
 
+Allow Minsc to use his Berserk ability at will (BG games)
+-
+
 - Can set duration to 30, 60, or 120 seconds.
 - The way it works differs by game:
 	- EEs: Can be recast at any time (stat bonuses do not stack).
@@ -479,6 +529,9 @@ NOTE: Will be skipped if Rashemi Berserker (Artisan's Kitpack) is installed
   
 ---
 
+Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
+-
+
 - IWDEE: Patch shortbows to use shortbow appearance (as in classic IWD)
 - IWD-in-BG2: Patch scimitars to use scimitar appearance (was using long sword)
 
@@ -493,6 +546,9 @@ NOTE: Shortbow appearance can't be set for IWD-in-BG2
   
 ---
 
+Remove alignment restrictions for classes (classic and EEs)
+-
+
 - All classes can be any alignment
 - Affects all kits as well, including mod kits
   
@@ -504,6 +560,9 @@ NOTE: Shortbow appearance can't be set for IWD-in-BG2
   <summary>Paladins and Rangers do not fall at low rep (EEs)</summary>
   
 ---
+
+Paladins and Rangers do not fall at low rep (EEs)
+-
 
 - Prevent falling at low rep
 - Affects all kits as well, including mod kits

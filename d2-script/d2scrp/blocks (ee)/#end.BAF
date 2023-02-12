@@ -1,0 +1,20 @@
+IF
+	ActionListEmpty()
+	OR(2)
+		CheckStatGT(Myself,0,TRAPS)
+		CheckStatGT(Myself,0,DETECTILLUSIONS)
+	!ModalState(DETECTTRAPS)
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(DETECTTRAPS)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END

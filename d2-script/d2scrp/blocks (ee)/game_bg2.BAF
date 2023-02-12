@@ -1,0 +1,31 @@
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
+		Range(NearestEnemyOfType([0.0.TROLL]),10)
+	HP(NearestEnemyOfType([0.0.TROLL]),1)
+	!CharName("Fire Troll",NearestEnemyOfType([0.0.TROLL]))
+	OR(%troll%)
+		HasItem("melfmet",Myself)
+THEN
+	RESPONSE #100
+		Attack(NearestEnemyOfType([0.0.TROLL]))
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
+		Range(NearestEnemyOfType([0.0.TROLL]),10)
+	HP(NearestEnemyOfType([0.0.TROLL]),1)
+	CharName("Fire Troll",NearestEnemyOfType([0.0.TROLL]))
+	OR(%firetroll%)
+		HasItemEquipedReal("SW1H06",Myself)
+THEN
+	RESPONSE #100
+		Attack(NearestEnemyOfType([0.0.TROLL]))
+END

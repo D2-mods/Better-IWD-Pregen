@@ -57,17 +57,18 @@ Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
 ==================================================
 - IWDEE: 
 	- Increases movement of polar bear and winter wolf forms. 
-	- Both will move slightly faster than in human form.
+	- Winter wolf will move slightly faster than in natural form.
+	- Polar bear is similar speed or slightly slower (depending on angle of movement).
 
 - Classic: 
 	- Increases movement of all Druid shapeshifts. 
 	- The winter wolf moves faster than in natural form. 
-	- Polar Bear gets a huge increase. It now moves similar speed to natural form, instead of ridiculously slow.
-	- The boring beetle and elementals move slightly slower than in natural form.
+	- Polar bear gets a huge increase. It now moves similar speed to natural form (instead of ridiculously slow).
+	- The boring beetle and elementals are slightly slower than natural form.
 
 - Additional info:
 	- There are no conflicts with this tweak and the similar tweak in my Polymorph fixes mod. If differing options are chosen, the game will use whichever is installed last.
-	- Classic: All installer options are identical. Game doesn't have a polymorph spell.
+	- Classic: Installer options are identical. Game doesn't have a polymorph spell.
 
 
 ==================================================

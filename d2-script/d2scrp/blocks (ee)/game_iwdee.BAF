@@ -1,0 +1,97 @@
+IF
+	AreaCheck("AR4005")
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	OR(4)
+		Class(Myself,FIGHTER_ALL)
+		Class(Myself,PALADIN_ALL)
+		Class(Myself,RANGER_ALL)
+		CheckStat(Myself,1,POLYMORPHED)
+	See([EVILCUTOFF.0.HUMAN])
+	OR(3)
+		InWeaponRange([EVILCUTOFF.0.YUANTI])
+		Range([EVILCUTOFF.0.YUANTI],25)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.YUANTI])
+END
+
+IF
+	AreaCheck("AR4005")
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	See([EVILCUTOFF.0.HUMAN])
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.YUANTI])
+		Range([EVILCUTOFF.0.YUANTI],12)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.YUANTI])
+END
+
+IF
+	AreaCheck("AR4005")
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+	See([EVILCUTOFF.0.HUMAN])
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.YUANTI])
+		Range([EVILCUTOFF.0.YUANTI],5)
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.YUANTI])
+END
+
+IF
+	AreaCheck("AR4005")
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(3)
+		Class(Myself,THIEF_ALL)
+		Class(Myself,MONK)
+		Class(Myself,SHAMAN)
+	!ModalState(DETECTTRAPS)
+	See([EVILCUTOFF.0.HUMAN])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	AreaCheck("AR4005")
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	See([EVILCUTOFF.0.HUMAN])
+	!InParty([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
+		Range(NearestEnemyOfType([0.0.TROLL]),10)
+	HP(NearestEnemyOfType([0.0.TROLL]),1)
+	OR(%troll%)
+		HasItem("melfmet",Myself)
+THEN
+	RESPONSE #100
+		Attack(NearestEnemyOfType([0.0.TROLL]))
+END

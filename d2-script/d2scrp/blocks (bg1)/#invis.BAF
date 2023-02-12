@@ -1,0 +1,35 @@
+IF
+	Global("d2autobattle","LOCALS",1)
+	StateCheck(Myself,STATE_INVISIBLE)
+THEN
+	RESPONSE #100
+		ClearActions(Myself)
+		SetGlobal("d2autobattle","LOCALS",0)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	CheckStat(Myself,1,SANCTUARY)
+THEN
+	RESPONSE #100
+		ClearActions(Myself)
+		SetGlobal("d2autobattle","LOCALS",0)
+END
+
+IF
+	ActionListEmpty()
+	InWeaponRange([EVILCUTOFF])
+	StateCheck(Myself,STATE_INVISIBLE)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	InWeaponRange([EVILCUTOFF])
+	CheckStat(Myself,1,SANCTUARY)
+THEN
+	RESPONSE #100
+		NoAction()
+END

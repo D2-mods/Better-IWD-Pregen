@@ -1,56 +1,56 @@
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
 
-COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
-  PATCH_IF (SOURCE_SIZE > 0x71) BEGIN    // min size for ITM
-  PATCH_IF !(~%SOURCE_RES%~ STRING_EQUAL_CASE ~GODBOW~) BEGIN    // skip if Godbow
+  COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+    PATCH_IF (SOURCE_SIZE > 0x71) BEGIN    // min size for ITM
+    PATCH_IF !(~%SOURCE_RES%~ STRING_EQUAL_CASE ~GODBOW~) BEGIN    // skip if Godbow
+    
+      READ_BYTE 0x31 prof    // checks weapon proficiency
+      PATCH_IF (prof = 105) BEGIN    //shortbow prof (note: some mods combine longbows into this)
+        READ_SHORT 0x80 range    // checks launcher range
+        PATCH_IF (range = 75) BEGIN    // patch if 75 range (standard for shortbows)
+          WRITE_ASCII 0x22 ~BS~ #2    // BS = shortbow appearance
+          WRITE_ASCII 0x44 ~GBOW02~ #8    // change ground icon
+        END
+      END
+  	
+      PATCH_IF (!(prof = 105) OR !(range = 75)) BEGIN
+        READ_STRREF 0x8 weapon    // checks unidentified name
+        PATCH_IF ((~%weapon%~ STRING_EQUAL_CASE ~Shortbow~) OR
+                  (~%weapon%~ STRING_EQUAL_CASE ~Short Bow~)) BEGIN
+          WRITE_ASCII 0x22 ~BS~ #2    // BS = shortbow appearance
+          WRITE_ASCII 0x44 ~GBOW02~ #8    // change ground icon
+        END
+      END
   
-    READ_BYTE 0x31 prof    // checks weapon proficiency
-    PATCH_IF (prof = 105) BEGIN    //shortbow prof (note: some mods combine longbows into this)
-      READ_SHORT 0x80 range    // checks launcher range
-      PATCH_IF (range = 75) BEGIN    // patch if 75 range (standard for shortbows)
-        WRITE_ASCII 0x22 ~BS~ #2    // BS = shortbow appearance
-        WRITE_ASCII 0x44 ~GBOW02~ #8    // change ground icon
-      END
     END
-	
-    PATCH_IF (!(prof = 105) OR !(range = 75)) BEGIN
-      READ_STRREF 0x8 weapon    // checks unidentified name
-      PATCH_IF ((~%weapon%~ STRING_EQUAL_CASE ~Shortbow~) OR
-                (~%weapon%~ STRING_EQUAL_CASE ~Short Bow~)) BEGIN
-        WRITE_ASCII 0x22 ~BS~ #2    // BS = shortbow appearance
-        WRITE_ASCII 0x44 ~GBOW02~ #8    // change ground icon
-      END
     END
-
-  END
-  END
-BUT_ONLY
+  BUT_ONLY
 
 END
 
 
 ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
 
-COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
-  PATCH_IF (SOURCE_SIZE > 0x71) BEGIN    // min size for ITM
-    READ_BYTE 0x31 prof    // checks weapon proficiency
-    PATCH_IF (prof = 95) BEGIN    //scimitar prof
-      READ_STRREF 0x8 weapon    // checks unidentified name
-	  
-      PATCH_IF (~%weapon%~ STRING_EQUAL_CASE ~Scimitar~) BEGIN
-        WRITE_ASCII 0x22 ~SC~ #2    // SC = scimitar appearance
+  COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
+    PATCH_IF (SOURCE_SIZE > 0x71) BEGIN    // min size for ITM
+      READ_BYTE 0x31 prof    // checks weapon proficiency
+      PATCH_IF (prof = 95) BEGIN    //scimitar prof
+        READ_STRREF 0x8 weapon    // checks unidentified name
+  	  
+        PATCH_IF (~%weapon%~ STRING_EQUAL_CASE ~Scimitar~) BEGIN
+          WRITE_ASCII 0x22 ~SC~ #2    // SC = scimitar appearance
+        END
+  	  
+        PATCH_IF (~%weapon%~ STRING_EQUAL_CASE ~Wakizashi~) BEGIN
+          WRITE_ASCII 0x22 ~SS~ #2    // SS = short sword appearance
+        END
+  	  
+        PATCH_IF (~%weapon%~ STRING_EQUAL_CASE ~Ninja-To~) BEGIN
+          WRITE_ASCII 0x22 ~S1~ #2    // S1 = long sword appearance
+        END
+  	  
       END
-	  
-      PATCH_IF (~%weapon%~ STRING_EQUAL_CASE ~Wakizashi~) BEGIN
-        WRITE_ASCII 0x22 ~SS~ #2    // SS = short sword appearance
-      END
-	  
-      PATCH_IF (~%weapon%~ STRING_EQUAL_CASE ~Ninja-To~) BEGIN
-        WRITE_ASCII 0x22 ~S1~ #2    // S1 = long sword appearance
-      END
-	  
     END
-  END
-BUT_ONLY
+  BUT_ONLY
 
 END

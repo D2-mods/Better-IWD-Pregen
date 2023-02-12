@@ -1,0 +1,21 @@
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!Class(Myself,BARD)
+	!Class(Myself,CLERIC)
+	!Class(Myself,CLERIC_THIEF)
+	!Class(Myself,FIGHTER_CLERIC)
+	!Class(Myself,FIGHTER_MAGE_CLERIC)
+	!Class(Myself,CLERIC_MAGE)
+	!Class(Myself,THIEF)
+	!Class(Myself,FIGHTER_THIEF)
+	!Class(Myself,MAGE_THIEF)
+	!Class(Myself,FIGHTER_MAGE_THIEF)
+	!Class(Myself,PALADIN)
+	!Class(Myself,CLERIC_RANGER)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END

@@ -1,0 +1,84 @@
+//Game-specific script blocks
+//
+
+
+//Set variables
+ACTION_IF (GAME_IS ~iwdee~) BEGIN
+  OUTER_TEXT_SPRINT insert ~game_iwdee~
+END
+ELSE BEGIN
+  ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
+    OUTER_TEXT_SPRINT insert ~game_iwd~
+  END
+  ELSE BEGIN
+    ACTION_IF (GAME_IS ~bgee~) BEGIN
+      OUTER_TEXT_SPRINT insert ~game_bgee~
+    END
+    ELSE BEGIN
+      OUTER_TEXT_SPRINT insert ~game_bg2~
+    END
+  END
+END
+
+
+//Troll killing (for EEs and BG2 engine)
+ACTION_IF (FILE_EXISTS ~%blocks%/%insert%.BAF~) BEGIN
+
+  COPY ~%blocks%/%insert%.BAF~  ~%workspace%/#game.BAF~
+  
+    SET troll     = 1
+    SET firetroll = 1
+  
+    PHP_EACH acidweap AS item => dummy BEGIN
+      PATCH_IF (FILE_EXISTS_IN_GAME ~%item%.ITM~) BEGIN
+        //normal trolls
+        REPLACE_TEXTUALLY ~HasItem("melfmet",Myself)~
+                          ~HasItem("melfmet",Myself) HasItemEquipedReal("%item%",Myself)~
+        SET troll = (troll + 1)
+        //fire trolls
+        REPLACE_TEXTUALLY ~HasItemEquipedReal("SW1H06",Myself)~
+                          ~HasItemEquipedReal("SW1H06",Myself) HasItemEquipedReal("%item%",Myself)~
+        SET firetroll = (firetroll + 1)
+      END
+    END
+    
+    PHP_EACH fireweap AS item => dummy BEGIN
+      PATCH_IF (FILE_EXISTS_IN_GAME ~%item%.ITM~) BEGIN
+        COUNT_REGEXP_INSTANCES ~%item%~ item_check
+        PATCH_IF (item_check = 0) BEGIN
+          REPLACE_TEXTUALLY ~HasItem("melfmet",Myself)~
+                            ~HasItem("melfmet",Myself) HasItemEquipedReal("%item%",Myself)~
+          SET troll = (troll + 1)
+        END
+      END
+    END
+    
+    PHP_EACH firetemp AS item => dummy BEGIN
+      PATCH_IF (FILE_EXISTS_IN_GAME ~%item%.ITM~) BEGIN
+        COUNT_REGEXP_INSTANCES ~%item%~ item_check
+        PATCH_IF (item_check = 0) BEGIN
+          REPLACE_TEXTUALLY ~HasItem("melfmet",Myself)~
+                            ~HasItem("melfmet",Myself) HasItem("%item%",Myself)~
+          SET troll = (troll + 1)
+        END
+      END
+    END
+    
+    PHP_EACH coldweap AS item => dummy BEGIN
+      PATCH_IF (FILE_EXISTS_IN_GAME ~%item%.ITM~) BEGIN
+        COUNT_REGEXP_INSTANCES ~%item%~ item_check
+        PATCH_IF (item_check = 0) BEGIN
+          REPLACE_TEXTUALLY ~HasItemEquipedReal("SW1H06",Myself)~
+                            ~HasItemEquipedReal("SW1H06",Myself) HasItemEquipedReal("%item%",Myself)~
+          SET firetroll = (firetroll + 1)
+        END
+      END
+    END
+  
+    EVALUATE_BUFFER
+
+END
+
+
+/*
+*/

@@ -1,0 +1,64 @@
+IF
+	OnCreation()
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2cooldown","LOCALS",0)
+END
+
+IF
+	HotKey(B)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,@1001)
+		SetGlobalTimer("d2cooldown","LOCALS",30)
+		Continue()
+END
+
+IF
+	HotKey(E)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,@1003)
+		SetGlobalTimer("d2cooldown","LOCALS",0)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
+	See([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,STEALTH)
+	!Detect([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(400)
+		SetGlobal("d2autobattle","LOCALS",0)
+		Continue()
+END

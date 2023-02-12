@@ -1,0 +1,21 @@
+IF
+	ActionListEmpty()
+	OR(2)
+		Class(Myself,ROGUE)
+		Class(Myself,MONK)
+	!ModalState(Myself,DETECTTRAPS)
+THEN
+	RESPONSE #100
+		Wait(2)
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,DETECTTRAPS)
+	See([EVILCUTOFF],0)
+THEN
+	RESPONSE #100
+		Shout(600)
+END

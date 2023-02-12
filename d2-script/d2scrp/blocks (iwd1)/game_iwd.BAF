@@ -1,15 +1,15 @@
 IF
-	AreaCheck("AR4005")
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(4)
-		Class(Myself,FIGHTER_ALL)
-		Class(Myself,PALADIN_ALL)
-		Class(Myself,RANGER_ALL)
+	Or(4)
+		ClassEx(Myself,FIGHTER)
+		ClassEx(Myself,PALADIN)
+		ClassEx(Myself,RANGER)
 		CheckStat(Myself,1,POLYMORPHED)
 	See([EVILCUTOFF.0.HUMAN])
+	See([EVILCUTOFF.0.YUANTI])
 	OR(3)
 		InWeaponRange([EVILCUTOFF.0.YUANTI])
 		Range([EVILCUTOFF.0.YUANTI],25)
@@ -21,12 +21,12 @@ THEN
 END
 
 IF
-	AreaCheck("AR4005")
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 	See([EVILCUTOFF.0.HUMAN])
+	See([EVILCUTOFF.0.YUANTI])
 	OR(2)
 		InWeaponRange([EVILCUTOFF.0.YUANTI])
 		Range([EVILCUTOFF.0.YUANTI],12)
@@ -37,12 +37,12 @@ THEN
 END
 
 IF
-	AreaCheck("AR4005")
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 	GlobalTimerNotExpired("d2cooldown","LOCALS")
 	See([EVILCUTOFF.0.HUMAN])
+	See([EVILCUTOFF.0.YUANTI])
 	OR(2)
 		InWeaponRange([EVILCUTOFF.0.YUANTI])
 		Range([EVILCUTOFF.0.YUANTI],5)
@@ -53,65 +53,28 @@ THEN
 END
 
 IF
-	AreaCheck("AR4005")
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
-	!ModalState(DETECTTRAPS)
+	ClassEx(Myself,THIEF)
+	!ModalState(Myself,DETECTTRAPS)
 	See([EVILCUTOFF.0.HUMAN])
+	See([EVILCUTOFF.0.YUANTI])
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
+		Wait(2)
 		FindTraps()
 END
 
 IF
-	AreaCheck("AR4005")
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 	See([EVILCUTOFF.0.HUMAN])
+	See([EVILCUTOFF.0.YUANTI])
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
 		NoAction()
-END
-
-IF
-	ActionListEmpty()
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	OR(2)
-		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
-		Range(NearestEnemyOfType([0.0.TROLL]),10)
-	HP(NearestEnemyOfType([0.0.TROLL]),1)
-	OR(21)
-		HasItemEquipedReal("u2hax2a",Myself)    // fire weapons
-		HasItemEquipedReal("udagg1a",Myself)
-		HasItemEquipedReal("udagg3a",Myself)
-		HasItemEquipedReal("tongue",Myself)
-		HasItemEquipedReal("uflal4a",Myself)
-		HasItemEquipedReal("uhalb4a",Myself)
-		HasItemEquipedReal("u2ham5a",Myself)
-		HasItemEquipedReal("usswd2a",Myself)
-		HasItemEquipedReal("ubswd2b",Myself)
-		HasItemEquipedReal("ubswd5b",Myself)
-		HasItemEquipedReal("ulswd3a",Myself)
-		HasItemEquipedReal("ulswd5b",Myself)
-		HasItemEquipedReal("zzg7ts",Myself)
-		HasItemEquipedReal("uhalb5a",Myself)     // acid weapons
-		HasItemEquipedReal("u1ham3a",Myself)
-		HasItem("melfmet",Myself)
-		HasItem("fblade",Myself)
-		HasItem("plyflind",Myself)
-		HasItem("plysala",Myself)
-		HasItem("felem",Myself)
-		HasItem("firern",Myself)
-THEN
-	RESPONSE #100
-		Attack(NearestEnemyOfType([0.0.TROLL]))
 END

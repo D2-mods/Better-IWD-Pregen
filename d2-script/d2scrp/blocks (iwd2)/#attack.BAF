@@ -1,0 +1,194 @@
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	OR(2)
+		See(NearestEnemyOf(ProtectedBy()),0)
+		See(NearestEnemyOf(),0)
+	!InWeaponRange(NearestEnemyOf(ProtectedBy()))
+	!LOS(NearestEnemyOf(ProtectedBy()),5)
+	OR(2)
+		See(LastAttackerOf(),0)
+		See(NearestEnemyOf(),0)
+	!InWeaponRange(LastAttackerOf())
+	!LOS(NearestEnemyOf(LastAttackerOf()),5)
+	OR(2)
+		See(NearestEnemyOf(LeaderOf()),0)
+		See(NearestEnemyOf(),0)
+	!InWeaponRange(NearestEnemyOf(LeaderOf()))
+	!LOS(NearestEnemyOf(LeaderOf()),5)
+	OR(2)
+		See(NearestEnemyOf(MostDamagedOf()),0)
+		See(NearestEnemyOf(),0)
+	!InWeaponRange(NearestEnemyOf(MostDamagedOf()))
+	!LOS(NearestEnemyOf(MostDamagedOf()),5)
+	OR(2)
+		See(NearestEnemyOf(WeakestOf()),0)
+		See(NearestEnemyOf(),0)
+	!InWeaponRange(NearestEnemyOf(WeakestOf()))
+	!LOS(NearestEnemyOf(WeakestOf()),5)
+	!See(NearestEnemyOf(),0)
+THEN
+	RESPONSE #100
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2retarget3","LOCALS")
+	OR(2)
+		InWeaponRange(LastSeenBy())
+		LOS(LastSeenBy(),5)
+	!InParty(LastSeenBy())
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget3","LOCALS",18)
+		EquipWeapon()
+		AttackOneRound(LastSeenBy())
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	Or(4)
+		Class(Myself,FIGHTER)
+		Class(Myself,RANGER)
+		Class(Myself,PALADIN)
+		Class(Myself,BARBARIAN)
+	Or(3)
+		InWeaponRange([EVILCUTOFF])
+		LOS([EVILCUTOFF],25)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+	!Class(Myself,CLERIC)
+	!Class(Myself,DRUID)
+	!Class(Myself,MONK)
+	!Class(Myself,ROGUE)
+	!Class(Myself,BARD)
+	!Class(Myself,SORCERER)
+	!Class(Myself,WIZARD)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	Or(4)
+		LevelInClassGT(Myself,2,BARBARIAN)
+		LevelInClassGT(Myself,2,FIGHTER)
+		LevelInClassGT(Myself,2,PALADIN)
+		LevelInClassGT(Myself,2,RANGER)
+	Or(3)
+		InWeaponRange([EVILCUTOFF])
+		LOS([EVILCUTOFF],25)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	Or(4)
+		LevelInClassGT(Myself,8,MONK)
+		CheckSpellState(Myself,TENSERS_TRANSFORMATION)
+		CheckStat(Myself,1,POLYMORPHED)
+		CheckSpellState(Myself,IRON_BODY)
+	Or(3)
+		InWeaponRange([EVILCUTOFF])
+		LOS([EVILCUTOFF],18)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	Or(5)
+		Class(Myself,CLERIC)
+		Class(Myself,DRUID)
+		Class(Myself,MONK)
+		Class(Myself,ROGUE)
+		Class(Myself,BARD)
+	Or(2)
+		InWeaponRange([EVILCUTOFF])
+		LOS([EVILCUTOFF],12)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+	Or(12)
+		Class(Myself,FIGHTER)
+		Class(Myself,RANGER)
+		Class(Myself,PALADIN)
+		Class(Myself,BARBARIAN)
+		Class(Myself,CLERIC)
+		Class(Myself,DRUID)
+		Class(Myself,MONK)
+		Class(Myself,ROGUE)
+		Class(Myself,BARD)
+		CheckSpellState(Myself,TENSERS_TRANSFORMATION)
+		CheckStat(Myself,1,POLYMORPHED)
+		CheckSpellState(Myself,IRON_BODY)
+	Or(2)
+		InWeaponRange([EVILCUTOFF])
+		LOS([EVILCUTOFF],5)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF],30)
+END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	Or(2)
+		Class(Myself,SORCERER)
+		Class(Myself,WIZARD)
+	Or(2)
+		InWeaponRange([EVILCUTOFF])
+		LOS([EVILCUTOFF],3)
+	!InParty([EVILCUTOFF])
+	!Race(LastMarkedObject,KEG)
+THEN
+	RESPONSE #100
+		EquipWeapon()
+		AttackReevaluate([EVILCUTOFF],30)
+END

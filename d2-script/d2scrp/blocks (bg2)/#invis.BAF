@@ -1,0 +1,59 @@
+IF
+	ModalState(BATTLESONG)
+	StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+THEN
+	RESPONSE #100
+		ClearActions(Myself)
+END
+
+IF
+	ActionListEmpty()
+	OR(3)
+		ModalState(BATTLESONG)
+		ModalState(TURNUNDEAD)
+		ModalState(STEALTH)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(STEALTH)
+THEN
+	RESPONSE #100
+		ClearActions(Myself)
+		SetGlobal("d2autobattle","LOCALS",0)
+END
+
+IF
+	ActionListEmpty()
+	InWeaponRange([EVILCUTOFF])
+	OR(2)
+		Class(Myself,THIEF_ALL)
+		Class(Myself,MONK)
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
+	!ModalState(DETECTTRAPS)
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	InWeaponRange([EVILCUTOFF])
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
+THEN
+	RESPONSE #100
+		NoAction()
+END

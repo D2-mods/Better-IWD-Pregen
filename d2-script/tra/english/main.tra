@@ -3,43 +3,61 @@ This file contains text displayed in the game
 */
 
 
-//SCRPDESC.2DA entries (script descriptions)
-@100 = ~IWD PREGEN:~
+//SCRPDESC.2DA (d2scrp)
+@100 = ~BETTER IWD PREGEN:~
 
 //EEs
-@101 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a Thief, Monk, or Shaman will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
+@101 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a character with skill invested will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
 
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
 Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
 
 //IWD2
-@102 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth or Battle Song. If not in auto-attack range, a character with Rogue or Monk levels will search for traps, but not if using Stealth or Battle Song. (<script>)
+@102 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth or Battle Song. If not in auto-attack range, a character with rogue or monk levels will search for traps, but not if using Stealth or Battle Song. (<script>)
 
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
 Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
 
 //BG2
-@103 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, or Turn Undead. If not in auto-attack range, a Thief or Monk will search for traps or illusions, but not if using Stealth or Turn Undead. (<script>)
+@103 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth, Bard Song, or Turn Undead. If not in auto-attack range, a thief or monk will search for traps or illusions, but not if using Stealth or Turn Undead. (<script>)
 
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
 Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
 
 //IWD1
-@104 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth, Bard Song, or Turn Undead. If not in auto-attack range, a Thief will search for traps, but not if using Stealth or Turn Undead. (<script>)
+@104 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth, Bard Song, or Turn Undead. If not in auto-attack range, a thief will search for traps, but not if using Stealth or Turn Undead. (<script>)
 
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
 Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
 
 //BG1
-@105 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of Invisibility or Sanctuary, or if using Stealth. (<script>)
+@105 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth. (<script>)
 
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
 Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for 5 rounds, or the E key to deactivate instantly.~
+
+
+
+//SCRPDESC.2DA (d2scrp-)
+@33100 = ~D2SCRP-:~
+@33101 = ~This AI script is identical to Better IWD Pregen, except some retargeting actions are disabled. (<script>)~
+
+
+
+//SCRPDESC.2DA (d2scrp+)
+@66100 = ~D2SCRP+:~
+@66101 = ~This AI script is identical to Better IWD Pregen, except calls for help are enabled. If Cooldown mode is active, a character can still make a call for help, but will not respond to one. (<script>)~
+
+
+
+//SCRPDESC.2DA (vanilla IWD Pregen)
+@99100 = ~IWD PREGEN:~
+@99101 = ~This combat AI script is assigned to the members of the default party in IWD:EE. The character will defend <HIMHER>self if attacked, or if <HESHE> sees enemies. If the character is under the effects of invisibility or sanctuary, or if <HESHE> is singing a bard song, turning undead, hiding in shadows, or using shamanic dance, <HESHE> will not attack enemies. In addition, a thief, monk, or shaman will search for traps or illusions when there are no enemies nearby. (<script>)~
 
 
 

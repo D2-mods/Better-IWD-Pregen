@@ -1,0 +1,55 @@
+//Better IWD Pregen (base script)
+//
+
+
+//make blank BCS file
+<<<<<<<< .../temp/d2scrp.BAF
+>>>>>>>>
+COMPILE ~.../temp/d2scrp.BAF~
+
+
+//create script
+ACTION_FOR_EACH baf_to_add IN
+  ~#variables~
+  ~#invis~
+  ~#passive~
+//~#assist~
+  ~#game~
+  ~#immune~
+  ~#caster~
+  ~#attack~
+  ~#retarget~
+  ~#end~
+BEGIN
+
+  ACTION_IF (FILE_EXISTS ~%workspace%/%baf_to_add%.BAF~) BEGIN
+    EXTEND_BOTTOM ~d2scrp.BCS~  ~%workspace%/%baf_to_add%.BAF~
+  END
+  ELSE BEGIN
+    ACTION_IF (FILE_EXISTS ~%blocks%/%baf_to_add%.BAF~) BEGIN
+      EXTEND_BOTTOM ~d2scrp.BCS~  ~%blocks%/%baf_to_add%.BAF~
+    END
+  END
+
+END
+
+COPY_EXISTING ~d2scrp.BCS~  ~scripts/d2scrp.BS~    // copy to scripts folder
+
+
+//Script text
+OUTER_SET name = RESOLVE_STR_REF (@100)
+ACTION_IF (GAME_IS ~bgee bg2ee iwdee eet~)                  BEGIN OUTER_SET desc = RESOLVE_STR_REF (@101) END
+ACTION_IF (GAME_IS ~iwd2~)                                  BEGIN OUTER_SET desc = RESOLVE_STR_REF (@102) END
+ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN OUTER_SET desc = RESOLVE_STR_REF (@103) END
+ACTION_IF (GAME_IS ~iwd how totlm~)                         BEGIN OUTER_SET desc = RESOLVE_STR_REF (@104) END
+ACTION_IF (GAME_IS ~bg1 totsc~)                             BEGIN OUTER_SET desc = RESOLVE_STR_REF (@105) END
+
+COPY_EXISTING ~SCRPDESC.2DA~  ~override~
+  LPF 2da_find_row_delete STR_VAR row_name = ~d2scrp~ RET row_number columns END
+  INSERT_2DA_ROW row_number columns ~d2scrp %name% %desc%~
+  PRETTY_PRINT_2DA
+BUT_ONLY
+
+
+/*
+*/

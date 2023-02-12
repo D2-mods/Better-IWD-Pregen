@@ -1,0 +1,111 @@
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	OR(2)
+		LOS([EVILCUTOFF],4)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+	IsWeaponRanged(Myself)
+	Range(NearestEnemyOf(),10,LESS_THAN)
+	!IsWeaponRanged(NearestEnemyOf())
+THEN
+	RESPONSE #100
+		RunAwayFrom(NearestEnemyOf(),35)
+END
+
+IF
+	ActionListEmpty()
+	HPPercentLT(Myself,15)
+	OR(2)
+		Class(Myself,ROGUE)
+		Class(Myself,MONK)
+	!ModalState(Myself,DETECTTRAPS)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Wait(2)
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	HPPercentLT(Myself,15)
+	!ModalState(Myself,DETECTTRAPS)
+	See([EVILCUTOFF],0)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END
+
+IF
+	ActionListEmpty()
+	HPPercentLT(Myself,15)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	Or(2)
+		Class(Myself,SORCERER)
+		Class(Myself,WIZARD)
+	LevelInClassLT(Myself,3,BARBARIAN)
+	LevelInClassLT(Myself,3,FIGHTER)
+	LevelInClassLT(Myself,3,PALADIN)
+	LevelInClassLT(Myself,3,RANGER)
+	!Class(Myself,CLERIC)
+	!Class(Myself,DRUID)
+	!Class(Myself,MONK)
+	!Class(Myself,ROGUE)
+	!Class(Myself,BARD)
+	!IsWeaponRanged(Myself)
+	!CheckSpellState(Myself,TENSERS_TRANSFORMATION)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	!CheckSpellState(Myself,IRON_BODY)
+	See([EVILCUTOFF],0)
+	!LOS([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END
+
+IF
+	ActionListEmpty()
+	Or(2)
+		Class(Myself,SORCERER)
+		Class(Myself,WIZARD)
+	LevelInClassLT(Myself,3,BARBARIAN)
+	LevelInClassLT(Myself,3,FIGHTER)
+	LevelInClassLT(Myself,3,PALADIN)
+	LevelInClassLT(Myself,3,RANGER)
+	!Class(Myself,CLERIC)
+	!Class(Myself,DRUID)
+	!Class(Myself,MONK)
+	!Class(Myself,ROGUE)
+	!Class(Myself,BARD)
+	!IsWeaponRanged(Myself)
+	!CheckSpellState(Myself,TENSERS_TRANSFORMATION)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	!CheckSpellState(Myself,IRON_BODY)
+	!LOS([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	!StateCheck(Myself,STATE_INVISIBLE)
+	!CheckSpellState(Myself,SANCTUARY)
+	Heard([GOODCUTOFF],400)
+	!LOS([EVILCUTOFF],30)
+THEN
+	RESPONSE #100
+		NoAction()
+END

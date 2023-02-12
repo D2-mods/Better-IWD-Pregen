@@ -1,0 +1,89 @@
+IF
+	ActionListEmpty()
+	HPPercentLT(Myself,15)
+	OR(2)
+		Class(Myself,THIEF_ALL)
+		Class(Myself,MONK)
+	!ModalState(DETECTTRAPS)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	HPPercentLT(Myself,15)
+	!ModalState(DETECTTRAPS)
+	See([EVILCUTOFF])
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END
+
+IF
+	ActionListEmpty()
+	HPPercentLT(Myself,15)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Class(Myself,MAGE_THIEF)
+	!ModalState(DETECTTRAPS)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	OR(3)
+		Class(Myself,MAGE)
+		Class(Myself,MAGE_THIEF)
+		Class(Myself,CLERIC_MAGE)
+	!ModalState(DETECTTRAPS)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	See([EVILCUTOFF])
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		Shout(600)
+END
+
+IF
+	ActionListEmpty()
+	OR(3)
+		Class(Myself,MAGE)
+		Class(Myself,MAGE_THIEF)
+		Class(Myself,CLERIC_MAGE)
+	CheckStatLT(Myself,1,POLYMORPHED)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([EVILCUTOFF],3)
+	!InWeaponRange([EVILCUTOFF])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	Heard([GOODCUTOFF],400)
+	!Range([EVILCUTOFF],30)
+THEN
+	RESPONSE #100
+		NoAction()
+END
