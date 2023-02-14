@@ -27,7 +27,7 @@ Components
 11. Allow Minsc to use his Berserk ability at will (BG games)
 12. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 13. Remove alignment restrictions for classes (classic and EEs)
-14. Paladins and Rangers do not fall at low rep (EEs)
+14. Prevent paladins and rangers falling at low rep? (EEs)
 
 
 **Additional info:**
@@ -45,10 +45,10 @@ Overview (party script):
 This script manages auto-attack, while giving more nuanced control of the characters. The script will never use your consumable items, spells, or abilities. The main aim is to (hopefully) reduce some of the more frustrating aspects of auto-attack.
 
 #### Script - Quick Info:
-- Better IWD Pregen (D2SCRP): Base script. Includes all features listed below.
-- D2SCRP-: Same as base script, except some retargeting actions are disabled.
-- D2SCRP+: Same as base script, except calls for help are enabled.
-- IWD Pregen (IWDPGEN): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only).
+- Better IWD Pregen (d2scrp): Base script. Includes all features listed below.
+- d2scrp-: Same as base script, except default mode is Cooldown.
+- d2scrp+: Same as base script, except calls for help are enabled.
+- IWD Pregen (iwdpgen): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only)
 
 #### Auto-attack features:
 - Melee aggro range is dependent on class (see readme for full breakdown); range from 3 ft. (mages) to 25 ft..
@@ -59,7 +59,7 @@ This script manages auto-attack, while giving more nuanced control of the charac
 - Cooldown hotkeys to reduce melee aggro range to 5 ft. for 30 seconds, or set back to normal instantly.
 
 #### Other features:
-- Classes with Search will use it when not attacking (note: for IWD2, auto-Search only works if a character has Rogue and Monk levels).
+- Classes with Search will use it when not attacking (note: for IWD2, auto-Search only works if a character has Rogue or Monk levels).
 - Will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
 - Will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (ex. from a contingency or area invisibility spell).
 - Shamanic Dance is NOT stopped if suddenly invisible. This is to preserve summons.
@@ -207,7 +207,7 @@ NOTE: Dimension Door is more limited with this patch. Will only teleport to the 
 #### BG1 script info:
 - Characters will preserve Hide/Invisibility/Sanctuary
 - Melee aggro ranges working
-- Calls for help working (D2SCRP+)
+- Calls for help working (d2scrp+)
 - Cooldown hotkeys working
 - No auto-Search (the FindTraps() script action doesn't work)
 

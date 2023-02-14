@@ -1,11 +1,33 @@
-//Better IWD Pregen (no retargeting)
-//
+//d2scrp-
+//default mode is Cooldown
 
 
 //make blank BCS file
 <<<<<<<< .../temp/d2scrp-.BAF
 >>>>>>>>
 COMPILE ~.../temp/d2scrp-.BAF~
+
+
+//edit #variables.BAF
+COPY ~%blocks%/#variables.BAF~  ~%workspace%~
+  REPLACE_TEXTUALLY ~d2cooldown","LOCALS",0)~  ~d2cooldown","LOCALS",9999999)~
+  REPLACE_TEXTUALLY ~d2cooldown","LOCALS",30)~  ~d2cooldown","LOCALS",0)~
+
+  REPLACE_TEXTUALLY ~HotKey(B)~  ~False()~
+  REPLACE_TEXTUALLY ~HotKey(E)~  ~HotKey(B)~
+  REPLACE_TEXTUALLY ~False()~    ~HotKey(E)~
+
+  REPLACE_TEXTUALLY ~@1001~  ~@1004~    // Cooldown mode disabled 30 seconds
+  REPLACE_TEXTUALLY ~@1003~  ~@1005~    // Cooldown mode activated
+
+  REPLACE_TEXTUALLY ~SetGlobalTimer("d2cooldown","LOCALS",0)~  
+                    ~SetGlobalTimer("d2cooldown","LOCALS",0) SetGlobalTimer("d2cooldowndisabler","LOCALS",30)~
+
+  REPLACE_TEXTUALLY ~OnCreation()~  
+                    ~ActionListEmpty() !GlobalTimerNotExpired("d2cooldowndisabler","LOCALS")~
+
+  REPLACE_TEXTUALLY ~GlobalTimerNotExpired("d2cooldown","LOCALS")~  
+                    ~!GlobalTimerNotExpired("d2cooldown","LOCALS")~
 
 
 //create script
@@ -18,7 +40,7 @@ ACTION_FOR_EACH baf_to_add IN
   ~#immune~
   ~#caster~
   ~#attack~
-//~#retarget~
+  ~#retarget~
   ~#end~
 BEGIN
 
@@ -37,8 +59,8 @@ COPY_EXISTING ~d2scrp-.BCS~  ~scripts/d2scrp-.BS~    // copy to scripts folder
 
 
 //Script text
-OUTER_SET name = RESOLVE_STR_REF (@33100)
-OUTER_SET desc = RESOLVE_STR_REF (@33101)
+OUTER_SET name = RESOLVE_STR_REF (@66100)
+OUTER_SET desc = RESOLVE_STR_REF (@66101)
 
 COPY_EXISTING ~SCRPDESC.2DA~  ~override~
   LPF 2da_find_row_delete STR_VAR row_name = ~d2scrp-~ RET row_number columns END

@@ -10,11 +10,13 @@ ACTION_IF (GAME_IS ~iwd how totlm~)                         BEGIN OUTER_TEXT_SPR
 ACTION_IF (GAME_IS ~iwd2~)                                  BEGIN OUTER_TEXT_SPRINT game ~iwd2~ END
 
 OUTER_TEXT_SPRINT blocks  ~%d2scrp%/blocks (%game%)~
-INCLUDE ~%install%/d2scrpgame.tph~        // creates #game.BAF file (inlined)
+INCLUDE ~%install%/trollarrays.tph~    // mod items
+INCLUDE ~%install%/d2scrpgame.tph~     // creates #game.BAF file
+
 
 //dummy file for IWD2 (prevents weidu message)
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
-  COPY ~%iwd2%/attstyle.ids~  ~override~    // copy dummy file, prevents error message
+  COPY ~%iwd2%/attstyle.ids~  ~override~
 END
 
 //fixed TobEx DLL (skipped if TobEx Afterlife or BG2 Improved GUI is installed)
@@ -33,8 +35,8 @@ END
 
 //Install
 INCLUDE ~%install%/d2scrp.tph~
-INCLUDE ~%install%/d2scrp-.tph~
 INCLUDE ~%install%/d2scrp+.tph~
+INCLUDE ~%install%/d2scrp-.tph~
 
 
 /*

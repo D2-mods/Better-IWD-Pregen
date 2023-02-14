@@ -89,8 +89,7 @@ IF
 		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
 		Range(NearestEnemyOfType([0.0.TROLL]),10)
 	HP(NearestEnemyOfType([0.0.TROLL]),1)
-	OR(%troll%)
-		HasItem("melfmet",Myself)
+	HasItem("trollweap",Myself)
 THEN
 	RESPONSE #100
 		Attack(NearestEnemyOfType([0.0.TROLL]))

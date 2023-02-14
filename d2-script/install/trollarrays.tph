@@ -1,0 +1,121 @@
+//for function: d2_elemental_weapon_arrays
+//add mod weapons to arrays + copies to file in override
+
+/*array list (use RET_ARRAY)
+d2fireweap
+d2acidweap
+d2coldweap
+
+Use INT_VAR temp=1 for weapons in magical slot
+*/
+
+
+//fire weapons
+ACTION_FOR_EACH mod_item IN
+//sod2bg2 (bg2)
+  ~dtkaxe03~
+  ~dtkbln2~
+  ~dtkstaf1~
+  ~dtkswd03~
+  ~dtkswd06~
+  ~dtkswd3a~
+  ~dtkswd6a~
+  ~dtkswd8~
+  ~dtkswd8a~
+  ~dtktdag1~
+  ~dtktdag2~
+  ~dtktdag3~
+  ~dtktdag4~
+  ~dtktdag5~
+
+//forgotten armament (bg2)
+  ~MO1H01~
+  ~MO1H05~
+  ~MOHAL02~
+  ~MOHM02~
+  ~MOMS02~
+
+//Lava (IWD)
+  ~L#bbflai~
+  ~L#ffch~
+BEGIN
+  LAF d2_elemental_weapon_arrays STR_VAR item=~%mod_item%~ element=~fire~ RET_ARRAY d2fireweap END
+END
+
+
+//acid weapons
+ACTION_FOR_EACH mod_item IN
+//sod2bg2 (bg2)
+  ~dtkax1ha~
+  ~dtkax1hb~
+  ~dtkdag1~
+  ~dtkdag2~
+  ~dtkswd1b~
+  ~dtkswd1c~
+  ~dtkswda4~
+  ~dtkswda5~
+  ~dtktdag1~
+  ~dtktdag2~
+  ~dtktdag3~
+  ~dtktdag4~
+  ~dtktdag5~
+
+//forgotten armament (bg2)
+  ~MO1H05~
+  ~MOSP02~
+
+//Lava (IWD)
+  ~L#HASTA1~
+  ~L#iswo2~
+  ~L#KUPOT4~
+  ~L#KUTAL~
+  ~L#TSHB02~
+  ~L#ZBKATA~
+BEGIN
+  LAF d2_elemental_weapon_arrays STR_VAR item=~%mod_item%~ element=~acid~ RET_ARRAY d2acidweap END
+END
+
+
+//cold weapons
+ACTION_FOR_EACH mod_item IN
+//sod2bg2 (bg2)
+  ~dtkax1ha~
+  ~dtkax1hb~
+  ~dtkaxe01~
+  ~dtkaxe02~
+  ~dtkaxe2a~
+  ~dtkhalb1~
+  ~dtkhalb2~
+  ~dtkhalb3~
+  ~dtkham3~
+  ~dtkstaf1~
+  ~dtkswd05~
+  ~dtkswd07~
+  ~dtkswd5a~
+  ~dtkswd7a~
+  ~dtkswd7b~
+  ~dtktdag1~
+  ~dtktdag2~
+  ~dtktdag3~
+  ~dtktdag4~
+  ~dtktdag5~
+
+//forgotten armament (bg2)
+  ~MO1H30~
+  ~MOBLN02~
+  ~MODAG02~
+BEGIN
+  LAF d2_elemental_weapon_arrays STR_VAR item=~%mod_item%~ element=~cold~ RET_ARRAY d2coldweap END
+END
+
+
+//magical fire weapons
+ACTION_FOR_EACH mod_item IN
+  ~~
+BEGIN
+  LAF d2_elemental_weapon_arrays INT_VAR temp=1 STR_VAR item=~%mod_item%~ element=~fire~ RET_ARRAY d2fireweap END
+END
+
+
+/*
+*/

@@ -1,5 +1,5 @@
-//Better IWD Pregen
-//
+//IWD Pregen (iwdpgen)
+//same as vanilla script, but with shaman abilities added
 
 
 ACTION_IF (GAME_IS ~iwdee bgee bg2ee eet~) BEGIN
@@ -12,9 +12,10 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~iwdpgen.BCS~) BEGIN
 
   COPY_EXISTING ~iwdpgen.BCS~  ~override~
     DECOMPILE_AND_PATCH BEGIN
-      REPLACE_TEXTUALLY ~Class(Myself,THIEF_ALL)~  ~CheckStatGT(Myself,0,TRAPS)~
-      REPLACE_TEXTUALLY ~Class(Myself,MONK)~       ~CheckStatGT(Myself,0,DETECTILLUSIONS)~
-      REPLACE_TEXTUALLY ~!ModalState(STEALTH)~     ~!ModalState(STEALTH) !ModalState(SHAMANDANCE)~
+      REPLACE_TEXTUALLY ~Class(Myself,THIEF_ALL)~   ~CheckStatGT(Myself,0,TRAPS)~
+      REPLACE_TEXTUALLY ~Class(Myself,MONK)~        ~CheckStatGT(Myself,0,DETECTILLUSIONS)~
+      REPLACE_TEXTUALLY ~!ModalState(DETECTTRAPS)~  ~!ModalState(BATTLESONG) !ModalState(DETECTTRAPS)~
+      REPLACE_TEXTUALLY ~!ModalState(STEALTH)~      ~!ModalState(STEALTH) !ModalState(SHAMANDANCE)~
       COUNT_REGEXP_INSTANCES ~SHAMANDANCE~ was_it_patched
     END
   BUT_ONLY
@@ -36,6 +37,7 @@ IF
 		CheckStatGT(Myself,0,TRAPS)
 		CheckStatGT(Myself,0,DETECTILLUSIONS)
 	!ModalState(TURNUNDEAD)
+	!ModalState(BATTLESONG)
 	!ModalState(DETECTTRAPS)
 	!ModalState(STEALTH)
 	!ModalState(SHAMANDANCE)

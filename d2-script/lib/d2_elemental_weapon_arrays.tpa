@@ -1,0 +1,303 @@
+//Fire, Cold, Electrical, Acid weapons (skips consumable ammo)
+//also a function at the end for adding mod items to arrays (and to a file in override)
+
+/*array list
+d2fireweap
+d2coldweap
+d2electricalweap
+d2acidweap
+*/
+
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2fireweap BEGIN    // resource => type (weap or temp)
+  bdblun09 => fireweap
+  bddagg01 => fireweap
+  bddagg02 => fireweap
+  bdsw1h08 => fireweap
+  STAFN1 => fireweap
+  SW1H11 => fireweap
+  SW1H24 => fireweap
+  AX1H12 => fireweap
+  BLUN14 => fireweap
+  BLUN14D => fireweap
+  BLUN14F => fireweap
+  BLUN14H => fireweap
+  BLUN26 => fireweap
+  BLUN27 => fireweap
+  BLUN30 => fireweap
+  BLUN30C => fireweap
+  BLUN30D => fireweap
+  DAGG12 => fireweap
+  DAGG22 => fireweap
+  HALB05 => fireweap
+  ohdsw03 => fireweap
+  ohdsw2ha => fireweap
+  ohdsw2hb => fireweap
+  ohdsw2hc => fireweap
+  ohdsw2hd => fireweap
+  ohrax1h1 => fireweap
+  SW1H39 => fireweap
+  SW1H53 => fireweap
+  SW1H60 => fireweap
+  SW1H61 => fireweap
+  XBOW15 => fireweap
+  XBOW16 => fireweap
+  TONGUE => fireweap
+  U2HAM5A => fireweap
+  U2HAX2A => fireweap
+  UBSWD2B => fireweap
+  UBSWD5B => fireweap
+  UDAGG1A => fireweap
+  UDAGG3A => fireweap
+  UFLAL4A => fireweap
+  UHALB4A => fireweap
+  ULSWD3A => fireweap
+  ULSWD5B => fireweap
+  USSWD2A => fireweap
+  ZZG7TS => fireweap
+  SECRET03 => fireweap
+  SECRET04 => fireweap
+  melfmet => firetemp
+  fblade => firetemp
+  plyflind => firetemp
+  plysala => firetemp
+  felem => firetemp
+  firern => firetemp
+  drufir => firetemp
+END
+
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2coldweap BEGIN
+  bdax1h03 => coldweap
+  bddagg01 => coldweap
+  bdhalb03 => coldweap
+  bdhamm06 => coldweap
+  BLUN40 => coldweap
+  AX1H13 => coldweap
+  bdsw2h01 => coldweap
+  BLUN14 => coldweap
+  BLUN14D => coldweap
+  BLUN14E => coldweap
+  BLUN14G => coldweap
+  BLUN30 => coldweap
+  BLUN30C => coldweap
+  BLUN30D => coldweap
+  BLUN35 => coldweap
+  BONEDAG => coldweap
+  HALB05 => coldweap
+  HALB08 => coldweap
+  HALB09 => coldweap
+  slayerw1 => coldweap
+  slayerw3 => coldweap
+  SW1H06 => coldweap
+  SW1H68 => coldweap
+  SW1H68C => coldweap
+  SW1H69 => coldweap
+  SW1H69C => coldweap
+  WAS2H => coldweap
+  BITEME => coldweap
+  KISSGF => coldweap
+  REAVER => coldweap
+  SERRATE => coldweap
+  U1HAM5A => coldweap
+  U2HAM4B => coldweap
+  U2HAX4A => coldweap
+  UMSTR3C => coldweap
+  USSWD2B => coldweap
+  CHILLT => coldtemp
+  LTOUCH => coldtemp
+  CTOUCH => coldtemp
+END
+
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2electricalweap BEGIN
+  bddagg01 => electricalweap
+  bdhalb01 => electricalweap
+  HAMM03 => electricalweap
+  BLUN28 => electricalweap
+  BLUN29 => electricalweap
+  BLUN30 => electricalweap
+  BLUN30D => electricalweap
+  BOW19 => electricalweap
+  DAGG22 => electricalweap
+  HALB05 => electricalweap
+  HAMM03 => electricalweap
+  HAMM05 => electricalweap
+  HAMM09 => electricalweap
+  SPER09 => electricalweap
+  SW1H51 => electricalweap
+  SW1H67 => electricalweap
+  U1HAM3B => electricalweap
+  U1HAX2A => electricalweap
+  U2HAX5A => electricalweap
+  UDAGG2A => electricalweap
+  UFLAL5A => electricalweap
+  UHALB1A => electricalweap
+  UMSTR2B => electricalweap
+  UMSTR4B => electricalweap
+  USSWD4B => electricalweap
+  UTSWD5A => electricalweap
+  SGRASP01 => electricaltemp
+  SGRASP02 => electricaltemp
+  SGRASP03 => electricaltemp
+  SGRASP04 => electricaltemp
+  SGRASP05 => electricaltemp
+  SGRASP06 => electricaltemp
+  SGRASP07 => electricaltemp
+  SGRASP08 => electricaltemp
+  SGRASP09 => electricaltemp
+  SGRASP10 => electricaltemp
+  SGRASP11 => electricaltemp
+  SGRASP12 => electricaltemp
+  SGRASP13 => electricaltemp
+  SGRASP14 => electricaltemp
+  SGRASP15 => electricaltemp
+  SGRASP16 => electricaltemp
+  SGRASP17 => electricaltemp
+  SGRASP18 => electricaltemp
+  SGRASP19 => electricaltemp
+  SGRASP20 => electricaltemp    // BG2 cap (not used for IWD)
+  SGRASP21 => electricaltemp
+  SGRASP22 => electricaltemp
+  SGRASP23 => electricaltemp
+  SGRASP24 => electricaltemp
+  SGRASP25 => electricaltemp
+  SGRASP26 => electricaltemp
+  SGRASP27 => electricaltemp
+  SGRASP28 => electricaltemp
+  SGRASP29 => electricaltemp
+  SGRASP30 => electricaltemp
+  SGRASP31 => electricaltemp
+  SGRASP32 => electricaltemp
+END
+
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2acidweap BEGIN
+  bddagg01 => acidweap
+  bddagg05 => acidweap
+  bdsw1h02 => acidweap
+  AX1H13 => acidweap
+  BLUN10 => acidweap
+  BLUN14 => acidweap
+  BLUN14E => acidweap
+  BLUN14F => acidweap
+  BLUN14I => acidweap
+  BLUN22 => acidweap
+  BLUN30 => acidweap
+  BLUN30C => acidweap
+  BLUN30D => acidweap
+  HALB05 => acidweap
+  U1HAM3A => acidweap
+  UBSWD1A => acidweap
+  UHALB5A => acidweap
+  bddart01 => acidweap
+END
+
+
+//Include mod items (if already in override)
+ACTION_IF (FILE_EXISTS ~override/d2_elemental_weapon_arrays~) BEGIN
+  INCLUDE ~override/d2_elemental_weapon_arrays~
+END
+
+
+
+//add mod weapons to arrays
+//also adds to d2_elemental_weapon_arrays file in override
+
+/*example 
+LAF d2_elemental_weapon_arrays STR_VAR item=~fireweap~ element=~fire~ RET_ARRAY d2fireweap END
+
+This adds the item "fireweap" to array of fire damage weapons.
+Use RET_ARRAY to get the results of the d2fireweap array.
+*/
+
+
+DEFINE_ACTION_FUNCTION d2_elemental_weapon_arrays
+
+  INT_VAR  temp     = 0     // 1 = magical weapon (i.e. created by spell)
+           magical  = 0         // same as %temp%
+  STR_VAR  item     = ~~    // item to add (can use any of the 3)
+           weapon   = ~~        // same as %item%
+           resource = ~~        // same as %item%
+           element  = ~~    // fire, cold, electrical, acid
+
+  RET_ARRAY  
+    d2fireweap
+    d2coldweap
+    d2electricalweap
+    d2acidweap
+    
+BEGIN
+
+//Prep
+  ACTION_IF ((temp > 0) OR (magical > 0)) BEGIN 
+    OUTER_TEXT_SPRINT type  ~temp~ END
+  ELSE BEGIN
+    OUTER_TEXT_SPRINT type  ~weap~ END
+
+  ACTION_IF !(~%item%~ STR_EQ ~~) BEGIN END 
+    ELSE BEGIN 
+  ACTION_IF !(~%weapon%~ STR_EQ ~~) BEGIN OUTER_TEXT_SPRINT item  ~%weapon%~ END
+    ELSE BEGIN
+  ACTION_IF !(~%resource%~ STR_EQ ~~) BEGIN OUTER_TEXT_SPRINT item  ~%resource%~ END
+    END
+  END
+
+  ACTION_IF (~%element%~ STR_EQ ~elec~) BEGIN OUTER_TEXT_SPRINT element  ~electrical~ END
+    ELSE BEGIN
+  ACTION_IF (~%element%~ STR_EQ ~lightning~) BEGIN OUTER_TEXT_SPRINT element  ~electrical~ END
+    END
+  ACTION_IF (~%element%~ STR_EQ ~ice~) BEGIN OUTER_TEXT_SPRINT element  ~cold~ END
+
+  OUTER_TEXT_SPRINT result  ~%element%%type%~
+
+
+//add array template to override
+ACTION_IF !(FILE_EXISTS ~override/d2_elemental_weapon_arrays~) BEGIN
+
+<<<<<<<< .../temp/d2_elemental_weapon_arrays
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2fireweap BEGIN
+  fire => fireweap
+  fire => firetemp
+END
+
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2coldweap BEGIN
+  cold => coldweap
+  cold => coldtemp
+END
+
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2electricalweap BEGIN
+  electrical => electricalweap
+  electrical => electricaltemp
+END
+
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2acidweap BEGIN
+  acid => acidweap
+  acid => acidtemp
+END
+>>>>>>>>
+
+COPY ~.../temp/d2_elemental_weapon_arrays~  ~override~
+
+END
+
+
+//add mod items to array
+  ACTION_DEFINE_ASSOCIATIVE_ARRAY ~d2%element%weap~ BEGIN    // resource => result (element + type)
+    ~%item%~ => ~%result%~
+  END
+
+
+//add mod items to d2_elemental_weapon_arrays file (in override)
+  COPY_EXISTING ~override/d2_elemental_weapon_arrays~  ~override~
+    REPLACE_TEXTUALLY ~%element% => %result%~  ~%element% => %result%%WNL%  %item% => %result%~
+  BUT_ONLY UNLESS ~%item% => %result%~
+
+END
+
+
+/*
+*/

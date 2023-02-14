@@ -1,14 +1,4 @@
 IF
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	Heard([GOODCUTOFF],400)
-	!Range([EVILCUTOFF],30)
-THEN
-	RESPONSE #100
-		NoAction()
-END
-
-IF
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)

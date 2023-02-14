@@ -1,10 +1,10 @@
 ==================================================
 Script - Quick Info
 ==================================================
-- Better IWD Pregen (D2SCRP): Base script. Includes all features listed below.
-- D2SCRP-: Same as base script, except retargeting actions are disabled.
-- D2SCRP+: Same as base script, except calls for help are enabled.
-- IWD Pregen (IWDPGEN): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only).
+- Better IWD Pregen (d2scrp): Base script. Includes all features listed below.
+- d2scrp-: Same as base script, except default mode is Cooldown.
+- d2scrp+: Same as base script, except calls for help are enabled.
+- IWD Pregen (iwdpgen): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only)
 
 
 ==================================================
@@ -21,7 +21,7 @@ Auto-attack features
 ==================================================
 Other features
 ==================================================
-- Classes with Search will use it when not attacking (note: for IWD2, auto-Search only works if a character has Rogue and Monk levels).
+- Classes with Search will use it when not attacking (note: for IWD2, auto-Search only works if a character has Rogue or Monk levels).
 - Will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
 - Will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (ex. from a contingency or area invisibility spell).
 - Shamanic Dance is NOT stopped if suddenly invisible. This is to preserve summons.
@@ -111,7 +111,7 @@ Baldur's Gate (in BG1 engine) - script info
 ==================================================
 - Characters will preserve Hide/Invisibility/Sanctuary
 - Melee aggro ranges working
-- Calls for help working (D2SCRP+)
+- Calls for help working (d2scrp+)
 - Cooldown hotkeys working
 - No auto-Search (the FindTraps() script action doesn't work)
 

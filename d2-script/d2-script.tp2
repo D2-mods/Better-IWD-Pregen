@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~7.0~
+VERSION ~7.1~
 AUTO_EVAL_STRINGS
 
 ALWAYS
@@ -85,12 +85,30 @@ DESIGNATED 9999
 REQUIRE_COMPONENT ~d2-script.tp2~ 10 @50
 SUBCOMPONENT @9999
 LABEL ~D2-SCRIPT-NGAUTO~
+OUTER_TEXT_SPRINT ngauto  ~d2scrp~     // Better IWD Pregen (d2scrp)
 INCLUDE ~%install%/ngauto.tph~
 
 BEGIN @2
 REQUIRE_COMPONENT ~d2-script.tp2~ 10 @50
 SUBCOMPONENT @9999
-LABEL ~D2-SCRIPT-NONGAUTO~
+LABEL ~D2-SCRIPT-NGAUTO2~
+OUTER_TEXT_SPRINT ngauto  ~d2scrp+~    // d2scrp+ (Calls for help enabled)
+INCLUDE ~%install%/ngauto.tph~
+
+BEGIN @3
+REQUIRE_COMPONENT ~d2-script.tp2~ 10 @50
+SUBCOMPONENT @9999
+LABEL ~D2-SCRIPT-NGAUTO3~
+OUTER_TEXT_SPRINT ngauto  ~d2scrp-~    // d2scrp- (default mode is Cooldown)
+INCLUDE ~%install%/ngauto.tph~
+
+BEGIN @4
+REQUIRE_COMPONENT ~d2-script.tp2~ 10 @50
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~~
+SUBCOMPONENT @9999
+LABEL ~D2-SCRIPT-NGAUTO4~
+OUTER_TEXT_SPRINT ngauto  ~iwdpgen~    // IWD Pregen (iwdpgen)
+INCLUDE ~%install%/ngauto.tph~
 
 ////////////////////////////////////////////////////////////
 

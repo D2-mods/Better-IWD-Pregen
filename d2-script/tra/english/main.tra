@@ -43,16 +43,14 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 
 
 
-//SCRPDESC.2DA (d2scrp-)
-@33100 = ~D2SCRP-:~
-@33101 = ~This AI script is identical to Better IWD Pregen, except some retargeting actions are disabled. (<script>)~
-
-
-
 //SCRPDESC.2DA (d2scrp+)
-@66100 = ~D2SCRP+:~
-@66101 = ~This AI script is identical to Better IWD Pregen, except calls for help are enabled. If Cooldown mode is active, a character can still make a call for help, but will not respond to one. (<script>)~
+@33100 = ~D2SCRP+:~
+@33101 = ~This AI script is identical to Better IWD Pregen, except calls for help are enabled. Fighters, rangers, paladins, monks, and polymorphed characters can respond to a call for help. If Cooldown mode is activated, a character can still make a Shout action, but will not respond to one. (<script>)~
 
+
+//SCRPDESC.2DA (d2scrp-)
+@66100 = ~D2SCRP-:~
+@66101 = ~This AI script is similar to Better IWD Pregen, except the default mode is Cooldown. The E key will disable the Cooldown mode for 30 seconds. The B key will reactivate it instantly. (<script>)~
 
 
 //SCRPDESC.2DA (vanilla IWD Pregen)
@@ -65,7 +63,9 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 @1000 = ~Cooldown mode activated for 60 seconds~
 @1001 = ~Cooldown mode activated for 30 seconds~
 @1002 = ~Cooldown mode activated for 18 seconds~
-@1003 = ~Cooldown mode deactivated~
+@1003 = ~Cooldown mode disabled~
+@1004 = ~Cooldown mode disabled for 30 seconds~
+@1005 = ~Cooldown mode activated~
 
 
 //IWD auto-equip messages
@@ -207,6 +207,7 @@ Weight:  3 lb.~
 
 
 
+
 //Bag of Holding - unidentified (for ngbag)
 @720 = ~Bag~
 
@@ -249,6 +250,7 @@ Weight: 5~
 STATISTICS:
 
 Weight: 5 lb.~
+
 
 
 

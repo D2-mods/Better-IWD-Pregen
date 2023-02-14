@@ -34,7 +34,7 @@ Tweak components:
 11. Allow Minsc to use his Berserk ability at will (BG games)
 12. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 13. Remove alignment restrictions for classes (classic and EEs)
-14. Paladins and Rangers do not fall at low rep (EEs)
+14. Prevent paladins and rangers falling at low rep? (EEs)
 
 
 Additional info:
@@ -100,6 +100,18 @@ IWD2 exe patch:
 ==================================================
 VERSION INFO
 ==================================================
+v7.1
+- Fixes
+	- d2scrp scripts: Removed a duplicated script block.
+	- vanilla IWD Pregen script: Fixed an issue with bards modded to have Search skill.
+- Revised d2scrp- script:
+	- Same as standard script, except default mode is Cooldown.
+	- E key will disable Cooldown mode for 30 seconds. B key reactivates it instantly.
+	- Unlike v7.0, no script blocks are removed. Cooldown mode already disables certain actions.
+- Expanded "Auto-assign script" component:
+	- There are 3-4 options now, one for each script added or patched by this mod.
+- Installer improvements + expanded weapon arrays handling.
+
 v7.0
 - Fix for "Auto-assign script" with classic BG1:
 	- It was firing every time loading the game, due to using a local variable (which don't get saved in BG1).
@@ -107,8 +119,8 @@ v7.0
 	- It will now run once per party slot per playthrough (Player1, Player2, etc.).
 - Changes for "Better IWD Pregen":
 	- Main Script file renamed to d2scrp.BS (changed from iwdpgen.BS).
-	- Added D2SCRP-: Same as base script, except some retargeting actions are disabled.
-	- Added D2SCRP+: Same as base script, except calls for help are enabled.
+	- Added d2scrp-: Same as base script, except some retargeting actions are disabled.
+	- Added d2scrp+: Same as base script, except calls for help are enabled.
 	- IWDEE: Will patch the vanilla IWD Pregen script to include shaman abilities (basically what the v0.1 of this mod did).
 	- BGEE/BG2EE/EET: Will also install the vanilla IWD Pregen script (with shaman added) as iwdpgen.BS.
 	- Rewrote the install. Easier to edit or insert new script blocks.

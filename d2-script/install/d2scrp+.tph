@@ -1,5 +1,5 @@
-//Better IWD Pregen (calls for help)
-//
+//d2scrp+
+//Calls for help enabled
 
 
 //make blank BCS file
@@ -37,8 +37,8 @@ COPY_EXISTING ~d2scrp+.BCS~  ~scripts/d2scrp+.BS~    // copy to scripts folder
 
 
 //Script text
-OUTER_SET name = RESOLVE_STR_REF (@66100)
-OUTER_SET desc = RESOLVE_STR_REF (@66101)
+OUTER_SET name = RESOLVE_STR_REF (@33100)
+OUTER_SET desc = RESOLVE_STR_REF (@33101)
 
 COPY_EXISTING ~SCRPDESC.2DA~  ~override~
   LPF 2da_find_row_delete STR_VAR row_name = ~d2scrp+~ RET row_number columns END

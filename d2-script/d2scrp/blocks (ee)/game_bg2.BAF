@@ -7,8 +7,7 @@ IF
 		Range(NearestEnemyOfType([0.0.TROLL]),10)
 	HP(NearestEnemyOfType([0.0.TROLL]),1)
 	!CharName("Fire Troll",NearestEnemyOfType([0.0.TROLL]))
-	OR(%troll%)
-		HasItem("melfmet",Myself)
+	HasItem("trollweap",Myself)
 THEN
 	RESPONSE #100
 		Attack(NearestEnemyOfType([0.0.TROLL]))
@@ -23,8 +22,7 @@ IF
 		Range(NearestEnemyOfType([0.0.TROLL]),10)
 	HP(NearestEnemyOfType([0.0.TROLL]),1)
 	CharName("Fire Troll",NearestEnemyOfType([0.0.TROLL]))
-	OR(%firetroll%)
-		HasItemEquipedReal("SW1H06",Myself)
+	HasItem("firetrollweap",Myself)
 THEN
 	RESPONSE #100
 		Attack(NearestEnemyOfType([0.0.TROLL]))

@@ -2,65 +2,79 @@
 
 ACTION_IF (GAME_IS ~iwd2 iwd how totlm~) BEGIN
 
+
 //classic IWD games
-<<<<<<<< .../temp/ngauto.BAF
+<<<<<<<< .../temp/ngauto
 IF
 	ActionListEmpty()
 	!Global("d2ngauto","LOCALS",1)
 	InParty(Myself)
 THEN
 	RESPONSE #100
-		ChangeAIScript("d2scrp",3)
+		ChangeAIScript("%ngauto%",3)
 		SetGlobal("d2ngauto","LOCALS",1)
 		Continue()
 END
 >>>>>>>>
 
+COPY - ~.../temp/ngauto~  ~%workspace%/ngauto.BAF~
+  EVALUATE_BUFFER
+
+
 END
 ELSE BEGIN
+
 
 ACTION_IF !(GAME_IS ~bg1 totsc~) BEGIN
 
 //EEs + BG2 engine
-<<<<<<<< .../temp/ngauto.BAF
+<<<<<<<< .../temp/ngauto
 IF
 	ActionListEmpty()
 	!Global("d2ngauto","LOCALS",1)
 	InParty(Myself)
 THEN
 	RESPONSE #100
-		ChangeAIScript("d2scrp",4)
+		ChangeAIScript("%ngauto%",4)
 		SetGlobal("d2ngauto","LOCALS",1)
 		Continue()
 END
 >>>>>>>>
 
+COPY - ~.../temp/ngauto~  ~%workspace%/ngauto.BAF~
+  EVALUATE_BUFFER
+
+
 END
 ELSE BEGIN
 
+
 //classic BG1 (needs to use GLOBAL variable)
-<<<<<<<< .../temp/ngauto.BAF
+<<<<<<<< .../temp/ngauto
 IF
 	!Global("d2ngautoPlayer1","GLOBAL",1)
 	InParty(Player1)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,ChangeAIScript("d2scrp",4))
+		ActionOverride(Player1,ChangeAIScript("%ngauto%",4))
 		SetGlobal("d2ngautoPlayer1","GLOBAL",1)
 		Continue()
 END
 >>>>>>>>
 
-COPY - ~.../temp/ngauto.BAF~  ~%workspace%/ngauto2.BAF~
+COPY - ~.../temp/ngauto~  ~%workspace%/ngauto.BAF~
+  EVALUATE_BUFFER
+COPY - ~%workspace%/ngauto.BAF~  ~%workspace%/ngauto2.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player2~
-COPY - ~.../temp/ngauto.BAF~  ~%workspace%/ngauto3.BAF~
+COPY - ~%workspace%/ngauto.BAF~  ~%workspace%/ngauto3.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player3~
-COPY - ~.../temp/ngauto.BAF~  ~%workspace%/ngauto4.BAF~
+COPY - ~%workspace%/ngauto.BAF~  ~%workspace%/ngauto4.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player4~
-COPY - ~.../temp/ngauto.BAF~  ~%workspace%/ngauto5.BAF~
+COPY - ~%workspace%/ngauto.BAF~  ~%workspace%/ngauto5.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player5~
-COPY - ~.../temp/ngauto.BAF~  ~%workspace%/ngauto6.BAF~
+COPY - ~%workspace%/ngauto.BAF~  ~%workspace%/ngauto6.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player6~
+
 
 END
 END
@@ -81,21 +95,21 @@ END
 ACTION_IF !(GAME_IS ~bg1 totsc~) BEGIN
 
   ACTION_IF (FILE_EXISTS_IN_GAME ~DPLAYER2.BCS~) BEGIN
-    EXTEND_TOP ~DPLAYER2.BCS~ ~.../temp/ngauto.BAF~
+    EXTEND_TOP ~DPLAYER2.BCS~ ~%workspace%/ngauto.BAF~
   END
   
   ACTION_IF (FILE_EXISTS_IN_GAME ~DPLAYER3.BCS~) BEGIN
-    EXTEND_TOP ~DPLAYER3.BCS~ ~.../temp/ngauto.BAF~
+    EXTEND_TOP ~DPLAYER3.BCS~ ~%workspace%/ngauto.BAF~
   END
 
 END
-ELSE BEGIN    // or add to Area scripts for BG1
+ELSE BEGIN
 
   ACTION_FOR_EACH script IN
     ~DPLAYER2~
     ~DPLAYER3~
   BEGIN
-    EXTEND_TOP ~%script%.BCS~  ~.../temp/ngauto.BAF~
+    EXTEND_TOP ~%script%.BCS~  ~%workspace%/ngauto.BAF~
     EXTEND_TOP ~%script%.BCS~  ~%workspace%/ngauto2.BAF~
     EXTEND_TOP ~%script%.BCS~  ~%workspace%/ngauto3.BAF~
     EXTEND_TOP ~%script%.BCS~  ~%workspace%/ngauto4.BAF~
@@ -120,7 +134,7 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     ACTION_IF (FILE_EXISTS_IN_GAME ~%area%.BCS~) BEGIN
       COPY_EXISTING ~%area%.BCS~ ~override~
         DECOMPILE_AND_PATCH BEGIN
-          REPLACE_TEXTUALLY ~BDDEFAI~ ~d2scrp~    // default script for main PC
+          REPLACE_TEXTUALLY ~BDDEFAI~ ~%ngauto%~    // default script for main PC
         END
       BUT_ONLY
     END
@@ -132,8 +146,8 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     COUNT_2DA_ROWS 1 row_count
     FOR (row = 3; row < row_count; ++row) BEGIN
       READ_2DA_ENTRY row 1 1 ~match~
-      PATCH_IF !(~%match%~ STRING_EQUAL_CASE ~d2scrp~) BEGIN
-        SET_2DA_ENTRY_LATER ~make_edits~ row 1 ~d2scrp~
+      PATCH_IF !(~%match%~ STRING_EQUAL_CASE ~%ngauto%~) BEGIN
+        SET_2DA_ENTRY_LATER ~make_edits~ row 1 ~%ngauto%~
       END
     END
     

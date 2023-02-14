@@ -11,8 +11,10 @@ This file contains text shown in weidu installer
 	@10202 = ~Use existing script, but patch in a few actions (choose this if using a revision mod, such as atweaks PnP Fey)~
 
 @9999 = ~Auto-assign script to new characters~
-	@1 = ~Yes~
-	@2 = ~No~
+	@1 = ~Better IWD Pregen (d2scrp)~
+	@2 = ~d2scrp+~
+	@3 = ~d2scrp-~
+	@4 = ~IWD Pregen (iwdpgen)~
 
 
 
@@ -83,7 +85,7 @@ This file contains text shown in weidu installer
 	@41501 = ~Yes~
 	@41502 = ~No~
 
-@41600 = ~Paladins and Rangers do not fall at low rep (EEs)~
+@41600 = ~Prevent paladins and rangers falling at low rep? (EEs)~
 	@41601 = ~Yes~
 	@41602 = ~No~
 
