@@ -9,8 +9,8 @@ Option 1 - Revised script:
 - Will not attack or cast spells at enemies if invisible
 - Cooldown hotkeys to delay spellcasting
 
-Compatible with EEs and original BG2 engine.
-Not compatible with atweaks PnP Fey (will be skipped during installation).
+Compatible with EEs and original BG2 engine, including SCS.
+Not compatible with atweaks PnP Fey.
 
 DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
 

@@ -46,8 +46,8 @@ This script manages auto-attack, while giving more nuanced control of the charac
 
 #### Script - Quick Info:
 - Better IWD Pregen (d2scrp): Base script. Includes all features listed below.
-- d2scrp-: Same as base script, except default mode is Cooldown.
 - d2scrp+: Same as base script, except calls for help are enabled.
+- d2scrp-: Same as base script, except default mode is Cooldown.
 - IWD Pregen (iwdpgen): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only)
 
 #### Auto-attack features:
@@ -172,8 +172,8 @@ Class: Wizard or Sorcerer
 - Will not attack or cast spells at enemies if invisible
 - Cooldown hotkeys to delay spellcasting
 
-Compatible with EEs and original BG2 engine.  
-Not compatible with atweaks PnP Fey (will be skipped during installation).
+Compatible with EEs and original BG2 engine, including SCS.
+Not compatible with atweaks PnP Fey.
 
 > DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
 
@@ -557,11 +557,11 @@ Remove alignment restrictions for classes (classic and EEs)
 </details>
 
 <details>
-  <summary>Paladins and Rangers do not fall at low rep (EEs)</summary>
+  <summary>Prevent paladins and rangers falling at low rep? (EEs)</summary>
   
 ---
 
-Paladins and Rangers do not fall at low rep (EEs)
+Prevent paladins and rangers falling at low rep? (EEs)
 -
 
 - Prevent falling at low rep

@@ -121,7 +121,6 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY d2electricalweap BEGIN
   BOW19 => electricalweap
   DAGG22 => electricalweap
   HALB05 => electricalweap
-  HAMM03 => electricalweap
   HAMM05 => electricalweap
   HAMM09 => electricalweap
   SPER09 => electricalweap
@@ -205,21 +204,26 @@ END
 //also adds to d2_elemental_weapon_arrays file in override
 
 /*example 
-LAF d2_elemental_weapon_arrays STR_VAR item=~fireweap~ element=~fire~ RET_ARRAY d2fireweap END
+LAF d2_elemental_weapon_arrays STR_VAR item=~fireacid~ element=~fire acid~ RET_ARRAY d2fireweap d2acidweap END
 
-This adds the item "fireweap" to array of fire damage weapons.
-Use RET_ARRAY to get the results of the d2fireweap array.
+This adds the item "fireacid" to array of fire and acid damage weapons.
+Use RET_ARRAY to get the results of the arrays.
 */
 
 
 DEFINE_ACTION_FUNCTION d2_elemental_weapon_arrays
 
-  INT_VAR  temp     = 0     // 1 = magical weapon (i.e. created by spell)
-           magical  = 0         // same as %temp%
+  INT_VAR  temp       = 0     // 1 = magical weapon (i.e. created by spell)
+           magical    = 0         // same as %temp%
+           fire       = 0     // add to d2fireweap (identical to using the %element% variable)
+           cold       = 0     // add to d2coldweap
+           electrical = 0     // add to d2electricalweap
+           acid       = 0     // add to d2acidweap
+
   STR_VAR  item     = ~~    // item to add (can use any of the 3)
            weapon   = ~~        // same as %item%
            resource = ~~        // same as %item%
-           element  = ~~    // fire, cold, electrical, acid
+           element  = ~~    // fire, cold, electrical, acid (can set multiple, separated by a space)
 
   RET_ARRAY  
     d2fireweap
@@ -243,13 +247,13 @@ BEGIN
     END
   END
 
-  ACTION_IF (~%element%~ STR_EQ ~elec~) BEGIN OUTER_TEXT_SPRINT element  ~electrical~ END
-    ELSE BEGIN
-  ACTION_IF (~%element%~ STR_EQ ~lightning~) BEGIN OUTER_TEXT_SPRINT element  ~electrical~ END
-    END
-  ACTION_IF (~%element%~ STR_EQ ~ice~) BEGIN OUTER_TEXT_SPRINT element  ~cold~ END
-
-  OUTER_TEXT_SPRINT result  ~%element%%type%~
+  ACTION_IF !(~%element%~ STRING_CONTAINS_REGEXP ~fire~)       BEGIN OUTER_SET fire = 1 END
+  ACTION_IF !(~%element%~ STRING_CONTAINS_REGEXP ~cold~)       BEGIN OUTER_SET cold = 1 END
+  ACTION_IF !(~%element%~ STRING_CONTAINS_REGEXP ~ice~)        BEGIN OUTER_SET cold = 1 END
+  ACTION_IF !(~%element%~ STRING_CONTAINS_REGEXP ~electrical~) BEGIN OUTER_SET electrical = 1 END
+  ACTION_IF !(~%element%~ STRING_CONTAINS_REGEXP ~elec~)       BEGIN OUTER_SET electrical = 1 END
+  ACTION_IF !(~%element%~ STRING_CONTAINS_REGEXP ~lightning~)  BEGIN OUTER_SET electrical = 1 END
+  ACTION_IF !(~%element%~ STRING_CONTAINS_REGEXP ~acid~)       BEGIN OUTER_SET acid = 1 END
 
 
 //add array template to override
@@ -285,16 +289,32 @@ COPY ~.../temp/d2_elemental_weapon_arrays~  ~override~
 END
 
 
-//add mod items to array
-  ACTION_DEFINE_ASSOCIATIVE_ARRAY ~d2%element%weap~ BEGIN    // resource => result (element + type)
-    ~%item%~ => ~%result%~
+//add to arrays
+  ACTION_FOR_EACH element2 IN 
+    ~fire~
+    ~cold~
+    ~electrical~
+    ~acid~
+  BEGIN
+
+    OUTER_TEXT_SPRINT result  ~%element2%%type%~
+    OUTER_TEXT_SPRINT damagetype ~%element2%~
+    OUTER_SET add_to_array = EVAL ~%damagetype%~
+
+    ACTION_IF (%add_to_array% > 0) BEGIN
+
+      //add mod items to array
+      ACTION_DEFINE_ASSOCIATIVE_ARRAY ~d2%element2%weap~ BEGIN    // resource => result
+        ~%item%~ => ~%result%~
+      END
+  
+      //add mod items to d2_elemental_weapon_arrays file (in override)
+      COPY_EXISTING ~override/d2_elemental_weapon_arrays~  ~override~
+        REPLACE_TEXTUALLY ~%element2% => %result%~  ~%element2% => %result%%WNL%  %item% => %result%~
+      BUT_ONLY UNLESS ~%item% => %result%~
+
+    END
   END
-
-
-//add mod items to d2_elemental_weapon_arrays file (in override)
-  COPY_EXISTING ~override/d2_elemental_weapon_arrays~  ~override~
-    REPLACE_TEXTUALLY ~%element% => %result%~  ~%element% => %result%%WNL%  %item% => %result%~
-  BUT_ONLY UNLESS ~%item% => %result%~
 
 END
 

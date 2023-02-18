@@ -2,8 +2,8 @@
 Script - Quick Info
 ==================================================
 - Better IWD Pregen (d2scrp): Base script. Includes all features listed below.
-- d2scrp-: Same as base script, except default mode is Cooldown.
 - d2scrp+: Same as base script, except calls for help are enabled.
+- d2scrp-: Same as base script, except default mode is Cooldown.
 - IWD Pregen (iwdpgen): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only)
 
 

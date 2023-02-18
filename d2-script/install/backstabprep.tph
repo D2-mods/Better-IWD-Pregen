@@ -26,11 +26,10 @@ LAF no_backstab STR_VAR kit = ~D5ALCHM~ END            // Alchemist (thief) from
 
 ////////////////////////////////////////////////////////////
 
-//fix lines for some Expanded Classes kits
-//these lines were causing some issues (including for ADD_KIT_EX)
+//fix lines for some Expanded Classes kits (incorrect values or column numbers)
 //This first part sets lines to level 40, with corrected numbers
 
-ACTION_IF !(MOD_IS_INSTALLED ~d2-modfixes.tp2~ 2) BEGIN    // skip if expanded classes component is installed
+ACTION_IF !(MOD_IS_INSTALLED ~d2-modfixes.tp2~ 2) BEGIN    // skip if d2-modfixes component is installed
 
 //Kensai (Thief)
 ACTION_IF FILE_EXISTS ~override/CLABUSKT.2DA~ BEGIN
@@ -121,7 +120,7 @@ END
 ////////////////////////////////////////////////////////////
 
 //Scale to level 50, if backstab.2da extends to 50
-//Needs to be after the level 40 lines to workaround some issues
+//This is checked after the level 40 lines to workaround some issues
 
 //Get column count from backstab.2da
 COPY_EXISTING - ~backstab.2DA~  ~~

@@ -218,7 +218,7 @@ Remove alignment restrictions for classes (classic and EEs)
 
 
 ==================================================
-Paladins and Rangers do not fall at low rep (EEs)
+Prevent paladins and rangers falling at low rep? (EEs)
 ==================================================
 - Prevent falling at low rep
 - Affects all kits as well, including mod kits

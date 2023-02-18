@@ -89,21 +89,21 @@ OUTER_TEXT_SPRINT ngauto  ~d2scrp~     // Better IWD Pregen (d2scrp)
 INCLUDE ~%install%/ngauto.tph~
 
 BEGIN @2
-REQUIRE_COMPONENT ~d2-script.tp2~ 10 @50
+REQUIRE_COMPONENT ~d2-script.tp2~ 10 ~~
 SUBCOMPONENT @9999
 LABEL ~D2-SCRIPT-NGAUTO2~
 OUTER_TEXT_SPRINT ngauto  ~d2scrp+~    // d2scrp+ (Calls for help enabled)
 INCLUDE ~%install%/ngauto.tph~
 
 BEGIN @3
-REQUIRE_COMPONENT ~d2-script.tp2~ 10 @50
+REQUIRE_COMPONENT ~d2-script.tp2~ 10 ~~
 SUBCOMPONENT @9999
 LABEL ~D2-SCRIPT-NGAUTO3~
 OUTER_TEXT_SPRINT ngauto  ~d2scrp-~    // d2scrp- (default mode is Cooldown)
 INCLUDE ~%install%/ngauto.tph~
 
 BEGIN @4
-REQUIRE_COMPONENT ~d2-script.tp2~ 10 @50
+REQUIRE_COMPONENT ~d2-script.tp2~ 10 ~~
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~~
 SUBCOMPONENT @9999
 LABEL ~D2-SCRIPT-NGAUTO4~
@@ -356,7 +356,7 @@ LABEL ~D2-TWEAKS-ALIGNMENTS0~
 
 ////////////////////////////////////////////////////////////
 
-//Paladins and Rangers do not fall at low rep (EEs)
+//Prevent paladins and rangers falling at low rep? (EEs)
 
 BEGIN @41601    // Yes
 DESIGNATED 180
