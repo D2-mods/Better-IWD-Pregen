@@ -2,40 +2,48 @@
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
 Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2
 
-**Readme is accurate for v7.0**
-
 
 Components
 -
 
-**Script components:**
+#### Script components:
 1. Better IWD Pregen
 2. Better AI for Call Woodland Beings (EEs, BG2)
+	- Option 1: Use revised script for nymph summon (compatible with SCS)
+	- Option 2: Use existing script, but patch in a few actions (use with revision mods)
 3. Auto-assign script to new characters
 
-**Tweak components:**
+--
+
+#### Tweak components:
 1. Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
 4. Shapeshift movement bonuses bypass Free Action (EEs)
 5. Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
 6. Give party starting equipment (IWD games)
+	- Option 1: Items are auto-equipped or added to inventory
+	- Option 2: Start with a bag, containing a mix of weapons
 7. Give party a Bag of Holding at game start (classic and EEs)
+	- Option 1: "Bottomless" bag (same as Tweaks Anthology component)
+	- Option 4: Bottomless, and Gold is exchanged when adding/removing items
 8. All classes get full HP bonuses from Constitution (classic and EEs)
 9. Fixes for backstab-related 2DA files (EEs)
 10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+	- Crippling Strike is capped at -7 stat reduction in unmodded IWDEE
 11. Allow Minsc to use his Berserk ability at will (BG games)
 12. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 13. Remove alignment restrictions for classes (classic and EEs)
 14. Prevent paladins and rangers falling at low rep? (EEs)
 
+--
 
 **Additional info:**
 - All components can be installed independently and in any order, except for auto-assigning the script.
 - Script components should be installed after AI mods (ex. SCS or atweaks).
 - All tweaks have at least 2 subcomponents, even if just a simple "Yes" or "No". Some have 3-4 options.
 
-Scroll down for additional info on tweaks.
+Scroll down for additional info on some of the tweaks.
 
 ---
 ---
@@ -104,7 +112,8 @@ NOTE: I'm not 100% sure the scripts work with expansionless versions of the clas
   
 ---
 
-#### BG(EE), BG2(EE), IWD(EE):
+### BG(EE), BG2(EE), IWD(EE):
+
   ```
 Class: Fighter, Ranger, Paladin, including any multiclass combinations
 	Conditions (one must be met to auto-attack)
@@ -130,7 +139,10 @@ Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
 	3. If THAC0 is less than 5, will attack if enemy is within 12 ft.
   ```
 
-#### IWD2:
+ --
+
+### IWD2:
+
   ```
 Class: Fighter, Ranger, Paladin or Barbarian (single-class or multiclass with 3+ levels)
 	Conditions (one must be met to auto-attack)
@@ -164,7 +176,7 @@ Class: Wizard or Sorcerer
   
 ---
 
-#### Option 1 - Revised script:
+### Option 1 - Revised script:
 - Smarter spellcasting (better targeting and not as wasteful)
 - Won't cast statuses on undead or enemies with high magic resist
 - Will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
@@ -172,7 +184,7 @@ Class: Wizard or Sorcerer
 - Will not attack or cast spells at enemies if invisible
 - Cooldown hotkeys to delay spellcasting
 
-Compatible with EEs and original BG2 engine, including SCS.
+Compatible with EEs and classic BG2 engine, including SCS.  
 Not compatible with atweaks PnP Fey.
 
 > DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
@@ -184,9 +196,9 @@ Hotkeys:
 - If the B key is pressed, the nymph will enter Cooldown for 3 rounds; will not cast offensive spells or teleport to an enemy in Cooldown mode
 - If the E key is pressed, the Cooldown timer is set to 0 (deactivated)
 
+--
 
-
-#### Option 2 - Patch existing script:
+### Option 2 - Patch existing script:
 - Adds Cooldown hotkeys (B to enable, E to disable)
 - Adds D hotkey to teleport to party
 - Will teleport to party if not in visual range (and not invisible)
@@ -226,8 +238,6 @@ NOTE: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep t
 
 <details>
   <summary>Adjust enemy damage at higher difficulties (classic IWD, IWD2)</summary>
-  
----
 
 Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 -
@@ -237,23 +247,7 @@ Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 
 > Suppress Extra Difficulty Damage=1
 
-NOTE: For IWD2, this setting doesn't work in the unmodded game. Thanks to an exe patch by Bubb, the option can be enabled. This patch is used with Bubb's permission.
-  
----
-
-</details>
-
-<details>
-  <summary>Add or remove Avarine Decanter (IWD2)</summary>
-  
----
-
-Add or remove Avarine Decanter (IWD2)
--
-
-- This component adds or hides this item from the seller's store.
-- Official patches added the other bonus items, but not this one.
-- GOG version includes it by default.
+NOTE: For IWD2, this setting doesn't work in the unmodded game. Thanks to an exe patch by Bubb, the option can be enabled. This patch is included with Bubb's permission.
   
 ---
 
@@ -261,8 +255,6 @@ Add or remove Avarine Decanter (IWD2)
 
 <details>
   <summary>Unnerf Animate Dead (IWD2)</summary>
-  
----
 
 Unnerf Animate Dead (IWD2)
 -
@@ -291,25 +283,7 @@ You can also manually unnerf this spell by deleting SPWI501.SPL from the overrid
 </details>
 
 <details>
-  <summary>Shapeshift movement bonuses bypass Free Action (EEs)</summary>
-  
----
-
-Shapeshift movement bonuses bypass Free Action (EEs)
--
-
-This lets you set all movement bonuses from shapeshifts to bypass Free Action, or be blocked by Free Action. Note that a Free Action applied afterwards can still reset movement rate back to the base value. This component will also set all movement bonuses to the stacking multiplier. The EEs, especially IWD:EE, are inconsistent with these effects, and there are also differences between EE v2.5 and v2.6.
-
-This component is similar to the one in my Polymorph fixes mod for IWD:EE, except it applies also to the BG:EE games. If differing options are chosen, the game will use whichever is installed last.
-  
----
-
-</details>
-
-<details>
   <summary>Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)</summary>
-  
----
 
 Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
 -
@@ -335,8 +309,6 @@ Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
 
 <details>
   <summary>Give party starting equipment (IWD games)</summary>
-  
----
 
 Give party starting equipment (IWD games)
 -
@@ -346,7 +318,7 @@ This component gives player characters basic starting weapons, because my charac
 This is a global script that runs once per character per game.
 
 
-**Component 1 (auto-equip)**
+#### Component 1 (auto-equip):
 
 Instructions:
 - Start a new game with new characters (you can also load one saved at the start).
@@ -394,7 +366,9 @@ IWD-in-BG2:
 
 </details>
 
-**Component 2 (weapon bag)**
+--
+
+#### Component 2 (weapon bag):
 
 This component will give the party a bag, containing a selection of weapons. A single bag is given and the player can choose what to do with unwanted items (i.e. sell or throw away). The contents is the same regardless of party size. The bag contains at least one of each weapon type, so it should be compatible with any Proficiencies overhauls.
 
@@ -406,8 +380,6 @@ NOTE: If the separate "Give party a Bag of Holding" component is not installed, 
 
 <details>
   <summary>Give party a Bag of Holding at game start (classic and EEs)</summary>
-  
----
 
 Give party a Bag of Holding at game start (classic and EEs)
 -
@@ -416,6 +388,7 @@ Give party a Bag of Holding at game start (classic and EEs)
 - The "Bottomless" option has a capacity of 32767 items, same number used by Tweaks Anthology.
 - Compatible with all IE games that support Bags of Holding (except PsT:EE for now).
 
+--
 
 **Option 4 (EEs) - Bottomless, and Gold is exchanged when adding/removing items (experimental)**
 
@@ -429,6 +402,7 @@ Note that taking items out of the bag isn't cheap. I set to a 180% markup, so co
 
 ---
 
+**Info:**
 - Bag screen won't show any numbers (for current gold or amounts transferred).
 - You can sell items in the bag to merchants (still costs gold to remove from bag).
 - Reputation has no effect.
@@ -449,40 +423,7 @@ NOTE: Items cannot be taken out of the bag if party lacks the gold to buy it bac
 </details>
 
 <details>
-  <summary>All classes get full HP bonuses from Constitution (classic and EEs)</summary>
-  
----
-
-All classes get full HP bonuses from Constitution (classic and EEs)
--
-
-- Choice between 2e/BG-style or the more even HP curve of later editions.
-- Usable with all versions of BG1, BG2, and IWD, including conversion mods.
-  
----
-
-</details>
-
-<details>
-  <summary>Fixes for backstab-related 2DA files (EEs)</summary>
-  
----
-
-Fixes for backstab-related 2DA files (EEs)
--
-
-- Fixes problematic lines in backstab-related 2das (added by some mod kits).
-- Also makes sure base-game kits have correct progression to level 40 or 50.
-- Will also add all files necessary for Sneak Attack (if missing).
-  
----
-
-</details>
-
-<details>
   <summary>Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)</summary>
-  
----
 
 Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
 -
@@ -504,8 +445,6 @@ Uncap Crippling Strike:
 
 <details>
   <summary>Allow Minsc to use his Berserk ability at will (BG games)</summary>
-  
----
 
 Allow Minsc to use his Berserk ability at will (BG games)
 -
@@ -526,8 +465,6 @@ NOTE: Will be skipped if Rashemi Berserker (Artisan's Kitpack) is installed
 
 <details>
   <summary>Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)</summary>
-  
----
 
 Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 -
@@ -536,36 +473,6 @@ Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 - IWD-in-BG2: Patch scimitars to use scimitar appearance (was using long sword)
 
 NOTE: Shortbow appearance can't be set for IWD-in-BG2
-  
----
-
-</details>
-
-<details>
-  <summary>Remove alignment restrictions for classes (classic and EEs)</summary>
-  
----
-
-Remove alignment restrictions for classes (classic and EEs)
--
-
-- All classes can be any alignment
-- Affects all kits as well, including mod kits
-  
----
-
-</details>
-
-<details>
-  <summary>Prevent paladins and rangers falling at low rep? (EEs)</summary>
-  
----
-
-Prevent paladins and rangers falling at low rep? (EEs)
--
-
-- Prevent falling at low rep
-- Affects all kits as well, including mod kits
   
 ---
 

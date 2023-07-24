@@ -1,38 +1,53 @@
-//This file contains fixes for the backstab-related 2das
-
-////////////////////////////////////////////////////////////
-
-//Add files if missing
+/*
+Check for missing backstab-related files
+v2.6 should have all 2das in all games, but older versions may not
+*/
 
 ACTION_IF !(FILE_EXISTS_IN_GAME ~CRIPPSTR.2DA~) BEGIN
-  COPY ~%files%/CRIPPSTR.2DA~ ~override~
+<<<<<<<< .../temp/CRIPPSTR.2DA
+2DA           V1.0
+0
+              0             1             2             3             4             5             6             7             8             9             10            11            12            13            14            15            16            17            18            19            20            21            22            23            24            25            26            27            28            29            30            31            32            33            34            35            36            37            38            39            40
+THIEF         0             0             0             0             0             1             1             1             1             2             2             2             2             3             3             3             3             4             4             4             4             5             5             5             5             6             6             6             6             7             7             7             7             8             8             8             8             9             9             9             9
+SHADOWDANCER  0             0             0             0             0             0             1             1             1             1             1             1             2             2             2             2             2             2             3             3             3             3             3             3             4             4             4             4             4             4             5             5             5             5             5             5             6             6             6             6             6
+ASSASIN       0             0             0             1             1             1             2             2             2             3             3             3             4             4             4             5             5             5             6             6             6             7             7             7             8             8             8             9             9             9             10            10            10            11            11            11            12            12            12            13            13
+BOUNTY_HUNTER 0             0             0             0             0             1             1             1             1             2             2             2             2             3             3             3             3             4             4             4             4             5             5             5             5             6             6             6             6             7             7             7             7             8             8             8             8             9             9             9             9
+STALKER       0             0             0             0             0             0             0             0             0             0             1             1             1             1             1             1             1             1             2             2             2             2             2             2             2             2             3             3             3             3             3             3             3             3             4             4             4             4             4             4             4
+
+>>>>>>>>
+COPY ~.../temp/CRIPPSTR.2DA~  ~override~
 END
 
 ACTION_IF !(FILE_EXISTS_IN_GAME ~SNEAKATT.2DA~) BEGIN
-  COPY ~%files%/SNEAKATT.2DA~ ~override~
+<<<<<<<< .../temp/SNEAKATT.2DA
+2DA           V1.0
+0
+              0             1             2             3             4             5             6             7             8             9             10            11            12            13            14            15            16            17            18            19            20            21            22            23            24            25            26            27            28            29            30            31            32            33            34            35            36            37            38            39            40
+THIEF         1             1             1             1             2             2             2             2             3             3             3             3             4             4             4             4             5             5             5             5             6             6             6             6             7             7             7             7             8             8             8             8             9             9             9             9             10            10            10            10            11
+SHADOWDANCER  1             1             1             1             1             1             2             2             2             2             2             2             3             3             3             3             3             3             4             4             4             4             4             4             5             5             5             5             5             5             6             6             6             6             6             6             7             7             7             7             7
+ASSASIN       1             1             1             2             2             2             3             3             3             4             4             4             5             5             5             6             6             6             7             7             7             8             8             8             9             9             9             10            10            10            11            11            11            12            12            12            13            13            13            14            14
+BOUNTY_HUNTER 1             1             1             1             2             2             2             2             3             3             3             3             4             4             4             4             5             5             5             5             6             6             6             6             7             7             7             7             8             8             8             8             9             9             9             9             10            10            10            10            11
+STALKER       1             1             1             1             1             1             1             1             2             2             2             2             2             2             2             2             3             3             3             3             3             3             3             3             4             4             4             4             4             4             4             4             5             5             5             5             5             5             5             5             6
+
+>>>>>>>>
+COPY ~.../temp/SNEAKATT.2DA~  ~override~
 END
 
 ACTION_IF !(FILE_EXISTS_IN_GAME ~backstab.SPL~) BEGIN
   COPY ~%files%/backstab.SPL~ ~override~
 END
 
-////////////////////////////////////////////////////////////
 
-//Delete kits that don't need rows (cleanest way to set to 0 for EEs)
-LAF no_backstab STR_VAR kit = ~C0ADVENT~ END           // Rogue Archer from Artisan's Kitpack
-LAF no_backstab STR_VAR kit = ~USAT00~ END             // Archer (Thief) from Expanded Classes
-LAF no_backstab STR_VAR kit = ~A7_SHARPSHOOTER~ END    // Sharpshooter from Improved Archer
-LAF no_backstab STR_VAR kit = ~D5ALCHM~ END            // Alchemist (thief) from Might and Guile
 
-////////////////////////////////////////////////////////////
-
-//fix lines for some Expanded Classes kits (incorrect values or column numbers)
-//This first part sets lines to level 40, with corrected numbers
+/*
+fix lines for some Expanded Classes kits (incorrect values or column numbers)
+Fixes an issue when installing a thief kit after these kits, using ADD_KIT_EX.
+*/
 
 ACTION_IF !(MOD_IS_INSTALLED ~d2-modfixes.tp2~ 2) BEGIN    // skip if d2-modfixes component is installed
 
 //Kensai (Thief)
-ACTION_IF FILE_EXISTS ~override/CLABUSKT.2DA~ BEGIN
+ACTION_IF (FILE_EXISTS ~override/CLABUSKT.2DA~) BEGIN
   COPY_EXISTING ~BACKSTAB.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USKT00~ RET row_number columns END
     INSERT_2DA_ROW row_number columns ~USKT00 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4~
@@ -53,7 +68,7 @@ ACTION_IF FILE_EXISTS ~override/CLABUSKT.2DA~ BEGIN
 END
 
 //Vampyre
-ACTION_IF FILE_EXISTS ~override/CLABUSVA.2DA~ BEGIN
+ACTION_IF (FILE_EXISTS ~override/CLABUSVA.2DA~) BEGIN
   COPY_EXISTING ~BACKSTAB.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USVA00~ RET row_number columns END
     INSERT_2DA_ROW row_number columns ~USVA00 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2~
@@ -74,7 +89,7 @@ ACTION_IF FILE_EXISTS ~override/CLABUSVA.2DA~ BEGIN
 END
 
 //Seducer
-ACTION_IF FILE_EXISTS ~override/CLABUSSD.2DA~ BEGIN
+ACTION_IF (FILE_EXISTS ~override/CLABUSSD.2DA~) BEGIN
   COPY_EXISTING ~BACKSTAB.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USSD77~ RET row_number columns END
     INSERT_2DA_ROW row_number columns ~USSD77 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2~
@@ -95,7 +110,7 @@ ACTION_IF FILE_EXISTS ~override/CLABUSSD.2DA~ BEGIN
 END
 
 //Shapechanger
-ACTION_IF FILE_EXISTS ~override/CLABUSSC.2DA~ BEGIN
+ACTION_IF (FILE_EXISTS ~override/CLABUSSC.2DA~) BEGIN
   COPY_EXISTING ~BACKSTAB.2DA~ ~override~
     LPF 2da_find_row_delete STR_VAR row_name = ~USSC00~ RET row_number columns END
     INSERT_2DA_ROW row_number columns ~USSC00 1 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4~
@@ -117,10 +132,12 @@ END
 
 END
 
-////////////////////////////////////////////////////////////
 
-//Scale to level 50, if backstab.2da extends to 50
-//This is checked after the level 40 lines to workaround some issues
+
+/*
+Scale to level 50, if backstab.2da extends to 50
+This is checked after the level 40 lines to workaround some issues
+*/
 
 //Get column count from backstab.2da
 COPY_EXISTING - ~backstab.2DA~  ~~
@@ -215,4 +232,6 @@ END
 
 END
 
-////////////////////////////////////////////////////////////
+
+/*
+*/

@@ -1,7 +1,6 @@
 ==================================================
-Better AI for Call Woodland Beings
+Option 1 - Revised script
 ==================================================
-Option 1 - Revised script:
 - Smarter spellcasting (better targeting and not as wasteful)
 - Won't cast statuses on undead or enemies with high magic resist
 - Will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
@@ -22,8 +21,9 @@ Hotkeys:
 - If the E key is pressed, the Cooldown timer is set to 0 (deactivated)
 
 
-
-Option 2 - Patch existing script:
+==================================================
+Option 2 - Patch existing script
+==================================================
 - Adds Cooldown hotkeys (B to enable, E to disable)
 - Adds D hotkey to teleport to party
 - Will teleport to party if not in visual range (and not invisible)

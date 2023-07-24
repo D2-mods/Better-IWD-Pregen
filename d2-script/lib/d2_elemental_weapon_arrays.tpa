@@ -303,12 +303,12 @@ END
 
     ACTION_IF (%add_to_array% > 0) BEGIN
 
-      //add mod items to array
+      //add item to array
       ACTION_DEFINE_ASSOCIATIVE_ARRAY ~d2%element2%weap~ BEGIN    // resource => result
         ~%item%~ => ~%result%~
       END
   
-      //add mod items to d2_elemental_weapon_arrays file (in override)
+      //add item to file in override
       COPY_EXISTING ~override/d2_elemental_weapon_arrays~  ~override~
         REPLACE_TEXTUALLY ~%element2% => %result%~  ~%element2% => %result%%WNL%  %item% => %result%~
       BUT_ONLY UNLESS ~%item% => %result%~
