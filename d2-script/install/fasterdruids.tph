@@ -1,0 +1,81 @@
+//for IWDEE
+//
+
+
+ACTION_IF (GAME_IS ~iwdee~) BEGIN
+
+  LAF add_movement_equip INT_VAR speed=180 STR_VAR item = plywwolf END
+  LAF add_movement_equip INT_VAR speed=250 STR_VAR item = plypbear END
+  LAF delete_movement_effects STR_VAR item = cdpolybb END
+  LAF delete_movement_effects STR_VAR item = plybeetl END
+
+  ACTION_IF (fasterdruids = 1) BEGIN
+    LAF add_movement_equip INT_VAR speed=180 STR_VAR item = cdpolyww END
+    LAF add_movement_equip INT_VAR speed=180 STR_VAR item = PLYWOLF1 END
+    LAF add_movement_equip INT_VAR speed=250 STR_VAR item = cdpolypb END
+    LAF add_movement_equip INT_VAR speed=250 STR_VAR item = PLYBEAR1 END
+  END
+
+  ACTION_IF (fasterdruids = 0) BEGIN
+    LAF delete_movement_effects STR_VAR item = cdpolyww END
+    LAF delete_movement_effects STR_VAR item = cdpolypb END
+  END
+
+
+  //Check opcode to use (check if this is needed)
+  OUTER_SET movebonus1 = ID_OF_LABEL ~d2-iwdee-fixes.tp2~ ~D2-IWDEE-MOVEBONUS1~
+  OUTER_SET movebonus0 = ID_OF_LABEL ~d2-iwdee-fixes.tp2~ ~D2-IWDEE-MOVEBONUS0~
+  OUTER_SET plymovebonus1 = ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-PLYMOVEBONUS1~
+  OUTER_SET plymovebonus0 = ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-PLYMOVEBONUS0~
+
+  ACTION_IF ((MOD_IS_INSTALLED ~d2-iwdee-fixes.tp2~ %movebonus0%) OR
+             (MOD_IS_INSTALLED ~d2-script.tp2~ %plymovebonus0%)
+  ) BEGIN
+
+    ACTION_IF (((INSTALL_ORDER ~d2-script.tp2~ %plymovebonus1% AFTER ~d2-iwdee-fixes.tp2~ %movebonus0%)) OR
+               ((INSTALL_ORDER ~d2-iwdee-fixes.tp2~ %movebonus1% AFTER ~d2-script.tp2~ %plymovebonus0%))
+    ) BEGIN		 
+  
+    // no change needed (bypass free action)
+
+    END
+    ELSE BEGIN    // installed 'blocked by free action'
+  
+      COPY_EXISTING_REGEXP ~ply.*\.itm~ ~override~
+        LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=176 opcode=126 END
+      BUT_ONLY
+
+      ACTION_IF (fasterdruids = 1) BEGIN
+        COPY_EXISTING_REGEXP ~cdpoly.*\.itm~ ~override~
+          LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=176 opcode=126 END
+        BUT_ONLY
+      END
+
+    END
+  END
+
+
+  //Text edits
+  COPY_EXISTING ~SPCL107.SPL~ ~override~
+    SAY NAME1 @140 SAY UNIDENTIFIED_DESC @240
+  BUT_ONLY
+  
+  COPY_EXISTING ~SPCL101.SPL~ ~override~
+    SAY NAME1 @141 SAY UNIDENTIFIED_DESC @241
+  BUT_ONLY
+  
+  ACTION_IF (fasterdruids = 1) BEGIN
+    COPY_EXISTING ~spwi482.SPL~ ~override~
+      SAY NAME1 @142 SAY UNIDENTIFIED_DESC @242
+    BUT_ONLY
+  
+    COPY_EXISTING ~spwi481.SPL~ ~override~
+      SAY NAME1 @143 SAY UNIDENTIFIED_DESC @243
+    BUT_ONLY
+  END
+
+END
+
+
+/*
+*/

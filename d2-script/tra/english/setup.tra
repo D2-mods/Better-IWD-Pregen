@@ -21,7 +21,7 @@ This file contains text shown in weidu installer
 //Tweaks
 @40100 = ~Adjust enemy damage at higher difficulties (classic IWD, IWD2)~
 	@40101 = ~Enemies don't do extra damage~
-	@40102 = ~Enemies do extra damage (game default)~
+	@40102 = ~Enemies do extra damage (default)~
 
 @40200 = ~Add or remove Avarine Decanter (IWD2)~
 	@40201 = ~Add Avarine Decanter~
@@ -51,11 +51,12 @@ This file contains text shown in weidu installer
 
 @40800 = ~All classes get full HP bonuses from Constitution (classic and EEs)~
 	@40801 = ~2e-style HP bonuses (i.e. BG-style)~
-	@40802 = ~3e-style bonuses (+1 for every 2 CON above 10)~
+	@40802 = ~3e-style bonuses (+1 or -1 every 2 Con) (WARNING: Prism will spawn dead in BG1.)~
+	@40803 = ~Mixed (use 3e-style at 10+, normal BG penalties at under 10)~
 
-@40900 = ~Fixes for backstab-related 2DA files (EEs)~
-	@40901 = ~Check files and fix (incorrect lines, etc.)~
-	@40902 = ~Do nothing~
+@40900 = ~~
+	@40901 = ~~
+	@40902 = ~~
 
 @41000 = ~Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)~
 	@41001 = ~Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)~
@@ -74,20 +75,24 @@ This file contains text shown in weidu installer
 	@41301 = ~Use at will, and reduce duration to 5 rounds (30 seconds)~
 	@41302 = ~Use at will, and reduce duration to 1 turn (60 seconds)~
 	@41303 = ~Use at will, but do not lower duration (120 seconds)~
-	@41304 = ~Only install timing fix, no change to ability duration (EEs)~
-@41360 = ~This component is not available for Rashemi Berserker (Artisan's Kitpack)~
+	@41304 = ~Only install timing fix (prevents self-damage after ability ends)~
+@41360 = ~Not available for Rashemi Berserker (Artisan's Kitpack)~
 
 @41400 = ~Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)~
 	@41401 = ~Yes~
 	@41402 = ~No~
 
 @41500 = ~Remove alignment restrictions for classes (classic and EEs)~
-	@41501 = ~Yes~
-	@41502 = ~No~
+	@41501 = ~for all classes~
+	@41502 = ~not paladins/monks~
+	@41503 = ~not clerics/druids/shamans~
+	@41504 = ~not paladins/monks/clerics/druids/shamans~
+	@41505 = ~not paladins/monks/clerics/druids/shamans/bards~
 
-@41600 = ~Prevent paladins and rangers falling at low rep? (EEs)~
-	@41601 = ~Yes~
-	@41602 = ~No~
+@41600 = ~Prevent paladins and rangers falling at low rep (EEs)~
+	@41601 = ~for both (paladins and rangers)~
+	@41602 = ~Rangers only (paladins can fall)~
+	@41603 = ~Paladins only (rangers can fall)~
 
 @41700 = ~~
 	@41701 = ~~
@@ -103,12 +108,12 @@ This file contains text shown in weidu installer
 //WeiDU Messages
 
 @50 = ~Component not available~
-@51 = ~~
+@51 = ~EE component~
 @52 = ~NOTE: The Avarine Decanter was already added. No changes were made to the game.
 ~
-@53 = ~NOTE: See the readme-tweaks file in the mod folder for summon list and additional info.
+@53 = ~NOTE: See GitHub page for summon list and additional info.
 ~
-@54 = ~NOTE: See the readme-tweaks file for additional info, including known issues/exploits.
+@54 = ~NOTE: See GitHub page for additional info, including known issues/exploits.
 ~
 @55 = ~~
 @56 = ~NOTE: This patch makes the AI for CWB summons preserve invisibility, as well as make usable the B, E, and D hotkeys (Cooldown mode controls and Dimension Door when out-of-battle).

@@ -1,0 +1,35 @@
+//Add or remove Avarine Decanter (IWD2)
+//
+
+
+//add Decanter
+ACTION_IF (decanter = 1) BEGIN
+
+  //Copies script to override (used by Nym)
+  ACTION_IF ((FILE_EXISTS ~override/00BPak0.bcs~) OR 
+             (MOD_IS_INSTALLED ~Setup-IWD2-Ease.tp2~ 9)
+  ) BEGIN
+    PRINT @52    // "NOTE: The Avarine Decanter was already added. No changes were made to the game."
+  END
+  ELSE BEGIN
+    COPY ~%iwd2%/00BPak0.bcs~  ~override~
+  END
+
+END
+
+
+//remove Decanter
+ACTION_IF (decanter = 0) BEGIN
+
+  //edit Nym's script
+  COPY_EXISTING ~50NYM.DLG~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~50Nym2~ ~50Nym~
+    END
+  BUT_ONLY
+
+END
+
+
+/*
+*/

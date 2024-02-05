@@ -1,0 +1,158 @@
+/*
+Remove alignment restrictions for classes (classic and EEs)
+Has multiple options for skipping some classes (ex. clerics or paladins)
+*/
+
+
+//array of class labels
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2alignmentcat BEGIN
+  MAGE       => all
+  FIGHTER    => all
+  CLERIC     => divine
+  THIEF      => all
+  BARD       => song
+  PALADIN    => law
+  DRUID      => divine
+  RANGER     => all
+  SORCERER   => all
+  MONK       => law
+  SHAMAN     => divine
+//iwd2
+  BARBARIAN  => song    // skipped with bard for iwd2
+  ROGUE      => all
+  WIZARD     => all
+END
+
+
+//
+//array for kit classes to skip
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2alignmentclass BEGIN
+  3 => cleric
+  5 => bard
+  6 => paladin
+  8 => FC
+  11 => druid
+  14 => CM
+  15 => CT
+  16 => FD
+  17 => FMC
+  18 => CR
+  20 => monk
+  21 => shaman
+END
+
+
+//
+//set variables (installer options)
+
+// for all classes
+ACTION_IF (alignments = 1) BEGIN  ACTION_PHP_EACH d2alignmentclass AS classid => class BEGIN
+  OUTER_SET EVAL ~%class%~ = 0    // 0 = kit gets patched
+END
+  OUTER_SET all = 1 OUTER_SET law = 1 OUTER_SET divine = 1 OUTER_SET song = 1    // for d2alignmentcat array
+END
+
+// not paladins/monks
+ACTION_IF (alignments = 2) BEGIN  ACTION_PHP_EACH d2alignmentclass AS classid => class BEGIN  
+  ACTION_IF ((classid = 6) OR (classid = 20)) BEGIN  OUTER_SET EVAL ~%class%~ = classid
+  END ELSE BEGIN  OUTER_SET EVAL ~%class%~ = 0 END    // set to 0, unless paladin/monk
+END
+  OUTER_SET all = 1 OUTER_SET law = 0 OUTER_SET divine = 1 OUTER_SET song = 1
+END
+
+// not clerics/druids/shamans
+ACTION_IF (alignments = 3) BEGIN  ACTION_PHP_EACH d2alignmentclass AS classid => class BEGIN  
+  ACTION_IF ((classid = 6) OR (classid = 20) OR (classid = 5)) BEGIN  OUTER_SET EVAL ~%class%~ = 0
+  END ELSE BEGIN  OUTER_SET EVAL ~%class%~ = classid END    // set to 0, unless cleric/druid/shaman
+END
+  OUTER_SET all = 1 OUTER_SET law = 1 OUTER_SET divine = 0 OUTER_SET song = 1
+END
+
+// not paladins/monks/clerics/druids/shamans
+ACTION_IF (alignments = 4) BEGIN  ACTION_PHP_EACH d2alignmentclass AS classid => class BEGIN  
+  ACTION_IF (classid = 5) BEGIN  OUTER_SET EVAL ~%class%~ = 0    // set to 0 if monk
+  END ELSE BEGIN  OUTER_SET EVAL ~%class%~ = classid END
+END
+  OUTER_SET all = 1 OUTER_SET law = 0 OUTER_SET divine = 0 OUTER_SET song = 1
+END
+
+// not paladins/monks/clerics/druids/shamans/bards
+ACTION_IF (alignments = 5) BEGIN  ACTION_PHP_EACH d2alignmentclass AS classid => class BEGIN  
+  OUTER_SET EVAL ~%class%~ = classid    // classid = not patched
+END
+  OUTER_SET all = 1 OUTER_SET law = 0 OUTER_SET divine = 0 OUTER_SET song = 0
+END
+
+
+
+//
+//check main classes
+COPY_EXISTING - ~ALIGNMNT.2da~  ~~
+  COUNT_2DA_ROWS 3 ALIGNMNT_rows
+  READ_2DA_ENTRIES_NOW ~ALIGNMNT_table~ 3
+  FOR (r = 1; r < ALIGNMNT_rows; ++r) BEGIN
+    SET patch_class = 0
+    READ_2DA_ENTRY_FORMER ~ALIGNMNT_table~ r 0 label
+    PHP_EACH d2alignmentcat AS mainclass => cat BEGIN
+      PATCH_IF (patch_class = 0) BEGIN
+        PATCH_IF !(~%label%~ STRING_CONTAINS_REGEXP ~%mainclass%~) BEGIN    // if %label% DOES contain %mainclass%
+          TEXT_SPRINT type ~%cat%~
+          SET i = EVAL ~%type%~
+          PATCH_IF (i = 1) BEGIN
+            FOR (col = 1; col < 10; ++col) BEGIN    // for columns 1-9 (alignments)
+              SET_2DA_ENTRY_LATER ~d2alignment_edits~ r col 1
+            END
+            SET patch_class = 1
+          END
+        END
+      END
+    END
+  END
+//end inlined COPY
+
+
+//
+//check kitlist.2da (if file exists)
+ACTION_IF (RESOURCE_CONTAINS ~kitlist.2da~ ~BERSERKER~) BEGIN    // returns false if file not in game
+  COPY_EXISTING - ~kitlist.2da~  ~~
+    COUNT_2DA_ROWS 3 kitlist_rows
+    READ_2DA_ENTRIES_NOW ~kitlist_table~ 3
+
+    FOR (row = 1; row < kitlist_rows; ++row) BEGIN
+      READ_2DA_ENTRY_FORMER ~kitlist_table~ row 8 baseclass
+      PATCH_IF (IS_AN_INT %baseclass%) BEGIN
+        PATCH_IF ((baseclass != paladin) AND (baseclass != monk) AND (baseclass != bard) AND
+                  (baseclass != cleric) AND (baseclass != druid) AND (baseclass != shaman) AND
+                  (baseclass != FC) AND (baseclass != CM) AND (baseclass != CT) AND 
+                  (baseclass != FD) AND (baseclass != FMC) AND (baseclass != CR)
+        ) BEGIN
+          READ_2DA_ENTRY_FORMER ~kitlist_table~ row 1 class1
+          INNER_ACTION BEGIN
+            COPY_EXISTING - ~ALIGNMNT.2DA~  ~~
+              FOR (kit = 1; kit < ALIGNMNT_rows; ++kit) BEGIN
+                READ_2DA_ENTRY_FORMER ~ALIGNMNT_table~ kit 0 class2
+                PATCH_IF (~%class1%~ STR_EQ ~%class2%~) BEGIN
+                  FOR (col = 1; col < 10; ++col) BEGIN    // for columns 1-9 in ALIGNMNT.2DA
+                    SET_2DA_ENTRY_LATER ~d2alignment_edits~ kit col 1
+                  END
+                END
+              END
+            // end inlined COPY
+          END
+        END
+      END
+    END
+  // end inlined COPY
+END
+
+
+//
+//make edits
+COPY_EXISTING ~ALIGNMNT.2da~  ~override~
+  SET_2DA_ENTRIES_NOW ~d2alignment_edits~ 3
+  PRETTY_PRINT_2DA
+BUT_ONLY
+
+
+/*
+*/

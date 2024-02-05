@@ -1,0 +1,31 @@
+//Shapeshift movement bonuses bypass Free Action (EEs)
+//
+
+
+ACTION_IF (movebonus = 1) BEGIN  OUTER_SET match=126 OUTER_SET opcode=176 END    // bypass
+ACTION_IF (movebonus = 0) BEGIN  OUTER_SET match=176 OUTER_SET opcode=126 END    // blocked
+
+
+COPY_EXISTING_REGEXP ~ply.*\.itm~ ~override~
+  LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=match opcode=opcode END
+  LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=opcode parameter2=5 END
+BUT_ONLY
+
+COPY_EXISTING ~TROLLALL.ITM~ ~override~
+  LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=match opcode=opcode END
+BUT_ONLY
+
+ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+  COPY_EXISTING ~plywolf1.ITM~ ~override/wolfm.ITM~
+END
+
+ACTION_IF (FILE_EXISTS_IN_GAME ~cdpolyww.ITM~) BEGIN
+  COPY_EXISTING_REGEXP ~cdpoly.*\.itm~ ~override~
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=match opcode=opcode END
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=opcode parameter2=5 END
+  BUT_ONLY
+END
+
+
+/*
+*/

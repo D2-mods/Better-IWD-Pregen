@@ -1,0 +1,15 @@
+//Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+//
+
+
+COPY ~%files%/backstab16.SPL~ ~override/backstab.SPL~
+  LPF ALTER_EFFECT INT_VAR match_opcode = 292 duration = new_dur END
+  
+  LPF ADD_SPELL_EFFECT 
+    INT_VAR opcode = 321 target = 2 timing = 1 insert_point = 0
+    STR_VAR resource = ~backstab~
+  END
+
+
+/*
+*/

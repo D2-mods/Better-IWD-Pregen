@@ -1,0 +1,100 @@
+//Allow Minsc to use his Berserk ability at will (BG games)
+//30, 60, or 120 second duration
+
+
+//prep
+OUTER_SET 15hploss = duration - 1    // lose 15 HP before max HP bonus ends
+
+
+//EEs
+ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+
+COPY_EXISTING ~SPIN117.SPL~ ~override~
+  SAY NAME1 @900 
+  SAY UNIDENTIFIED_DESC @902
+
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_duration = 120 duration = duration END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 18 match_parameter1 = 15 duration = duration END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 17 match_parameter1 = 15 duration = duration END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 12 match_parameter1 = 15 duration = 15hploss END
+
+//Prevent from stacking and make usable at will
+  LPF ADD_SPELL_EFFECT 
+    INT_VAR opcode = 321 target = 1 timing = 1 insert_point = 0
+    STR_VAR resource = ~SPIN117~
+  END
+   
+  LPF ADD_SPELL_CFEFFECT
+    INT_VAR opcode = 171 target = 1 timing = 9
+    STR_VAR resource = ~SPIN117~
+  END
+	
+  LPF ADD_SPELL_CFEFFECT
+    INT_VAR opcode = 172 target = 1 timing = 9
+    STR_VAR resource = ~SPIN117~
+  END
+BUT_ONLY
+
+END
+
+
+//
+//BG2
+ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc~) BEGIN
+
+COPY_EXISTING ~SPIN117.SPL~ ~override~
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_duration = 120 duration = duration END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_duration = 30 duration = duration END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 18 match_parameter1 = 15 duration = duration END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 17 match_parameter1 = 15 duration = duration END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 12 match_parameter1 = 15 duration = 15hploss END
+
+//Prevent from stacking and make usable at will
+  
+  LPF ADD_SPELL_EFFECT 
+    INT_VAR opcode = 206 target = 1 duration = duration
+    STR_VAR resource = ~SPIN117~
+  END
+  
+  LPF ADD_SPELL_CFEFFECT
+    INT_VAR opcode = 171 target = 1 timing = 9
+    STR_VAR resource = ~SPIN117~
+  END
+	
+  LPF ADD_SPELL_CFEFFECT
+    INT_VAR opcode = 172 target = 1 timing = 9
+    STR_VAR resource = ~SPIN117~
+  END
+  
+BUT_ONLY
+
+END
+
+
+//
+//BG1
+ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN
+
+COPY_EXISTING ~SPIN117.SPL~ ~override~
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_timing = 0 duration = duration END
+  LPF ALTER_EFFECT INT_VAR silent = 1 match_timing = 4 duration = duration END
+
+//Prevent from stacking and make usable at will
+  
+  LPF ADD_SPELL_CFEFFECT
+    INT_VAR opcode = 171 target = 1 timing = 4 duration = duration
+    STR_VAR resource = ~SPIN117~
+  END
+	
+  LPF ADD_SPELL_CFEFFECT
+    INT_VAR opcode = 172 target = 1 timing = 9
+    STR_VAR resource = ~SPIN117~
+  END
+  
+BUT_ONLY
+
+END
+
+
+/*
+*/

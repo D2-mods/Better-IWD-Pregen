@@ -3,6 +3,24 @@ This file contains text displayed in the game
 */
 
 
+/*
+//alt scripts
+//Cooldown mode feedback
+//IWDEE Shapeshift descriptions (faster movement)
+//Animate Dead (IWD2)
+//Worn Garment descriptions (for ngequip)
+//Bag of Holding - unidentified (for ngbag)
+//Bag of Holding - identified (for ngitembag without ngbag)
+//Bag of Holding - identified (for ngbag)
+//for Minsc Berserk tweak
+//light crossbow descriptions for IWD-in-BG2 (for ngequip)
+*/
+
+
+
+//
+//Script descriptions
+
 //SCRPDESC.2DA (d2scrp)
 @100 = ~BETTER IWD PREGEN:~
 
@@ -43,22 +61,24 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 
 
 
-//SCRPDESC.2DA (d2scrp+)
+//
+//alt scripts
+
+//d2scrp+
 @33100 = ~D2SCRP+:~
 @33101 = ~This AI script is identical to Better IWD Pregen, except calls for help are enabled. Fighters, rangers, paladins, monks, and polymorphed characters can respond to a call for help. If Cooldown mode is activated, a character can still make a Shout action, but will not respond to one. (<script>)~
 
-
-//SCRPDESC.2DA (d2scrp-)
+//d2scrp-
 @66100 = ~D2SCRP-:~
 @66101 = ~This AI script is similar to Better IWD Pregen, except the default mode is Cooldown. The E key will disable the Cooldown mode for 30 seconds. The B key will reactivate it instantly. (<script>)~
 
-
-//SCRPDESC.2DA (vanilla IWD Pregen)
+//IWD Pregen (with shaman added)
 @99100 = ~IWD PREGEN:~
 @99101 = ~This combat AI script is assigned to the members of the default party in IWD:EE. The character will defend <HIMHER>self if attacked, or if <HESHE> sees enemies. If the character is under the effects of invisibility or sanctuary, or if <HESHE> is singing a bard song, turning undead, hiding in shadows, or using shamanic dance, <HESHE> will not attack enemies. In addition, a thief, monk, or shaman will search for traps or illusions when there are no enemies nearby. (<script>)~
 
 
 
+//
 //Cooldown mode feedback
 @1000 = ~Cooldown mode activated for 60 seconds~
 @1001 = ~Cooldown mode activated for 30 seconds~
@@ -68,6 +88,7 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 @1005 = ~Cooldown mode activated~
 
 
+//
 //IWD auto-equip messages
 @1010 = ~The party has been given starting weapons. All items are equipped or in the inventories.~
 @1011 = ~The party has been given starting weapons. All items can be found in the inventories.~
@@ -76,6 +97,8 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 
 
 
+
+//
 //IWDEE Shapeshift descriptions (faster movement)
 @140 = ~Shapeshift: Winter Wolf~
 @240 = ~Shapeshift: Winter Wolf
@@ -143,6 +166,26 @@ Special Abilities:
 
 
 
+//
+//Animate Dead (IWD2)
+@160 = ~Animate Dead~
+@260 = ~Animate Dead 
+(Necromancy)
+Level: Clr 3, Sor/Wiz 5, Tempus 3
+Range: Sight of Caster
+Duration: Instantaneous 
+Casting Time: 1 round
+Area of Effect: Special 
+Saving Throw: None 
+
+This spell brings forth a long-dead skeleton or zombie from deep within the earth and reanimates it to serve the caster.  The higher the level of the caster, the more powerful the skeleton or zombie summoned by this spell.
+
+WARNING: At higher levels, the Zombie Lords and Festering Drowned Dead summoned by this spell have powerful supernatural auras.  The effects of their auras may harm your own party members if they fall within the area of affect.~
+
+
+
+
+//
 //Katana descriptions (for ngequip)
 @700 = ~Katana~
 @701 = ~The katana is a single-edged, slightly curved sword that ends with a chisel point. The katana is perhaps one of the finest swords ever made, the steps to its creation a long and secret process that is more art form than anything else. This blade is an important facet of Kara-Turan culture. To touch or wield a samurai's katana is to insult the samurai and to incite his wrath. For a gaijin, or foreigner, to own such a blade is a rare occurrence. Either the gaijin is a greatly honored friend of an important minister, or the gaijin has murdered a samurai.
@@ -176,6 +219,7 @@ Not Usable By:
 
 
 
+//
 //Worn Garment descriptions (for ngequip)
 @710 = ~Worn Garment~
 @711 = ~A plain robe, worn by travelers on extended journeys. Provides some modest protection from the elements.
@@ -208,6 +252,7 @@ Weight:  3 lb.~
 
 
 
+//
 //Bag of Holding - unidentified (for ngbag)
 @720 = ~Bag~
 
@@ -227,6 +272,7 @@ Weight: 5 lb.~
 
 
 
+//
 //Bag of Holding - identified (for ngitembag without ngbag)
 @726 = ~Weapon Sack~
 
@@ -254,6 +300,7 @@ Weight: 5 lb.~
 
 
 
+//
 //Bag of Holding - identified (for ngbag)
 @730 = ~Bag of Holding~
 
@@ -286,6 +333,7 @@ Special: Gold is exchanged when adding or removing items
 
 Weight: 5~
 
+//
 //iwd2
 @735 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
 
@@ -309,6 +357,8 @@ Weight: 5 lb.~
 
 
 
+
+//
 //for Minsc Berserk tweak
 @900 = ~Berserk~
 @901 = ~Berserk
@@ -326,6 +376,8 @@ Minsc becomes enraged for 2 turns. While enraged, he gains a +2 bonus to his Str
 
 
 
+
+//
 //light crossbow descriptions for IWD-in-BG2 (for ngequip)
 
 /*

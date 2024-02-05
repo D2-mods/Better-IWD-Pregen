@@ -1,19 +1,21 @@
-Better IWD Pregen (v7.0)
+Better IWD Pregen
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases
 Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2.
 
+--
 
-==================================================
-OVERVIEW
-==================================================
 A minimalist script and tweak pack. This mod was started as an attempt to make an improved version of the IWD Pregen script from IWD:EE.
 
+See GitHub page for additional info on scripts and tweaks.
+
 
 ==================================================
-INSTALL
+Install info
 ==================================================
-Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other mods (mod packages are cross-platform). It's best to install this mod near the end of the order.
+Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other weidu mods. It's best to install this mod near the end of the order.
+
+--
 
 Script components:
 1. Better IWD Pregen
@@ -29,22 +31,22 @@ Tweak components:
 6. Give party starting equipment (IWD games)
 7. Give party a Bag of Holding at game start (classic and EEs)
 8. All classes get full HP bonuses from Constitution (classic and EEs)
-9. Fixes for backstab-related 2DA files (EEs)
-10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
-11. Allow Minsc to use his Berserk ability at will (BG games)
-12. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
-13. Remove alignment restrictions for classes (classic and EEs)
-14. Prevent paladins and rangers falling at low rep? (EEs)
+9. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+10. Allow Minsc to use his Berserk ability at will (BG games)
+11. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
+12. Remove alignment restrictions for classes (classic and EEs)
+13. Prevent paladins and rangers falling at low rep (EEs)
 
+--
 
 Additional info:
 - All components can be installed independently and in any order, except for auto-assigning the script.
 - Script components should be installed after AI mods (ex. SCS or atweaks).
-- All tweaks have at least 2 subcomponents, even if just a simple "Yes" or "No". Some have 3-4 options.
+- All tweaks have at least 2 subcomponents. Some have 3-4 options.
 
 
 ==================================================
-SCRIPT COMPATIBILITY (v4.0+)
+Script Compatibility (v4.0+)
 ==================================================
 EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
 Classic: BG1, BG2, IWD1, IWD2 (tested with GOG versions)
@@ -60,7 +62,7 @@ NOTE: I'm not 100% sure the scripts work with expansionless versions of the clas
 
 
 ==================================================
-IN-GAME DESCRIPTION (adjusted for each game)
+Script Description (adjusted for each game)
 ==================================================
 The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a character with skill invested will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
 
@@ -70,14 +72,11 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 
 
 ==================================================
-CREDITS
+Tools/Coding
 ==================================================
-Modder: Dan_P
-
 Custom Functions:
-- CD_EXTEND-O-MATIC, by CamDawg (https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220)
+- CD_LEVEL_SELECT-O-MATIC, by CamDawg (https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220)
 - 2DA_MISSING_COLS - by K4thos (https://github.com/K4thos/IE-code-repository)
-- The other files include simple functions I put together to do stuff.
 
 Tools and Resources used:
 - WeiDU (https://github.com/WeiDUorg/weidu)
@@ -87,6 +86,7 @@ Tools and Resources used:
 - Infinity Auto Packager (https://github.com/InfinityTools/InfinityAutoPackager)
 - IESDP (https://gibberlings3.github.io/iesdp/main.htm)
 - LibIconv for Windows (http://gnuwin32.sourceforge.net/packages/libiconv.htm)
+- 7-Zip (https://www.7-zip.org/)
 
 TobEx.dll:
 - Patched DLL file was made by Insomniator and used with permission.
@@ -98,8 +98,24 @@ IWD2 exe patch:
 
 
 ==================================================
-VERSION INFO
+Updates
 ==================================================
+v7.2
+- IWD2/IWD2EE mod:
+	- This mod is compatible with IWD2EE. Install this mod after IWD2EE.
+	- 'Unnerf Animate Dead' will be skipped if IWD2EE 'Spell Revisions' is installed (it splits zombies and skeletons into separate spells, which include the stronger summons).
+	- If using the 'Give party starting equipment' component, then also install this mod before the IWD2EE compatibility patch. It adds an effect to the 'Worn Garment' starting armor. Otherwise, I don't think it should matter.
+- Removed component: Fixes for backstab-related 2DA files. Not really a fit for this mod.
+- Fix/update for 'All classes get full HP bonuses from Constitution':
+	- The '3e-style bonuses' option was only updating non-warriors. It will now apply to warrior classes. (Warning: Prism from BG1 will spawn dead if using '3e-style bonuses'.)
+	- Added 3rd option: 'Mixed (use 3e-style at 10+, normal BG penalties at under 10)'.
+	- Note that this component edits only the HP bonus. If you install this after another Con tweak, any changes to other Con effects will be kept.
+- More options added for these components:
+	- 'Remove alignment restrictions for classes': Now has multiple subcomponents, allowing to skip certain classes (paladins, clerics, monks, etc.).
+	- 'Prevent paladins and rangers falling at low rep': Can now install for rangers only or paladins only.
+- Minsc's Berserk tweak was using wrong description for '1 turn duration' option (it was saying 5 rounds).
+- Internal installer improvements.
+
 v7.1
 - Fixes
 	- d2scrp scripts: Removed a duplicated script block.

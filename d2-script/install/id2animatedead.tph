@@ -1,0 +1,64 @@
+/*
+Use unnerfed Animate Dead (IWD2)
+Also fixes percent chance of each summon
+Skipped if IWD2EE spell revisions is installed (it separates zombies and skeletons into different spells).
+*/
+
+
+ACTION_FOR_EACH spell IN ~SPWI501~ ~SPPR301~ BEGIN    // SPPR301 isn't used in unmodded game (patch anyways)
+  COPY_EXISTING ~%spell%.SPL~  ~override~
+    SAY NAME1 @160 SAY UNIDENTIFIED_DESC @260
+
+    //delete all headers but 1
+    FOR (n = 2; n < 31; ++n) BEGIN
+      LPF DELETE_SPELL_HEADER INT_VAR header_type=1 min_level=~%n%~ END
+    END
+
+    // rebuild effects
+    LPF DELETE_EFFECT INT_VAR match_opcode=410 END
+    LPF ADD_SPELL_EFFECT
+      INT_VAR opcode=410 target=1 parameter1=1 parameter2=3 resist_dispel=2 duration=3000 probability1=100 probability2=50 dicesize=6
+      STR_VAR resource=~00SZMB~
+    END
+    LPF CLONE_EFFECT INT_VAR match_opcode=410 probability1=49 probability2=0 STR_VAR resource=~00SSKLAR~ END
+
+    LPF ~CD_LEVEL_SELECT-O-MATIC~
+      INT_VAR base_dur=3000 step_dur=0 step_size=2 level_cap=level_cap min_abil=1 min_lev_alt=3
+    END
+
+    LPF ALTER_EFFECT INT_VAR header=0 probability1=100 probability2=67 STR_VAR match_resource=~00SZMB~ END
+    LPF ALTER_EFFECT INT_VAR header=0 probability1=66 probability2=34 STR_VAR match_resource=~00SSKLAR~ END
+    LPF CLONE_EFFECT INT_VAR header=0 multi_match=1 probability1=33 probability2=0 STR_VAR resource=~00SSKL~ END
+
+    LPF ALTER_EFFECT INT_VAR header=1 match_probability2=0   STR_VAR resource=~00SARSKL~ END
+    LPF ALTER_EFFECT INT_VAR header=1 match_probability1=100 STR_VAR resource=~00SCHZMB~ END
+
+    LPF ALTER_EFFECT INT_VAR header=2 match_probability2=0   STR_VAR resource=~00SBGD~ END
+    LPF ALTER_EFFECT INT_VAR header=2 match_probability1=100 STR_VAR resource=~00SPOZMB~ END
+
+    LPF ALTER_EFFECT INT_VAR header=3 match_probability2=0   STR_VAR resource=~00SGRBGD~ END
+    LPF ALTER_EFFECT INT_VAR header=3 match_probability1=100 STR_VAR resource=~00SZMBLO~ END
+
+    PATCH_IF (level_cap = 17) BEGIN
+      LPF ALTER_EFFECT INT_VAR header=4 match_probability2=0   STR_VAR resource=~00SCBNS~ END
+      LPF ALTER_EFFECT INT_VAR header=4 match_probability1=100 STR_VAR resource=~00SZMBL2~ END
+
+      LPF ALTER_EFFECT INT_VAR header=5 match_probability2=0   STR_VAR resource=~00SEGBGD~ END
+      LPF ALTER_EFFECT INT_VAR header=5 match_probability1=100 STR_VAR resource=~00SGDND~ END
+
+      LPF ALTER_EFFECT INT_VAR header=6 match_probability2=0   STR_VAR resource=~00SBWHT~ END
+      LPF ALTER_EFFECT INT_VAR header=6 match_probability1=100 STR_VAR resource=~00SMUMK~ END
+
+      LPF ALTER_EFFECT INT_VAR header=7 match_probability2=0   STR_VAR resource=~00SABGD~ END
+      LPF ALTER_EFFECT INT_VAR header=7 match_probability1=100 STR_VAR resource=~00SFDND~ END
+    END
+
+  BUT_ONLY
+END
+
+
+//PRINT @53
+
+
+/*
+*/

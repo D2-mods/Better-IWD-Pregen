@@ -2,6 +2,7 @@
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
 Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2
 
+--
 
 Components
 -
@@ -28,28 +29,27 @@ Components
 	- Option 1: "Bottomless" bag (same as Tweaks Anthology component)
 	- Option 4: Bottomless, and Gold is exchanged when adding/removing items
 8. All classes get full HP bonuses from Constitution (classic and EEs)
-9. Fixes for backstab-related 2DA files (EEs)
-10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+9. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
 	- Crippling Strike is capped at -7 stat reduction in unmodded IWDEE
-11. Allow Minsc to use his Berserk ability at will (BG games)
-12. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
-13. Remove alignment restrictions for classes (classic and EEs)
-14. Prevent paladins and rangers falling at low rep? (EEs)
+10. Allow Minsc to use his Berserk ability at will (BG games)
+11. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
+12. Remove alignment restrictions for classes (classic and EEs)
+13. Prevent paladins and rangers falling at low rep (EEs)
 
 --
 
 **Additional info:**
 - All components can be installed independently and in any order, except for auto-assigning the script.
 - Script components should be installed after AI mods (ex. SCS or atweaks).
-- All tweaks have at least 2 subcomponents, even if just a simple "Yes" or "No". Some have 3-4 options.
+- All tweaks have at least 2 subcomponents. Some have 3-5 options.
 
 Scroll down for additional info on some of the tweaks.
 
----
----
+--
 
 Overview (party script):
 -
+
 This script manages auto-attack, while giving more nuanced control of the characters. The script will never use your consumable items, spells, or abilities. The main aim is to (hopefully) reduce some of the more frustrating aspects of auto-attack.
 
 #### Script - Quick Info:
@@ -82,15 +82,16 @@ This script manages auto-attack, while giving more nuanced control of the charac
 
 Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering.
 
+--
 
 Additional info:
 -
 <details>
   <summary>Script Compatibility</summary>
-  
----
 
-**Info:**
+Script Compatibility:
+-
+
 - EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
 - Classic: BG1, BG2, IWD, IWD2 (tested with GOG versions)
 
@@ -103,16 +104,17 @@ Also compatible with any BG2 conversion mods (ex. BGT or Classic Adventures).
 
 NOTE: I'm not 100% sure the scripts work with expansionless versions of the classic games.
   
----
+--
 
 </details>
 
 <details>
   <summary>Auto-attack breakdown</summary>
-  
----
 
-### BG(EE), BG2(EE), IWD(EE):
+Auto-attack breakdown
+-
+
+**BG(EE), BG2(EE), IWD(EE):**
 
   ```
 Class: Fighter, Ranger, Paladin, including any multiclass combinations
@@ -141,7 +143,7 @@ Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
 
  --
 
-### IWD2:
+**IWD2:**
 
   ```
 Class: Fighter, Ranger, Paladin or Barbarian (single-class or multiclass with 3+ levels)
@@ -167,16 +169,17 @@ Class: Wizard or Sorcerer
 	2. Enemy is within 3 ft.
   ```
   
----
+--
 
 </details>
 
 <details>
   <summary>Nymph AI script (Call Woodland Beings)</summary>
-  
----
 
-### Option 1 - Revised script:
+Nymph AI script (Call Woodland Beings)
+-
+
+**Option 1 - Revised script:**
 - Smarter spellcasting (better targeting and not as wasteful)
 - Won't cast statuses on undead or enemies with high magic resist
 - Will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
@@ -185,20 +188,20 @@ Class: Wizard or Sorcerer
 - Cooldown hotkeys to delay spellcasting
 
 Compatible with EEs and classic BG2 engine, including SCS.  
-Not compatible with atweaks PnP Fey.
+Not compatible with atweaks PnP Fey (use option 2).
 
 > DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
 
 > Marking: The nymph "marks" a PC as an object for various actions (by default, this is the summoner). If the marked PC is not on the map for any reason, the nymph will choose another PC on the same map. The nymph will always switch back to its summoner if in visual range. Note that the summoner, as an identifier, is not saved if a summon is still on the map (so if reloading, the script will default to Player1 as the "marked" PC).
 
-Hotkeys:
+**Hotkeys:**
 - If the D key is pressed outside of combat, and not in visual range of enemies, the nymph will teleport to its summoner (or other PC)
 - If the B key is pressed, the nymph will enter Cooldown for 3 rounds; will not cast offensive spells or teleport to an enemy in Cooldown mode
 - If the E key is pressed, the Cooldown timer is set to 0 (deactivated)
 
 --
 
-### Option 2 - Patch existing script:
+**Option 2 - Patch existing script:**
 - Adds Cooldown hotkeys (B to enable, E to disable)
 - Adds D hotkey to teleport to party
 - Will teleport to party if not in visual range (and not invisible)
@@ -207,16 +210,16 @@ Hotkeys:
 
 NOTE: Dimension Door is more limited with this patch. Will only teleport to the summoner or Player1.
   
----
+--
 
 </details>
 
 <details>
   <summary>Baldur's Gate (in BG1 engine)</summary>
-  
----
 
-#### BG1 script info:
+Baldur's Gate (in BG1 engine)
+-
+
 - Characters will preserve Hide/Invisibility/Sanctuary
 - Melee aggro ranges working
 - Calls for help working (d2scrp+)
@@ -225,7 +228,7 @@ NOTE: Dimension Door is more limited with this patch. Will only teleport to the 
 
 NOTE: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
   
----
+--
 
 </details>
 
@@ -249,7 +252,7 @@ Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 
 NOTE: For IWD2, this setting doesn't work in the unmodded game. Thanks to an exe patch by Bubb, the option can be enabled. This patch is included with Bubb's permission.
   
----
+--
 
 </details>
 
@@ -259,10 +262,11 @@ NOTE: For IWD2, this setting doesn't work in the unmodded game. Thanks to an exe
 Unnerf Animate Dead (IWD2)
 -
 
-- This is a patching component. Should be safe to install after spell tweaks.
+- This is a patching component. Should be fine to install after spell tweaks.
 - The nerfed version caps at the Level 9 summons.
-- Mages and Clerics both use SPWI501.SPL (the similar spell SPPR301.SPL exists, but is unused).
 - Also corrects the chance of each creature type to 50/50 (was 51/49).
+
+--
 
 **Level - Summons**
 - 1 - Skeleton, Skeleton Archer, Zombie
@@ -274,11 +278,13 @@ Unnerf Animate Dead (IWD2)
 - 15 - Barrow Wight, Mummy King
 - 17 - Apocalyptic Boneguard, Festering Drowned Dead
 
-> NOTE: Festering Drowned Dead emits an aura, affecting living creatures, with several possible negative effects (including instant death) on a failed save vs. Fortitude. The aura prevents saving the game while active.
+--
 
-You can also manually unnerf this spell by deleting SPWI501.SPL from the override.
+**NOTE: Festering Drowned Dead emits an aura, affecting living creatures, with several possible negative effects (including instant death) on a failed save vs. Fortitude. The aura prevents saving the game while active.**
+
+You can also unnerf this spell by deleting SPWI501.SPL from the override.
   
----
+--
 
 </details>
 
@@ -288,22 +294,22 @@ You can also manually unnerf this spell by deleting SPWI501.SPL from the overrid
 Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
 -
 
-- IWDEE: 
-	- Increases movement of polar bear and winter wolf forms. 
-	- Winter wolf will move slightly faster than in natural form.
-	- Polar bear is similar speed or slightly slower (depending on angle of movement).
+IWDEE:
+- Increases movement of polar bear and winter wolf forms. 
+- Winter wolf will move slightly faster than in natural form.
+- Polar bear is similar speed or slightly slower (depending on angle of movement).
 
-- Classic: 
-	- Increases movement of all Druid shapeshifts. 
-	- The winter wolf moves faster than in natural form. 
-	- Polar bear gets a huge increase. It now moves similar speed to natural form (instead of ridiculously slow).
-	- The boring beetle and elementals are slightly slower than natural form.
+Classic:
+- Increases movement of all Druid shapeshifts. 
+- The winter wolf moves faster than in natural form. 
+- Polar bear gets a huge increase. It now moves similar speed to natural form (instead of ridiculously slow).
+- The boring beetle and elementals are slightly slower than natural form.
 
-- Additional info:
-	- There are no conflicts with this tweak and the similar tweak in my Polymorph fixes mod. If differing options are chosen, the game will use whichever is installed last.
-	- Classic: Installer options are identical. Game doesn't have a polymorph spell.
+Additional info:
+- There are no conflicts with this tweak and the similar tweak in my Polymorph fixes mod. If differing options are chosen, the game will use whichever is installed last.
+- Classic: Installer options are identical. Game doesn't have a polymorph spell.
   
----
+--
 
 </details>
 
@@ -317,8 +323,9 @@ This component gives player characters basic starting weapons, because my charac
 
 This is a global script that runs once per character per game.
 
+--
 
-#### Component 1 (auto-equip):
+**Component 1 (auto-equip):**
 
 Instructions:
 - Start a new game with new characters (you can also load one saved at the start).
@@ -332,22 +339,26 @@ NOTE: Auto-equip option is not compatible with proficiency overhauls.
 <details>
   <summary>Additional info:</summary>
 
----
+--
 
-IWDEE:
+**IWDEE:**
 - Items are created based on a character's proficiencies (up to 1 melee and 1 ranged).
 - Characters with no melee profs will keep the starting staff.
 - Weapons are added to the quickslots or inventory.
 - No known issues.
 
-Classic IWD:
+--
+
+**Classic IWD:**
 - This game doesn't have a way to detect proficiencies from a script.
 - The party receives a randomized set of items (a few items are non-random).
 - Total amount of items received is based on size of the initial party.
 - For organization, all weapons will be in the inventories of Player1 or Player2.
 - Characters will keep the starting staff (removing it can lead to a possible crash).
 
-IWD2:
+--
+
+**IWD2:**
 - This game doesn't have a way to detect Feats from a script.
 - Each character receives one melee and one ranged weapon.
 - Items are slightly randomized. Possible items are based on character class.
@@ -357,24 +368,26 @@ IWD2:
 	- Open and exit Character arbitration
 	- Pick up and re-equip each weapon
 
-IWD-in-BG2:
+--
+
+**IWD-in-BG2:**
 - Works the same as in IWD:EE.
 - Quickslot icon is not automatically updated.
 - To update the icon, pick up and re-equip each weapon (save/reload doesn't work).
 
----
+--
 
 </details>
 
 --
 
-#### Component 2 (weapon bag):
+**Component 2 (weapon bag):**
 
 This component will give the party a bag, containing a selection of weapons. A single bag is given and the player can choose what to do with unwanted items (i.e. sell or throw away). The contents is the same regardless of party size. The bag contains at least one of each weapon type, so it should be compatible with any Proficiencies overhauls.
 
 NOTE: If the separate "Give party a Bag of Holding" component is not installed, then items can only be taken out of the weapon bag. If it is installed, then the bag is changed to a normal Bag of Holding. You only have one bag with both installed, and install order doesn't matter.
   
----
+--
 
 </details>
 
@@ -400,7 +413,7 @@ Note that taking items out of the bag isn't cheap. I set to a 180% markup, so co
 <details>
   <summary>Additional info (Option 4):</summary>
 
----
+--
 
 **Info:**
 - Bag screen won't show any numbers (for current gold or amounts transferred).
@@ -410,15 +423,17 @@ Note that taking items out of the bag isn't cheap. I set to a 180% markup, so co
 
 NOTE: Items cannot be taken out of the bag if party lacks the gold to buy it back.
 
+--
+
 **Issues/Exploits:**
 - Rechargeable items: Gold gained when putting in the bag is always the same (current charges doesn't matter). Removing an item, however, costs less with fewer charges. At 0 charges, an item is actually free to take out. So you can deplete an item of charges, then continually add and remove it to make infinite gold.
 - Items with 1 gold base price will give 0 gold when putting in the bag.
 
----
+--
 
 </details>
   
----
+--
 
 </details>
 
@@ -439,7 +454,7 @@ Uncap Crippling Strike:
 - The dialogue box and Record screen could show higher numbers, but the effect never went past -7.
 - Main purpose is to allow Assassins to reach -10 in IWD:EE.
   
----
+--
 
 </details>
 
@@ -459,7 +474,7 @@ Allow Minsc to use his Berserk ability at will (BG games)
 
 NOTE: Will be skipped if Rashemi Berserker (Artisan's Kitpack) is installed
   
----
+--
 
 </details>
 
@@ -474,6 +489,6 @@ Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 
 NOTE: Shortbow appearance can't be set for IWD-in-BG2
   
----
+--
 
 </details>

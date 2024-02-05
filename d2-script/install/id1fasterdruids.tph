@@ -1,4 +1,5 @@
 //for classic IWD
+//
 
 ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
 
@@ -21,3 +22,7 @@ ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
   END
 
 END
+
+
+/*
+*/

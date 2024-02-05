@@ -1,9 +1,12 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~7.1~
+VERSION ~7.2~
 AUTO_EVAL_STRINGS
 
 ALWAYS
+
+  CLEAR_INLINED
+
   ACTION_BASH_FOR ~%MOD_FOLDER%/lib~ ~.*\.tpa~ BEGIN    // function list
     INCLUDE ~%BASH_FOR_FILESPEC%~
   END
@@ -36,7 +39,6 @@ ALWAYS
   OUTER_TEXT_SPRINT tobex      ~%MOD_FOLDER%/tobex~
   OUTER_TEXT_SPRINT workspace  ~weidu_external/Workspace~
 
-  CLEAR_INLINED
 END
 
 LANGUAGE ~English~ 
@@ -47,14 +49,12 @@ LANGUAGE ~English~
 
 ////////////////////////////////////////////////////////////
 
-//Better IWD Pregen (appears in-game as "IWD PREGEN")
+//Better IWD Pregen
 
 BEGIN @10100
 DESIGNATED 10
-REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
-                   (GAME_INCLUDES ~bg2~) OR
-                   (GAME_INCLUDES ~iwd~) OR
-                   (GAME_INCLUDES ~iwd2~) OR
+REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR (GAME_INCLUDES ~bg2~) OR
+                   (GAME_INCLUDES ~iwd~) OR (GAME_INCLUDES ~iwd2~) OR
                    (GAME_IS ~ca~)) ~Game not supported~
 LABEL ~D2-SCRIPT-IWDPGEN~
 INCLUDE ~%install%/iwdpgen.tph~
@@ -119,12 +119,14 @@ DESIGNATED 30
 REQUIRE_PREDICATE (GAME_IS ~iwd how totlm iwd2~) @50
 SUBCOMPONENT @40100
 LABEL ~D2-TWEAKS-SUPPRESSDAMAGE1~
-INCLUDE ~%install%/suppressdamage1.tph~
+OUTER_SET suppressdamage = 1
+INCLUDE ~%install%/suppressdamage.tph~
 
-BEGIN @40102    // enemies do extra damage (game default)
+BEGIN @40102    // enemies do extra damage (default)
 SUBCOMPONENT @40100
 LABEL ~D2-TWEAKS-SUPPRESSDAMAGE0~
-INCLUDE ~%install%/suppressdamage0.tph~
+OUTER_SET suppressdamage = 0
+INCLUDE ~%install%/suppressdamage.tph~
 
 ////////////////////////////////////////////////////////////
 
@@ -135,12 +137,14 @@ DESIGNATED 40
 REQUIRE_PREDICATE (GAME_IS ~iwd2~) @50
 SUBCOMPONENT @40200
 LABEL ~D2-TWEAKS-NYMBONUS1~
-INCLUDE ~%install%/nymbonus1.tph~
+OUTER_SET decanter = 1
+INCLUDE ~%install%/id2decanter.tph~
 
 BEGIN @40202    // remove Avarine Decanter
 SUBCOMPONENT @40200
 LABEL ~D2-TWEAKS-NYMBONUS0~
-INCLUDE ~%install%/nymbonus0.tph~
+OUTER_SET decanter = 0
+INCLUDE ~%install%/id2decanter.tph~
 
 ////////////////////////////////////////////////////////////
 
@@ -149,14 +153,18 @@ INCLUDE ~%install%/nymbonus0.tph~
 BEGIN @40301    // Use unnerfed Animate Dead
 DESIGNATED 50
 REQUIRE_PREDICATE (GAME_IS ~iwd2~) @50
+REQUIRE_PREDICATE !(MOD_IS_INSTALLED ~iwd2ee.tp2~ 2) ~~
 SUBCOMPONENT @40300
 LABEL ~D2-TWEAKS-ID2ANIMATEDEAD17~
-INCLUDE ~%install%/id2animatedead17.tph~
+OUTER_SET level_cap = 17
+INCLUDE ~%install%/id2animatedead.tph~
 
 BEGIN @40302    // Use nerfed Animate Dead
+REQUIRE_PREDICATE !(MOD_IS_INSTALLED ~iwd2ee.tp2~ 2) ~~
 SUBCOMPONENT @40300
 LABEL ~D2-TWEAKS-ID2ANIMATEDEAD9~
-INCLUDE ~%install%/id2animatedead9.tph~
+OUTER_SET level_cap = 9
+INCLUDE ~%install%/id2animatedead.tph~
 
 ////////////////////////////////////////////////////////////
 
@@ -167,12 +175,14 @@ DESIGNATED 60
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @50
 SUBCOMPONENT @40400
 LABEL ~D2-TWEAKS-PLYMOVEBONUS1~
-INCLUDE ~%install%/plymovebonus1.tph~
+OUTER_SET movebonus = 1
+INCLUDE ~%install%/plymovebonus.tph~
 
 BEGIN @40402    // Blocked by Free Action
 SUBCOMPONENT @40400
 LABEL ~D2-TWEAKS-PLYMOVEBONUS0~
-INCLUDE ~%install%/plymovebonus0.tph~
+OUTER_SET movebonus = 0
+INCLUDE ~%install%/plymovebonus.tph~
 
 ////////////////////////////////////////////////////////////
 
@@ -183,13 +193,15 @@ DESIGNATED 70
 REQUIRE_PREDICATE (GAME_IS ~iwdee iwd how totlm~) @50
 SUBCOMPONENT @40500
 LABEL ~D2-TWEAKS-FASTERDRUIDS1~
-INCLUDE ~%install%/fasterdruids1.tph~
+OUTER_SET fasterdruids = 1
+INCLUDE ~%install%/fasterdruids.tph~
 INCLUDE ~%install%/id1fasterdruids.tph~
 
 BEGIN @40502    // for Druids only
 SUBCOMPONENT @40500
 LABEL ~D2-TWEAKS-FASTERDRUIDS0~
-INCLUDE ~%install%/fasterdruids0.tph~
+OUTER_SET fasterdruids = 0
+INCLUDE ~%install%/fasterdruids.tph~
 INCLUDE ~%install%/id1fasterdruids.tph~
 
 ////////////////////////////////////////////////////////////
@@ -232,7 +244,7 @@ LABEL ~D2-TWEAKS-NGBAGC~
 INCLUDE ~%install%/ngbagC.tph~
 
 BEGIN @40704    // Bottomless, and Gold is exchanged when adding/removing items (experimental)
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @50
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @51
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGD~
 INCLUDE ~%install%/ngbagD.tph~
@@ -243,21 +255,28 @@ INCLUDE ~%install%/ngbagD.tph~
 
 BEGIN @40801    // 2E-style HP bonuses (i.e. BG-style)
 DESIGNATED 100
-REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
-                   (GAME_INCLUDES ~bg2~) OR
-                   (GAME_INCLUDES ~iwd~) OR
-                   (GAME_IS ~ca~ )) @50
+REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR (GAME_INCLUDES ~bg2~) OR
+                   (GAME_INCLUDES ~iwd~) OR (GAME_IS ~ca~ )) @50
 SUBCOMPONENT @40800
 LABEL ~D2-TWEAKS-CONBON2E~
-INCLUDE ~%install%/conbon2e.tph~
+OUTER_TEXT_SPRINT style ~2e~
+INCLUDE ~%install%/conbonus.tph~
 
-BEGIN @40802    // 3e-style bonuses (+1 for every 2 CON above 10)
+BEGIN @40802    // 3e-style bonuses (+1 or -1 every 2 Con) (WARNING: Prism will spawn dead in BG1.)
 SUBCOMPONENT @40800
 LABEL ~D2-TWEAKS-CONBON3E~
-INCLUDE ~%install%/conbon3e.tph~
+OUTER_TEXT_SPRINT style ~3e~
+INCLUDE ~%install%/conbonus.tph~
+
+BEGIN @40803    // Mixed (use 3e-style at 10+, normal BG penalties at under 10)
+SUBCOMPONENT @40800
+LABEL ~D2-TWEAKS-CONBON25~
+OUTER_TEXT_SPRINT style ~25~
+INCLUDE ~%install%/conbonus.tph~
 
 ////////////////////////////////////////////////////////////
 
+/*
 //Fixes for backstab-related 2DA files (EEs)
 
 BEGIN @40901    // Check files and fix (incorrect lines, etc.)
@@ -270,6 +289,7 @@ INCLUDE ~%install%/backstabcheck.tph~
 BEGIN @40902    // Do nothing
 SUBCOMPONENT @40900
 LABEL ~D2-TWEAKS-NOBACKSTABCHECK~
+*/
 
 ////////////////////////////////////////////////////////////
 
@@ -280,12 +300,14 @@ DESIGNATED 120
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @50
 SUBCOMPONENT @41000
 LABEL ~D2-TWEAKS-CRIPPSTR6~
-INCLUDE ~%install%/crippstr6.tph~
+OUTER_SET new_dur = 6
+INCLUDE ~%install%/cripplingstrike.tph~
 
 BEGIN @41002    // Can Sneak Attack a target once every 30 seconds (stat reduction does not stack)
 SUBCOMPONENT @41000
 LABEL ~D2-TWEAKS-CRIPPSTR30~
-INCLUDE ~%install%/crippstr30.tph~
+OUTER_SET new_dur = 30
+INCLUDE ~%install%/cripplingstrike.tph~
 
 BEGIN @41003    // Uncap Crippling Strike, but do not change delay (420 seconds)
 SUBCOMPONENT @41000
@@ -298,27 +320,29 @@ INCLUDE ~%install%/crippstr16.tph~
 
 BEGIN @41301    // Use at will, and reduce duration to 5 rounds (30 seconds)
 DESIGNATED 150
-REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR
-                   (GAME_INCLUDES ~bg2~)) @50
+REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR (GAME_INCLUDES ~bg2~)) @50
 REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if detected Minsc kit (Artisan's Kitpack)
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE30~
-INCLUDE ~%install%/minscrage30.tph~
+OUTER_SET duration = 30
+INCLUDE ~%install%/minscrage.tph~
 
 BEGIN @41302    // Use at will, and reduce duration to 1 turn (60 seconds)
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if detected Minsc kit (Artisan's Kitpack)
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE60~
-INCLUDE ~%install%/minscrage60.tph~
+OUTER_SET duration = 60
+INCLUDE ~%install%/minscrage.tph~
 
 BEGIN @41303    // Use at will, but do not lower duration (120 seconds)
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if detected Minsc kit (Artisan's Kitpack)
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE120~
-INCLUDE ~%install%/minscrage120.tph~
+OUTER_SET duration = 120
+INCLUDE ~%install%/minscrage.tph~
 
-BEGIN @41304    // Only install timing fix (EEs)
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet~) @50
+BEGIN @41304    // Only install timing fix (prevents self-damage after ability ends)
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet~) @51
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE0~
 INCLUDE ~%install%/minscrage0.tph~
@@ -342,33 +366,63 @@ LABEL ~D2-TWEAKS-NOSHORTBOWFIX~
 
 //Remove alignment restrictions for classes (classic and EEs)
 
-BEGIN @41501    // Yes
+BEGIN @41501    // for all classes
 DESIGNATED 170
 REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
                   !(GAME_IS ~pst pstee~)) @50
 SUBCOMPONENT @41500
 LABEL ~D2-TWEAKS-ALIGNMENTS1~
-INCLUDE ~%install%/allalignments.tph~
+OUTER_SET alignments = 1
+INCLUDE ~%install%/alignments.tph~
 
-BEGIN @41502    // No
+BEGIN @41502    // not paladins/monks
 SUBCOMPONENT @41500
-LABEL ~D2-TWEAKS-ALIGNMENTS0~
+LABEL ~D2-TWEAKS-ALIGNMENTS2~
+OUTER_SET alignments = 2
+INCLUDE ~%install%/alignments.tph~
+
+BEGIN @41503    // not clerics/druids/shamans
+SUBCOMPONENT @41500
+LABEL ~D2-TWEAKS-ALIGNMENTS3~
+OUTER_SET alignments = 3
+INCLUDE ~%install%/alignments.tph~
+
+BEGIN @41504    // not paladins/monks/clerics/druids/shamans
+SUBCOMPONENT @41500
+LABEL ~D2-TWEAKS-ALIGNMENTS4~
+OUTER_SET alignments = 4
+INCLUDE ~%install%/alignments.tph~
+
+BEGIN @41505    // not paladins/monks/clerics/druids/shamans/bards
+SUBCOMPONENT @41500
+LABEL ~D2-TWEAKS-ALIGNMENTS5~
+OUTER_SET alignments = 5
+INCLUDE ~%install%/alignments.tph~
 
 ////////////////////////////////////////////////////////////
 
-//Prevent paladins and rangers falling at low rep? (EEs)
+//Prevent paladins and rangers falling at low rep (EEs)
 
-BEGIN @41601    // Yes
+BEGIN @41601    // for both (paladins and rangers)
 DESIGNATED 180
 REQUIRE_PREDICATE ((GAME_IS ~bgee bg2ee iwdee eet~) AND
                    (FILE_EXISTS_IN_GAME ~fallen.2da~)) @50
 SUBCOMPONENT @41600
 LABEL ~D2-TWEAKS-NOFALLING1~
+OUTER_SET nofalling = 1
 INCLUDE ~%install%/nofalling.tph~
 
-BEGIN @41602    // No
+BEGIN @41602    // Rangers only (paladins can fall)
 SUBCOMPONENT @41600
-LABEL ~D2-TWEAKS-NOFALLING0~
+LABEL ~D2-TWEAKS-NOFALLING2~
+OUTER_SET nofalling = 2
+INCLUDE ~%install%/nofalling.tph~
+
+BEGIN @41603    // Paladins only (rangers can fall)
+SUBCOMPONENT @41600
+LABEL ~D2-TWEAKS-NOFALLING3~
+OUTER_SET nofalling = 3
+INCLUDE ~%install%/nofalling.tph~
 
 ////////////////////////////////////////////////////////////
 

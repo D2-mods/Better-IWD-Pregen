@@ -1,7 +1,15 @@
-//Paladins and Rangers do not fall at low rep
-//for EEs
+/*
+Prevent paladins and rangers falling at low rep (EEs)
+*/
 
 
+//
+ACTION_IF (nofalling = 1) BEGIN  OUTER_SET paladin = 6 OUTER_SET ranger = 12 END    // Both
+ACTION_IF (nofalling = 2) BEGIN  OUTER_SET paladin = 0 OUTER_SET ranger = 12 END    // Ranger only
+ACTION_IF (nofalling = 3) BEGIN  OUTER_SET paladin = 6 OUTER_SET ranger = 0  END    // Paladin only
+
+
+//
 ACTION_IF (FILE_EXISTS_IN_GAME ~fallen.2da~) BEGIN
 
   COPY_EXISTING - ~clastext.2da~  ~~
@@ -10,7 +18,7 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~fallen.2da~) BEGIN
 
     FOR (r = 1; r < rows; ++r) BEGIN
       READ_2DA_ENTRY_FORMER ~d2checkkits~ r 1 baseclass
-      PATCH_IF ((baseclass = 6) OR (baseclass = 12)) BEGIN    // if paladin or ranger
+      PATCH_IF ((baseclass = paladin) OR (baseclass = ranger)) BEGIN    // if paladin or ranger
         READ_2DA_ENTRY_FORMER ~d2checkkits~ r 7 fallen
         PATCH_IF (fallen = 0) BEGIN    // if not a fallen kit
           INNER_ACTION BEGIN
@@ -27,6 +35,10 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~fallen.2da~) BEGIN
         END
       END
     END
-  BUT_ONLY
+
 
 END
+
+
+/*
+*/

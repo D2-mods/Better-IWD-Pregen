@@ -1,9 +1,7 @@
-//backup existing spell file (if in override)
-ACTION_IF (FILE_EXISTS ~override/backstab.SPL~) BEGIN
-  COPY ~override/backstab.SPL~ ~override/backstab.SPL.BAK~
-END
+//Uncap Crippling Strike, but do not change delay (420 seconds)
+//patch if METweaks is detected
 
-//copy new spell to override and patch if tweak is detected
+
 COPY ~%files%/backstab16.SPL~ ~override/backstab.SPL~
 
   PATCH_IF (MOD_IS_INSTALLED ~METweaks.tp2~ 3800) BEGIN
@@ -29,3 +27,7 @@ COPY ~%files%/backstab16.SPL~ ~override/backstab.SPL~
       STR_VAR resource = ~backstab~
     END
   END
+
+
+/*
+*/

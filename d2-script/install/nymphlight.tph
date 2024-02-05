@@ -16,7 +16,7 @@ ACTION_IF !(FILE_EXISTS ~override/RR#DINV.ITM~) BEGIN
 END
 
 
-
+//
 //atweaks PnP Fey scripts
 
 ACTION_IF (FILE_EXISTS_IN_GAME ~rr#sdrya.BCS~) BEGIN
@@ -32,7 +32,7 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~rr#snymp.BCS~) BEGIN
 END
 
 
-
+//
 //NYMPH.BCS - vanilla script file (also used by SCS)
 
 ACTION_IF (FILE_EXISTS_IN_GAME ~NYMPH.BCS~) BEGIN
@@ -41,3 +41,7 @@ END
 
 
 PRINT @56    // info on patch features (see nymph readme)
+
+
+/*
+*/
