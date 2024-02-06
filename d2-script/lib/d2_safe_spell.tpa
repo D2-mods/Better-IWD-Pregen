@@ -1,0 +1,66 @@
+/*
+compatible with EEs and classic IWD1
+make spell damage safe for allies, neutrals, or enemies
+allies/enemies is relative to creature
+*/
+
+
+/*
+EEs: 'opcode' variable must be 318 or 324 (defaults to 318 if not)
+classic IWD: 'opcode' variable is ignored (sets to 206)
+function matches the 'block_opcode' variable for effect (default 12 = damage)
+*/
+
+
+DEFINE_PATCH_FUNCTION d2_safe_spell
+  INT_VAR opcode=318 allies=1 neutrals=1 enemies=0 block_opcode=12
+BEGIN
+
+  //set protection
+  PATCH_IF (allies=1 AND neutrals=1 AND enemies=1) BEGIN  SET safe = 9999 END  // all protected
+  PATCH_IF (allies=1 AND neutrals=1 AND enemies=0) BEGIN  SET safe = 52 END    // not enemies
+  PATCH_IF (allies=1 AND neutrals=0 AND enemies=1) BEGIN  SET safe = 999 END   // allies and enemies
+  PATCH_IF (allies=0 AND neutrals=1 AND enemies=1) BEGIN  SET safe = 50 END    // not allies
+  PATCH_IF (allies=1 AND neutrals=0 AND enemies=0) BEGIN  SET safe = 49 END    // allies only
+  PATCH_IF (allies=0 AND neutrals=1 AND enemies=0) BEGIN  SET safe = 0  END    // neutrals only (not implemented)
+  PATCH_IF (allies=0 AND neutrals=0 AND enemies=1) BEGIN  SET safe = 51 END    // enemies only
+  PATCH_IF (allies=0 AND neutrals=0 AND enemies=0) BEGIN  SET safe = 0  END    // none protected
+
+  //set opcode + remove old effect with matching parameters
+  PATCH_IF (GAME_IS ~bgee bg2ee iwdee eet~) BEGIN
+    PATCH_IF (opcode != 318 AND opcode != 324) BEGIN
+      SET opcode = 318    // for EEs
+    END
+    PATCH_FOR_EACH param IN ~49~ ~50~ ~51~ ~52~ BEGIN
+      LPF DELETE_EFFECT INT_VAR match_opcode=318 match_parameter2=param STR_VAR match_resource=~%SOURCE_RES%~ END
+      LPF DELETE_EFFECT INT_VAR match_opcode=324 match_parameter2=param STR_VAR match_resource=~%SOURCE_RES%~ END
+    END
+  END ELSE BEGIN
+    SET opcode = 206    // for classic IWD
+    PATCH_FOR_EACH param IN ~49~ ~50~ ~51~ ~52~ BEGIN
+      LPF DELETE_EFFECT INT_VAR match_opcode=206 match_parameter2=param STR_VAR match_resource=~%SOURCE_RES%~ END
+    END
+  END
+
+  //create effect
+  PATCH_IF (safe != 0) BEGIN
+    LPF CLONE_EFFECT
+      INT_VAR silent=1 multi_match=1 match_opcode=block_opcode opcode=opcode parameter2=safe resist_dispel=0
+              timing=0 duration=0 probability1=100 probability2=0 dicenumber=0 dicesize=0 savingthrow=0 special=0
+      STR_VAR resource=~%DEST_RES%~ insert=first
+    END
+
+    PATCH_IF (safe = 9999) BEGIN
+      LPF ALTER_EFFECT INT_VAR multi_match=1 match_opcode=opcode parameter2=0 END    // all protected
+    END
+    PATCH_IF (safe = 999) BEGIN
+      LPF ALTER_EFFECT INT_VAR multi_match=1 match_opcode=opcode parameter2=49 END    // allies
+      LPF CLONE_EFFECT INT_VAR multi_match=1 match_opcode=opcode parameter2=51 END    // enemies
+    END
+  END
+
+END
+
+
+/*
+*/

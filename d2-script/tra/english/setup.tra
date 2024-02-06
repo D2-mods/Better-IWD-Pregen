@@ -35,7 +35,7 @@ This file contains text shown in weidu installer
 	@40401 = ~Bypass Free Action~
 	@40402 = ~Blocked by Free Action~
 
-@40500 = ~Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)~
+@40500 = ~Increase movement speed of IWD shapeshifts (IWD1, IWDEE)~
 	@40501 = ~for Druids and Polymorph Self~
 	@40502 = ~for Druids only~
 
@@ -63,9 +63,17 @@ This file contains text shown in weidu installer
 	@41002 = ~Can Sneak Attack a target once every 30 seconds (stat reduction does not stack)~
 	@41003 = ~Uncap Crippling Strike, but do not change delay (420 seconds)~
 
-@41100 = ~~
-	@41101 = ~~
-	@41102 = ~~
+@41100 = ~Salamander auras hit only enemies of the caster (IWDEE)~
+	@41101 = ~all salamanders, hits enemies only (relative to caster)~
+	@41102 = ~all salamanders, hits enemies/neutrals~
+	@41103 = ~Avenger form only, hits enemies only~
+	@41104 = ~Avenger form only, hits enemies/neutrals~
+	@41105 = ~Option 1, and Cloudburst is party friendly~
+	@41106 = ~Option 2, and Cloudburst is party friendly~
+	@41107 = ~Option 3, and Cloudburst is party friendly~
+	@41108 = ~Option 4, and Cloudburst is party friendly~
+	@41109 = ~all salamanders, hits no one~
+	@41110 = ~Avenger form only, hits allies only~
 
 @41200 = ~~
 	@41201 = ~~
@@ -75,10 +83,10 @@ This file contains text shown in weidu installer
 	@41301 = ~Use at will, and reduce duration to 5 rounds (30 seconds)~
 	@41302 = ~Use at will, and reduce duration to 1 turn (60 seconds)~
 	@41303 = ~Use at will, but do not lower duration (120 seconds)~
-	@41304 = ~Only install timing fix (prevents self-damage after ability ends)~
+	@41304 = ~Only install timing fix (prevents taking damage if at full HP when ability ends)~
 @41360 = ~Not available for Rashemi Berserker (Artisan's Kitpack)~
 
-@41400 = ~Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)~
+@41400 = ~Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)~
 	@41401 = ~Yes~
 	@41402 = ~No~
 

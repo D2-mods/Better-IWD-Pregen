@@ -1,4 +1,16 @@
-// Bottomless, and Gold is exchanged when adding/removing items (experimental)
+/*
+Bottomless, and Gold is exchanged when adding/removing items (experimental)
+*/
+
+
+//prep
+DEFINE_PATCH_FUNCTION d2goldbag BEGIN
+  WRITE_LONG 0x10 THIS | BIT13    // make buy price ignore rep
+  WRITE_LONG 0x14 180             // sell markup (bag "sells" to character)
+  WRITE_LONG 0x18 65              // buy markup (bag "buys" from character)
+  WRITE_SHORT 0x22 capacity
+END
+
 
 ////////////////////////////////////////////////////////////
 
@@ -12,10 +24,7 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 	
   COPY ~%ngbag%/d2hbee1.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
-    WRITE_LONG 0x10 THIS | BIT13    // make buy price ignore rep
-    WRITE_LONG 0x14 180    // 180% markup when buying back items
-    WRITE_LONG 0x18 65    // receive 65% of base price
-    WRITE_SHORT 0x22 65535    // set storage to max
+    LPF d2goldbag END
 	
   ACTION_IF (GAME_IS ~bg2ee~) BEGIN
     EXTEND_BOTTOM ~AR0602.BCS~ ~%ngbag%/ngbag-imoen.BAF~
@@ -59,10 +68,7 @@ ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TW
 	
   COPY ~%ngbag%/d2hbee0.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
-    WRITE_LONG 0x10 THIS | BIT13    // make buy price ignore rep
-    WRITE_LONG 0x14 180    // 180% markup when buying back items
-    WRITE_LONG 0x18 65    // receive 65% of base price
-    WRITE_SHORT 0x22 65535    // set storage to max
+    LPF d2goldbag END
 	
   EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/ngbag-script.BAF~
   
@@ -71,25 +77,26 @@ END
 
 ////////////////////////////////////////////////////////////
 
-//IWD games: Patch existing bag if added by another component
+//IWDEE - Patches existing bag if already added
 
 ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
+
   COPY_EXISTING ~d2#ngbag.STO.BAK~ ~override/d2#ngbag.STO~    // revert edits to store file
-  COPY_EXISTING ~d2#ngbag.STO~ ~override~
-    WRITE_LONG 0x10 THIS | BIT13    // make buy price ignore rep
-    WRITE_LONG 0x14 180    // 180% markup when buying back items
-    WRITE_LONG 0x18 65    // receive 65% of base price
-    WRITE_SHORT 0x22 65535    // set storage to max
-  BUT_ONLY
+    LPF d2goldbag END
+  // end COPY
   
   COPY ~%ngbag%/ngbagD.BAM~ ~override/d2#ngbag.BAM~
   COPY_EXISTING ~d2#ngbag.ITM.BAK~ ~override/d2#ngbag.ITM~    // revert edits to item file
-  COPY_EXISTING ~d2#ngbag.ITM~ ~override~
     SAY DESC @734
     WRITE_ASCII 0x3a ~d2#ngbag~ #8    // set inventory icon
-  BUT_ONLY
+  // end COPY
+
 END
 
 ////////////////////////////////////////////////////////////
 
-PRINT @54    // print message to check readme for additional info
+//PRINT @54    // print message to check readme for additional info
+
+
+/*
+*/

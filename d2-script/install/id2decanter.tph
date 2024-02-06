@@ -5,26 +5,37 @@
 //add Decanter
 ACTION_IF (decanter = 1) BEGIN
 
-  //Copies script to override (used by Nym)
   ACTION_IF ((FILE_EXISTS ~override/00BPak0.bcs~) OR 
              (MOD_IS_INSTALLED ~Setup-IWD2-Ease.tp2~ 9)
   ) BEGIN
-    PRINT @52    // "NOTE: The Avarine Decanter was already added. No changes were made to the game."
-  END
-  ELSE BEGIN
-    COPY ~%iwd2%/00BPak0.bcs~  ~override~
-  END
 
+    PRINT @52    // skips if added
+  END ELSE BEGIN
+
+//
+//write script (variable is used by Nym in his DLG)
+<<<<<<<< .../inlined/00BPak0.BAF
+IF
+    Global("IWD2_BONUS_PACK","GLOBAL",0)
+THEN
+    RESPONSE #100
+        SetGlobal("IWD2_BONUS_PACK","GLOBAL",1)
+        Continue()
+END
+>>>>>>>>
+COMPILE ~.../inlined/00BPak0.BAF~
+
+  END
 END
 
 
-//remove Decanter
+
+//
+//remove Decanter (edits Nym's DLG)
 ACTION_IF (decanter = 0) BEGIN
 
-  //edit Nym's script
-  COPY_EXISTING ~50NYM.DLG~  ~override~
-    DECOMPILE_AND_PATCH BEGIN
-      REPLACE_TEXTUALLY ~50Nym2~ ~50Nym~
+  COPY_EXISTING ~50NYM.DLG~  ~override~  DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~50Nym2~ ~50Nym~    // makes Nym always open his regular store
     END
   BUT_ONLY
 

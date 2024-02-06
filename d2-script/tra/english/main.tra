@@ -361,6 +361,8 @@ Weight: 5 lb.~
 //
 //for Minsc Berserk tweak
 @900 = ~Berserk~
+
+//EEs
 @901 = ~Berserk
 
 Minsc becomes enraged for 5 rounds. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
@@ -372,6 +374,28 @@ Minsc becomes enraged for 1 turn. While enraged, he gains a +2 bonus to his Stre
 @903 = ~Berserk
 
 Minsc becomes enraged for 2 turns. While enraged, he gains a +2 bonus to his Strength and Dexterity and becomes immune to charm, confusion, fear, feeblemind, hold, level drain, maze, stun, and sleep. He also gains 15 temporary Hit Points, which are taken away at the end of the berserk spree (possibly knocking him unconscious).~
+
+//classic BG2 (with Improved GUI mod)
+@906 = ~Berserk
+
+Duration: 5 rounds
+Area of Effect: The caster
+
+The character goes berserk 5 rounds. He gains a +2 bonus to Strength and Dexterity, and becomes immune to charm, confusion, fear, feeblemind, hold, imprisonment, level drain, maze, stun, and sleep; he also gains 15 temporary Hit Points. When the state ends, the character will take 15 points of piercing damage.~
+
+@907 = ~Berserk
+
+Duration: 1 turn
+Area of Effect: The caster
+
+The character goes berserk 1 turn. He gains a +2 bonus to Strength and Dexterity, and becomes immune to charm, confusion, fear, feeblemind, hold, imprisonment, level drain, maze, stun, and sleep; he also gains 15 temporary Hit Points. When the state ends, the character will take 15 points of piercing damage.~
+
+@908 = ~Berserk
+
+Duration: 2 turns
+Area of Effect: The caster
+
+The character goes berserk 2 turns. He gains a +2 bonus to Strength and Dexterity, and becomes immune to charm, confusion, fear, feeblemind, hold, imprisonment, level drain, maze, stun, and sleep; he also gains 15 temporary Hit Points. When the state ends, the character will take 15 points of piercing damage.~
 
 
 

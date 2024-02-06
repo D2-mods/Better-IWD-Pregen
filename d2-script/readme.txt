@@ -1,11 +1,11 @@
 Better IWD Pregen
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases
-Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2.
+Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2 (including EET/BGT/IWD2EE).
 
 --
 
-A minimalist script and tweak pack. This mod was started as an attempt to make an improved version of the IWD Pregen script from IWD:EE.
+A minimalist script and tweak pack for Infinity Engine games. This mod was started as an attempt to make an improved version of the 'IWD Pregen' party AI script from Icewind Dale: Enhanced Edition.
 
 See GitHub page for additional info on scripts and tweaks.
 
@@ -27,22 +27,23 @@ Tweak components:
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
 4. Shapeshift movement bonuses bypass Free Action (EEs)
-5. Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
+5. Increase movement speed of IWD shapeshifts (IWD1, IWDEE)
 6. Give party starting equipment (IWD games)
 7. Give party a Bag of Holding at game start (classic and EEs)
 8. All classes get full HP bonuses from Constitution (classic and EEs)
 9. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
-10. Allow Minsc to use his Berserk ability at will (BG games)
-11. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
-12. Remove alignment restrictions for classes (classic and EEs)
-13. Prevent paladins and rangers falling at low rep (EEs)
+10. Salamander auras hit only enemies of the caster (IWDEE)
+11. Allow Minsc to use his Berserk ability at will (BG games)
+12. Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)
+13. Remove alignment restrictions for classes (classic and EEs)
+14. Prevent paladins and rangers falling at low rep (EEs)
 
 --
 
 Additional info:
 - All components can be installed independently and in any order, except for auto-assigning the script.
 - Script components should be installed after AI mods (ex. SCS or atweaks).
-- All tweaks have at least 2 subcomponents. Some have 3-4 options.
+- All tweaks have at least 2 subcomponents. Some have 3-6 options.
 
 
 ==================================================
@@ -100,6 +101,13 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.3
+- Added tweak for IWDEE: Salamander auras hit only enemies of the caster. Has multiple options. Can patch all salamander auras, or just the Avenger shapeshift (i.e. if you want enemy auras to still damage anyone). Can also optionally make Cloudburst party friendly.
+- classic BG2: the tweak for Minsc's Berserk will now update the description if using the Improved GUI mod from Insomniator. Install this mod after Improved GUI. The description uses the same layout as Improved GUI, with duration changed to match the component.
+- BGEE/BG2EE: Fixed issue (caused by v7.2 update) that made description for Minsc's Berserk always say 1 turn duration, even if setting to 5 rounds or 2 turns.
+- Added more detailed component info to GitHub page.
+- More improvements to install files.
+
 v7.2
 - IWD2/IWD2EE mod:
 	- This mod is compatible with IWD2EE. Install this mod after IWD2EE.

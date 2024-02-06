@@ -200,7 +200,7 @@ ACTION_IF (FILE_EXISTS ~override/d2#ngbag.STO~) BEGIN
 END
 
 ACTION_IF !(FILE_EXISTS ~override/d2#ngbag.STO~) BEGIN
-  INCLUDE ~%install%/ngbagA.tph~
+  INCLUDE ~%install%/ngbag.tph~
   INCLUDE ~%install%/ngitembagfill.tph~
   COPY_EXISTING ~d2#ngbag.STO~ ~override/d2#ngbag.STO.BAK~    // backup to make it easy to revert changes
   COPY_EXISTING ~d2#ngbag.STO~ ~override~

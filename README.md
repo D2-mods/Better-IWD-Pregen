@@ -1,54 +1,94 @@
 # Better IWD Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
-Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2
+Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2 (including EET/BGT/IWD2EE).
 
 --
 
-Components
+A minimalist script and tweak pack for Infinity Engine games. This mod was started as an attempt to make an improved version of the "IWD Pregen" party AI script from Icewind Dale: Enhanced Edition.
+
+--
+
+Script components:
 -
 
-#### Script components:
-1. Better IWD Pregen
-2. Better AI for Call Woodland Beings (EEs, BG2)
-	- Option 1: Use revised script for nymph summon (compatible with SCS)
-	- Option 2: Use existing script, but patch in a few actions (use with revision mods)
-3. Auto-assign script to new characters
+1. **Better IWD Pregen**
+	- Adds 3-4 party AI scripts (d2scrp, d2scrp+, d2scrp-, iwdpgen).
+ 	- More info below.
+2. **Better AI for Call Woodland Beings (EEs, BG2)**
+	- Option 1: Use revised script for nymph summon (compatible with SCS).
+	- Option 2: Use existing script, but patch in a few actions (use with revision mods).
+	- This component needs to be installed after AI mods (ex. SCS or atweaks).
+3. **Auto-assign script to new characters**
+	- Can choose any of the 3-4 scripts from this mod.
 
 --
 
-#### Tweak components:
-1. Adjust enemy damage at higher difficulties (classic IWD, IWD2)
-2. Add or remove Avarine Decanter (IWD2)
-3. Unnerf Animate Dead (IWD2)
-4. Shapeshift movement bonuses bypass Free Action (EEs)
-5. Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
-6. Give party starting equipment (IWD games)
+Tweak components:
+-
+
+1. **Adjust enemy damage at higher difficulties (classic IWD, IWD2)**
+	- IWD2: includes exe patch by Bubb (required for damage adjust to work).
+2. **Add or remove Avarine Decanter (IWD2)**
+	- Won't cause issues if the item is already obtainable.
+3. **Unnerf Animate Dead (IWD2)**
+	- Also corrects chance of each summon to 50/50.
+	- This is skipped if IWD2EE 'Spell Revisions' is installed.
+4. **Shapeshift movement bonuses bypass Free Action (EEs)**
+	- Can set to bypass or be blocked by Free Action.
+5. **Increase movement speed of IWD shapeshifts (IWD1, IWDEE)**
+	- EEs: increases Polar Bear and Winter Wolf movement.
+	- classic: increases all forms (most are still slower than natural form).  
+
+--
+
+6. **Give party starting equipment (IWD games)**
 	- Option 1: Items are auto-equipped or added to inventory
-	- Option 2: Start with a bag, containing a mix of weapons
-7. Give party a Bag of Holding at game start (classic and EEs)
+	- Option 2: Start with a bag, containing a mix of weapons (choose this if using a Proficiencies overhaul)
+7. **Give party a Bag of Holding at game start (classic and EEs)**
 	- Option 1: "Bottomless" bag (same as Tweaks Anthology component)
+	- Option 2: Capacity = 50 items (IWD2 default)
+	- Option 3: Capacity = 100 items (BG2 default)
 	- Option 4: Bottomless, and Gold is exchanged when adding/removing items
-8. All classes get full HP bonuses from Constitution (classic and EEs)
-9. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
-	- Crippling Strike is capped at -7 stat reduction in unmodded IWDEE
-10. Allow Minsc to use his Berserk ability at will (BG games)
-11. Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
-12. Remove alignment restrictions for classes (classic and EEs)
-13. Prevent paladins and rangers falling at low rep (EEs)
+8. **All classes get full HP bonuses from Constitution (classic and EEs)**
+	- Option 1: 2e-style HP bonuses (i.e. BG-style)
+	- Option 2: 3e-style bonuses (+1 or -1 every 2 Con) (WARNING: Prism will spawn dead in BG1.)
+	- Option 3: Mixed (use 3e-style at 10+, normal BG penalties at under 10)
+	- Will not overwrite any previous changes to Con effects, except for HP bonus.
+9. **Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)**
+	- Can set delay to 1 round or 5 rounds (stat reduction does not stack).
+	- Note: Crippling Strike is capped at -7 stat reduction in unmodded IWDEE.
+10. **Salamander auras hit only enemies of the caster (IWDEE)**
+	- Can patch just Avenger or enemy auras as well.
+	- Can optionally make Cloudburst party friendly.  
+
+--
+
+11. **Allow Minsc to use his Berserk ability at will (BG games)**
+	- Options to set duration to 5 rounds, 1 turn, or 2 turns.
+12. **Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)**
+	- IWDEE: makes shortbows look like shortbows in the inventory screen.
+13. **Remove alignment restrictions for classes (classic and EEs)**
+	- Will patch any kits of a class as well, including multiclass kits.
+	- Has options to skip certain classes (paladins, clerics, monks, etc.)
+14. **Prevent paladins and rangers falling at low rep (EEs)**
+	- Will patch any kits of a class as well.
+	- Can optionally install for only rangers or only paladins.
 
 --
 
 **Additional info:**
 - All components can be installed independently and in any order, except for auto-assigning the script.
 - Script components should be installed after AI mods (ex. SCS or atweaks).
-- All tweaks have at least 2 subcomponents. Some have 3-5 options.
+- Note that all tweaks are fine to install even after mods like SCS (this is the order I use for testing).
+- If using tweaks from other mods that do similar things, whichever is installed last will usually be used.
+- All tweaks have at least 2 subcomponents. i.e. if you say to 'install all components', it won't automatically install any tweaks.
 
 Scroll down for additional info on some of the tweaks.
 
---
+---
+---
 
-Overview (party script):
--
+# Overview (party script):
 
 This script manages auto-attack, while giving more nuanced control of the characters. The script will never use your consumable items, spells, or abilities. The main aim is to (hopefully) reduce some of the more frustrating aspects of auto-attack.
 
@@ -262,9 +302,9 @@ NOTE: For IWD2, this setting doesn't work in the unmodded game. Thanks to an exe
 Unnerf Animate Dead (IWD2)
 -
 
-- This is a patching component. Should be fine to install after spell tweaks.
 - The nerfed version caps at the Level 9 summons.
 - Also corrects the chance of each creature type to 50/50 (was 51/49).
+- Skipped if the IWD2EE "Spell Revisions" component is installed.
 
 --
 
@@ -307,7 +347,7 @@ Classic:
 
 Additional info:
 - There are no conflicts with this tweak and the similar tweak in my Polymorph fixes mod. If differing options are chosen, the game will use whichever is installed last.
-- Classic: Installer options are identical. Game doesn't have a polymorph spell.
+- Classic: The 2 installer options are identical. Game doesn't have a polymorph spell.
   
 --
 
@@ -319,13 +359,22 @@ Additional info:
 Give party starting equipment (IWD games)
 -
 
-This component gives player characters basic starting weapons, because my characters aren't idiots who travel to Icewind Dale unprepared. For IWD2, the pre-made parties already start out equipped, so this just makes it more fair for custom parties.
+This component gives the party basic starting weapons, as well the "Worn Garment" armor. Weapons are given based on proficiencies (IWDEE), or class (IWD2), or randomly (classic IWD). There's also an option to start with a bag, containing at least 1 of each weapon type. More info below.
 
-This is a global script that runs once per character per game.
+> Note: For IWD2, the pre-made parties already start out equipped, so this just makes it more fair for custom parties.  
+> This component is fully compatible with the IWD2EE mod. It's also compatible with IWD-in-BG2, if you really want to use that version.
 
 --
 
-**Component 1 (auto-equip):**
+**Scripting notes:**
+
+This is a global script that runs once per character slot per game. If the character exists, the script will start for that slot. It specifically looks for a quarterstaff in the inventory (which level 1 characters will always start with). It will not give starting items if already equipped (i.e. you imported a character from a previous playthrough).
+
+After about 1 round, the script will never run again for that playthrough for that character slot.
+
+--
+
+**Option 1 (auto-equip):**
 
 Instructions:
 - Start a new game with new characters (you can also load one saved at the start).
@@ -333,7 +382,7 @@ Instructions:
 - That's it. The items will be either equipped or in the inventory.
 - For classic IWD, you may need to open/close the Inventory screen 1-2 times to make the script run.
 
-NOTE: Auto-equip option is not compatible with proficiency overhauls.
+**NOTE: Auto-equip option is not compatible with proficiency overhauls.**
 
 
 <details>
@@ -381,11 +430,11 @@ NOTE: Auto-equip option is not compatible with proficiency overhauls.
 
 --
 
-**Component 2 (weapon bag):**
+**Option 2 (weapon bag):**
 
 This component will give the party a bag, containing a selection of weapons. A single bag is given and the player can choose what to do with unwanted items (i.e. sell or throw away). The contents is the same regardless of party size. The bag contains at least one of each weapon type, so it should be compatible with any Proficiencies overhauls.
 
-NOTE: If the separate "Give party a Bag of Holding" component is not installed, then items can only be taken out of the weapon bag. If it is installed, then the bag is changed to a normal Bag of Holding. You only have one bag with both installed, and install order doesn't matter.
+NOTE: If the separate "Give party a Bag of Holding" component is not installed, then items can only be taken out of the weapon bag. If it is installed, then the bag is changed to a normal Bag of Holding.
   
 --
 

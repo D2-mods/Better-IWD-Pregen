@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~7.2~
+VERSION ~7.3~
 AUTO_EVAL_STRINGS
 
 ALWAYS
@@ -186,7 +186,7 @@ INCLUDE ~%install%/plymovebonus.tph~
 
 ////////////////////////////////////////////////////////////
 
-//Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
+//Increase movement speed of IWD shapeshifts (IWD1, IWDEE)
 
 BEGIN @40501    // for Druids and Polymorph Self
 DESIGNATED 70
@@ -219,6 +219,7 @@ BEGIN @40602    // Start with a bag, containing a mix of weapons
 REQUIRE_PREDICATE !(GAME_IS ~iwd~) @50
 SUBCOMPONENT @40600
 LABEL ~D2-TWEAKS-NGITEMBAG~
+OUTER_SET capacity = 1
 INCLUDE ~%install%/ngitembag.tph~
 
 ////////////////////////////////////////////////////////////
@@ -227,26 +228,29 @@ INCLUDE ~%install%/ngitembag.tph~
 
 BEGIN @40701    // "Bottomless" bag (same as Tweaks Anthology component)
 DESIGNATED 90
-REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
-                  !(GAME_IS ~bg1 totsc iwd pst pstee~)) @50
+REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc iwd pst pstee~) @50
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGA~
-INCLUDE ~%install%/ngbagA.tph~
+OUTER_SET capacity = 1
+INCLUDE ~%install%/ngbag.tph~
 
 BEGIN @40702    // Capacity = 50 items (IWD2 default)
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGB~
-INCLUDE ~%install%/ngbagB.tph~
+OUTER_SET capacity = 2
+INCLUDE ~%install%/ngbag.tph~
 
 BEGIN @40703    // Capacity = 100 items (BG2 default)
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGC~
-INCLUDE ~%install%/ngbagC.tph~
+OUTER_SET capacity = 3
+INCLUDE ~%install%/ngbag.tph~
 
 BEGIN @40704    // Bottomless, and Gold is exchanged when adding/removing items (experimental)
 REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @51
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGD~
+OUTER_SET capacity = 65000
 INCLUDE ~%install%/ngbagD.tph~
 
 ////////////////////////////////////////////////////////////
@@ -276,23 +280,6 @@ INCLUDE ~%install%/conbonus.tph~
 
 ////////////////////////////////////////////////////////////
 
-/*
-//Fixes for backstab-related 2DA files (EEs)
-
-BEGIN @40901    // Check files and fix (incorrect lines, etc.)
-DESIGNATED 110
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @50
-SUBCOMPONENT @40900
-LABEL ~D2-TWEAKS-BACKSTABCHECK~
-INCLUDE ~%install%/backstabcheck.tph~
-
-BEGIN @40902    // Do nothing
-SUBCOMPONENT @40900
-LABEL ~D2-TWEAKS-NOBACKSTABCHECK~
-*/
-
-////////////////////////////////////////////////////////////
-
 //Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
 
 BEGIN @41001    // Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)
@@ -313,6 +300,72 @@ BEGIN @41003    // Uncap Crippling Strike, but do not change delay (420 seconds)
 SUBCOMPONENT @41000
 LABEL ~D2-TWEAKS-CRIPPSTR16~
 INCLUDE ~%install%/crippstr16.tph~
+
+////////////////////////////////////////////////////////////
+
+//Salamander auras hit only enemies of the caster (IWDEE)
+
+BEGIN @41101    // all salamanders, hits enemies only (relative to caster)
+DESIGNATED 130
+REQUIRE_PREDICATE (GAME_IS ~iwdee~) @50
+SUBCOMPONENT @41100
+LABEL ~D2-TWEAKS-SALAURA1~
+OUTER_SET salamanders = 1
+INCLUDE ~%install%/salamanders.tph~
+
+BEGIN @41102    // all salamanders, hits enemies/neutrals
+SUBCOMPONENT @41100
+LABEL ~D2-TWEAKS-SALAURA2~
+OUTER_SET salamanders = 2
+INCLUDE ~%install%/salamanders.tph~
+
+BEGIN @41103    // Avenger form only, hits enemies only
+SUBCOMPONENT @41100
+LABEL ~D2-TWEAKS-SALAURA3~
+OUTER_SET salamanders = 3
+INCLUDE ~%install%/salamanders.tph~
+
+BEGIN @41104    // Avenger form only, hits enemies/neutrals
+SUBCOMPONENT @41100
+LABEL ~D2-TWEAKS-SALAURA4~
+OUTER_SET salamanders = 4
+INCLUDE ~%install%/salamanders.tph~
+
+BEGIN @41105    // Option 1, and Cloudburst is party friendly
+SUBCOMPONENT @41100
+LABEL ~D2-TWEAKS-SALAURA5~
+OUTER_SET salamanders = 5
+INCLUDE ~%install%/salamanders.tph~
+
+BEGIN @41106    // Option 2, and Cloudburst is party friendly
+SUBCOMPONENT @41100
+LABEL ~D2-TWEAKS-SALAURA6~
+OUTER_SET salamanders = 6
+INCLUDE ~%install%/salamanders.tph~
+
+BEGIN @41107    // Option 3, and Cloudburst is party friendly
+SUBCOMPONENT @41100
+LABEL ~D2-TWEAKS-SALAURA7~
+OUTER_SET salamanders = 7
+INCLUDE ~%install%/salamanders.tph~
+
+BEGIN @41108    // Option 4, and Cloudburst is party friendly
+SUBCOMPONENT @41100
+LABEL ~D2-TWEAKS-SALAURA8~
+OUTER_SET salamanders = 8
+INCLUDE ~%install%/salamanders.tph~
+
+BEGIN @41109    // all salamanders, hits no one
+SUBCOMPONENT @41100
+LABEL ~D2-TWEAKS-SALAURA9~
+OUTER_SET salamanders = 9
+INCLUDE ~%install%/salamanders.tph~
+
+BEGIN @41110    // Avenger form only, hits allies only
+SUBCOMPONENT @41100
+LABEL ~D2-TWEAKS-SALAURA10~
+OUTER_SET salamanders = 10
+INCLUDE ~%install%/salamanders.tph~
 
 ////////////////////////////////////////////////////////////
 
@@ -341,15 +394,15 @@ LABEL ~D2-TWEAKS-MINSCRAGE120~
 OUTER_SET duration = 120
 INCLUDE ~%install%/minscrage.tph~
 
-BEGIN @41304    // Only install timing fix (prevents self-damage after ability ends)
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee eet~) @51
+BEGIN @41304    // Only install timing fix (prevents taking damage if at full HP when ability ends)
+REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) @51
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE0~
 INCLUDE ~%install%/minscrage0.tph~
 
 ////////////////////////////////////////////////////////////
 
-//Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
+//Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)
 
 BEGIN @41401    // Yes
 DESIGNATED 160
@@ -368,8 +421,7 @@ LABEL ~D2-TWEAKS-NOSHORTBOWFIX~
 
 BEGIN @41501    // for all classes
 DESIGNATED 170
-REQUIRE_PREDICATE ((FILE_EXISTS ~CHITIN.KEY~) AND 
-                  !(GAME_IS ~pst pstee~)) @50
+REQUIRE_PREDICATE !(GAME_IS ~pst pstee~) @50
 SUBCOMPONENT @41500
 LABEL ~D2-TWEAKS-ALIGNMENTS1~
 OUTER_SET alignments = 1

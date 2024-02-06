@@ -107,7 +107,7 @@ Class: Wizard or Sorcerer
 
 
 ==================================================
-Baldur's Gate (in BG1 engine) - script info
+Baldur's Gate (in BG1 engine)
 ==================================================
 - Characters will preserve Hide/Invisibility/Sanctuary
 - Melee aggro ranges working
@@ -117,3 +117,9 @@ Baldur's Gate (in BG1 engine) - script info
 
 Note: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped).
 
+
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+/*
+*/

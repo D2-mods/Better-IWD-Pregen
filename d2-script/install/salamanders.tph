@@ -1,0 +1,113 @@
+/*
+for IWDEE (couldn't make it work with classic IWD)
+protects allies or allies+neutrals from salamander auras ('allies' is relative to creature)
+can also install for only Avenger form
+*/
+
+
+//prep
+ACTION_IF (salamanders=1) BEGIN  OUTER_SET allies=1 OUTER_SET neutrals=1 OUTER_SET enemies=0 END  // all salamanders, hits enemies only
+ACTION_IF (salamanders=2) BEGIN  OUTER_SET allies=1 OUTER_SET neutrals=0 OUTER_SET enemies=0 END  // all salamanders, hits enemies/neutrals
+ACTION_IF (salamanders=3) BEGIN  OUTER_SET allies=1 OUTER_SET neutrals=1 OUTER_SET enemies=0 END  // Avenger form only, hits enemies only
+ACTION_IF (salamanders=4) BEGIN  OUTER_SET allies=1 OUTER_SET neutrals=0 OUTER_SET enemies=0 END  // Avenger form only, hits enemies/neutrals
+ACTION_IF (salamanders=5) BEGIN  OUTER_SET allies=1 OUTER_SET neutrals=1 OUTER_SET enemies=0 END  // Option 1, and Cloudburst is party friendly
+ACTION_IF (salamanders=6) BEGIN  OUTER_SET allies=1 OUTER_SET neutrals=0 OUTER_SET enemies=0 END  // Option 2, and Cloudburst is party friendly
+ACTION_IF (salamanders=7) BEGIN  OUTER_SET allies=1 OUTER_SET neutrals=1 OUTER_SET enemies=0 END  // Option 3, and Cloudburst is party friendly
+ACTION_IF (salamanders=8) BEGIN  OUTER_SET allies=1 OUTER_SET neutrals=0 OUTER_SET enemies=0 END  // Option 4, and Cloudburst is party friendly
+ACTION_IF (salamanders=9) BEGIN  OUTER_SET allies=1 OUTER_SET neutrals=1 OUTER_SET enemies=1 END  // all salamanders, hits no one
+ACTION_IF (salamanders=10) BEGIN  OUTER_SET allies=0 OUTER_SET neutrals=1 OUTER_SET enemies=1 END  // Avenger form only, hits allies only
+
+ACTION_IF (salamanders=1 OR salamanders=2 OR salamanders=5 OR salamanders=6 OR salamanders=9) BEGIN
+  OUTER_SET patch_salaura = 1
+END ELSE BEGIN
+  OUTER_SET patch_salaura = 0
+END
+
+ACTION_IF (salamanders=5 OR salamanders=6 OR salamanders=7 OR salamanders=8) BEGIN
+  OUTER_SET patch_cloudburst = 1
+END ELSE BEGIN
+  OUTER_SET patch_cloudburst = 0
+END
+
+
+//
+//Avenger form
+ACTION_IF (FILE_EXISTS_IN_GAME ~firau1d2.spl~) BEGIN
+  COPY_EXISTING ~firau1d2.spl~  ~override~
+    LPF d2_safe_spell INT_VAR allies=allies neutrals=neutrals enemies=enemies END
+  BUT_ONLY
+END
+
+
+
+//
+//for options 1, 2, 5, 6, 9 (patch all salamanders)
+
+ACTION_IF (patch_salaura = 1) BEGIN
+
+  //base game spells with "salaura" projectile (EEs)
+  ACTION_FOR_EACH salspell IN
+    ~FIRAU1D6~
+    ~FIRAU3D6~    // set list in case a tweak changes the projectile
+    ~FROSTD6~
+    ~FROSTD10~
+  BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%salspell%.spl~) BEGIN
+      COPY_EXISTING ~%salspell%.spl~  ~override~
+        LPF d2_safe_spell INT_VAR allies=allies neutrals=neutrals enemies=enemies END
+      BUT_ONLY
+    END
+  END
+
+  //
+  //catch mod-added spells that use "salaura" projectile (EEs)
+  OUTER_SET salaura = 1 + IDS_OF_SYMBOL (projectl ~salaura~)    // projectile number for spell
+
+  COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
+    PATCH_IF (!(~%SOURCE_RES%~ STR_EQ ~firau1d2~) AND
+              !(~%SOURCE_RES%~ STR_EQ ~FIRAU1D6~) AND !(~%SOURCE_RES%~ STR_EQ ~FROSTD6~) AND
+              !(~%SOURCE_RES%~ STR_EQ ~FIRAU3D6~) AND !(~%SOURCE_RES%~ STR_EQ ~FROSTD10~)
+    ) BEGIN
+
+      READ_SHORT 0x98 proj
+      PATCH_IF proj = salaura BEGIN
+        LPF d2_safe_spell INT_VAR allies=allies neutrals=neutrals enemies=enemies END
+      END
+    END
+  BUT_ONLY
+
+END
+
+
+
+//
+//for options 5-8 (Cloudburst tweak)
+
+ACTION_IF (patch_cloudburst = 1) BEGIN
+
+  //patch base game Cloudburst
+  ACTION_IF (FILE_EXISTS_IN_GAME ~SPPR325.SPL~) BEGIN
+    COPY_EXISTING ~SPPR325.spl~  ~override~
+      LPF d2_safe_spell END    // use default settings (protects allies/neutrals)
+    BUT_ONLY
+  END
+
+  //
+  //catch mod-added spells that use Cloudburst projectile ("IDPRO301")
+  OUTER_SET cloudburst = 1 + IDS_OF_SYMBOL (projectl ~IDPRO301~)    // projectile number for spell
+
+  COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
+    PATCH_IF !(~%SOURCE_RES%~ STR_EQ ~SPPR325~) BEGIN
+
+      READ_SHORT 0x98 proj
+      PATCH_IF proj = cloudburst BEGIN
+        LPF d2_safe_spell END
+      END
+    END
+  BUT_ONLY
+
+END
+
+
+/*
+*/

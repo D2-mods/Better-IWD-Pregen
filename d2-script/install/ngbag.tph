@@ -1,15 +1,38 @@
-// Capacity = 50 items (IWD2 default)
+/*
+Give party a Bag of Holding at game start (classic and EEs)
+This file is for bottomless, 50 items, or 100 items options.
+*/
+
+
+//prep
+ACTION_IF (capacity=1) BEGIN  OUTER_SET capacity = 32767 
+  OUTER_SET bg2_desc = RESOLVE_STR_REF (@731)
+  OUTER_SET id2_desc = RESOLVE_STR_REF (@735)
+END
+
+ACTION_IF (capacity=2) BEGIN  OUTER_SET capacity = 50
+  OUTER_SET bg2_desc = RESOLVE_STR_REF (@732)
+  OUTER_SET id2_desc = RESOLVE_STR_REF (@736)
+END
+
+ACTION_IF (capacity=3) BEGIN  OUTER_SET capacity = 100
+  OUTER_SET bg2_desc = RESOLVE_STR_REF (@733)
+  OUTER_SET id2_desc = RESOLVE_STR_REF (@737)
+END
+
 
 ////////////////////////////////////////////////////////////
 
+//bgee, bg2ee
+
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
   COPY ~%ngbag%/d2hbee1.ITM~ ~override/d2#ngbag.ITM~
-    SAY NAME1 @730 SAY UNIDENTIFIED_DESC @732
+    SAY NAME1 @730 WRITE_LONG 0x50 bg2_desc
     SAY NAME2 @730
 	
   COPY ~%ngbag%/d2hbee1.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
-    WRITE_SHORT 0x22 50    // set to 50 capacity
+    WRITE_SHORT 0x22 capacity
 	
   ACTION_IF !(FILE_EXISTS_IN_GAME ~ibag04.BAM~) BEGIN
     COPY ~%ngbag%/icon-ee1.BAM~ ~override/ibag04.BAM~
@@ -41,16 +64,18 @@ END
 
 ////////////////////////////////////////////////////////////
 
+//iwdee
+
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
 ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
   COPY ~%ngbag%/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
-    SAY NAME2 @730 SAY DESC @732
+    SAY NAME2 @730 WRITE_LONG 0x54 bg2_desc
 	
   COPY ~%ngbag%/d2hbee0.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
-    WRITE_SHORT 0x22 50    // set to 50 capacity
+    WRITE_SHORT 0x22 capacity
 	
   ACTION_IF !(FILE_EXISTS_IN_GAME ~ibaghold.BAM~) BEGIN
     COPY ~%ngbag%/icon-ee0.BAM~ ~override/ibaghold.BAM~
@@ -63,16 +88,18 @@ END
 
 ////////////////////////////////////////////////////////////
 
+//iwd2
+
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
 ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
   COPY ~%ngbag%/d2hbid2.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @722
-    SAY NAME2 @730 SAY DESC @736
+    SAY NAME2 @730 WRITE_LONG 0x54 id2_desc
 	
   COPY ~%ngbag%/d2hbid2.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
-    WRITE_SHORT 0x9c 50    // set to 50 capacity
+    WRITE_SHORT 0x9c capacity
   
   ACTION_IF !(FILE_EXISTS_IN_GAME ~ibaghold.BAM~) BEGIN
     COPY ~%ngbag%/icon-id2.BAM~ ~override/ibaghold.BAM~
@@ -85,16 +112,18 @@ END
 
 ////////////////////////////////////////////////////////////
 
+//iwd1 (classic)
+
 ACTION_IF (GAME_IS ~how totlm~) BEGIN
 ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
   COPY ~%ngbag%/d2hbid1.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
-    SAY NAME2 @730 SAY DESC @732
+    SAY NAME2 @730 WRITE_LONG 0x54 bg2_desc
 	
   COPY ~%ngbag%/d2hbid1.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
-    WRITE_SHORT 0x9c 50    // set to 50 capacity
+    WRITE_SHORT 0x9c capacity
   
   ACTION_IF !(FILE_EXISTS_IN_GAME ~ibaghold.BAM~) BEGIN
     COPY ~%ngbag%/icon-id1.BAM~ ~override/ibaghold.BAM~
@@ -106,17 +135,19 @@ END
 END
 
 ////////////////////////////////////////////////////////////
+
+//IWD-in-BG2 mod
 
 ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
 ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
   COPY ~%ngbag%/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
-    SAY NAME2 @730 SAY DESC @732
+    SAY NAME2 @730 WRITE_LONG 0x54 bg2_desc
 	
   COPY ~%ngbag%/d2hbee0.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
-    WRITE_SHORT 0x22 50    // set to 50 capacity
+    WRITE_SHORT 0x22 capacity
   
   ACTION_IF !(FILE_EXISTS_IN_GAME ~ibaghold.BAM~) BEGIN
     COPY ~%ngbag%/icon-id1.BAM~ ~override/ibaghold.BAM~
@@ -129,14 +160,16 @@ END
 
 ////////////////////////////////////////////////////////////
 
+//bg2 engine (classic)
+
 ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc ca~) BEGIN
   COPY ~%ngbag%/d2hbbg2.ITM~ ~override/d2#ngbag.ITM~
-    SAY NAME1 @730 SAY UNIDENTIFIED_DESC @732
+    SAY NAME1 @730 WRITE_LONG 0x50 bg2_desc
     SAY NAME2 @730
 	
   COPY ~%ngbag%/d2hbbg2.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
-    WRITE_SHORT 0x22 50    // set to 50 capacity
+    WRITE_SHORT 0x22 capacity
   
   ACTION_IF !(FILE_EXISTS_IN_GAME ~ibag04.BAM~) BEGIN
     COPY ~%ngbag%/icon-bg2.BAM~ ~override/ibag04.BAM~
@@ -166,25 +199,25 @@ END
 
 ////////////////////////////////////////////////////////////
 
-//IWD games: Patch existing bag if added by another component
+//IWD games - Patches existing bag if already added
 
 ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN  
+
   COPY_EXISTING ~d2#ngbag.STO.BAK~ ~override/d2#ngbag.STO~    // revert edits to store file
-  COPY_EXISTING ~d2#ngbag.STO~ ~override~
     PATCH_IF (GAME_IS ~iwd2 how totlm~) BEGIN
-      WRITE_SHORT 0x9c 50    // set to 50 capacity
+      WRITE_SHORT 0x9c capacity
     END
 	
     PATCH_IF (GAME_IS ~iwdee iwd_in_bg2~) BEGIN
-      WRITE_SHORT 0x22 50    // set to 50 capacity
+      WRITE_SHORT 0x22 capacity
     END
-  BUT_ONLY
+  // end COPY
 
   COPY_EXISTING ~d2#ngbag.ITM.BAK~ ~override/d2#ngbag.ITM~    // revert edits to item file
-  COPY_EXISTING ~d2#ngbag.ITM~ ~override~
-    PATCH_IF (GAME_IS ~iwd2~) BEGIN SAY DESC @736 END
-    ELSE BEGIN SAY DESC @732 END
-  BUT_ONLY
+    PATCH_IF (GAME_IS ~iwd2~) BEGIN WRITE_LONG 0x54 id2_desc END
+    ELSE BEGIN WRITE_LONG 0x54 bg2_desc END
+  // end COPY
+
 END
 
 ////////////////////////////////////////////////////////////

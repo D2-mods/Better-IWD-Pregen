@@ -1,4 +1,4 @@
-//timing fix for Minsc Berserk
+//BG2EE: timing fix for Minsc Berserk
 //prevents self-damage after ability ends
 
 COPY_EXISTING ~SPIN117.SPL~ ~override~
