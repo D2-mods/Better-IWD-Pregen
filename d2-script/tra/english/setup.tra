@@ -88,7 +88,7 @@ This file contains text shown in weidu installer
 
 @41400 = ~Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)~
 	@41401 = ~Yes~
-	@41402 = ~No~
+	@41402 = ~Yes, but not mod items~
 
 @41500 = ~Remove alignment restrictions for classes (classic and EEs)~
 	@41501 = ~for all classes~
@@ -101,6 +101,9 @@ This file contains text shown in weidu installer
 	@41601 = ~for both (paladins and rangers)~
 	@41602 = ~Rangers only (paladins can fall)~
 	@41603 = ~Paladins only (rangers can fall)~
+	@41604 = ~Option 1, but not for mod kits~
+	@41605 = ~Option 2, but not for mod kits~
+	@41606 = ~Option 3, but not for mod kits~
 
 @41700 = ~~
 	@41701 = ~~

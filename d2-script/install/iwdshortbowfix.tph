@@ -1,66 +1,142 @@
-//
+//patch visuals
 //
 
 
-//Patch visuals for shortbows (IWD:EE)
+//IWDEE - patch shortbows
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
 
-  COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
-    PATCH_IF (SOURCE_SIZE > 0x71) BEGIN
-    PATCH_IF !(~%SOURCE_RES%~ STR_EQ ~GODBOW~) BEGIN    // skip if Godbow
-    
-      READ_BYTE 0x31 prof                 // checks weapon proficiency
-      PATCH_IF (prof = 105) BEGIN         // shortbow prof (note: some mods combine longbows into this)
-        READ_SHORT 0x80 range             // checks launcher range
-        PATCH_IF (range = 75) BEGIN       // patch if 75 range (standard for shortbows)
-          WRITE_ASCII 0x22 ~BS~ #2        // BS = shortbow appearance
-          WRITE_ASCII 0x44 ~GBOW02~ #8    // change ground icon
-        END
-      END
-  	
-      PATCH_IF (!(prof = 105) OR !(range = 75)) BEGIN
-        READ_STRREF 0x8 weapon            // checks unidentified name
-        PATCH_IF ((~%weapon%~ STR_EQ ~Shortbow~) OR
-                  (~%weapon%~ STR_EQ ~Short Bow~)
-        ) BEGIN
-          WRITE_ASCII 0x22 ~BS~ #2        // BS = shortbow appearance
-          WRITE_ASCII 0x44 ~GBOW02~ #8    // change ground icon
-        END
-      END
+  //base game items
+  ACTION_FOR_EACH shortbow IN
+    ~BOW05~
+    ~BOW06~
+    ~COMPB05~    // set list to ensure always patched
+    ~HQSBOW~
+    ~SBOWEBU~
+    ~STORM~
+  BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%shortbow%.itm~) BEGIN
+      COPY_EXISTING ~%shortbow%.itm~  ~override~
+        WRITE_ASCII 0x22 ~BS~ #2        // BS = shortbow appearance
+        WRITE_ASCII 0x44 ~GBOW02~ #8    // change ground icon
+      BUT_ONLY
+    END
+  END
+
+
+  //
+  //mod items
+  ACTION_IF (patch_items = 1) BEGIN
+
+    // get info from regular shortbow
+    COPY_EXISTING - ~BOW05.itm~ ~~
+      READ_SHORT 0x1c shortbow_cat    // item "Category"
+      READ_BYTE 0x31 shortbow_prof    // proficiency
+      READ_LONG 0x8 shortbow_name     // name as string ref
+      READ_LONG 0x50 shortbow_desc    // desc as string ref (non-magical)
+    // end inlined COPY
   
-    END
-    END
-  BUT_ONLY
+    // patching
+    COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
+      PATCH_IF (!(~%SOURCE_RES%~ STR_EQ ~BOW05~) AND !(~%SOURCE_RES%~ STR_EQ ~HQSBOW~) AND
+                !(~%SOURCE_RES%~ STR_EQ ~BOW06~) AND !(~%SOURCE_RES%~ STR_EQ ~SBOWEBU~) AND
+                !(~%SOURCE_RES%~ STR_EQ ~COMPB05~) AND !(~%SOURCE_RES%~ STR_EQ ~STORM~) AND
+                !(~%SOURCE_RES%~ STR_EQ ~GODBOW~)
+      ) BEGIN
+  
+        READ_SHORT 0x1c weapon_cat
+        PATCH_IF (weapon_cat = shortbow_cat) BEGIN    // if category matches shortbow
+          READ_BYTE 0x31 weapon_prof
+          PATCH_IF (weapon_prof = shortbow_prof) BEGIN    // if prof matches shortbow
+            READ_SHORT 0x68 num_headers
+            PATCH_IF (num_headers > 0) BEGIN    // if itm has headers
+  
+                READ_LONG 0x8 weapon_name
+                READ_LONG 0x50 weapon_desc
+                READ_SHORT 0x80 range
+                PATCH_IF ((weapon_name = shortbow_name) OR    // if name matches shortbow
+                          (weapon_desc = shortbow_desc) OR    // if desc matches shortbow
+                          (range < 80)    // default is 75 for shortbows (100 for longbows)
+                ) BEGIN
+                  WRITE_ASCII 0x22 ~BS~ #2        // BS = shortbow appearance
+                  WRITE_ASCII 0x44 ~GBOW02~ #8    // change ground icon
+                END
+  
+            END
+          END
+        END
+
+      END
+    BUT_ONLY
+  END
 
 END
 
 
+
 //
-//Patch visuals for scimitars (IWD-in-BG2)
+//IWD-in-BG2 - patch scimitars
 ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
 
-  COPY_EXISTING_REGEXP GLOB ~.*\.itm~ override
-    PATCH_IF (SOURCE_SIZE > 0x71) BEGIN
-
-      READ_BYTE 0x31 prof                  // checks weapon proficiency
-      PATCH_IF (prof = 95) BEGIN           // scimitar prof
-        READ_STRREF 0x8 weapon             // checks unidentified name
-  	  
-        PATCH_IF (~%weapon%~ STR_EQ ~Scimitar~) BEGIN
-          WRITE_ASCII 0x22 ~SC~ #2    // SC = scimitar appearance
-        END
-  	  
-        PATCH_IF (~%weapon%~ STR_EQ ~Wakizashi~) BEGIN
-          WRITE_ASCII 0x22 ~SS~ #2    // SS = short sword appearance
-        END
-  	  
-        PATCH_IF (~%weapon%~ STR_EQ ~Ninja-To~) BEGIN
-          WRITE_ASCII 0x22 ~S1~ #2    // S1 = long sword appearance
-        END
-      END
-
+  //base game items
+  ACTION_FOR_EACH scimitar IN
+    ~LUCKY~
+    ~MIELIKK~
+    ~SCIMITA~    // set list to ensure always patched
+    ~SW1H15~
+    ~TALONGF~
+    ~VALIANT~
+    ~ZZD5WOH~
+  BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%scimitar%.itm~) BEGIN
+      COPY_EXISTING ~%scimitar%.itm~  ~override~
+        WRITE_ASCII 0x22 ~SC~ #2    // SC = scimitar appearance
+      BUT_ONLY
     END
-  BUT_ONLY
+  END
+
+
+  //
+  //mod items
+  ACTION_IF (patch_items = 1) BEGIN
+
+    // get info from regular scimitar
+    COPY_EXISTING - ~SCIMITA.itm~ ~~
+      READ_SHORT 0x1c scimitar_cat    // item "Category"
+      READ_BYTE 0x31 scimitar_prof    // proficiency
+      READ_LONG 0x8 scimitar_name     // name as string ref
+      READ_LONG 0x50 scimitar_desc    // desc as string ref (non-magical)
+    // end inlined COPY
+
+    // patching
+    COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
+      PATCH_IF (!(~%SOURCE_RES%~ STR_EQ ~LUCKY~) AND !(~%SOURCE_RES%~ STR_EQ ~TALONGF~) AND
+                !(~%SOURCE_RES%~ STR_EQ ~MIELIKK~) AND !(~%SOURCE_RES%~ STR_EQ ~VALIANT~) AND
+                !(~%SOURCE_RES%~ STR_EQ ~SCIMITA~) AND !(~%SOURCE_RES%~ STR_EQ ~ZZD5WOH~) AND
+                !(~%SOURCE_RES%~ STR_EQ ~SW1H15~)
+      ) BEGIN
+  
+        READ_SHORT 0x1c weapon_cat
+        PATCH_IF (weapon_cat = scimitar_cat) BEGIN    // if category matches scimitar
+          READ_BYTE 0x31 weapon_prof
+          PATCH_IF (weapon_prof = scimitar_prof) BEGIN    // if prof matches scimitar
+            READ_SHORT 0x68 num_headers
+            PATCH_IF (num_headers > 0) BEGIN    // if itm has headers
+  
+                READ_LONG 0x8 weapon_name
+                READ_LONG 0x50 weapon_desc
+                PATCH_IF ((weapon_name = scimitar_name) OR    // if name matches scimitar
+                          (weapon_desc = scimitar_desc)       // if desc matches scimitar
+                ) BEGIN
+                  WRITE_ASCII 0x22 ~SC~ #2    // SC = scimitar appearance
+                END
+  
+            END
+          END
+        END
+
+      END
+    BUT_ONLY
+  END
 
 END
 

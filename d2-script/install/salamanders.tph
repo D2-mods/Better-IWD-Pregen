@@ -69,10 +69,14 @@ ACTION_IF (patch_salaura = 1) BEGIN
               !(~%SOURCE_RES%~ STR_EQ ~FIRAU3D6~) AND !(~%SOURCE_RES%~ STR_EQ ~FROSTD10~)
     ) BEGIN
 
-      READ_SHORT 0x98 proj
-      PATCH_IF proj = salaura BEGIN
-        LPF d2_safe_spell INT_VAR allies=allies neutrals=neutrals enemies=enemies END
+      READ_SHORT 0x68 num_headers
+      PATCH_IF (num_headers > 0) BEGIN    // skip spl if no header
+        READ_SHORT 0x98 proj
+        PATCH_IF proj = salaura BEGIN
+          LPF d2_safe_spell INT_VAR allies=allies neutrals=neutrals enemies=enemies END
+        END
       END
+
     END
   BUT_ONLY
 
@@ -99,10 +103,14 @@ ACTION_IF (patch_cloudburst = 1) BEGIN
   COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
     PATCH_IF !(~%SOURCE_RES%~ STR_EQ ~SPPR325~) BEGIN
 
-      READ_SHORT 0x98 proj
-      PATCH_IF proj = cloudburst BEGIN
-        LPF d2_safe_spell END
+      READ_SHORT 0x68 num_headers
+      PATCH_IF (num_headers > 0) BEGIN    // skip spl if no header
+        READ_SHORT 0x98 proj
+        PATCH_IF proj = cloudburst BEGIN
+          LPF d2_safe_spell END
+        END
       END
+
     END
   BUT_ONLY
 

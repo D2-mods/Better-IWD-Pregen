@@ -3,38 +3,86 @@ Prevent paladins and rangers falling at low rep (EEs)
 */
 
 
-//
-ACTION_IF (nofalling = 1) BEGIN  OUTER_SET paladin = 6 OUTER_SET ranger = 12 END    // Both
-ACTION_IF (nofalling = 2) BEGIN  OUTER_SET paladin = 0 OUTER_SET ranger = 12 END    // Ranger only
-ACTION_IF (nofalling = 3) BEGIN  OUTER_SET paladin = 6 OUTER_SET ranger = 0  END    // Paladin only
+ACTION_IF (FILE_EXISTS_IN_GAME ~fallen.2DA~) BEGIN
+
+
+//prep
+ACTION_IF (nofalling = 1) BEGIN  OUTER_SET paladin = 6 OUTER_SET ranger = 12 END    // for both (paladins and rangers)
+ACTION_IF (nofalling = 2) BEGIN  OUTER_SET paladin = 0 OUTER_SET ranger = 12 END    // Rangers only (paladins can fall)
+ACTION_IF (nofalling = 3) BEGIN  OUTER_SET paladin = 6 OUTER_SET ranger = 0  END    // Paladins only (rangers can fall)
+ACTION_IF (nofalling = 4) BEGIN  OUTER_SET paladin = 6 OUTER_SET ranger = 12 END    // Option 1, but not for mod kits
+ACTION_IF (nofalling = 5) BEGIN  OUTER_SET paladin = 0 OUTER_SET ranger = 12 END    // Option 2, but not for mod kits
+ACTION_IF (nofalling = 6) BEGIN  OUTER_SET paladin = 6 OUTER_SET ranger = 0  END    // Option 3, but not for mod kits
+
+ACTION_IF (nofalling=1 OR nofalling=2 OR nofalling=3) BEGIN
+  OUTER_SET patch_kits = 1
+END ELSE BEGIN
+  OUTER_SET patch_kits = 0
+END
 
 
 //
-ACTION_IF (FILE_EXISTS_IN_GAME ~fallen.2da~) BEGIN
+//function
+DEFINE_PATCH_FUNCTION d2nofallen BEGIN
+  COUNT_REGEXP_INSTANCES ~%kitname%~ count
+  PATCH_IF (count = 0) BEGIN
+    COUNT_2DA_ROWS 1 fallenrows
+    INSERT_2DA_ROW fallenrows 1 ~%kitname% 0~
+    PRETTY_PRINT_2DA
+  END
+END
 
-  COPY_EXISTING - ~clastext.2da~  ~~
-    COUNT_2DA_ROWS 3 rows
-    READ_2DA_ENTRIES_NOW ~d2checkkits~ 3
 
-    FOR (r = 1; r < rows; ++r) BEGIN
-      READ_2DA_ENTRY_FORMER ~d2checkkits~ r 1 baseclass
-      PATCH_IF ((baseclass = paladin) OR (baseclass = ranger)) BEGIN    // if paladin or ranger
-        READ_2DA_ENTRY_FORMER ~d2checkkits~ r 7 fallen
-        PATCH_IF (fallen = 0) BEGIN    // if not a fallen kit
+
+//
+//base class/kits
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2nofallen_base BEGIN
+  PALADIN        => paladin
+  CAVALIER       => paladin
+  INQUISITOR     => paladin
+  UNDEAD_HUNTER  => paladin
+  RANGER         => ranger
+  FERALAN        => ranger
+  STALKER        => ranger
+  BEASTMASTER    => ranger
+END
+
+COPY_EXISTING ~fallen.2DA~  ~override~
+  PHP_EACH d2nofallen_base AS kitname => check BEGIN
+    TEXT_SPRINT setting ~%check%~
+    SET patch = EVAL ~%setting%~
+    PATCH_IF (patch > 0) BEGIN
+      LPF d2nofallen END
+    END
+  END
+BUT_ONLY
+
+
+
+//
+//mod kits
+ACTION_IF (patch_kits = 1) BEGIN
+
+  COPY_EXISTING - ~kitlist.2da~  ~~
+    COUNT_2DA_ROWS 3 kitlist_rows
+    READ_2DA_ENTRIES_NOW ~kitlist_table~ 3
+
+    FOR (row = 1; row < kitlist_rows; ++row) BEGIN
+      READ_2DA_ENTRY_FORMER ~kitlist_table~ row 8 baseclass
+      PATCH_IF (IS_AN_INT %baseclass%) BEGIN
+        PATCH_IF ((baseclass = paladin) OR (baseclass = ranger)) BEGIN    // if paladin or ranger
           INNER_ACTION BEGIN
             COPY_EXISTING ~fallen.2da~  ~override~
-              READ_2DA_ENTRY_FORMER ~d2checkkits~ r 0 kitname
-              COUNT_REGEXP_INSTANCES ~%kitname%~ count
-              PATCH_IF (count = 0) BEGIN    // if not already listed
-                COUNT_2DA_ROWS 1 fallenrows
-                INSERT_2DA_ROW fallenrows 1 ~%kitname% 0~
-                PRETTY_PRINT_2DA
-              END
+              READ_2DA_ENTRY_FORMER ~kitlist_table~ row 1 kitname
+              LPF d2nofallen END
             BUT_ONLY
           END
         END
       END
     END
+  // end inlined COPY
+
+END
 
 
 END

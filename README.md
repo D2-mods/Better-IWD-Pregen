@@ -12,14 +12,14 @@ Script components:
 -
 
 1. **Better IWD Pregen**
-	- Adds 3-4 party AI scripts (d2scrp, d2scrp+, d2scrp-, iwdpgen).
- 	- More info below.
+	- Adds 3-4 party AI scripts (d2scrp, d2scrp+, d2scrp-, iwdpgen)
+ 	- More info below
 2. **Better AI for Call Woodland Beings (EEs, BG2)**
-	- Option 1: Use revised script for nymph summon (compatible with SCS).
-	- Option 2: Use existing script, but patch in a few actions (use with revision mods).
-	- This component needs to be installed after AI mods (ex. SCS or atweaks).
+	- Option 1: Use revised script for nymph summon (compatible with SCS)
+	- Option 2: Use existing script, but patch in a few actions (use with revision mods)
+	- This component needs to be installed after AI mods (ex. SCS or atweaks)
 3. **Auto-assign script to new characters**
-	- Can choose any of the 3-4 scripts from this mod.
+	- Can choose any of the 3-4 scripts from this mod
 
 --
 
@@ -27,17 +27,17 @@ Tweak components:
 -
 
 1. **Adjust enemy damage at higher difficulties (classic IWD, IWD2)**
-	- IWD2: includes exe patch by Bubb (required for damage adjust to work).
+	- IWD2: includes exe patch by Bubb (required for damage adjust to work)
 2. **Add or remove Avarine Decanter (IWD2)**
-	- Won't cause issues if the item is already obtainable.
+	- Won't cause issues if the item is already obtainable
 3. **Unnerf Animate Dead (IWD2)**
-	- Also corrects chance of each summon to 50/50.
-	- This is skipped if IWD2EE 'Spell Revisions' is installed.
+	- Also corrects chance of each summon to 50/50
+	- This is skipped if IWD2EE 'Spell Revisions' is installed
 4. **Shapeshift movement bonuses bypass Free Action (EEs)**
-	- Can set to bypass or be blocked by Free Action.
+	- Can set to bypass or be blocked by Free Action
 5. **Increase movement speed of IWD shapeshifts (IWD1, IWDEE)**
-	- EEs: increases Polar Bear and Winter Wolf movement.
-	- classic: increases all forms (most are still slower than natural form).  
+	- EEs: increases Polar Bear and Winter Wolf movement
+	- classic: increases all forms (most are still slower than natural form)  
 
 --
 
@@ -48,31 +48,31 @@ Tweak components:
 	- Option 1: "Bottomless" bag (same as Tweaks Anthology component)
 	- Option 2: Capacity = 50 items (IWD2 default)
 	- Option 3: Capacity = 100 items (BG2 default)
-	- Option 4: Bottomless, and Gold is exchanged when adding/removing items
+	- Option 4: Bottomless, and Gold is exchanged when adding/removing items (EE-only)
 8. **All classes get full HP bonuses from Constitution (classic and EEs)**
 	- Option 1: 2e-style HP bonuses (i.e. BG-style)
 	- Option 2: 3e-style bonuses (+1 or -1 every 2 Con) (WARNING: Prism will spawn dead in BG1.)
 	- Option 3: Mixed (use 3e-style at 10+, normal BG penalties at under 10)
-	- Will not overwrite any previous changes to Con effects, except for HP bonus.
+	- Will not overwrite any previous changes to Con effects, except for HP bonus
 9. **Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)**
-	- Can set delay to 1 round or 5 rounds (stat reduction does not stack).
-	- Note: Crippling Strike is capped at -7 stat reduction in unmodded IWDEE.
+	- Can set delay to 1 round or 5 rounds (stat reduction does not stack)
+	- Note: Crippling Strike is capped at -7 stat reduction in unmodded IWDEE
 10. **Salamander auras hit only enemies of the caster (IWDEE)**
-	- Can patch just Avenger or enemy auras as well.
-	- Can optionally make Cloudburst party friendly.  
+	- Can patch just Avenger form or enemy auras as well
+	- Can optionally make Cloudburst party friendly  
 
 --
 
 11. **Allow Minsc to use his Berserk ability at will (BG games)**
-	- Options to set duration to 5 rounds, 1 turn, or 2 turns.
+	- Options to set duration to 5 rounds, 1 turn, or 2 turns
 12. **Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)**
-	- IWDEE: makes shortbows look like shortbows in the inventory screen.
+	- IWDEE: makes shortbows look like shortbows in the inventory screen
 13. **Remove alignment restrictions for classes (classic and EEs)**
-	- Will patch any kits of a class as well, including multiclass kits.
+	- Will patch any mod-added kits as well, including multiclass kits
 	- Has options to skip certain classes (paladins, clerics, monks, etc.)
 14. **Prevent paladins and rangers falling at low rep (EEs)**
-	- Will patch any kits of a class as well.
-	- Can optionally install for only rangers or only paladins.
+	- Will patch any mod-added kits as well
+	- Can optionally install for only rangers or only paladins
 
 --
 
@@ -115,8 +115,7 @@ This script manages auto-attack, while giving more nuanced control of the charac
 
 #### Cooldown hotkeys:
 - If the B key is pressed, the character will enter a Cooldown mode for 30 seconds.
-	- Reduces melee aggro range to 5 ft..
-	- Also disables some of the retargeting actions.
+- Cooldown reduces melee aggro range to 5 ft. and disables some of the retargeting actions.
 - If the E key is pressed, the Cooldown mode will be deactivated.
 - If the game is saved while a character is in Cooldown mode, it will be deactivated on reload.
 
@@ -221,9 +220,9 @@ Nymph AI script (Call Woodland Beings)
 
 **Option 1 - Revised script:**
 - Smarter spellcasting (better targeting and not as wasteful)
-- Won't cast statuses on undead or enemies with high magic resist
+- Won't cast status spells on undead or enemies with high magic resist
 - Will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
-- Is more cautious at low HP if it has spells remaining
+- More cautious at low HP if it has spells remaining
 - Will not attack or cast spells at enemies if invisible
 - Cooldown hotkeys to delay spellcasting
 

@@ -101,6 +101,12 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.4
+- Fixed an issue that would cause the salamander tweak for IWDEE to fail at install, if a previous mod added SPL files with no headers to the override folder.
+- Fixed an issue that made archers/beast masters still able to fall if using the "Prevent paladins and rangers falling" component.
+- Can now choose to skip mod items for the shortbow patch for IWDEE. (modders might make weird items with intentionally different visuals than normal).
+- Also fixed a potential issue with the shortbow patch. It could previously fail (not an error, just do nothing) if installed after a proficiencies overhaul on a non-English install of the game.
+
 v7.3
 - Added tweak for IWDEE: Salamander auras hit only enemies of the caster. Has multiple options. Can patch all salamander auras, or just the Avenger shapeshift (i.e. if you want enemy auras to still damage anyone). Can also optionally make Cloudburst party friendly.
 - classic BG2: the tweak for Minsc's Berserk will now update the description if using the Improved GUI mod from Insomniator. Install this mod after Improved GUI. The description uses the same layout as Improved GUI, with duration changed to match the component.
