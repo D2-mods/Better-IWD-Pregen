@@ -1,0 +1,269 @@
+/*
+variables for nymph script
+*/
+
+
+//
+OUTER_SET is_ee = 0
+ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN  OUTER_SET is_ee = 1  END
+ACTION_IF (GAME_IS ~iwdee~)          BEGIN  OUTER_SET is_ee = 2  END
+
+ACTION_IF (is_ee > 0) BEGIN
+  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1002) STR_VAR color=orange RET newstring END
+  OUTER_TEXT_SPRINT activate_cooldown ~%newstring%~
+  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1003) STR_VAR color=orange RET newstring END
+  OUTER_TEXT_SPRINT disable_cooldown ~%newstring%~
+END ELSE BEGIN
+  OUTER_SET activate_cooldown = RESOLVE_STR_REF (@1002)
+  OUTER_SET disable_cooldown = RESOLVE_STR_REF (@1003)
+END
+
+
+
+//
+//trigger variables
+ACTION_IF (is_ee = 2) BEGIN
+  OUTER_TEXT_SPRINT no_status ~!Race(LastSeenBy(),SWORD)~
+END ELSE BEGIN
+  OUTER_TEXT_SPRINT no_status ~!Race(LastSeenBy(),SWORD) !Race(LastSeenBy(),TROLL)~
+END
+
+ACTION_IF (is_ee = 2) BEGIN
+  OUTER_TEXT_SPRINT no_wounds
+~
+	!Race(LastSeenBy(),DEMONIC)
+	!Race(LastSeenBy(),ELEMENTAL)
+	!Race(LastSeenBy(),MEPHIT)
+	!Race(LastSeenBy(),GENIE)
+	!Race(LastSeenBy(),SALAMANDER)
+	!Race(LastSeenBy(),TIEFLING)
+	!Race(LastSeenBy(),GITHYANKI)
+	!Race(LastSeenBy(),SOLAR)
+	!Race(LastSeenBy(),ANTISOLAR)
+	!Race(LastSeenBy(),PLANATAR)
+	!Race(LastSeenBy(),DARKPLANATAR)
+~
+END ELSE BEGIN
+  OUTER_TEXT_SPRINT no_wounds ~~
+END
+
+ACTION_IF (is_ee > 0) BEGIN
+  OUTER_TEXT_SPRINT caster_check
+~
+	OR(5)
+		See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+		See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+		See(NearestEnemyOfType([0.0.0.SHAMAN]))
+		See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+		See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+~
+END ELSE BEGIN
+  OUTER_TEXT_SPRINT caster_check
+~
+	OR(4)
+		See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+		See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+		See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+		See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+~
+END
+
+ACTION_IF (RESOURCE_CONTAINS ~trigger.ids~ ~IsWeaponRanged~) BEGIN
+  OUTER_TEXT_SPRINT run_check ~!IsWeaponRanged(NearestEnemyOf())~
+END ELSE BEGIN
+  OUTER_TEXT_SPRINT run_check ~~
+END
+
+
+
+//
+//bg2 block
+ACTION_IF (RESOURCE_CONTAINS ~spell.ids~ ~NYMPH_CONFUSION~) BEGIN
+  OUTER_TEXT_SPRINT bg2_block
+~
+IF
+	OR(2)
+		ActionListEmpty()
+		!Allegiance(Myself,GOODCUTOFF)
+	HaveSpell(NYMPH_CONFUSION)
+	See(NearestEnemyOf())
+	!StateCheck(LastSeenBy(),STATE_CONFUSED)
+	Global("castConfusion","LOCALS",0)
+THEN
+	RESPONSE #100
+		Spell(NearestEnemyOf(),NYMPH_CONFUSION)
+		SetGlobal("castConfusion","LOCALS",1)
+END
+~
+END ELSE BEGIN
+  OUTER_TEXT_SPRINT bg2_block ~~
+END
+
+
+
+//
+//ee blocks
+ACTION_IF (RESOURCE_CONTAINS ~trigger.ids~ ~WeaponEffectiveVs~) BEGIN
+
+  OUTER_TEXT_SPRINT immune_check
+~
+IF
+	OR(2)
+		ActionListEmpty()
+		!Allegiance(Myself,GOODCUTOFF)
+	See(NearestEnemyOf())
+	Range([GOODCUTOFF],30)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+THEN
+	RESPONSE #100
+		FaceObject(NearestEnemyOf())
+		NoAction()
+END
+~
+
+  OUTER_TEXT_SPRINT target_check
+~
+IF
+	OR(2)
+		ActionListEmpty()
+		!Allegiance(Myself,GOODCUTOFF)
+	Range(NearestEnemyOf(),5)
+	Range([GOODCUTOFF],20)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		InWeaponRange(SecondNearestEnemyOf())
+		Range(SecondNearestEnemyOf(),5)
+	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+THEN
+	RESPONSE #80
+		AttackOneRound(SecondNearestEnemyOf())
+	RESPONSE #20
+		RunAwayFrom(NearestEnemyOf(),90)
+END
+
+IF
+	OR(2)
+		ActionListEmpty()
+		!Allegiance(Myself,GOODCUTOFF)
+	Range(NearestEnemyOf(),5)
+	Range([GOODCUTOFF],20)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		InWeaponRange(ThirdNearestEnemyOf())
+		Range(ThirdNearestEnemyOf(),5)
+	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+THEN
+	RESPONSE #80
+		AttackOneRound(ThirdNearestEnemyOf())
+	RESPONSE #20
+		RunAwayFrom(NearestEnemyOf(),90)
+END
+
+IF
+	OR(2)
+		ActionListEmpty()
+		!Allegiance(Myself,GOODCUTOFF)
+	Range(NearestEnemyOf(),5)
+	Range([GOODCUTOFF],20)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+THEN
+	RESPONSE #100
+		RunAwayFrom(NearestEnemyOf(),90)
+END
+~
+
+END
+ELSE BEGIN
+
+  OUTER_TEXT_SPRINT immune_check ~~
+  OUTER_TEXT_SPRINT target_check
+~
+IF
+	OR(2)
+		ActionListEmpty()
+		!Allegiance(Myself,GOODCUTOFF)
+	Range(NearestEnemyOf(),5)
+	Range([GOODCUTOFF],20)
+	OR(2)
+		InWeaponRange(SecondNearestEnemyOf())
+		Range(SecondNearestEnemyOf(),5)
+THEN
+	RESPONSE #80
+		AttackOneRound(SecondNearestEnemyOf())
+	RESPONSE #20
+		RunAwayFrom(NearestEnemyOf(),90)
+END
+
+IF
+	OR(2)
+		ActionListEmpty()
+		!Allegiance(Myself,GOODCUTOFF)
+	Range(NearestEnemyOf(),5)
+	Range([GOODCUTOFF],20)
+	OR(2)
+		InWeaponRange(ThirdNearestEnemyOf())
+		Range(ThirdNearestEnemyOf(),5)
+THEN
+	RESPONSE #80
+		AttackOneRound(ThirdNearestEnemyOf())
+	RESPONSE #20
+		RunAwayFrom(NearestEnemyOf(),90)
+END
+
+IF
+	OR(2)
+		ActionListEmpty()
+		!Allegiance(Myself,GOODCUTOFF)
+	Range(NearestEnemyOf(),5)
+	!Range([GOODCUTOFF],20)
+THEN
+	RESPONSE #100
+		RunAwayFrom(NearestEnemyOf(),90)
+END
+~
+
+END
+
+
+
+//
+//function
+DEFINE_PATCH_FUNCTION ddoor_check BEGIN
+  PATCH_IF (is_ee != 1) BEGIN
+    REPLACE_TEXTUALLY EXACT_MATCH
+      ~ForceSpellRES("BDDDOORX",LastSummonerOf())~
+      ~ForceSpell(LastSummonerOf(),WIZARD_DIMENSION_DOOR)~
+    REPLACE_TEXTUALLY EXACT_MATCH
+      ~ForceSpellRES("BDDDOORX",NearestEnemyOf())~
+      ~ForceSpell(NearestEnemyOf(),WIZARD_DIMENSION_DOOR)~
+    REPLACE_TEXTUALLY EXACT_MATCH
+      ~ForceSpellRES("BDDDOORX",Player1)~
+      ~ForceSpell(Player1,WIZARD_DIMENSION_DOOR)~
+  END
+END
+
+
+//
+//

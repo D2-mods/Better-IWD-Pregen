@@ -1,24 +1,25 @@
 IF
 	HotKey(D)
 	Allegiance(Myself,GOODCUTOFF)
-	Exists(LastSummonerOf())
-	!Range([EVILCUTOFF],30)
+	InMyArea(LastSummonerOf())
 	!ActuallyInCombat()
 THEN
 	RESPONSE #100
-		ForceSpell(LastSummonerOf(),WIZARD_DIMENSION_DOOR)
+		ForceSpellRES("BDDDOORX",LastSummonerOf())
 END
 
 IF
 	HotKey(D)
 	Allegiance(Myself,GOODCUTOFF)
-	!Exists(LastSummonerOf())
-	Exists(Player1)
-	!Range([EVILCUTOFF],30)
+	OR(3)
+		!Exists(LastSummonerOf())
+		Died(LastSummonerOf())
+		!InMyArea(LastSummonerOf())
+	InMyArea(Player1)
 	!ActuallyInCombat()
 THEN
 	RESPONSE #100
-		ForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+		ForceSpellRES("BDDDOORX",Player1)
 END
 
 IF
@@ -26,7 +27,7 @@ IF
 	Allegiance(Myself,GOODCUTOFF)
 THEN
 	RESPONSE #100
-		DisplayString(Myself,@1002)
+		DisplayString(Myself,%activate_cooldown%)
 		SetGlobalTimer("d2cooldown","LOCALS",18)
 		Continue()
 END
@@ -36,7 +37,7 @@ IF
 	Allegiance(Myself,GOODCUTOFF)
 THEN
 	RESPONSE #100
-		DisplayString(Myself,@1003)
+		DisplayString(Myself,%disable_cooldown%)
 		SetGlobalTimer("d2cooldown","LOCALS",0)
 		Continue()
 END
@@ -72,11 +73,11 @@ IF
 	!GlobalTimerNotExpired("d2ddoorjump","LOCALS")
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
-	Exists(LastSummonerOf())
+	InMyArea(LastSummonerOf())
 	!Detect([PC])
 THEN
 	RESPONSE #100
-		ForceSpell(LastSummonerOf(),WIZARD_DIMENSION_DOOR)
+		ForceSpellRES("BDDDOORX",LastSummonerOf())
 		SetGlobalTimer("d2ddoorjump","LOCALS",6)
 		SetGlobal("d2follower","LOCALS",1)
 END
@@ -108,12 +109,15 @@ IF
 	!GlobalTimerNotExpired("d2ddoorjump","LOCALS")
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
-	!Exists(LastSummonerOf())
-	Exists(Player1)
+	OR(3)
+		!Exists(LastSummonerOf())
+		Died(LastSummonerOf())
+		!InMyArea(LastSummonerOf())
+	InMyArea(Player1)
 	!Detect([PC])
 THEN
 	RESPONSE #100
-		ForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+		ForceSpellRES("BDDDOORX",Player1)
 		SetGlobalTimer("d2ddoorjump","LOCALS",6)
 		SetGlobal("d2follower","LOCALS",1)
 END
@@ -122,8 +126,11 @@ IF
 	ActionListEmpty()
 	Allegiance(Myself,GOODCUTOFF)
 	Global("d2follower","LOCALS",1)
-	!Exists(LastSummonerOf())
-	Exists(Player1)
+	OR(3)
+		!Exists(LastSummonerOf())
+		Died(LastSummonerOf())
+		!InMyArea(LastSummonerOf())
+	InMyArea(Player1)
 	See(Player1)
 	!Range(Player1,3)
 THEN
@@ -134,8 +141,11 @@ END
 IF
 	Allegiance(Myself,GOODCUTOFF)
 	Global("d2follower","LOCALS",1)
-	!Exists(LastSummonerOf())
-	Exists(Player1)
+	OR(3)
+		!Exists(LastSummonerOf())
+		Died(LastSummonerOf())
+		!InMyArea(LastSummonerOf())
+	InMyArea(Player1)
 	Range(Player1,3)
 THEN
 	RESPONSE #100

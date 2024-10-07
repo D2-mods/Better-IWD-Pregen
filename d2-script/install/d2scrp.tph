@@ -8,6 +8,20 @@
 COMPILE ~.../temp/d2scrp.BAF~
 
 
+//change text color (EEs)
+ACTION_IF (~%game%~ STR_EQ ~ee~) BEGIN
+  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1001) STR_VAR color=blue RET newstring END
+  OUTER_TEXT_SPRINT activate_cooldown ~%newstring%~
+  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1003) STR_VAR color=blue RET newstring END
+  OUTER_TEXT_SPRINT disable_cooldown ~%newstring%~
+END
+
+
+//edit #variables.BAF
+COPY ~%blocks%/#variables.BAF~  ~%workspace%~
+  EVALUATE_BUFFER
+
+
 //create script
 ACTION_FOR_EACH baf_to_add IN
   ~#variables~

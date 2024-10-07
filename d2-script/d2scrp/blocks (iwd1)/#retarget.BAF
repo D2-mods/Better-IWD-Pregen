@@ -20,9 +20,11 @@ IF
 	!ModalState(Myself,DETECTTRAPS)
 	!ModalState(Myself,STEALTH)
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!HPGT(NearestEnemyOf(),10)
 	OR(2)
-		InWeaponRange([NOTGOOD.0.TROLL])
-		Range([NOTGOOD.0.TROLL],5)
+		InWeaponRange([EVILCUTOFF.0.TROLL])
+		Range([EVILCUTOFF.0.TROLL],10)
+	HPLT([EVILCUTOFF.0.TROLL],5)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2retarget1","LOCALS",6)
@@ -50,9 +52,23 @@ IF
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
 	!GlobalTimerNotExpired("d2retarget2","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
-		InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
+	InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
+	!ClassEx(NearestEnemyOf(),MAGE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
 	!ClassEx(NearestEnemyOf(),MAGE)
 	!ClassEx(NearestEnemyOf(),CLERIC)
 THEN
@@ -69,9 +85,25 @@ IF
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
 	!GlobalTimerNotExpired("d2retarget2","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
-		InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
+	InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
+	!ClassEx(NearestEnemyOf(),MAGE)
+	!ClassEx(NearestEnemyOf(),CLERIC)
+	!ClassEx(NearestEnemyOf(),DRUID)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,TURNUNDEAD)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
 	!ClassEx(NearestEnemyOf(),MAGE)
 	!ClassEx(NearestEnemyOf(),CLERIC)
 	!ClassEx(NearestEnemyOf(),DRUID)

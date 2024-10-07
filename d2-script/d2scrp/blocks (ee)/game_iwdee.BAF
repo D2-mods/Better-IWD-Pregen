@@ -57,10 +57,9 @@ IF
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
-	OR(3)
-		Class(Myself,THIEF_ALL)
-		Class(Myself,MONK)
-		Class(Myself,SHAMAN)
+	OR(2)
+		CheckStatGT(Myself,0,TRAPS)
+		CheckStatGT(Myself,0,DETECTILLUSIONS)
 	!ModalState(DETECTTRAPS)
 	See([EVILCUTOFF.0.HUMAN])
 	!InParty([EVILCUTOFF])
@@ -88,7 +87,7 @@ IF
 	OR(2)
 		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
 		Range(NearestEnemyOfType([0.0.TROLL]),10)
-	HP(NearestEnemyOfType([0.0.TROLL]),1)
+	HPLT(NearestEnemyOfType([0.0.TROLL]),5)
 	HasItem("trollweap",Myself)
 THEN
 	RESPONSE #100

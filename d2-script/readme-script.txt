@@ -31,9 +31,9 @@ Other features
 ==================================================
 Cooldown hotkeys
 ==================================================
-- If the B key is pressed, the character will enter a Cooldown mode for 30 seconds.
-	- Reduces melee aggro range to 5 ft..
-	- Also disables some of the retargeting actions.
+- If the B key is pressed, the character will enter a Cooldown mode for 5 rounds (30 seconds).
+	- Reduces melee aggro range to 5 ft.
+	- Also disables the more aggressive retargeting actions
 - If the E key is pressed, the Cooldown mode will be deactivated.
 - If the game is saved while a character is in Cooldown mode, it will be deactivated on reload.
 
@@ -59,25 +59,25 @@ Auto-attack breakdown (BG(EE), BG2(EE), IWD(EE))
 Class: Fighter, Ranger, Paladin, including any multiclass combinations
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 25 ft.
+	2. Enemy is within 27 ft.
 	3. Attacked by enemy
 
 Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 18 ft.
+	2. Enemy is within 19 ft.
 	3. Attacked by enemy
 
 Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 12 ft.
+	2. Enemy is within 13 ft.
 
 Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 3 ft.
-	3. If THAC0 is less than 5, will attack if enemy is within 12 ft.
+	2. Enemy is within 5 ft.
+	3. If THAC0 is less than 5, will attack if enemy is within 13 ft.
 
 
 ==================================================
@@ -86,24 +86,24 @@ Auto-attack breakdown (IWD2)
 Class: Fighter, Ranger, Paladin or Barbarian (single-class or multiclass with 3+ levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 25 ft.
+	2. Enemy is within 27 ft.
 	3. Attacked by enemy
 
 Class: Monk (Level 9+), Wild Shape/Tenser's/Iron Body (without 3+ warrior levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 18 ft.
+	2. Enemy is within 19 ft.
 	3. Attacked by enemy
 
 Class: Cleric, Druid, Monk, Thief or Bard, including multiclass with Wizard or Sorcerer
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 12 ft.
+	2. Enemy is within 13 ft.
 
 Class: Wizard or Sorcerer
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 3 ft.
+	2. Enemy is within 5 ft.
 
 
 ==================================================

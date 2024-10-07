@@ -5,9 +5,9 @@
 // this function creates headers and does basic duration extensions to level 30; written for inwd-in-bg2 ages ago
 DEFINE_PATCH_FUNCTION CD_LEVEL_SELECT-O-MATIC
   INT_VAR base_dur       = 0     // constant to add to all durations
-          step_dur       = round // how much duration to add to each consecutive header
+          step_dur       = 6     // how much duration to add to each consecutive header
           step_size      = 1     // how many levels between headers
-          level_cap      = cap   // stop extending at level
+          level_cap      = 20    // stop extending at level
           min_dur        = 4     // ignore effects with durations less than this (e.g. cosmetics)
           dur_special    = 0     // just add step_dur to existing effects (ignore base_dur)
           min_lev_alt    = 0     // if extending from level 1, use this value as its minimum level instead (e.g. fifth slevel spell with only one header, use 9 here)
@@ -49,9 +49,9 @@ END
 // added abil_delta tracking
 DEFINE_PATCH_FUNCTION CD_EXTEND-O-MATIC
   INT_VAR base_dur       = 0     // constant to add to all durations
-          step_dur       = round // how much duration to add to each consecutive header
+          step_dur       = 6     // how much duration to add to each consecutive header
           step_size      = 1     // how many levels between headers
-          level_cap      = cap   // stop extending at level
+          level_cap      = 20    // stop extending at level
           min_dur        = 4     // ignore effects with durations less than this (e.g. cosmetics)
           dur_special    = 0     // just add step_dur to existing effects (ignore base_dur)
           min_lev_alt    = 0     // if extending from level 1, use this value as its minimum level instead (e.g. fifth slevel spell with only one header, use 9 here)

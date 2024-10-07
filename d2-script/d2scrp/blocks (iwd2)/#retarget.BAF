@@ -20,10 +20,38 @@ IF
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
 	!GlobalTimerNotExpired("d2retarget2","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(3)
-		InWeaponRange([EVILCUTOFF.0.0.SORCERER])
-		InWeaponRange([EVILCUTOFF.0.0.WIZARD])
-		InWeaponRange([EVILCUTOFF.0.0.CLERIC])
+	InWeaponRange([EVILCUTOFF.0.0.SORCERER])
+	!Class(NearestEnemyOf(),SORCERER)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.WIZARD])
+	!Class(NearestEnemyOf(),SORCERER)
+	!Class(NearestEnemyOf(),WIZARD)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC])
 	!Class(NearestEnemyOf(),SORCERER)
 	!Class(NearestEnemyOf(),WIZARD)
 	!Class(NearestEnemyOf(),CLERIC)
@@ -40,9 +68,25 @@ IF
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
 	!GlobalTimerNotExpired("d2retarget2","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.DRUID])
-		InWeaponRange([EVILCUTOFF.0.0.BARD])
+	InWeaponRange([EVILCUTOFF.0.0.DRUID])
+	!Class(NearestEnemyOf(),SORCERER)
+	!Class(NearestEnemyOf(),WIZARD)
+	!Class(NearestEnemyOf(),CLERIC)
+	!Class(NearestEnemyOf(),DRUID)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(Myself,BATTLESONG)
+	!ModalState(Myself,DETECTTRAPS)
+	!ModalState(Myself,STEALTH)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.BARD])
 	!Class(NearestEnemyOf(),SORCERER)
 	!Class(NearestEnemyOf(),WIZARD)
 	!Class(NearestEnemyOf(),CLERIC)

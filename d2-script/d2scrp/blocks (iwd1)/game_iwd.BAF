@@ -78,3 +78,17 @@ THEN
 	RESPONSE #100
 		NoAction()
 END
+
+IF
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([EVILCUTOFF.0.TROLL])
+		Range([EVILCUTOFF.0.TROLL],10)
+	HPLT([EVILCUTOFF.0.TROLL],5)
+	HasItem("trollweap",Myself)
+THEN
+	RESPONSE #100
+		Attack([EVILCUTOFF.0.TROLL])
+END

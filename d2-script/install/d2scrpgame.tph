@@ -2,28 +2,21 @@
 //
 
 
-//Game variables
-ACTION_IF (GAME_IS ~iwdee~) BEGIN
-  OUTER_TEXT_SPRINT insert ~game_iwdee~
-END
-ELSE BEGIN
-  ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
-    OUTER_TEXT_SPRINT insert ~game_iwd~
-  END
-  ELSE BEGIN
-    ACTION_IF (GAME_IS ~bgee~) BEGIN
-      OUTER_TEXT_SPRINT insert ~game_bgee~
-    END
-    ELSE BEGIN
-      OUTER_TEXT_SPRINT insert ~game_bg2~
-    END
-  END
+//variables
+OUTER_TEXT_SPRINT insert ~game_bg2~
+ACTION_IF (GAME_IS ~iwdee~) BEGIN  OUTER_TEXT_SPRINT insert ~game_iwdee~  END
+ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN  OUTER_TEXT_SPRINT insert ~game_iwd~  END
+ACTION_IF (GAME_IS ~bgee~) BEGIN  OUTER_TEXT_SPRINT insert ~game_bgee~  END
+
+ACTION_IF (RESOURCE_CONTAINS ~trigger.ids~ ~HasItemEquipedReal~) BEGIN
+  OUTER_TEXT_SPRINT itemcheck ~HasItemEquipedReal~
+END ELSE BEGIN
+  OUTER_TEXT_SPRINT itemcheck ~HasItem~
 END
 
-//Type variables
-OUTER_TEXT_SPRINT fireweap ~HasItemEquipedReal("killtroll",Myself)~
-OUTER_TEXT_SPRINT acidweap ~HasItemEquipedReal("killtroll",Myself)~
-OUTER_TEXT_SPRINT coldweap ~HasItemEquipedReal("killtroll",Myself)~
+OUTER_TEXT_SPRINT fireweap ~%itemcheck%("killtroll",Myself)~
+OUTER_TEXT_SPRINT acidweap ~%itemcheck%("killtroll",Myself)~
+OUTER_TEXT_SPRINT coldweap ~%itemcheck%("killtroll",Myself)~
 OUTER_TEXT_SPRINT firetemp ~HasItem("killtroll",Myself)~
 OUTER_TEXT_SPRINT acidtemp ~HasItem("killtroll",Myself)~
 OUTER_TEXT_SPRINT coldtemp ~HasItem("killtroll",Myself)~

@@ -2,9 +2,7 @@ IF
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
-	OR(2)
-		LOS([EVILCUTOFF],4)
-		AttackedBy([EVILCUTOFF],DEFAULT)
+	AttackedBy([EVILCUTOFF],DEFAULT)
 	IsWeaponRanged(Myself)
 	Range(NearestEnemyOf(),8)
 	!IsWeaponRanged(NearestEnemyOf())
@@ -54,7 +52,7 @@ IF
 	!IsWeaponRanged(Myself)
 	CheckStatLT(Myself,1,POLYMORPHED)
 	CheckStatGT(Myself,4,THAC0)
-	!Range([EVILCUTOFF],3)
+	!Range([EVILCUTOFF],5)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -73,7 +71,7 @@ IF
 	CheckStatLT(Myself,1,POLYMORPHED)
 	CheckStatGT(Myself,4,THAC0)
 	See([EVILCUTOFF])
-	!Range([EVILCUTOFF],3)
+	!Range([EVILCUTOFF],5)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -89,7 +87,7 @@ IF
 	!IsWeaponRanged(Myself)
 	CheckStatLT(Myself,1,POLYMORPHED)
 	CheckStatGT(Myself,4,THAC0)
-	!Range([EVILCUTOFF],3)
+	!Range([EVILCUTOFF],5)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100

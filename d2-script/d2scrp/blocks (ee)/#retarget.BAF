@@ -42,9 +42,11 @@ IF
 	!ModalState(STEALTH)
 	!ModalState(SHAMANDANCE)
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!HPGT(NearestEnemyOf(),10)
 	OR(2)
 		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
-		Range(NearestEnemyOfType([0.0.TROLL]),5)
+		Range(NearestEnemyOfType([0.0.TROLL]),10)
+	HPLT(NearestEnemyOfType([0.0.TROLL]),5)
 	ActuallyInCombat()
 THEN
 	RESPONSE #100
@@ -76,9 +78,24 @@ IF
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
 	!GlobalTimerNotExpired("d2retarget2","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(2)
-		InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
-		InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
+	InWeaponRange([EVILCUTOFF.0.0.MAGE_ALL])
+	!Class(NearestEnemyOf(),MAGE_ALL)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.CLERIC_ALL])
 	!Class(NearestEnemyOf(),MAGE_ALL)
 	!Class(NearestEnemyOf(),CLERIC_ALL)
 THEN
@@ -96,10 +113,46 @@ IF
 	!GlobalTimerNotExpired("d2retarget1","LOCALS")
 	!GlobalTimerNotExpired("d2retarget2","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	OR(3)
-		InWeaponRange([EVILCUTOFF.0.0.SHAMAN])
-		InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
-		InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
+	InWeaponRange([EVILCUTOFF.0.0.SHAMAN])
+	!Class(NearestEnemyOf(),MAGE_ALL)
+	!Class(NearestEnemyOf(),CLERIC_ALL)
+	!Class(NearestEnemyOf(),SHAMAN)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.DRUID_ALL])
+	!Class(NearestEnemyOf(),MAGE_ALL)
+	!Class(NearestEnemyOf(),CLERIC_ALL)
+	!Class(NearestEnemyOf(),SHAMAN)
+	!Class(NearestEnemyOf(),DRUID_ALL)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2retarget2","LOCALS",12)
+END
+
+IF
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(BATTLESONG)
+	!ModalState(TURNUNDEAD)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	!ModalState(SHAMANDANCE)
+	!GlobalTimerNotExpired("d2retarget1","LOCALS")
+	!GlobalTimerNotExpired("d2retarget2","LOCALS")
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	InWeaponRange([EVILCUTOFF.0.0.BARD_ALL])
 	!Class(NearestEnemyOf(),MAGE_ALL)
 	!Class(NearestEnemyOf(),CLERIC_ALL)
 	!Class(NearestEnemyOf(),SHAMAN)

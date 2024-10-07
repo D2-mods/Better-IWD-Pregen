@@ -25,7 +25,7 @@ This file contains text displayed in the game
 @100 = ~BETTER IWD PREGEN:~
 
 //EEs
-@101 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a character with skill invested will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
+@101 = ~The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a character with skill points will search for traps or illusions, but not if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. (<script>)
 
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
@@ -92,7 +92,7 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 //IWD auto-equip messages
 @1010 = ~The party has been given starting weapons. All items are equipped or in the inventories.~
 @1011 = ~The party has been given starting weapons. All items can be found in the inventories.~
-@1012 = ~The party has been given starting weapons. Please save and reload to update the quick icons.~
+@1012 = ~The party has been given starting weapons. Save and reload to update the quick icons.~
 @1013 = ~The party has been given starting weapons. Weapons must be re-equipped to update the quick icons.~
 
 

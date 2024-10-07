@@ -2,9 +2,7 @@ IF
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	!CheckSpellState(Myself,SANCTUARY)
-	OR(2)
-		LOS([EVILCUTOFF],4)
-		AttackedBy([EVILCUTOFF],DEFAULT)
+	AttackedBy([EVILCUTOFF],DEFAULT)
 	IsWeaponRanged(Myself)
 	Range(NearestEnemyOf(),10,LESS_THAN)
 	!IsWeaponRanged(NearestEnemyOf())
@@ -68,7 +66,7 @@ IF
 	CheckStatLT(Myself,1,POLYMORPHED)
 	!CheckSpellState(Myself,IRON_BODY)
 	See([EVILCUTOFF],0)
-	!LOS([EVILCUTOFF],3)
+	!LOS([EVILCUTOFF],5)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -93,7 +91,7 @@ IF
 	!CheckSpellState(Myself,TENSERS_TRANSFORMATION)
 	CheckStatLT(Myself,1,POLYMORPHED)
 	!CheckSpellState(Myself,IRON_BODY)
-	!LOS([EVILCUTOFF],3)
+	!LOS([EVILCUTOFF],5)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100

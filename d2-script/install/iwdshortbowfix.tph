@@ -34,7 +34,7 @@ ACTION_IF (GAME_IS ~iwdee~) BEGIN
       READ_LONG 0x8 shortbow_name     // name as string ref
       READ_LONG 0x50 shortbow_desc    // desc as string ref (non-magical)
     // end inlined COPY
-  
+
     // patching
     COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
       PATCH_IF (!(~%SOURCE_RES%~ STR_EQ ~BOW05~) AND !(~%SOURCE_RES%~ STR_EQ ~HQSBOW~) AND
@@ -42,25 +42,24 @@ ACTION_IF (GAME_IS ~iwdee~) BEGIN
                 !(~%SOURCE_RES%~ STR_EQ ~COMPB05~) AND !(~%SOURCE_RES%~ STR_EQ ~STORM~) AND
                 !(~%SOURCE_RES%~ STR_EQ ~GODBOW~)
       ) BEGIN
+
+        PATCH_IF (SOURCE_SIZE > 0xa8) BEGIN    // skip if no header (0 chance it's a weapon)
+          READ_SHORT 0x1c weapon_cat
+          PATCH_IF (weapon_cat = shortbow_cat) BEGIN    // if category matches shortbow
+            READ_BYTE 0x31 weapon_prof
+            PATCH_IF (weapon_prof = shortbow_prof) BEGIN    // if prof matches shortbow
   
-        READ_SHORT 0x1c weapon_cat
-        PATCH_IF (weapon_cat = shortbow_cat) BEGIN    // if category matches shortbow
-          READ_BYTE 0x31 weapon_prof
-          PATCH_IF (weapon_prof = shortbow_prof) BEGIN    // if prof matches shortbow
-            READ_SHORT 0x68 num_headers
-            PATCH_IF (num_headers > 0) BEGIN    // if itm has headers
-  
-                READ_LONG 0x8 weapon_name
-                READ_LONG 0x50 weapon_desc
-                READ_SHORT 0x80 range
-                PATCH_IF ((weapon_name = shortbow_name) OR    // if name matches shortbow
-                          (weapon_desc = shortbow_desc) OR    // if desc matches shortbow
-                          (range < 80)    // default is 75 for shortbows (100 for longbows)
-                ) BEGIN
-                  WRITE_ASCII 0x22 ~BS~ #2        // BS = shortbow appearance
-                  WRITE_ASCII 0x44 ~GBOW02~ #8    // change ground icon
-                END
-  
+              READ_LONG 0x8 weapon_name
+              READ_LONG 0x50 weapon_desc
+              READ_SHORT 0x80 range
+              PATCH_IF ((weapon_name = shortbow_name) OR    // if name matches shortbow
+                        (weapon_desc = shortbow_desc) OR    // if desc matches shortbow
+                        (range < 80)    // default is 75 for shortbows (100 for longbows)
+              ) BEGIN
+                WRITE_ASCII 0x22 ~BS~ #2        // BS = shortbow appearance
+                WRITE_ASCII 0x44 ~GBOW02~ #8    // change ground icon
+              END
+
             END
           END
         END
@@ -114,22 +113,21 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
                 !(~%SOURCE_RES%~ STR_EQ ~SCIMITA~) AND !(~%SOURCE_RES%~ STR_EQ ~ZZD5WOH~) AND
                 !(~%SOURCE_RES%~ STR_EQ ~SW1H15~)
       ) BEGIN
-  
-        READ_SHORT 0x1c weapon_cat
-        PATCH_IF (weapon_cat = scimitar_cat) BEGIN    // if category matches scimitar
-          READ_BYTE 0x31 weapon_prof
-          PATCH_IF (weapon_prof = scimitar_prof) BEGIN    // if prof matches scimitar
-            READ_SHORT 0x68 num_headers
-            PATCH_IF (num_headers > 0) BEGIN    // if itm has headers
-  
-                READ_LONG 0x8 weapon_name
-                READ_LONG 0x50 weapon_desc
-                PATCH_IF ((weapon_name = scimitar_name) OR    // if name matches scimitar
-                          (weapon_desc = scimitar_desc)       // if desc matches scimitar
-                ) BEGIN
-                  WRITE_ASCII 0x22 ~SC~ #2    // SC = scimitar appearance
-                END
-  
+
+        PATCH_IF (SOURCE_SIZE > 0xa8) BEGIN    // skip if no header (0 chance it's a weapon)
+          READ_SHORT 0x1c weapon_cat
+          PATCH_IF (weapon_cat = scimitar_cat) BEGIN    // if category matches scimitar
+            READ_BYTE 0x31 weapon_prof
+            PATCH_IF (weapon_prof = scimitar_prof) BEGIN    // if prof matches scimitar
+
+              READ_LONG 0x8 weapon_name
+              READ_LONG 0x50 weapon_desc
+              PATCH_IF ((weapon_name = scimitar_name) OR    // if name matches scimitar
+                        (weapon_desc = scimitar_desc)       // if desc matches scimitar
+              ) BEGIN
+                WRITE_ASCII 0x22 ~SC~ #2    // SC = scimitar appearance
+              END
+
             END
           END
         END
@@ -141,5 +139,5 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
 END
 
 
-/*
-*/
+//
+//

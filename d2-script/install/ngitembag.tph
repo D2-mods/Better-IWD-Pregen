@@ -195,20 +195,20 @@ END
 
 ACTION_IF (FILE_EXISTS ~override/d2#ngbag.STO~) BEGIN
   INCLUDE ~%install%/ngitembagfill.tph~  
-  COPY_EXISTING ~d2#ngbag.STO~ ~override/d2#ngbag.STO.BAK~    // backup just in case
-  COPY_EXISTING ~d2#ngbag.ITM~ ~override/d2#ngbag.ITM.BAK~    // backup just in case
+  COPY_EXISTING ~d2#ngbag.STO~ ~override/d2#ngbag_backup.STO~    // backup just in case
+  COPY_EXISTING ~d2#ngbag.ITM~ ~override/d2#ngbag_backup.ITM~    // backup just in case
 END
 
 ACTION_IF !(FILE_EXISTS ~override/d2#ngbag.STO~) BEGIN
   INCLUDE ~%install%/ngbag.tph~
   INCLUDE ~%install%/ngitembagfill.tph~
-  COPY_EXISTING ~d2#ngbag.STO~ ~override/d2#ngbag.STO.BAK~    // backup to make it easy to revert changes
+  COPY_EXISTING ~d2#ngbag.STO~ ~override/d2#ngbag_backup.STO~    // backup to make it easy to revert changes
   COPY_EXISTING ~d2#ngbag.STO~ ~override~
     SAY 0xc @726  /* Weapon Sack */
     LPF cannot_add_items END    // make it so items cannot be placed in the bag
   BUT_ONLY
   
-  COPY_EXISTING ~d2#ngbag.ITM~ ~override/d2#ngbag.ITM.BAK~    // backup to make it easy to revert changes
+  COPY_EXISTING ~d2#ngbag.ITM~ ~override/d2#ngbag_backup.ITM~    // backup to make it easy to revert changes
   COPY_EXISTING ~d2#ngbag.ITM~ ~override~
     SAY NAME1 @726 SAY NAME2 @726
     PATCH_IF (GAME_IS ~iwdee iwd_in_bg2~) BEGIN SAY DESC @727 END

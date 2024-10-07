@@ -1,0 +1,620 @@
+//find row or column numbers
+//can auto-set entry or auto-delete a row
+
+/*
+no_backstab removes a kit from all 3 backstab 2das (backstab, sneakatt, crippstr)
+d2_edit_2da_entry sets an entry by matching row/colummn header names
+d2_get_2da_entry reads an entry by matching row/colummn header names
+d2_splprot_adder add new row to splprot.2da, or uses existing row if found
+d2_clone_hla_table creates new HLA table for a kit by cloning current one, or copying from another class/kit
+*/
+
+
+/*functions:
+d2_edit_2da_entry       PATCH or ACTION
+d2_get_2da_entry        PATCH or ACTION
+2da_find_row            PATCH or ACTION
+2da_find_row_set        PATCH or ACTION
+2da_find_row_delete     PATCH or ACTION
+2da_find_column         PATCH or ACTION
+no_backstab             ACTION
+d2_splprot_adder        PATCH or ACTION
+d2_clone_hla_table      ACTION
+d2_2da_row_adder        PATCH or ACTION
+*/
+
+////////////////////////////////////////////////////////////
+
+//adds entry to spot that matches row_name and col_name (exact match)
+//col_read is the column to check for row_name (0 = first column)
+//col_name should be the column header
+
+DEFINE_ACTION_FUNCTION d2_edit_2da_entry
+  INT_VAR col_read=0
+  STR_VAR 2da=~~ col_name=~~ row_name=~~ entry=~*~
+BEGIN
+  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^.]%col_name%[^.]~) BEGIN
+  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^.]%row_name%[^.]~) BEGIN
+    COPY_EXISTING ~%2da%.2da~  ~override~
+      LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
+      LPF 2da_find_row_set INT_VAR col_read=col_read col_write=col_number STR_VAR row_name=EVAL ~%row_name%~ entry=EVAL ~%entry%~ END
+    BUT_ONLY
+  END
+  END
+END
+
+DEFINE_PATCH_FUNCTION d2_edit_2da_entry
+  INT_VAR col_read=0
+  STR_VAR col_name=~~ row_name=~~ entry=~*~
+BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^.]%col_name%[^.]~) BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^.]%row_name%[^.]~) BEGIN
+    LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
+    LPF 2da_find_row_set INT_VAR col_read=col_read col_write=col_number STR_VAR row_name=EVAL ~%row_name%~ entry=EVAL ~%entry%~ END
+  END
+  END
+END
+
+////////////////////////////////////////////////////////////
+
+//reads entry at spot that matches row_name and col_name (exact match)
+//col_read is the column to check for row_name (0 = first column)
+//col_name should be the column header
+
+DEFINE_ACTION_FUNCTION d2_get_2da_entry
+  INT_VAR col_read=0
+  STR_VAR 2da=~~ col_name=~~ row_name=~~ entry=~RET variable~
+  RET entry
+BEGIN
+  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^.]%col_name%[^.]~) BEGIN
+  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^.]%row_name%[^.]~) BEGIN
+    COPY_EXISTING ~%2da%.2da~  ~override~
+      LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
+      LPF 2da_find_row INT_VAR col_read=col_read STR_VAR row_name=EVAL ~%row_name%~ RET row_number columns END
+      READ_2DA_ENTRY row_number col_number columns entry
+    BUT_ONLY
+  END
+  END
+END
+
+DEFINE_PATCH_FUNCTION d2_get_2da_entry
+  INT_VAR col_read=0
+  STR_VAR col_name=~~ row_name=~~ entry=~RET variable~
+  RET entry
+BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^.]%col_name%[^.]~) BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^.]%row_name%[^.]~) BEGIN
+    LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
+    LPF 2da_find_row INT_VAR col_read=col_read STR_VAR row_name=EVAL ~%row_name%~ RET row_number columns END
+    READ_2DA_ENTRY row_number col_number columns entry
+  END
+  END
+END
+
+////////////////////////////////////////////////////////////
+
+//search an entry and find the %row_number%
+//set row_name to entry to match
+//set col_read to column to check
+
+DEFINE_PATCH_FUNCTION 2da_find_row
+
+  INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
+          col_count = 1     // required column count
+		  
+  STR_VAR row_name  = ~~    // name to search for in the column
+  
+  RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
+          columns           // required columns for row_number (set by col_count)
+   
+BEGIN
+
+  PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
+  PATCH_IF (col_read>1 AND col_count<3) BEGIN  SET col_count = 3 END
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (row = 0; row < rows; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STR_EQ ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      SET row_number = row       // RET variable
+    END
+  END
+	
+END
+
+DEFINE_ACTION_FUNCTION 2da_find_row
+
+  INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
+          col_count = 1     // required column count
+		  
+  STR_VAR row_name  = ~~    // name to search for in the column
+          2da       = ~~    // 2da file to read
+  
+  RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
+          columns           // required columns for row_number (set by col_count)
+   
+BEGIN
+
+COPY_EXISTING - ~%2da%.2DA~ ~~
+
+  PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
+  PATCH_IF (col_read>1 AND col_count<3) BEGIN  SET col_count = 3 END
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (row = 0; row < rows; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STR_EQ ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      SET row_number = row       // RET variable
+    END
+  END
+
+END
+
+////////////////////////////////////////////////////////////
+
+//search an entry and write a new entry in the same row
+//you can even overwrite the entry being searched (read and write to same column)
+//will set entries for multiple rows if multiple matches are found
+
+DEFINE_PATCH_FUNCTION 2da_find_row_set
+
+  INT_VAR col_read  = 0      // 2da column to read, default = 0 (1st column)
+          col_count = 1      // required column count
+          col_write = 1      // column to add %entry%, default = 1 (2nd column)
+  
+  STR_VAR row_name  = ~~     // name to search for in the column
+          entry     = ~~     // new entry in column %col_write% of row with %row_name%
+		  
+  RET     row_number         // gives the row number with the row_name (returns final blank row if no match)
+          columns            // required columns for row_number (set by col_count)
+     
+BEGIN
+
+  PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
+  PATCH_IF (col_read>1 AND col_count<3) BEGIN  SET col_count = 3 END
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+
+  COUNT_2DA_COLS total_columns
+  PATCH_IF (col_write > total_columns) BEGIN SET col_write = total_columns END
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (row = 0; row < rows; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STR_EQ ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      SET_2DA_ENTRY row col_write columns ~%entry%~
+      SET row_number = row       // RET variable
+    END
+  END
+
+END
+
+DEFINE_ACTION_FUNCTION 2da_find_row_set
+
+  INT_VAR col_read  = 0      // 2da column to read, default = 0 (1st column)
+          col_count = 1      // required column count
+          col_write = 1      // column to add %entry%, default = 1 (2nd column)
+  
+  STR_VAR row_name  = ~~     // name to search for in the column
+          entry     = ~~     // new entry in column %col_write% of row with %row_name%
+          2da       = ~~     // 2da file to read
+		  
+  RET     row_number         // gives the row number with the row_name (returns final blank row if no match)
+          columns            // required columns for row_number (set by col_count)
+     
+BEGIN
+
+COPY_EXISTING ~%2da%.2DA~ ~override~
+
+  PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
+  PATCH_IF (col_read>1 AND col_count<3) BEGIN  SET col_count = 3 END
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+
+  COUNT_2DA_COLS total_columns
+  PATCH_IF (col_write > total_columns) BEGIN SET col_write = total_columns END
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (row = 0; row < rows; ++row) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STR_EQ ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      SET_2DA_ENTRY row col_write columns ~%entry%~
+      SET row_number = row       // RET variable
+    END
+  END
+
+  PRETTY_PRINT_2DA
+
+BUT_ONLY
+
+END
+
+////////////////////////////////////////////////////////////
+
+//search an entry and delete the entire row
+//will delete multiple rows if multiple matches are found
+//can also return the row_number to add a new line at the same spot (with INSERT_2DA_ROW)
+
+DEFINE_PATCH_FUNCTION 2da_find_row_delete
+
+  INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
+          col_count = 1     // required column count
+		  
+  STR_VAR row_name  = ~~    // name to search for in the column
+  
+  RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
+          columns           // required columns for row_number (set by col_count)
+   
+BEGIN
+
+  PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
+  PATCH_IF (col_read>1 AND col_count<3) BEGIN  SET col_count = 3 END
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ columns
+  FOR (row = (rows - 1); row >= 0; row -= 1) BEGIN    // checks %row%, starting from bottom
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STR_EQ ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      REMOVE_2DA_ROW row columns
+      SET row_number = row       // RET variable
+    END
+  END
+	
+END
+
+DEFINE_ACTION_FUNCTION 2da_find_row_delete
+
+  INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
+          col_count = 1     // required column count
+		  
+  STR_VAR row_name  = ~~    // name to search for in the column
+          2da       = ~~    // 2da file to read
+  
+  RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
+          columns           // required columns for row_number (set by col_count)
+     
+BEGIN
+
+COPY_EXISTING ~%2da%.2DA~ ~override~
+
+  PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
+  PATCH_IF (col_read>1 AND col_count<3) BEGIN  SET col_count = 3 END
+
+  SET columns = col_count        // RET variable
+  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
+  SET row_number = rows          // set RET variable to final blank line as default
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ columns
+  FOR (row = (rows - 1); row >= 0; row -= 1) BEGIN    // checks %row%, starting from bottom
+    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
+    PATCH_IF (~%match%~ STR_EQ ~%row_name%~) BEGIN    // if %match% is same as %row_name%
+      REMOVE_2DA_ROW row columns
+      SET row_number = row       // RET variable
+    END
+  END
+
+BUT_ONLY
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//search an entry and find the column number
+//default row will usually search the row with column headers
+//useful for finding mod-added columns in 2da files
+
+DEFINE_PATCH_FUNCTION 2da_find_column
+
+  INT_VAR row_read  = 0     // 2da row to read (default = row with headers)
+		  
+  STR_VAR col_name  = ~~    // name to search for in the column
+  
+  RET     col_number        // gives the column number of col_name (returns final blank column if no match)
+ 
+BEGIN
+
+  COUNT_2DA_COLS cols           // get column count of current 2da
+  SET col_count = (cols - 1)
+  SET col_number = cols         // set RET variable to final blank line as default
+
+  // check header row
+  SET header = 1
+  PATCH_IF (col_count=2 AND row_read<1) BEGIN  SET row_read = 1 END
+  PATCH_IF (col_count=1 AND row_read<2) BEGIN  SET row_read = 2 END
+
+  // check if row_read is below header
+  PATCH_IF (col_count=2 AND row_read>1) BEGIN  SET header = 0 END
+  PATCH_IF (col_count=1 AND row_read>2) BEGIN  SET header = 0 END
+  PATCH_IF (col_count>2 AND row_read>0) BEGIN  SET header = 0 END
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (col = 0; col < col_count; ++col) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row_read col match
+    PATCH_IF (~%match%~ STR_EQ ~%col_name%~) BEGIN    // if %match% is same as %col_name%
+      SET col_number = col
+      PATCH_IF (header > 0) BEGIN  SET col_number += 1 END    // RET variable (+1 if header because it has 1 less rows)
+    END
+  END
+	
+END
+
+DEFINE_ACTION_FUNCTION 2da_find_column
+
+  INT_VAR row_read  = 0     // 2da row to read (default = row with headers)
+		  
+  STR_VAR col_name  = ~~    // name to search for in the column
+          2da       = ~~    // 2da file to read
+  
+  RET     col_number        // gives the column number of col_name (returns final blank column if no match)
+ 
+BEGIN
+
+COPY_EXISTING - ~%2da%.2DA~ ~~
+
+  COUNT_2DA_COLS cols           // get column count of current 2da
+  SET col_count = (cols - 1)
+  SET col_number = cols         // set RET variable to final blank line as default
+
+  // check header row
+  SET header = 1
+  PATCH_IF (col_count=2 AND row_read<1) BEGIN  SET row_read = 1 END
+  PATCH_IF (col_count=1 AND row_read<2) BEGIN  SET row_read = 2 END
+
+  // check if row_read is below header
+  PATCH_IF (col_count=2 AND row_read>1) BEGIN  SET header = 0 END
+  PATCH_IF (col_count=1 AND row_read>2) BEGIN  SET header = 0 END
+  PATCH_IF (col_count>2 AND row_read>0) BEGIN  SET header = 0 END
+  
+  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
+  FOR (col = 0; col < col_count; ++col) BEGIN
+    READ_2DA_ENTRY_FORMER ~2da_table~ row_read col match
+    PATCH_IF (~%match%~ STR_EQ ~%col_name%~) BEGIN    // if %match% is same as %col_name%
+      SET col_number = col
+      PATCH_IF (header > 0) BEGIN  SET col_number += 1 END    // RET variable (+1 if header because it has 1 less rows)
+    END
+  END
+	
+END
+
+////////////////////////////////////////////////////////////
+
+//this function removes a kit from all 3 backstab-related 2das
+//you can use the variable %kit% as a synonym for %row_name%
+
+DEFINE_ACTION_FUNCTION no_backstab
+  
+  STR_VAR row_name = ~~    // internal kit name
+          kit      = ~~    // same as above (will check for both)
+     
+BEGIN
+
+ACTION_FOR_EACH 2da IN ~backstab~ ~crippstr~ ~sneakatt~ BEGIN
+
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%2da%.2DA~) BEGIN
+    COPY_EXISTING ~%2da%.2DA~ ~override~
+      COUNT_2DA_ROWS 1 rows
+      READ_2DA_ENTRIES_NOW ~2da_table~ 1
+      FOR (row = (rows - 1); row >= 0; row -= 1) BEGIN
+        READ_2DA_ENTRY_FORMER ~2da_table~ row 0 match
+        PATCH_IF ((~%match%~ STR_EQ ~%row_name%~) OR 
+                  (~%match%~ STR_EQ ~%kit%~)) BEGIN
+          REMOVE_2DA_ROW row 1
+        END
+      END
+    BUT_ONLY
+  END
+
+END
+
+END
+
+////////////////////////////////////////////////////////////
+
+//match is the 1st entry in row (default = None)
+//string should include the entire new line, including the first column
+//RET stat for number to use for "parameter2" of related opcodes (326, 318, 324)
+
+/*
+all variables are optional (does nothing if no STR_VARs are set)
+if "match" is found, "stat" is for existing line, and "string" will not be added
+set exact = 1 for exact match or leave at default (only needs to contain the "match" string)
+*/
+
+DEFINE_ACTION_FUNCTION d2_splprot_adder INT_VAR exact=0 STR_VAR match=d2stats string=~~ RET stat BEGIN
+
+  COPY_EXISTING ~splprot.2DA~  ~override~
+    SET stat = 0
+    COUNT_2DA_ROWS 1 count
+
+    PATCH_IF (RESOURCE_CONTAINS ~splprot.2DA~ ~%match%~) BEGIN
+      READ_2DA_ENTRIES_NOW ~splprot_table~ 1
+      FOR (row = 0; row < count; ++row) BEGIN
+        READ_2DA_ENTRY_FORMER ~splprot_table~ row 0 row_name
+        PATCH_IF (exact > 0) BEGIN
+          PATCH_IF (~%row_name%~ STR_EQ ~%match%~) BEGIN                     // exact match of row_name and "match" strings
+            SET stat = row - 3
+          END
+        END ELSE BEGIN
+          PATCH_IF !(~%row_name%~ STRING_CONTAINS_REGEXP ~%match%~) BEGIN    // "row_name" just needs to contain "match"
+            SET stat = row - 3
+          END
+        END
+      END
+    END ELSE BEGIN
+      PATCH_IF !(~%string%~ STR_EQ ~~) BEGIN
+        INSERT_2DA_ROW count 1 EVAL ~%string%~
+        SET stat = count - 3
+        PRETTY_PRINT_2DA
+      END
+    END
+
+  BUT_ONLY
+
+END
+
+DEFINE_PATCH_FUNCTION d2_splprot_adder INT_VAR exact=0 STR_VAR match=d2stats string=~~ RET stat BEGIN
+
+  PATCH_IF (~%SOURCE_RES%~ STR_EQ ~splprot~) BEGIN
+    SET stat = 0
+    COUNT_2DA_ROWS 1 count
+
+    PATCH_IF (RESOURCE_CONTAINS ~splprot.2DA~ ~%match%~) BEGIN
+      READ_2DA_ENTRIES_NOW ~splprot_table~ 1
+      FOR (row = 0; row < count; ++row) BEGIN
+        READ_2DA_ENTRY_FORMER ~splprot_table~ row 0 row_name
+        PATCH_IF (exact > 0) BEGIN
+          PATCH_IF (~%row_name%~ STR_EQ ~%match%~) BEGIN                     // exact match of row_name and "match" strings
+            SET stat = row - 3
+          END
+        END ELSE BEGIN
+          PATCH_IF !(~%row_name%~ STRING_CONTAINS_REGEXP ~%match%~) BEGIN    // "row_name" just needs to contain "match"
+            SET stat = row - 3
+          END
+        END
+      END
+    END ELSE BEGIN
+      PATCH_IF !(~%string%~ STR_EQ ~~) BEGIN
+        INSERT_2DA_ROW count 1 EVAL ~%string%~
+        SET stat = count - 3
+        PRETTY_PRINT_2DA
+      END
+    END
+  END
+
+END
+
+////////////////////////////////////////////////////////////
+
+//kitids, clone, copy are optional (if none are set function does nothing)
+//abbrev is required
+//kitids refers to the name in luabbr.2da
+
+/*
+if "kitids" is set, function also sets the new hla table for kit
+if "kitids" is set, but clone/copy are not set, function clones the kit's current hla table
+if "kitids" does not exist, function still makes new hla table if "clone" or "copy" is set
+if resource for clone/copy does not exist, no change is made to luabbr.2da, even if kitids exists
+*/
+
+//
+DEFINE_ACTION_FUNCTION d2_clone_hla_table
+  STR_VAR
+    kitids = ~~    // optional, set new table for this kit (luabbr), clones current hla table if clone/copy not set
+    clone  = ~~    // optional, abbrev of hla table to clone (without the "lu"), higher priority than "copy"
+    copy   = ~~    // optional, kit ids name to copy hla table (checks luabbr)
+    abbrev = ~~    // required, abbrev of new hla table (without the "lu")
+  RET
+    hlatable    // resource of new hla table (full name including the "lu")
+BEGIN
+
+  OUTER_TEXT_SPRINT hlatable  ~file not found~
+
+  ACTION_IF !(~%clone%~ STR_EQ ~~) BEGIN
+    OUTER_TEXT_SPRINT hlatable  ~lu%clone%~
+  END
+
+  ACTION_IF (RESOURCE_CONTAINS ~luabbr.2da~ ~%kitids%~) BEGIN
+    ACTION_IF !(FILE_EXISTS_IN_GAME ~%hlatable%.2DA~) BEGIN
+      ACTION_IF !(~%copy%~ STR_EQ ~~) BEGIN
+        COPY_EXISTING - ~luabbr.2da~  ~~
+          LPF 2da_find_row STR_VAR row_name=EVAL ~%copy%~ RET row_number columns END
+          READ_2DA_ENTRY row_number 1 columns ~tableres~
+        OUTER_TEXT_SPRINT hlatable  ~lu%tableres%~
+      END
+    END
+
+    ACTION_IF !(FILE_EXISTS_IN_GAME ~%hlatable%.2DA~) BEGIN
+      ACTION_IF !(~%kitids%~ STR_EQ ~~) BEGIN
+        COPY_EXISTING - ~luabbr.2da~  ~~
+          LPF 2da_find_row STR_VAR row_name=EVAL ~%kitids%~ RET row_number columns END
+          READ_2DA_ENTRY row_number 1 columns ~tableres~
+        OUTER_TEXT_SPRINT hlatable  ~lu%tableres%~
+      END
+    END
+  END
+
+  // add new 2da table
+  ACTION_IF !(~%abbrev%~ STR_EQ ~~) BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%hlatable%.2DA~) BEGIN
+      COPY_EXISTING ~%hlatable%.2DA~  ~override/lu%abbrev%.2DA~
+      OUTER_TEXT_SPRINT hlatable  ~lu%abbrev%~
+    END ELSE BEGIN
+      OUTER_TEXT_SPRINT hlatable  ~file not found~
+    END
+  END
+
+  ACTION_IF (RESOURCE_CONTAINS ~luabbr.2da~ ~%kitids%~) BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%hlatable%.2DA~) BEGIN
+      COPY_EXISTING ~luabbr.2da~  ~override~
+        LPF 2da_find_row_set STR_VAR row_name=EVAL ~%kitids%~ entry=EVAL ~%abbrev%~ END
+      BUT_ONLY
+    END
+  END
+
+END
+
+////////////////////////////////////////////////////////////
+
+//quickly add new line to 2da
+//best for 2das with few or set number of columns
+//will extend string with default entry if 2da has more columns than string
+
+/*
+"string" should be full new line
+"columns" is number of columns in "string" (default 4 because this was originally made for tooltip.2da)
+*/
+
+DEFINE_ACTION_FUNCTION d2_2da_row_adder INT_VAR columns=4 STR_VAR 2da=~~ string=~~ BEGIN
+  COPY_EXISTING ~%2da%.2da~  ~override~
+    COUNT_2DA_COLS col_count
+    COUNT_2DA_ROWS col_count row_count
+
+    // extend string if too few columns
+    SET check = col_count - columns
+    PATCH_IF (check > 0) BEGIN
+      READ_2DA_ENTRY 1 0 1 default
+      FOR (n = 1; n <= check; ++n) BEGIN
+        TEXT_SPRINT string ~%string%%TAB%%default%~
+      END
+    END
+
+    INSERT_2DA_ROW row_count col_count ~%string%~
+    PRETTY_PRINT_2DA
+  BUT_ONLY
+END
+
+DEFINE_PATCH_FUNCTION d2_2da_row_adder INT_VAR columns=4 STR_VAR string=~~ BEGIN
+  PATCH_IF (~%SOURCE_EXT%~ STR_EQ ~2da~) BEGIN
+    COUNT_2DA_COLS col_count
+    COUNT_2DA_ROWS col_count row_count
+
+    // extend string if too few columns (tooltip.2da can have more than default columns)
+    SET check = col_count - columns
+    PATCH_IF (check > 0) BEGIN
+      READ_2DA_ENTRY 1 0 1 default
+      FOR (n = 1; n <= check; ++n) BEGIN
+        TEXT_SPRINT string ~%string%%TAB%%default%~
+      END
+    END
+
+    INSERT_2DA_ROW row_count col_count ~%string%~
+    PRETTY_PRINT_2DA
+  END
+END
+
+////////////////////////////////////////////////////////////

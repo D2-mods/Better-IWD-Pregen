@@ -38,7 +38,7 @@ IF
 	CheckStatLT(Myself,1,POLYMORPHED)
 	CheckStatGT(Myself,4,THAC0)
 	See([EVILCUTOFF])
-	!Range([EVILCUTOFF],3)
+	!Range([EVILCUTOFF],5)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -50,7 +50,7 @@ IF
 	Class(Myself,MAGE)
 	CheckStatLT(Myself,1,POLYMORPHED)
 	CheckStatGT(Myself,4,THAC0)
-	!Range([EVILCUTOFF],3)
+	!Range([EVILCUTOFF],5)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -62,7 +62,7 @@ IF
 	Class(Myself,MAGE_THIEF)
 	CheckStatLT(Myself,1,POLYMORPHED)
 	CheckStatGT(Myself,4,THAC0)
-	!Range([EVILCUTOFF],3)
+	!Range([EVILCUTOFF],5)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -74,7 +74,7 @@ IF
 	Class(Myself,CLERIC_MAGE)
 	CheckStatLT(Myself,1,POLYMORPHED)
 	CheckStatGT(Myself,4,THAC0)
-	!Range([EVILCUTOFF],3)
+	!Range([EVILCUTOFF],5)
 	!InWeaponRange([EVILCUTOFF])
 THEN
 	RESPONSE #100

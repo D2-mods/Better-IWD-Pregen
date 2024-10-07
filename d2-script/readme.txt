@@ -65,7 +65,7 @@ NOTE: I'm not 100% sure the scripts work with expansionless versions of the clas
 ==================================================
 Script Description (adjusted for each game)
 ==================================================
-The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a character with skill invested will search for traps or illusions, but not if using Stealth, Turn Undead, or Shamanic Dance. (<script>)
+The character will auto-attack when enemies are in range*, but will not attack if under the effects of invisibility or sanctuary, or if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. If not in auto-attack range, a character with skill points will search for traps or illusions, but not if using Stealth, Bard Song, Turn Undead, or Shamanic Dance. (<script>)
 
 *Melee auto-attack range is dependent on class (see readme for full breakdown).
 
@@ -101,6 +101,26 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.6
+- IWD starting equip update:
+
+v7.5
+- Script changes:
+	- Slightly increased melee attack ranges.
+	- Improved retargeting scripting (trolls, casters).
+	- Powder Keg songs (from Workshop Kitpack) are now usable while invisible. Use v5.9 or later of Workshop Kitpack.
+	- EEs: changed log text color (Cooldown mode hotkeys).
+- Call Woodland Beings component:
+	- Adjusted targeting scripting. Minimum 8 second cooldown between casts of status spells.
+	- Adjusted triggers for "RunAway" and teleport actions.
+	- AI can now cast Barkskin, Mass Cure, Entangle, or Summon Insects once each per combat encounter.
+	- When the AI uses these spells, it doesn't require or consume any memorized spells.
+	- Small increase to movement and casting speed.
+	- Changes also apply to enemy summons (except move/cast speed).
+- nymph script fixes:
+	- Allied nymphs should no longer attack PCs if hit by accident (or if summoner is hit by a PC).
+	- Fixed "marked" PC switching with Option 2 (patch existing script). Caused some weirdness with Dimension Door if the summoner died or left the map.
+
 v7.4
 - Fixed an issue that would cause the salamander tweak for IWDEE to fail at install, if a previous mod added SPL files with no headers to the override folder.
 - Fixed an issue that made archers/beast masters still able to fall if using the "Prevent paladins and rangers falling" component.

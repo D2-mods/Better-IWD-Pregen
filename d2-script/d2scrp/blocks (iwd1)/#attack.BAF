@@ -60,7 +60,7 @@ IF
 		ClassEx(Myself,RANGER)
 	OR(3)
 		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],25)
+		Range([EVILCUTOFF],27)
 		AttackedBy([EVILCUTOFF],DEFAULT)
 	!InParty([EVILCUTOFF])
 THEN
@@ -76,7 +76,7 @@ IF
 	CheckStat(Myself,1,POLYMORPHED)
 	OR(3)
 		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],18)
+		Range([EVILCUTOFF],19)
 		AttackedBy([EVILCUTOFF],DEFAULT)
 	!InParty([EVILCUTOFF])
 THEN
@@ -98,7 +98,7 @@ IF
 		CheckStatLT(Myself,5,THAC0)
 	OR(2)
 		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],12)
+		Range([EVILCUTOFF],13)
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -140,7 +140,7 @@ IF
 		Class(Myself,CLERIC_MAGE)
 	OR(2)
 		InWeaponRange([EVILCUTOFF])
-		Range([EVILCUTOFF],3)
+		Range([EVILCUTOFF],5)
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100

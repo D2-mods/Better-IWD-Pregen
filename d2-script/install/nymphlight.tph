@@ -3,45 +3,66 @@ Patch existing scripts for Call Woodland Beings
 */
 
 
-//Prep
-ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-  COPY - ~%nymph%/d2cwb1p.BAF~ ~%workspace%/cwblight.baf~    // BGEE games
-END
-ELSE BEGIN
-  COPY - ~%nymph%/d2cwb0p.BAF~ ~%workspace%/cwblight.baf~    // IWDEE or classic BG2
-END
+INCLUDE ~%install%/nymphprep.tph~
 
+//
+COPY - ~%nymph%/nymphpatch.baf~  ~inlined/nymphpatch.baf~
+  EVALUATE_BUFFER
+  LPF ddoor_check END
+
+//dummy file
 ACTION_IF !(FILE_EXISTS ~override/RR#DINV.ITM~) BEGIN
   COPY_EXISTING ~SW1H01.ITM~  ~override/RR#DINV.ITM~
 END
 
 
 //
-//atweaks PnP Fey scripts
-
-ACTION_IF (FILE_EXISTS_IN_GAME ~rr#sdrya.BCS~) BEGIN
-  EXTEND_TOP ~rr#sdrya.BCS~ ~%workspace%/cwblight.baf~
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2_nymphpatch BEGIN
+  ~NYMPH~    => patch
+  ~rr#sdrya~ => patch
+  ~rr#shama~ => patch
+  ~rr#snymp~ => patch
 END
 
-ACTION_IF (FILE_EXISTS_IN_GAME ~rr#shama.BCS~) BEGIN
-  EXTEND_TOP ~rr#shama.BCS~ ~%workspace%/cwblight.baf~
+//scan for other modded scripts
+COPY_EXISTING - ~NYMPHSU.CRE~ ~~
+  PATCH_IF (SOURCE_SIZE > 0x2d3) BEGIN
+    READ_ASCII 0x248 script1
+    READ_ASCII 0x250 script2
+    READ_ASCII 0x258 script3
+    READ_ASCII 0x260 script4
+    READ_ASCII 0x248 script5
+  END
+IF_EXISTS
+
+ACTION_FOR_EACH script IN
+  ~%script1%~ ~%script2%~ ~%script3%~ ~%script4%~ ~%script5%~
+BEGIN
+  OUTER_SET extend_bcs = 1
+  ACTION_PHP_EACH d2_nymphpatch AS res => type BEGIN
+    ACTION_IF (~%script%~ STR_EQ ~%res%~) BEGIN
+      OUTER_SET extend_bcs = 0
+    END
+  END
+
+  ACTION_IF (extend_bcs > 0) BEGIN
+    OUTER_TEXT_SPRINT $d2_nymphpatch(~%script%~) ~patch~    // ~%script%~ => patch
+  END
 END
 
-ACTION_IF (FILE_EXISTS_IN_GAME ~rr#snymp.BCS~) BEGIN
-  EXTEND_TOP ~rr#snymp.BCS~ ~%workspace%/cwblight.baf~
-END
+//patches every script on the nymph to be safe
 
 
 //
-//NYMPH.BCS - vanilla script file (also used by SCS)
-
-ACTION_IF (FILE_EXISTS_IN_GAME ~NYMPH.BCS~) BEGIN
-  EXTEND_TOP ~NYMPH.BCS~ ~%workspace%/cwblight.baf~
+//patch scripts
+ACTION_PHP_EACH d2_nymphpatch AS res => type BEGIN
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%res%.BCS~) BEGIN
+    EXTEND_TOP ~%res%.BCS~  ~inlined/nymphpatch.baf~
+  END
 END
 
+//PRINT @56    // info on patch features (see nymph readme)
 
-PRINT @56    // info on patch features (see nymph readme)
 
-
-/*
-*/
+//
+//

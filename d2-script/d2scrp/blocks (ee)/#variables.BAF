@@ -18,7 +18,7 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		DisplayString(Myself,@1001)
+		DisplayString(Myself,"%activate_cooldown%")
 		SetGlobalTimer("d2cooldown","LOCALS",30)
 		Continue()
 END
@@ -31,7 +31,7 @@ IF
 	!ModalState(SHAMANDANCE)
 THEN
 	RESPONSE #100
-		DisplayString(Myself,@1003)
+		DisplayString(Myself,"%disable_cooldown%")
 		SetGlobalTimer("d2cooldown","LOCALS",0)
 		Continue()
 END

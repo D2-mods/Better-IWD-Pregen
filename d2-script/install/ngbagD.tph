@@ -81,12 +81,12 @@ END
 
 ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
-  COPY_EXISTING ~d2#ngbag.STO.BAK~ ~override/d2#ngbag.STO~    // revert edits to store file
+  COPY_EXISTING ~d2#ngbag_backup.STO~ ~override/d2#ngbag.STO~    // revert edits to store file
     LPF d2goldbag END
   // end COPY
   
   COPY ~%ngbag%/ngbagD.BAM~ ~override/d2#ngbag.BAM~
-  COPY_EXISTING ~d2#ngbag.ITM.BAK~ ~override/d2#ngbag.ITM~    // revert edits to item file
+  COPY_EXISTING ~d2#ngbag_backup.ITM~ ~override/d2#ngbag.ITM~    // revert edits to item file
     SAY DESC @734
     WRITE_ASCII 0x3a ~d2#ngbag~ #8    // set inventory icon
   // end COPY

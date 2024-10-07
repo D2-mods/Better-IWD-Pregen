@@ -99,7 +99,7 @@ This script manages auto-attack, while giving more nuanced control of the charac
 - IWD Pregen (iwdpgen): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only)
 
 #### Auto-attack features:
-- Melee aggro range is dependent on class (see readme for full breakdown); range from 3 ft. (mages) to 25 ft..
+- Melee aggro range is dependent on class (see below for full breakdown); range from 3 ft. (mages) to 25 ft..
 - Will not attack if under the effects of Invisibility or Sanctuary.
 - Will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
 - EEs: Active retargeting if a character's current weapon cannot hit or damage an enemy.
@@ -358,7 +358,7 @@ Additional info:
 Give party starting equipment (IWD games)
 -
 
-This component gives the party basic starting weapons, as well the "Worn Garment" armor. Weapons are given based on proficiencies (IWDEE), or class (IWD2), or randomly (classic IWD). There's also an option to start with a bag, containing at least 1 of each weapon type. More info below.
+This component gives the party basic starting weapons, as well as the "Worn Garment" armor. Weapons are given based on proficiencies (IWDEE), or class (IWD2), or randomly (classic IWD). There's also an option to start with a bag, containing at least 1 of each weapon type. More info below.
 
 > Note: For IWD2, the pre-made parties already start out equipped, so this just makes it more fair for custom parties.  
 > This component is fully compatible with the IWD2EE mod. It's also compatible with IWD-in-BG2, if you really want to use that version.

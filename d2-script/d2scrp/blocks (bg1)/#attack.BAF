@@ -162,7 +162,7 @@ IF
 	!Class(Myself,MAGE)
 	!Class(Myself,MAGE_THIEF)
 	!Class(Myself,CLERIC_MAGE)
-	Range([EVILCUTOFF],25)
+	Range([EVILCUTOFF],27)
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -175,7 +175,7 @@ IF
 	CheckStatLT(Myself,1,SANCTUARY)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 	CheckStat(Myself,1,POLYMORPHED)
-	Range([EVILCUTOFF],18)
+	Range([EVILCUTOFF],19)
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -190,7 +190,7 @@ IF
 	!Class(Myself,MAGE)
 	!Class(Myself,MAGE_THIEF)
 	!Class(Myself,CLERIC_MAGE)
-	Range([EVILCUTOFF],12)
+	Range([EVILCUTOFF],13)
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -203,7 +203,7 @@ IF
 	CheckStatLT(Myself,1,SANCTUARY)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 	CheckStatLT(Myself,5,THAC0)
-	Range([EVILCUTOFF],12)
+	Range([EVILCUTOFF],13)
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100
@@ -255,7 +255,7 @@ IF
 	ActionListEmpty()
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
-	Range([EVILCUTOFF],3)
+	Range([EVILCUTOFF],5)
 	!InParty([EVILCUTOFF])
 THEN
 	RESPONSE #100

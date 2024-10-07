@@ -70,7 +70,7 @@ END
 
 // not paladins/monks/clerics/druids/shamans
 ACTION_IF (alignments = 4) BEGIN  ACTION_PHP_EACH d2alignmentclass AS classid => class BEGIN  
-  ACTION_IF (classid = 5) BEGIN  OUTER_SET EVAL ~%class%~ = 0    // set to 0 if monk
+  ACTION_IF (classid = 5) BEGIN  OUTER_SET EVAL ~%class%~ = 0    // set to 0 if bard
   END ELSE BEGIN  OUTER_SET EVAL ~%class%~ = classid END
 END
   OUTER_SET all = 1 OUTER_SET law = 0 OUTER_SET divine = 0 OUTER_SET song = 1

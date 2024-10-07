@@ -7,6 +7,16 @@ THEN
 END
 
 IF
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
+	!Global("d2nymphspeed","LOCALS",1)
+THEN
+	RESPONSE #100
+		ApplySpellRES("D2CWFEY",Myself)
+		SetGlobal("d2nymphspeed","LOCALS",1)
+END
+
+IF
 	OR(2)
 		See(LastSummonerOf())
 		!Allegiance(Myself,GOODCUTOFF)
@@ -22,17 +32,16 @@ IF
 		!InMyArea(Player1)
 THEN
 	RESPONSE #100
-		ChangeAIScript("d2cwb0b",OVERRIDE)
+		ChangeAIScript("d2cwfey2",OVERRIDE)
 END
 
 IF
 	HotKey(D)
 	Allegiance(Myself,GOODCUTOFF)
-	!Range([EVILCUTOFF],30)
 	!ActuallyInCombat()
 THEN
 	RESPONSE #100
-		ForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+		ForceSpellRES("BDDDOORX",Player1)
 END
 
 IF
@@ -40,7 +49,7 @@ IF
 	Allegiance(Myself,GOODCUTOFF)
 THEN
 	RESPONSE #100
-		DisplayString(Myself,@1002)
+		DisplayString(Myself,"%activate_cooldown%")
 		SetGlobalTimer("d2cooldown","LOCALS",18)
 		Continue()
 END
@@ -50,7 +59,7 @@ IF
 	Allegiance(Myself,GOODCUTOFF)
 THEN
 	RESPONSE #100
-		DisplayString(Myself,@1003)
+		DisplayString(Myself,"%disable_cooldown%")
 		SetGlobalTimer("d2cooldown","LOCALS",0)
 		Continue()
 END
@@ -63,7 +72,7 @@ IF
 	!Detect([PC])
 THEN
 	RESPONSE #100
-		ForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+		ForceSpellRES("BDDDOORX",Player1)
 		SetGlobalTimer("d2ddoorjump","LOCALS",6)
 		SetGlobal("d2follower","LOCALS",1)
 END
@@ -96,11 +105,12 @@ IF
 	CheckStatLT(Myself,1,SANCTUARY)
 	OR(2)
 		SpellCast(Myself,0)
-		HPPercentLT(Myself,30)
+		HPPercentLT(Myself,80)
+	Range([EVILCUTOFF],8)
 	!Range([GOODCUTOFF],20)
 THEN
 	RESPONSE #100
-		ForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+		ForceSpellRES("BDDDOORX",Player1)
 		SetGlobalTimer("d2ddoorjump","LOCALS",6)
 END
 
@@ -115,21 +125,7 @@ IF
 	!Range([GOODCUTOFF],20)
 THEN
 	RESPONSE #100
-		ForceSpell(Player1,WIZARD_DIMENSION_DOOR)
-		SetGlobalTimer("d2ddoorjump","LOCALS",6)
-END
-
-IF
-	ActionListEmpty()
-	Allegiance(Myself,GOODCUTOFF)
-	!GlobalTimerNotExpired("d2ddoorjump","LOCALS")
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	SpellCast(Myself,0)
-	Range([EVILCUTOFF],3)
-THEN
-	RESPONSE #100
-		ForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+		ForceSpellRES("BDDDOORX",Player1)
 		SetGlobalTimer("d2ddoorjump","LOCALS",6)
 END
 
@@ -144,6 +140,9 @@ THEN
 	RESPONSE #100
 		Shout(600)
 		SetGlobal("d2autobattle","LOCALS",1)
+		SetGlobalTimer("d2masscure","LOCALS",0)
+		SetGlobalTimer("d2summoninsects","LOCALS",0)
+		SetGlobalTimer("d2entangle","LOCALS",0)
 		Continue()
 END
 
@@ -156,7 +155,7 @@ THEN
 	RESPONSE #100
 		Shout(400)
 		SetGlobal("d2autobattle","LOCALS",0)
-		SetGlobal("d2prebuff","LOCALS",0)
+		SetGlobalTimer("d2barkskin","LOCALS",0)
 		Continue()
 END
 
@@ -187,53 +186,131 @@ END
 IF
 	ActionListEmpty()
 	Allegiance(Myself,GOODCUTOFF)
-	HaveSpell(CLERIC_MASS_CURE)
-	OR(2)
-		HPPercentLT(Myself,80)
-		HPPercentLT([GOODCUTOFF],40)
-	Range(Player1,10)
-	Range(MostDamagedOf(),10)
-	Range(PartySlot1,10)
+	!GlobalTimerNotExpired("d2masscure","LOCALS")
+//	HaveSpell(CLERIC_MASS_CURE)
+	HPPercentLT(Player0,60)
+	Range(Player0,10)
 THEN
 	RESPONSE #100
-		Spell(Myself,CLERIC_MASS_CURE)
+		ForceSpell(Myself,CLERIC_MASS_CURE)
+		SetGlobalTimer("d2masscure","LOCALS",300)
+END
+
+IF
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
+	!GlobalTimerNotExpired("d2masscure","LOCALS")
+//	HaveSpell(CLERIC_MASS_CURE)
+	HPPercentLT(Player2,60)
+	Range(Player2,10)
+THEN
+	RESPONSE #100
+		ForceSpell(Myself,CLERIC_MASS_CURE)
+		SetGlobalTimer("d2masscure","LOCALS",300)
+END
+
+IF
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
+	!GlobalTimerNotExpired("d2masscure","LOCALS")
+//	HaveSpell(CLERIC_MASS_CURE)
+	HPPercentLT(Player3,60)
+	Range(Player3,10)
+THEN
+	RESPONSE #100
+		ForceSpell(Myself,CLERIC_MASS_CURE)
+		SetGlobalTimer("d2masscure","LOCALS",300)
+END
+
+IF
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
+	!GlobalTimerNotExpired("d2masscure","LOCALS")
+//	HaveSpell(CLERIC_MASS_CURE)
+	HPPercentLT(Player4,60)
+	Range(Player4,10)
+THEN
+	RESPONSE #100
+		ForceSpell(Myself,CLERIC_MASS_CURE)
+		SetGlobalTimer("d2masscure","LOCALS",300)
+END
+
+IF
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
+	!GlobalTimerNotExpired("d2masscure","LOCALS")
+//	HaveSpell(CLERIC_MASS_CURE)
+	HPPercentLT(Player5,60)
+	Range(Player5,10)
+THEN
+	RESPONSE #100
+		ForceSpell(Myself,CLERIC_MASS_CURE)
+		SetGlobalTimer("d2masscure","LOCALS",300)
+END
+
+IF
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
+	!GlobalTimerNotExpired("d2masscure","LOCALS")
+//	HaveSpell(CLERIC_MASS_CURE)
+	HPPercentLT(Player6,60)
+	Range(Player6,10)
+THEN
+	RESPONSE #100
+		ForceSpell(Myself,CLERIC_MASS_CURE)
+		SetGlobalTimer("d2masscure","LOCALS",300)
+END
+
+IF
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
+	!GlobalTimerNotExpired("d2masscure","LOCALS")
+//	HaveSpell(CLERIC_MASS_CURE)
+	OR(2)
+		HPPercentLT(Myself,50)
+		HPPercentLT([GOODCUTOFF],60)
+	Range([GOODCUTOFF],10)
+THEN
+	RESPONSE #100
+		ForceSpell(Myself,CLERIC_MASS_CURE)
+		SetGlobalTimer("d2masscure","LOCALS",300)
 END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
-	HaveSpell(CLERIC_MASS_CURE)
+	!GlobalTimerNotExpired("d2masscure","LOCALS")
+//	HaveSpell(CLERIC_MASS_CURE)
 	OR(2)
 		HPPercentLT(Myself,80)
 		HPPercentLT([EVILCUTOFF],60)
 	Range([EVILCUTOFF],10)
 THEN
 	RESPONSE #100
-		Spell(Myself,CLERIC_MASS_CURE)
+		ForceSpell(Myself,CLERIC_MASS_CURE)
+		SetGlobalTimer("d2masscure","LOCALS",300)
 END
 
 IF
 	ActionListEmpty()
 	Allegiance(Myself,GOODCUTOFF)
-	Global("d2prebuff","LOCALS",0)
-	!StateCheck(Myself,STATE_INVISIBLE)
-	CheckStatLT(Myself,1,SANCTUARY)
-	HaveSpell(CLERIC_BARKSKIN)
+	!GlobalTimerNotExpired("d2barkskin","LOCALS")
+//	HaveSpell(CLERIC_BARKSKIN)
 	See([EVILCUTOFF])
 THEN
 	RESPONSE #100
 		ApplySpell(Myself,CLERIC_BARKSKIN)
-		SetGlobal("d2prebuff","LOCALS",1)
+		SetGlobalTimer("d2barkskin","LOCALS",45)
 END
 
 IF
 	!Allegiance(Myself,GOODCUTOFF)
-	HaveSpell(CLERIC_BARKSKIN)
+	!GlobalTimerNotExpired("d2barkskin","LOCALS")
+//	HaveSpell(CLERIC_BARKSKIN)
 	See(NearestEnemyOf())
-	!GlobalTimerNotExpired("d2prep","LOCALS")
 THEN
 	RESPONSE #100
 		ApplySpell(Myself,CLERIC_BARKSKIN)
-		SetGlobalTimer("d2prep","LOCALS",30)
+		SetGlobalTimer("d2barkskin","LOCALS",45)
 END
 
 IF
@@ -244,12 +321,12 @@ IF
 	CheckStatLT(Myself,1,SANCTUARY)
 	OR(2)
 		Range(NearestEnemyOf(),8)
-		HPPercentLT(Myself,30)
+		HPPercentLT(Myself,50)
 	AttackedBy(NearestEnemyOf(),DEFAULT)
-	!IsWeaponRanged(NearestEnemyOf())
+	%run_check%
 THEN
 	RESPONSE #100
-		RunAwayFrom(NearestEnemyOf(),60)
+		RunAwayFrom(NearestEnemyOf(),75)
 END
 
 IF
@@ -260,7 +337,7 @@ IF
 	!Range([GOODCUTOFF],20)
 THEN
 	RESPONSE #100
-		RunAwayFrom(NearestEnemyOf(),60)
+		RunAwayFrom(NearestEnemyOf(),75)
 END
 
 IF
@@ -277,9 +354,8 @@ THEN
 END
 
 IF
-	OR(2)
-		ActionListEmpty()
-		!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 	AreaType(OUTDOOR)
 	HaveSpell(CLERIC_CALL_LIGHTNING)
@@ -288,12 +364,31 @@ IF
 		See(LastAttackerOf())
 		See(LastAttackerOf(Player1))
 	HPPercentGT(LastSeenBy(),50)
-	!Race(LastSeenBy(),GOLEM)
-	!Race(LastSeenBy(),SLIME)
-	!Race(LastSeenBy(),SWORD)
 	!HasBounceEffects(LastSeenBy())
-	CheckStatLT(LastSeenBy(),50,RESISTMAGIC)
-	CheckStatLT(LastSeenBy(),50,RESISTELECTRICITY)
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
+	CheckStatLT(LastSeenBy(),30,RESISTELECTRICITY)
+	!InParty(LastSeenBy())
+THEN
+	RESPONSE #20
+		Spell(LastSeenBy(),CLERIC_CALL_LIGHTNING)
+	RESPONSE #80
+		FaceObject(NearestEnemyOf())
+		Continue()
+END
+
+IF
+	!Allegiance(Myself,GOODCUTOFF)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	AreaType(OUTDOOR)
+	HaveSpell(CLERIC_CALL_LIGHTNING)
+	OR(3)
+		See(TenthNearestEnemyOf())
+		See(LastAttackerOf())
+		See(LastAttackerOf(LastSummonerOf()))
+	HPPercentGT(LastSeenBy(),50)
+	!HasBounceEffects(LastSeenBy())
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
+	CheckStatLT(LastSeenBy(),30,RESISTELECTRICITY)
 THEN
 	RESPONSE #20
 		Spell(LastSeenBy(),CLERIC_CALL_LIGHTNING)
@@ -308,6 +403,7 @@ IF
 		!Allegiance(Myself,GOODCUTOFF)
 	Global("d2nymphhold","LOCALS",0)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!GlobalTimerNotExpired("d2statuses","LOCALS")
 	HaveSpell(CLERIC_HOLD_PERSON)
 	OR(2)
 		See(SecondNearestEnemyOf())
@@ -316,10 +412,12 @@ IF
 	!HasBounceEffects(LastSeenBy())
 	!StateCheck(LastSeenBy(),STATE_HELPLESS)
 	!StateCheck(LastSeenBy(),STATE_CONFUSED)
-	CheckStatLT(LastSeenBy(),50,RESISTMAGIC)
+	!StateCheck(LastSeenBy(),STATE_CHARMED)
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
 THEN
 	RESPONSE #20
 		Spell(LastSeenBy(),CLERIC_HOLD_PERSON)
+		SetGlobalTimer("d2statuses","LOCALS",8)
 		SetGlobal("d2nymphhold","LOCALS",1)
 	RESPONSE #80
 		FaceObject(NearestEnemyOf())
@@ -331,21 +429,22 @@ IF
 		ActionListEmpty()
 		!Allegiance(Myself,GOODCUTOFF)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!GlobalTimerNotExpired("d2statuses","LOCALS")
 	HaveSpell(WIZARD_HOLD_MONSTER)
 	OR(2)
 		See(ThirdNearestEnemyOf())
 		See(ThirdNearestEnemyOf(Player1))
 	!General(LastSeenBy(),UNDEAD)
-	!Race(LastSeenBy(),GOLEM)
-	!Race(LastSeenBy(),SLIME)
-	!Race(LastSeenBy(),SWORD)
+	%no_status%
 	!HasBounceEffects(LastSeenBy())
 	!StateCheck(LastSeenBy(),STATE_HELPLESS)
 	!StateCheck(LastSeenBy(),STATE_CONFUSED)
-	CheckStatLT(LastSeenBy(),50,RESISTMAGIC)
+	!StateCheck(LastSeenBy(),STATE_CHARMED)
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
 THEN
 	RESPONSE #20
 		Spell(LastSeenBy(),WIZARD_HOLD_MONSTER)
+		SetGlobalTimer("d2statuses","LOCALS",8)
 	RESPONSE #80
 		FaceObject(NearestEnemyOf())
 		Continue()
@@ -356,22 +455,22 @@ IF
 		ActionListEmpty()
 		!Allegiance(Myself,GOODCUTOFF)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!GlobalTimerNotExpired("d2statuses","LOCALS")
 	HaveSpell(CLERIC_MENTAL_DOMINATION)
 	OR(2)
 		See(SecondNearestEnemyOf())
 		See(SecondNearestEnemyOf(Player1))
 	!General(LastSeenBy(),UNDEAD)
-	!Race(LastSeenBy(),GOLEM)
-	!Race(LastSeenBy(),SLIME)
-	!Race(LastSeenBy(),SWORD)
+	%no_status%
 	!HasBounceEffects(LastSeenBy())
 	!StateCheck(LastSeenBy(),STATE_HELPLESS)
 	!StateCheck(LastSeenBy(),STATE_CONFUSED)
 	!StateCheck(LastSeenBy(),STATE_CHARMED)
-	CheckStatLT(LastSeenBy(),50,RESISTMAGIC)
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
 THEN
 	RESPONSE #20
 		Spell(LastSeenBy(),CLERIC_MENTAL_DOMINATION)
+		SetGlobalTimer("d2statuses","LOCALS",8)
 	RESPONSE #80
 		FaceObject(NearestEnemyOf())
 		Continue()
@@ -382,21 +481,22 @@ IF
 		ActionListEmpty()
 		!Allegiance(Myself,GOODCUTOFF)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!GlobalTimerNotExpired("d2statuses","LOCALS")
 	HaveSpell(CLERIC_CONFUSION)
 	OR(2)
 		See(ThirdNearestEnemyOf())
 		See(ThirdNearestEnemyOf(Player1))
 	!General(LastSeenBy(),UNDEAD)
-	!Race(LastSeenBy(),GOLEM)
-	!Race(LastSeenBy(),SLIME)
-	!Race(LastSeenBy(),SWORD)
+	%no_status%
 	!HasBounceEffects(LastSeenBy())
 	!StateCheck(LastSeenBy(),STATE_HELPLESS)
 	!StateCheck(LastSeenBy(),STATE_CONFUSED)
-	CheckStatLT(LastSeenBy(),50,RESISTMAGIC)
+	!StateCheck(LastSeenBy(),STATE_CHARMED)
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
 THEN
 	RESPONSE #20
 		Spell(LastSeenBy(),CLERIC_CONFUSION)
+		SetGlobalTimer("d2statuses","LOCALS",8)
 	RESPONSE #80
 		FaceObject(NearestEnemyOf())
 		Continue()
@@ -408,6 +508,7 @@ IF
 		!Allegiance(Myself,GOODCUTOFF)
 	Global("d2nymphhold","LOCALS",1)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!GlobalTimerNotExpired("d2statuses","LOCALS")
 	!HaveSpell(CLERIC_MASS_CURE)
 	HaveSpell(CLERIC_HOLD_PERSON)
 	OR(2)
@@ -417,10 +518,12 @@ IF
 	!HasBounceEffects(LastSeenBy())
 	!StateCheck(LastSeenBy(),STATE_HELPLESS)
 	!StateCheck(LastSeenBy(),STATE_CONFUSED)
-	CheckStatLT(LastSeenBy(),50,RESISTMAGIC)
+	!StateCheck(LastSeenBy(),STATE_CHARMED)
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
 THEN
 	RESPONSE #20
 		Spell(LastSeenBy(),CLERIC_HOLD_PERSON)
+		SetGlobalTimer("d2statuses","LOCALS",8)
 	RESPONSE #80
 		FaceObject(NearestEnemyOf())
 		Continue()
@@ -431,28 +534,62 @@ IF
 		ActionListEmpty()
 		!Allegiance(Myself,GOODCUTOFF)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
-	HaveSpell(CLERIC_MISCAST_MAGIC)
-	OR(5)
-		See(NearestEnemyOfType([0.0.0.BARD_ALL]))
-		See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
-		See(NearestEnemyOfType([0.0.0.SHAMAN]))
-		See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
-		See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
-	HPPercentGT(LastSeenBy(),50)
-	!HasBounceEffects(LastSeenBy())
-	CheckStatLT(LastSeenBy(),50,RESISTMAGIC)
+	!GlobalTimerNotExpired("d2entangle","LOCALS")
+	OR(2)
+		See(ThirdNearestEnemyOf())
+		See(ThirdNearestEnemyOf(LastSummonerOf()))
+	!StateCheck(LastSeenBy(),STATE_HELPLESS)
+	!StateCheck(LastSeenBy(),STATE_CONFUSED)
+	!StateCheck(LastSeenBy(),STATE_CHARMED)
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
 THEN
-	RESPONSE #20
-		Spell(LastSeenBy(),CLERIC_MISCAST_MAGIC)
-	RESPONSE #80
+	RESPONSE #100
+		ForceSpellRES(%nymph_entangle%,LastSeenBy())
+		SetGlobalTimer("d2entangle","LOCALS",60)
+	RESPONSE #100
 		FaceObject(NearestEnemyOf())
 		Continue()
 END
 
 IF
+	OR(2)
+		ActionListEmpty()
+		!Allegiance(Myself,GOODCUTOFF)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!GlobalTimerNotExpired("d2summoninsects","LOCALS")
+//	HaveSpell(CLERIC_MISCAST_MAGIC)
+	%caster_check%
+	HPPercentGT(LastSeenBy(),50)
+	!HasBounceEffects(LastSeenBy())
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
+THEN
+	RESPONSE #100
+//		Spell(LastSeenBy(),CLERIC_MISCAST_MAGIC)
+		ForceSpell(LastSeenBy(),CLERIC_SUMMON_INSECTS)
+		SetGlobalTimer("d2summoninsects","LOCALS",300)
+	RESPONSE #100
+		FaceObject(NearestEnemyOf())
+		Continue()
+END
+
+%bg2_block%
+
+IF
 	ActionListEmpty()
 	Allegiance(Myself,GOODCUTOFF)
-	HPPercentLT(Myself,30)
+	GlobalTimerNotExpired("d2cooldown","LOCALS")
+	See(NearestEnemyOf())
+	!Range(NearestEnemyOf(),5)
+THEN
+	RESPONSE #100
+		FaceObject(NearestEnemyOf())
+		NoAction()
+END
+
+IF
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
+	HPPercentLT(Myself,50)
 	See([EVILCUTOFF])
 	OR(4)
 		HaveSpell(CLERIC_CONFUSION)
@@ -483,10 +620,10 @@ THEN
 END
 
 IF
-	OR(2)
-		ActionListEmpty()
-		!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!GlobalTimerNotExpired("d2statuses","LOCALS")
 	HaveSpell(CLERIC_CAUSE_SERIOUS_WOUNDS)
 	OR(3)
 		See(NearestEnemyOf())
@@ -495,59 +632,50 @@ IF
 	Range(LastSeenBy(),20)
 	HPPercentGT(LastSeenBy(),50)
 	!General(LastSeenBy(),UNDEAD)
-	!Race(LastSeenBy(),GOLEM)
-	!Race(LastSeenBy(),SLIME)
-	!Race(LastSeenBy(),DEMONIC)
-	!Race(LastSeenBy(),ELEMENTAL)
-	!Race(LastSeenBy(),MEPHIT)
-	!Race(LastSeenBy(),GENIE)
-	!Race(LastSeenBy(),SALAMANDER)
-	!Race(LastSeenBy(),TIEFLING)
-	!Race(LastSeenBy(),GITHYANKI)
-	!Race(LastSeenBy(),SOLAR)
-	!Race(LastSeenBy(),ANTISOLAR)
-	!Race(LastSeenBy(),PLANATAR)
-	!Race(LastSeenBy(),DARKPLANATAR)
+	%no_wounds%
 	!HasBounceEffects(LastSeenBy())
-	CheckStatLT(LastSeenBy(),50,RESISTMAGIC)
-	CheckStatLT(LastSeenBy(),50,MAGICDAMAGERESISTANCE)
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
+	CheckStatLT(LastSeenBy(),30,MAGICDAMAGERESISTANCE)
+	!InParty(LastSeenBy())
 THEN
-	RESPONSE #50
+	RESPONSE #100
 		Spell(LastSeenBy(),CLERIC_CAUSE_SERIOUS_WOUNDS)
-	RESPONSE #50
+	RESPONSE #100
 		FaceObject(NearestEnemyOf())
 		Continue()
 END
 
 IF
-	OR(2)
-		ActionListEmpty()
-		!Allegiance(Myself,GOODCUTOFF)
-	See(NearestEnemyOf())
-	Range([GOODCUTOFF],30)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+	!Allegiance(Myself,GOODCUTOFF)
+	!GlobalTimerNotExpired("d2cooldown","LOCALS")
+	!GlobalTimerNotExpired("d2statuses","LOCALS")
+	HaveSpell(CLERIC_CAUSE_SERIOUS_WOUNDS)
+	OR(3)
+		See(NearestEnemyOf())
+		See(NearestEnemyOf(LastSummonerOf()))
+		See(LastAttackerOf())
+	Range(LastSeenBy(),20)
+	HPPercentGT(LastSeenBy(),50)
+	!General(LastSeenBy(),UNDEAD)
+	%no_wounds%
+	!HasBounceEffects(LastSeenBy())
+	CheckStatLT(LastSeenBy(),30,RESISTMAGIC)
+	CheckStatLT(LastSeenBy(),30,MAGICDAMAGERESISTANCE)
 THEN
 	RESPONSE #100
+		Spell(LastSeenBy(),CLERIC_CAUSE_SERIOUS_WOUNDS)
+	RESPONSE #100
 		FaceObject(NearestEnemyOf())
-		NoAction()
+		Continue()
 END
+
+%immune_check%
 
 IF
 	OR(2)
 		ActionListEmpty()
 		!Allegiance(Myself,GOODCUTOFF)
-	HPPercentGT(Myself,30)
+	HPPercentGT(Myself,50)
 	!GlobalTimerNotExpired("d2ddoorjump","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 	ActuallyInCombat()
@@ -556,7 +684,7 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2ddoorjump","LOCALS",6)
-		ForceSpell(NearestEnemyOf(),WIZARD_DIMENSION_DOOR)
+		ForceSpellRES("BDDDOORX",NearestEnemyOf())
 		Continue()
 END
 
@@ -564,105 +692,69 @@ IF
 	OR(2)
 		ActionListEmpty()
 		!Allegiance(Myself,GOODCUTOFF)
-	HPPercentGT(Myself,30)
+	HPPercentGT(Myself,50)
 	!GlobalTimerNotExpired("d2ddoorjump","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 	Range(NearestEnemyOf(),12)
 	!Range(NearestEnemyOf(),3)
 	Range([GOODCUTOFF],20)
 THEN
-	RESPONSE #50
+	RESPONSE #100
 		SetGlobalTimer("d2ddoorjump","LOCALS",6)
-		ForceSpell(NearestEnemyOf(),WIZARD_DIMENSION_DOOR)
+		ForceSpellRES("BDDDOORX",NearestEnemyOf())
 		Continue()
-	RESPONSE #50
+	RESPONSE #100
 		FaceObject(NearestEnemyOf())
 		Continue()
 END
 
+%target_check%
+
 IF
-	OR(2)
-		ActionListEmpty()
-		!Allegiance(Myself,GOODCUTOFF)
-	Range(NearestEnemyOf(),5)
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
+	Range(LastAttackerOf(),5)
 	Range([GOODCUTOFF],20)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		InWeaponRange(SecondNearestEnemyOf())
-		Range(SecondNearestEnemyOf(),5)
-	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	!InParty(LastAttackerOf())
 THEN
 	RESPONSE #80
-		AttackOneRound(SecondNearestEnemyOf())
+		AttackOneRound(LastAttackerOf())
 	RESPONSE #20
-		RunAwayFrom(NearestEnemyOf(),60)
+		RunAwayFrom(NearestEnemyOf(),75)
 END
 
 IF
-	OR(2)
-		ActionListEmpty()
-		!Allegiance(Myself,GOODCUTOFF)
-	Range(NearestEnemyOf(),5)
-	Range([GOODCUTOFF],20)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-	OR(2)
-		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
-	OR(2)
-		InWeaponRange(ThirdNearestEnemyOf())
-		Range(ThirdNearestEnemyOf(),5)
-	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
-	WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
-THEN
-	RESPONSE #80
-		AttackOneRound(ThirdNearestEnemyOf())
-	RESPONSE #20
-		RunAwayFrom(NearestEnemyOf(),60)
-END
-
-IF
-	OR(2)
-		ActionListEmpty()
-		!Allegiance(Myself,GOODCUTOFF)
-	Range(NearestEnemyOf(),5)
-	Range([GOODCUTOFF],20)
-	OR(2)
-		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
-		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
-THEN
-	RESPONSE #100
-		RunAwayFrom(NearestEnemyOf(),60)
-END
-
-IF
-	OR(2)
-		ActionListEmpty()
-		!Allegiance(Myself,GOODCUTOFF)
+	!Allegiance(Myself,GOODCUTOFF)
 	Range(LastAttackerOf(),5)
 	Range([GOODCUTOFF],20)
 THEN
 	RESPONSE #80
 		AttackOneRound(LastAttackerOf())
 	RESPONSE #20
-		RunAwayFrom(NearestEnemyOf(),60)
+		RunAwayFrom(NearestEnemyOf(),75)
 END
 
 IF
-	OR(2)
-		ActionListEmpty()
-		!Allegiance(Myself,GOODCUTOFF)
+	ActionListEmpty()
+	Allegiance(Myself,GOODCUTOFF)
 	Range(NearestEnemyOf(Player1),5)
 	Range([GOODCUTOFF],20)
 THEN
 	RESPONSE #80
 		AttackOneRound(NearestEnemyOf(Player1))
 	RESPONSE #20
-		RunAwayFrom(NearestEnemyOf(),60)
+		RunAwayFrom(NearestEnemyOf(),75)
+END
+
+IF
+	!Allegiance(Myself,GOODCUTOFF)
+	Range(NearestEnemyOf(LastSummonerOf()),5)
+	Range([GOODCUTOFF],20)
+THEN
+	RESPONSE #80
+		AttackOneRound(NearestEnemyOf(LastSummonerOf()))
+	RESPONSE #20
+		RunAwayFrom(NearestEnemyOf(),75)
 END
 
 IF
@@ -675,7 +767,7 @@ THEN
 	RESPONSE #80
 		AttackOneRound(NearestEnemyOf())
 	RESPONSE #20
-		RunAwayFrom(NearestEnemyOf(),60)
+		RunAwayFrom(NearestEnemyOf(),75)
 END
 
 IF

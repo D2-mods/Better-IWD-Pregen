@@ -1,105 +1,99 @@
-////////////////////////////////////////////////////////////
+/*
+nymph script
+*/
 
-ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 
-COMPILE ~%nymph%/d2cwb1.BAF~
-COPY_EXISTING ~d2cwb1.BCS~ ~override/NYMPH.BCS~
+INCLUDE ~%install%/nymphprep.tph~
 
-COPY - ~%nymph%/d2cwb1a.BAF~ ~%workspace%/d2cwb1b.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player2~
-  REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1c~
-COPY - ~%nymph%/d2cwb1a.BAF~ ~%workspace%/d2cwb1c.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player3~
-  REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1d~
-COPY - ~%nymph%/d2cwb1a.BAF~ ~%workspace%/d2cwb1d.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player4~
-  REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1e~
-COPY - ~%nymph%/d2cwb1a.BAF~ ~%workspace%/d2cwb1e.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player5~
-  REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1f~
-COPY - ~%nymph%/d2cwb1a.BAF~ ~%workspace%/d2cwb1f.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player6~
-  REPLACE_TEXTUALLY ~d2cwb1b~ ~d2cwb1a~
-  
-COMPILE ~%nymph%/d2cwb1a.BAF~
-COMPILE ~%workspace%/d2cwb1b.BAF~
-COMPILE ~%workspace%/d2cwb1c.BAF~
-COMPILE ~%workspace%/d2cwb1d.BAF~
-COMPILE ~%workspace%/d2cwb1e.BAF~
-COMPILE ~%workspace%/d2cwb1f.BAF~
-
-END
-
-////////////////////////////////////////////////////////////
-
-ACTION_IF (GAME_IS ~iwdee~) BEGIN
-
-COMPILE ~%nymph%/d2cwb0.BAF~
-COPY_EXISTING ~d2cwb0.BCS~ ~override/NYMPH.BCS~
-
-COPY - ~%nymph%/d2cwb0a.BAF~ ~%workspace%/d2cwb0b.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player2~
-  REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0c~
-COPY - ~%nymph%/d2cwb0a.BAF~ ~%workspace%/d2cwb0c.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player3~
-  REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0d~
-COPY - ~%nymph%/d2cwb0a.BAF~ ~%workspace%/d2cwb0d.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player4~
-  REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0e~
-COPY - ~%nymph%/d2cwb0a.BAF~ ~%workspace%/d2cwb0e.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player5~
-  REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0f~
-COPY - ~%nymph%/d2cwb0a.BAF~ ~%workspace%/d2cwb0f.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player6~
-  REPLACE_TEXTUALLY ~d2cwb0b~ ~d2cwb0a~
-  
-COMPILE ~%nymph%/d2cwb0a.BAF~
-COMPILE ~%workspace%/d2cwb0b.BAF~
-COMPILE ~%workspace%/d2cwb0c.BAF~
-COMPILE ~%workspace%/d2cwb0d.BAF~
-COMPILE ~%workspace%/d2cwb0e.BAF~
-COMPILE ~%workspace%/d2cwb0f.BAF~
-
-END
-
-////////////////////////////////////////////////////////////
-
-ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN
-
-COMPILE ~%nymph%/d2cwb2.BAF~
-COPY_EXISTING ~d2cwb2.BCS~ ~override/NYMPH.BCS~
-
-COPY - ~%nymph%/d2cwb2a.BAF~ ~%workspace%/d2cwb2b.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player2~
-  REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2c~
-COPY - ~%nymph%/d2cwb2a.BAF~ ~%workspace%/d2cwb2c.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player3~
-  REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2d~
-COPY - ~%nymph%/d2cwb2a.BAF~ ~%workspace%/d2cwb2d.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player4~
-  REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2e~
-COPY - ~%nymph%/d2cwb2a.BAF~ ~%workspace%/d2cwb2e.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player5~
-  REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2f~
-COPY - ~%nymph%/d2cwb2a.BAF~ ~%workspace%/d2cwb2f.BAF~
-  REPLACE_TEXTUALLY ~Player1~ ~Player6~
-  REPLACE_TEXTUALLY ~d2cwb2b~ ~d2cwb2a~
-  
-COMPILE ~%nymph%/d2cwb2a.BAF~
-COMPILE ~%workspace%/d2cwb2b.BAF~
-COMPILE ~%workspace%/d2cwb2c.BAF~
-COMPILE ~%workspace%/d2cwb2d.BAF~
-COMPILE ~%workspace%/d2cwb2e.BAF~
-COMPILE ~%workspace%/d2cwb2f.BAF~
-
-END
-
-////////////////////////////////////////////////////////////
-
-COPY_EXISTING ~NYMPHSU.CRE~ ~override~    // set script for nymph (if another mod changed it)
+//set script for nymph (if changed by a mod)
+COPY_EXISTING ~NYMPHSU.CRE~ ~override~
   PATCH_IF (SOURCE_SIZE > 0x2d3) BEGIN
     WRITE_ASCII 0x248 NYMPH #8
   END
 BUT_ONLY
 
-////////////////////////////////////////////////////////////
+//speed bonus
+COPY ~%nymph%/nymphspeed.SPL~  ~override/d2cwfey.SPL~
+  PATCH_IF (is_ee > 0) BEGIN
+    LPF d2_remove_effects_on_cast END
+  END
+
+
+//
+//clone and edit projectile (classic BG2 only)
+ACTION_IF (is_ee = 0) BEGIN
+  COPY_EXISTING - ~SPPR105.spl~  ~~
+    READ_SHORT 0x98 entangle_proj
+  LOOKUP_IDS_SYMBOL_OF_INT oldproj ~projectl~ (entangle_proj - 1)    // number is 1 less in IDS file
+
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%oldproj%.PRO~) BEGIN
+    COPY_EXISTING - ~%oldproj%.PRO~  ~inlined/d2cwbs1.PRO~
+      WRITE_SHORT 0x200 THIS | BIT6    // affect enemies only (relative to caster)
+    IF_EXISTS
+
+    ADD_PROJECTILE ~inlined/d2cwbs1.PRO~    // set number for ITM/SPL field to %d2cwbs1%
+    OUTER_SET entangle_proj = d2cwbs1
+  END
+END
+
+
+//
+//clone entangle
+COPY_EXISTING ~SPPR105.spl~  ~override/d2cwbs1.SPL~
+  PATCH_IF (is_ee > 0) BEGIN
+    LPF update_op324_restrictions END
+    LPF d2_safe_spell INT_VAR neutrals=0 block_opcode=154 duration=5 END    // add op318 (EEs)
+  END ELSE BEGIN
+    LPF ALTER_SPELL_HEADER INT_VAR projectile=entangle_proj END    // or set new projectile (BG2)
+  END
+
+OUTER_TEXT_SPRINT nymph_entangle ~"D2CWBS1"~
+
+//CLERIC_SUMMON_INSECTS (replace CLERIC_MISCAST_MAGIC in scripts)
+
+
+//
+//install scripts
+COPY - ~%nymph%/nymphcore.BAF~  ~inlined/d2cwfey.BAF~
+  EVALUATE_BUFFER
+  LPF ddoor_check END
+COPY - ~%nymph%/nymphalt.BAF~   ~inlined/d2cwfey1.BAF~
+  EVALUATE_BUFFER
+  LPF ddoor_check END
+
+COMPILE ~inlined/d2cwfey.BAF~
+COPY_EXISTING ~d2cwfey.BCS~ ~override/NYMPH.BCS~
+
+COPY - ~inlined/d2cwfey1.BAF~ ~inlined/d2cwfey2.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player2~
+  REPLACE_TEXTUALLY ~Player0~ ~Player1~
+  REPLACE_TEXTUALLY ~d2cwfey2~ ~d2cwfey3~
+COPY - ~inlined/d2cwfey1.BAF~ ~inlined/d2cwfey3.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player3~
+  REPLACE_TEXTUALLY ~Player0~ ~Player1~
+  REPLACE_TEXTUALLY ~d2cwfey2~ ~d2cwfey4~
+COPY - ~inlined/d2cwfey1.BAF~ ~inlined/d2cwfey4.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player4~
+  REPLACE_TEXTUALLY ~Player0~ ~Player1~
+  REPLACE_TEXTUALLY ~d2cwfey2~ ~d2cwfey5~
+COPY - ~inlined/d2cwfey1.BAF~ ~inlined/d2cwfey5.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player5~
+  REPLACE_TEXTUALLY ~Player0~ ~Player1~
+  REPLACE_TEXTUALLY ~d2cwfey2~ ~d2cwfey6~
+COPY - ~inlined/d2cwfey1.BAF~ ~inlined/d2cwfey6.BAF~
+  REPLACE_TEXTUALLY ~Player1~ ~Player6~
+  REPLACE_TEXTUALLY ~Player0~ ~Player1~
+  REPLACE_TEXTUALLY ~d2cwfey2~ ~d2cwfey1~
+COPY - ~inlined/d2cwfey1.BAF~ ~inlined/d2cwfey1.BAF~
+  REPLACE_TEXTUALLY ~Player0~ ~Player1~
+
+COMPILE ~inlined/d2cwfey1.BAF~
+COMPILE ~inlined/d2cwfey2.BAF~
+COMPILE ~inlined/d2cwfey3.BAF~
+COMPILE ~inlined/d2cwfey4.BAF~
+COMPILE ~inlined/d2cwfey5.BAF~
+COMPILE ~inlined/d2cwfey6.BAF~
+
+
+//
+//

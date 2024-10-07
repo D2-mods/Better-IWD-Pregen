@@ -7,8 +7,14 @@ This file contains text shown in weidu installer
 @10100 = ~Better IWD Pregen~
 
 @10200 = ~Better AI for Call Woodland Beings (EEs, BG2)~
-	@10201 = ~Use revised script for nymph summon (compatible with SCS)~
-	@10202 = ~Use existing script, but patch in a few actions (choose this if using a revision mod, such as atweaks PnP Fey)~
+	@10201 = ~Use revised script for nymph summon. Compatible with SCS.
+
+(AI can cast Barkskin, Mass Cure, Entangle, or Summon Insects once each per combat encounter. Enemy summons can also cast these spells.)
+~
+	@10202 = ~Use existing script, but patch in a few actions. Use with atweaks PnP Fey or other major revisions.
+
+(Adds Cooldown mode hotkeys, adds Dimension Door hotkey/scripting, preserves invisibility)
+~
 
 @9999 = ~Auto-assign script to new characters~
 	@1 = ~Better IWD Pregen (d2scrp)~
@@ -50,13 +56,15 @@ This file contains text shown in weidu installer
 	@40704 = ~Bottomless, and Gold is exchanged when adding/removing items (experimental)~
 
 @40800 = ~All classes get full HP bonuses from Constitution (classic and EEs)~
-	@40801 = ~2e-style HP bonuses (i.e. BG-style)~
-	@40802 = ~3e-style bonuses (+1 or -1 every 2 Con) (WARNING: Prism will spawn dead in BG1.)~
+	@40801 = ~2e-style HP bonuses (BG-style)~
+	@40802 = ~3e-style bonuses (+1 or -1 every 2 Con) (note: Prism will spawn dead in BG1)~
 	@40803 = ~Mixed (use 3e-style at 10+, normal BG penalties at under 10)~
 
+/*
 @40900 = ~~
 	@40901 = ~~
 	@40902 = ~~
+*/
 
 @41000 = ~Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)~
 	@41001 = ~Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)~
@@ -75,9 +83,11 @@ This file contains text shown in weidu installer
 	@41109 = ~all salamanders, hits no one~
 	@41110 = ~Avenger form only, hits allies only~
 
+/*
 @41200 = ~~
 	@41201 = ~~
 	@41202 = ~~
+*/
 
 @41300 = ~Allow Minsc to use his Berserk ability at will (BG games)~    // includes the timing fix component
 	@41301 = ~Use at will, and reduce duration to 5 rounds (30 seconds)~
@@ -104,15 +114,6 @@ This file contains text shown in weidu installer
 	@41604 = ~Option 1, but not for mod kits~
 	@41605 = ~Option 2, but not for mod kits~
 	@41606 = ~Option 3, but not for mod kits~
-
-@41700 = ~~
-	@41701 = ~~
-	@41702 = ~~
-
-@41800 = ~~
-	@41801 = ~~
-	@41802 = ~~
-
 
 
 

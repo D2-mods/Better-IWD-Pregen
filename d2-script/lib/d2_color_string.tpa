@@ -1,0 +1,112 @@
+//only tested with EEs
+//this can be used as ACTION or PATCH
+
+
+/*
+"stringref" is a tlk number, ex. RESOLVE_STR_REF (@99)
+"string" is a text string
+"color" is a predefined color from bgee.lua (see array below)
+"hex" is a color hex value (without the # in front), 6 characters in BBGGRR format
+*/
+
+//set stringref or string variable (stringref is higher priority)
+//set color or hex variable to color value ("color" is higher priority)
+//RET newstring (string ref) or newtext (text) for colored string
+
+
+DEFINE_DIMORPHIC_FUNCTION d2_color_string
+  INT_VAR stringref=~-1~
+  STR_VAR string=~~ color=~~ hex=~~
+  RET newstring newtext
+BEGIN
+
+  // prep
+  ACTION_IF (stringref > 0) BEGIN
+    ACTION_GET_STRREF EVAL ~%stringref%~  string
+  END
+
+  ACTION_IF !(~%color%~ STR_EQ ~~) BEGIN
+    OUTER_SET setcolor = 0
+
+    ACTION_PHP_EACH d2_color_string_array AS symbol => type BEGIN
+      ACTION_IF (~%color%~ STR_EQ ~%symbol%~) BEGIN
+        ACTION_TO_UPPER color
+        OUTER_TEXT_SPRINT hex  ~~
+        OUTER_SET setcolor = 1
+      END
+      ACTION_IF (~%color%~ STR_EQ ~%type%~) BEGIN
+        ACTION_IF !(~%type%~ STR_EQ ~skip~) BEGIN
+          OUTER_TEXT_SPRINT color  ~%symbol%~
+          OUTER_TEXT_SPRINT hex  ~~
+          OUTER_SET setcolor = 1
+        END
+      END
+    END
+
+    ACTION_IF (setcolor = 0) BEGIN
+      OUTER_TEXT_SPRINT color  ~~
+    END
+  END
+
+  ACTION_IF !(~%hex%~ STR_EQ ~~) BEGIN
+    OUTER_TEXT_SPRINT color  ~0xff%hex%~
+  END
+
+  // if no color set, use blue text
+  ACTION_IF (~%color%~ STR_EQ ~~) BEGIN
+    OUTER_TEXT_SPRINT color  ~0xfffde6e9~
+  END
+
+  // color string
+  OUTER_SET newstring = ~-1~
+  OUTER_TEXT_SPRINT newtext  ~None~
+
+  ACTION_IF !(~%string%~ STR_EQ ~~) BEGIN
+    OUTER_TEXT_SPRINT newtext ~^%color%%string%^-~
+    OUTER_SET newstring = RESOLVE_STR_REF (~%newtext%~)
+  END
+
+END
+
+
+//good options are "A" and "$" (easy to read on light and dark backgrounds)
+//"color" variable can match either side of arrow (won't match "skip")
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2_color_string_array BEGIN
+  A => blue    // lighter blue than dialogue text
+  B => gray
+  C => mint
+  D => orange
+  R => red
+  G => green    // bright green, same as quicksave text
+  M => skip
+  N => skip
+  1 => white    // dialogue box white
+  2 => skip
+  3 => skip
+  4 => white2    // floating text white
+  5 => skip
+  6 => skip
+  7 => skip
+  8 => skip
+  9 => gray2    // lighter gray than B
+  ~-~ => dash    // white2 floating text, gray log text
+  ~$~ => gold
+//hex presets
+  ~0xffebe8fc~ => misty    // very light pinkish
+  ~0xffe9edf6~ => pearl    // very light shade (not white)
+  ~0xfffcdcfd~ => cloud    // very light purple
+  ~0xff98fbca~ => mana     // very light green
+//elemental
+  ~0xff00d7ff~ => magic
+  ~0xff002a9c~ => fire
+  ~0xffffbf00~ => cold
+  ~0xfffff97d~ => electricity
+  ~0xff19bba8~ => acid
+  ~0xffbed7d7~ => crushing
+  ~0xff76e4c7~ => poison
+END
+
+
+//
+//

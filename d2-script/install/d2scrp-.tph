@@ -8,8 +8,18 @@
 COMPILE ~.../temp/d2scrp-.BAF~
 
 
+//cooldown text
+ACTION_IF (~%game%~ STR_EQ ~ee~) BEGIN
+  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1004) STR_VAR color=blue RET newstring END
+  OUTER_TEXT_SPRINT activate_cooldown ~%newstring%~
+  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1005) STR_VAR color=blue RET newstring END
+  OUTER_TEXT_SPRINT disable_cooldown ~%newstring%~
+END
+
+
 //edit #variables.BAF
 COPY ~%blocks%/#variables.BAF~  ~%workspace%~
+  EVALUATE_BUFFER
   REPLACE_TEXTUALLY ~d2cooldown","LOCALS",0)~  ~d2cooldown","LOCALS",9999999)~
   REPLACE_TEXTUALLY ~d2cooldown","LOCALS",30)~  ~d2cooldown","LOCALS",0)~
 

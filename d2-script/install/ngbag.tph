@@ -203,17 +203,17 @@ END
 
 ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN  
 
-  COPY_EXISTING ~d2#ngbag.STO.BAK~ ~override/d2#ngbag.STO~    // revert edits to store file
+  COPY_EXISTING ~d2#ngbag_backup.STO~ ~override/d2#ngbag.STO~    // revert edits to store file
     PATCH_IF (GAME_IS ~iwd2 how totlm~) BEGIN
       WRITE_SHORT 0x9c capacity
     END
-	
+
     PATCH_IF (GAME_IS ~iwdee iwd_in_bg2~) BEGIN
       WRITE_SHORT 0x22 capacity
     END
   // end COPY
 
-  COPY_EXISTING ~d2#ngbag.ITM.BAK~ ~override/d2#ngbag.ITM~    // revert edits to item file
+  COPY_EXISTING ~d2#ngbag_backup.ITM~ ~override/d2#ngbag.ITM~    // revert edits to item file
     PATCH_IF (GAME_IS ~iwd2~) BEGIN WRITE_LONG 0x54 id2_desc END
     ELSE BEGIN WRITE_LONG 0x54 bg2_desc END
   // end COPY

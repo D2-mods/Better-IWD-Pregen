@@ -73,7 +73,7 @@ IF
 	!Class(Myself,CLERIC_MAGE)
 	!Class(Myself,THIEF)
 	!Class(Myself,MAGE_THIEF)
-	Range([EVILCUTOFF],25)
+	Range([EVILCUTOFF],27)
 THEN
 	RESPONSE #100
 		Shout(600)
@@ -87,7 +87,7 @@ IF
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
 	CheckStat(Myself,1,POLYMORPHED)
-	Range([EVILCUTOFF],18)
+	Range([EVILCUTOFF],19)
 THEN
 	RESPONSE #100
 		Shout(600)
@@ -102,7 +102,7 @@ IF
 	CheckStatLT(Myself,1,SANCTUARY)
 	!Class(Myself,CLERIC_MAGE)
 	!Class(Myself,MAGE_THIEF)
-	Range([EVILCUTOFF],12)
+	Range([EVILCUTOFF],13)
 THEN
 	RESPONSE #100
 		Shout(600)
@@ -116,7 +116,7 @@ IF
 	!StateCheck(Myself,STATE_INVISIBLE)
 	Class(Myself,CLERIC_MAGE)
 	CheckStatLT(Myself,5,THAC0)
-	Range([EVILCUTOFF],12)
+	Range([EVILCUTOFF],13)
 THEN
 	RESPONSE #100
 		Shout(600)
@@ -131,7 +131,7 @@ IF
 	CheckStatLT(Myself,1,SANCTUARY)
 	Class(Myself,MAGE_THIEF)
 	CheckStatLT(Myself,5,THAC0)
-	Range([EVILCUTOFF],12)
+	Range([EVILCUTOFF],13)
 THEN
 	RESPONSE #100
 		Shout(600)
@@ -144,7 +144,7 @@ IF
 	Global("d2autobattle","LOCALS",0)
 	!StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
-	Range([EVILCUTOFF],3)
+	Range([EVILCUTOFF],5)
 THEN
 	RESPONSE #100
 		Shout(600)

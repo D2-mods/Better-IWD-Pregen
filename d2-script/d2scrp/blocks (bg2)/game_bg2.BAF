@@ -5,7 +5,7 @@ IF
 	OR(2)
 		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
 		Range(NearestEnemyOfType([0.0.TROLL]),10)
-	HP(NearestEnemyOfType([0.0.TROLL]),1)
+	HPLT(NearestEnemyOfType([0.0.TROLL]),5)
 	!CharName("Fire Troll",NearestEnemyOfType([0.0.TROLL]))
 	HasItem("trollweap",Myself)
 THEN
@@ -20,7 +20,7 @@ IF
 	OR(2)
 		InWeaponRange(NearestEnemyOfType([0.0.TROLL]))
 		Range(NearestEnemyOfType([0.0.TROLL]),10)
-	HP(NearestEnemyOfType([0.0.TROLL]),1)
+	HPLT(NearestEnemyOfType([0.0.TROLL]),5)
 	CharName("Fire Troll",NearestEnemyOfType([0.0.TROLL]))
 	HasItem("firetrollweap",Myself)
 THEN

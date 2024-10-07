@@ -1,4 +1,5 @@
 IF
+	!Global("d2pkeg1","LOCALS",1)    // not if Powder Keg song (from The Workshop Kitpack)
 	ModalState(BATTLESONG)
 	StateCheck(Myself,STATE_INVISIBLE)
 	CheckStatLT(Myself,1,SANCTUARY)
