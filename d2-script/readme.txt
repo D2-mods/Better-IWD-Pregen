@@ -84,9 +84,13 @@ Tools and Resources used:
 - NearInfinity (https://github.com/Argent77/NearInfinity)
 - Notepad++ (https://notepad-plus-plus.org/)
 - Git Bash (https://git-scm.com/downloads)
-- Infinity Auto Packager (https://github.com/InfinityTools/InfinityAutoPackager)
+- WeiDU Mod Packager (https://github.com/InfinityTools/WeiduModPackager)
 - IESDP (https://gibberlings3.github.io/iesdp/main.htm)
+- WeiDU readme (https://weidu.org/~thebigg/README-WeiDU.html)
 - LibIconv for Windows (http://gnuwin32.sourceforge.net/packages/libiconv.htm)
+
+Used for older releases (replaced by WeiDU Mod Packager):
+- Infinity Auto Packager (https://github.com/InfinityTools/InfinityAutoPackager)
 - 7-Zip (https://www.7-zip.org/)
 
 TobEx.dll:
@@ -102,7 +106,10 @@ IWD2 exe patch:
 Updates
 ==================================================
 v7.6
-- IWD starting equip update:
+- Fixed possible mod conflict issues with "Start with bag of holding" component (scripting related).
+- IWD2: Fixed a possible crash if using "Give party starting items" component and G3 IWD2 NPC mod.
+- Alignment component: If skipping clerics/druids, the base fighter/druid multiclass will no longer be patched. (kits were already skipped, but base class was not)
+- Minsc Berserk component: fixed possible issue in classic BG1 engine where Berserk ability could be lost permanently if delayed effects were canceled before applying. (if this happens now, ability should be regained after rest)
 
 v7.5
 - Script changes:

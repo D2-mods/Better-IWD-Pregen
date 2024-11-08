@@ -31,7 +31,7 @@ THEN
 END
 >>>>>>>>
 
-COPY - ~.../temp/d2autoequip~  ~%workspace%/d2autoequip.BAF~
+COPY - ~.../temp/d2autoequip~  ~inlined/d2autoequip.BAF~
   EVALUATE_BUFFER
   PATCH_IF (GAME_IS ~iwd2~) BEGIN
     REPLACE_TEXTUALLY ~ngrb0~ ~ngrb2~
@@ -58,23 +58,23 @@ ACTION_IF (GAME_IS ~iwdee~) BEGIN
     SAY NAME1 @710 SAY UNIDENTIFIED_DESC @711
     SAY NAME2 @710
 
-  COPY - ~%ngequip%/d2#ng01.BAF~ ~%workspace%/d2#ng02.BAF~    // create baf files for each PC
+  COPY - ~%ngequip%/d2#ng01.BAF~ ~inlined/d2#ng02.BAF~    // create baf files for each PC
     REPLACE_TEXTUALLY ~Player1~ ~Player2~
-  COPY - ~%ngequip%/d2#ng01.BAF~ ~%workspace%/d2#ng03.BAF~
+  COPY - ~%ngequip%/d2#ng01.BAF~ ~inlined/d2#ng03.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player3~
-  COPY - ~%ngequip%/d2#ng01.BAF~ ~%workspace%/d2#ng04.BAF~
+  COPY - ~%ngequip%/d2#ng01.BAF~ ~inlined/d2#ng04.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player4~
-  COPY - ~%ngequip%/d2#ng01.BAF~ ~%workspace%/d2#ng05.BAF~
+  COPY - ~%ngequip%/d2#ng01.BAF~ ~inlined/d2#ng05.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player5~
-  COPY - ~%ngequip%/d2#ng01.BAF~ ~%workspace%/d2#ng06.BAF~
+  COPY - ~%ngequip%/d2#ng01.BAF~ ~inlined/d2#ng06.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player6~
 
-//EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2autoequip.BAF~       // add scripts to baldur.BCS
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng06.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng05.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng04.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng03.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng02.BAF~
+//EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2autoequip.BAF~       // add scripts to baldur.BCS
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng06.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng05.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng04.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng03.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng02.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%ngequip%/d2#ng01.BAF~
   
 END
@@ -87,7 +87,7 @@ ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
     SAY NAME1 @710 SAY UNIDENTIFIED_DESC @712
     SAY NAME2 @710
 
-//EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2autoequip.BAF~
+//EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2autoequip.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%ngequip%/d2#ng16.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%ngequip%/d2#ng15.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%ngequip%/d2#ng14.BAF~
@@ -103,25 +103,35 @@ ACTION_IF (GAME_IS ~iwd2~) BEGIN
   COPY ~%ngequip%/d2#ngrb2.ITM~ ~override~
     SAY NAME1 @710 SAY UNIDENTIFIED_DESC @713
     SAY NAME2 @710
-	
-  COPY - ~%ngequip%/d2#ng21.BAF~ ~%workspace%/d2#ng22.BAF~
+
+  COPY - ~%ngequip%/d2#ng21.BAF~ ~inlined/d2#ng21.BAF~
+    PATCH_IF !(FILE_EXISTS ~Characters/SIR_NORD.CHR~) BEGIN
+      REPLACE_TEXTUALLY EXACT_MATCH ~!InParty("nord")~ ~~
+      REPLACE_TEXTUALLY EXACT_MATCH ~!InParty("hildury")~ ~~
+      REPLACE_TEXTUALLY EXACT_MATCH ~!InParty("diriel")~ ~~
+      REPLACE_TEXTUALLY EXACT_MATCH ~!InParty("jaemal")~ ~~
+      REPLACE_TEXTUALLY EXACT_MATCH ~!InParty("salomeya")~ ~~
+      REPLACE_TEXTUALLY EXACT_MATCH ~!InParty("nikosh")~ ~~
+    END
+
+  COPY - ~inlined/d2#ng21.BAF~ ~inlined/d2#ng22.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player2~
-  COPY - ~%ngequip%/d2#ng21.BAF~ ~%workspace%/d2#ng23.BAF~
+  COPY - ~inlined/d2#ng21.BAF~ ~inlined/d2#ng23.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player3~
-  COPY - ~%ngequip%/d2#ng21.BAF~ ~%workspace%/d2#ng24.BAF~
+  COPY - ~inlined/d2#ng21.BAF~ ~inlined/d2#ng24.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player4~
-  COPY - ~%ngequip%/d2#ng21.BAF~ ~%workspace%/d2#ng25.BAF~
+  COPY - ~inlined/d2#ng21.BAF~ ~inlined/d2#ng25.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player5~
-  COPY - ~%ngequip%/d2#ng21.BAF~ ~%workspace%/d2#ng26.BAF~
+  COPY - ~inlined/d2#ng21.BAF~ ~inlined/d2#ng26.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player6~
 
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2autoequip.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng26.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng25.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng24.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng23.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng22.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%ngequip%/d2#ng21.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2autoequip.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng26.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng25.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng24.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng23.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng22.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng21.BAF~
 END
 
 ////////////////////////////////////////////////////////////
@@ -145,23 +155,23 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
     SAY NAME1 @710 SAY UNIDENTIFIED_DESC @712
     SAY NAME2 @710
   
-  COPY - ~%ngequip%/d2#ng31.BAF~ ~%workspace%/d2#ng32.BAF~
+  COPY - ~%ngequip%/d2#ng31.BAF~ ~inlined/d2#ng32.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player2~
-  COPY - ~%ngequip%/d2#ng31.BAF~ ~%workspace%/d2#ng33.BAF~
+  COPY - ~%ngequip%/d2#ng31.BAF~ ~inlined/d2#ng33.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player3~
-  COPY - ~%ngequip%/d2#ng31.BAF~ ~%workspace%/d2#ng34.BAF~
+  COPY - ~%ngequip%/d2#ng31.BAF~ ~inlined/d2#ng34.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player4~
-  COPY - ~%ngequip%/d2#ng31.BAF~ ~%workspace%/d2#ng35.BAF~
+  COPY - ~%ngequip%/d2#ng31.BAF~ ~inlined/d2#ng35.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player5~
-  COPY - ~%ngequip%/d2#ng31.BAF~ ~%workspace%/d2#ng36.BAF~
+  COPY - ~%ngequip%/d2#ng31.BAF~ ~inlined/d2#ng36.BAF~
     REPLACE_TEXTUALLY ~Player1~ ~Player6~
 
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2autoequip.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng36.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng35.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng34.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng33.BAF~
-  EXTEND_TOP ~BALDUR.BCS~ ~%workspace%/d2#ng32.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2autoequip.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng36.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng35.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng34.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng33.BAF~
+  EXTEND_TOP ~BALDUR.BCS~ ~inlined/d2#ng32.BAF~
   EXTEND_TOP ~BALDUR.BCS~ ~%ngequip%/d2#ng31.BAF~
 
 //fixing text for light crossbows (was annoying to look at while testing)

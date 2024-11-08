@@ -38,15 +38,8 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     COPY ~%ngbag%/icon-ee1.BAM~ ~override/ibag04.BAM~
   END
   
-  ACTION_IF (GAME_IS ~bg2ee~) BEGIN
+  ACTION_IF (GAME_INCLUDES ~bg2~) BEGIN
     EXTEND_BOTTOM ~AR0602.BCS~ ~%ngbag%/ngbag-imoen.BAF~
-  END
-  
-  ACTION_IF (GAME_IS ~eet~) BEGIN
-    COPY - ~%ngbag%/ngbag-imoen.BAF~ ~%workspace%/ngbag-imoen.BAF~
-      REPLACE_TEXTUALLY ~InParty("Imoen")~ ~InParty("Imoen2")~
-      REPLACE_TEXTUALLY ~"d2#ngbag","Imoen"~ ~"d2#ngbag","Imoen2"~
-    EXTEND_BOTTOM ~AR0602.BCS~ ~%workspace%/ngbag-imoen.BAF~
   END
   
   ACTION_IF (GAME_INCLUDES ~sod~) BEGIN
@@ -59,7 +52,12 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     END
   END
   
-  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/ngbag-script.BAF~
+  ACTION_FOR_EACH script IN ~BALDUR~ ~bdbaldur~ BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%script%.BCS~) BEGIN
+      EXTEND_TOP ~%script%.BCS~  ~%ngbag%/ngbag-script.BAF~
+    END
+  END
+
 END
 
 ////////////////////////////////////////////////////////////
@@ -81,7 +79,11 @@ ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TW
     COPY ~%ngbag%/icon-ee0.BAM~ ~override/ibaghold.BAM~
   END
   
-  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/ngbag-script.BAF~
+  ACTION_FOR_EACH script IN ~BALDUR~ ~BALDUR25~ ~bdbaldur~ BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%script%.BCS~) BEGIN
+      EXTEND_TOP ~%script%.BCS~  ~%ngbag%/ngbag-script.BAF~
+    END
+  END
   
 END
 END
@@ -175,15 +177,8 @@ ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc ca~) BEGIN
     COPY ~%ngbag%/icon-bg2.BAM~ ~override/ibag04.BAM~
   END
   
-  ACTION_IF ((GAME_IS ~bg2 tob~) AND !(GAME_IS ~bgt~)) BEGIN
+  ACTION_IF (GAME_INCLUDES ~bg2~) BEGIN
     EXTEND_BOTTOM ~AR0602.BCS~ ~%ngbag%/ngbag-imoen.BAF~
-  END
-  
-  ACTION_IF (GAME_IS ~bgt~) BEGIN
-    COPY - ~%ngbag%/ngbag-imoen.BAF~ ~%workspace%/ngbag-imoen.BAF~
-      REPLACE_TEXTUALLY ~InParty("Imoen")~ ~InParty("Imoen2")~
-      REPLACE_TEXTUALLY ~"d2#ngbag","Imoen"~ ~"d2#ngbag","Imoen2"~
-    EXTEND_BOTTOM ~AR0602.BCS~ ~%workspace%/ngbag-imoen.BAF~
   END
   
   ACTION_IF (FILE_EXISTS ~override/lhMIS0a.itm~) BEGIN

@@ -31,20 +31,20 @@ ACTION_IF (is_ee = 0) BEGIN
       WRITE_SHORT 0x200 THIS | BIT6    // affect enemies only (relative to caster)
     IF_EXISTS
 
-    ADD_PROJECTILE ~inlined/d2cwbs1.PRO~    // set number for ITM/SPL field to %d2cwbs1%
+    ADD_PROJECTILE ~inlined/d2cwbs1.PRO~    // set projectile in SPL to variable "d2cwbs1"
     OUTER_SET entangle_proj = d2cwbs1
   END
 END
 
 
 //
-//clone entangle
+//clone entangle (party friendly)
 COPY_EXISTING ~SPPR105.spl~  ~override/d2cwbs1.SPL~
   PATCH_IF (is_ee > 0) BEGIN
     LPF update_op324_restrictions END
     LPF d2_safe_spell INT_VAR neutrals=0 block_opcode=154 duration=5 END    // add op318 (EEs)
   END ELSE BEGIN
-    LPF ALTER_SPELL_HEADER INT_VAR projectile=entangle_proj END    // or set new projectile (BG2)
+    LPF ALTER_SPELL_HEADER INT_VAR projectile=entangle_proj END    // or set new projectile (classic)
   END
 
 OUTER_TEXT_SPRINT nymph_entangle ~"D2CWBS1"~

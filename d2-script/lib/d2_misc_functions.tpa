@@ -12,6 +12,7 @@ d2_no_casting                 PATCH
 d2_no_fatigue                 PATCH
 block_death_gaze              PATCH
 update_op324_restrictions     PATCH
+d2_remove_spelltypes          PATCH
 */
 
 ////////////////////////////////////////////////////////////
@@ -389,6 +390,30 @@ BEGIN
     LPF DELETE_EFFECT INT_VAR match_opcode=opcode END
   END
 
+END
+
+////////////////////////////////////////////////////////////
+
+//dispel Secondary types (skips level 0 spells)
+//set insert=last to put at bottom of stack (default top)
+
+DEFINE_PATCH_FUNCTION d2_remove_spelltypes INT_VAR buffs=1 debuffs=1 STR_VAR insert=first BEGIN
+  PATCH_IF (debuffs > 0) BEGIN
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=4 STR_VAR insert=EVAL ~%insert%~ END    // MAGICATTACK
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=5 STR_VAR insert=EVAL ~%insert%~ END    // DIVINATIONATTACK
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=6 STR_VAR insert=EVAL ~%insert%~ END    // CONJURATION
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=9 STR_VAR insert=EVAL ~%insert%~ END    // BATTLEGROUND
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=10 STR_VAR insert=EVAL ~%insert%~ END    // OFFENSIVEDAMAGE
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=11 STR_VAR insert=EVAL ~%insert%~ END    // DISABLING
+  END
+  PATCH_IF (buffs > 0) BEGIN
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=1 STR_VAR insert=EVAL ~%insert%~ END    // SPELLPROTECTIONS
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=2 STR_VAR insert=EVAL ~%insert%~ END    // SPECIFICPROTECTIONS
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=3 STR_VAR insert=EVAL ~%insert%~ END    // ILLUSIONARYPROTECTIONS
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=7 STR_VAR insert=EVAL ~%insert%~ END    // COMBATPROTECTIONS
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=12 STR_VAR insert=EVAL ~%insert%~ END    // COMBINATION
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=221 timing=1 parameter1=10 parameter2=13 STR_VAR insert=EVAL ~%insert%~ END    // NON-COMBAT
+  END
 END
 
 ////////////////////////////////////////////////////////////

@@ -1,7 +1,7 @@
 IF
 	!Global("d2ngbagsod","GLOBAL",1)
+	GlobalGT("bd_plot","GLOBAL",0)
 	!PartyHasItem("d2#ngbag")
-	PartyHasItem("BDKEYR")
 THEN
 	RESPONSE #100
 		GiveItemCreate("d2#ngbag",Player1,0,0,0)
@@ -11,6 +11,7 @@ END
 
 IF
 	!Global("d2ngbagsod","GLOBAL",1)
+	GlobalGT("bd_plot","GLOBAL",0)
 	PartyHasItem("d2#ngbag")
 THEN
 	RESPONSE #100

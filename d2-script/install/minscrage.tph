@@ -3,111 +3,73 @@
 
 
 //prep
+OUTER_TEXT_SPRINT minscrage ~SPIN117~
 OUTER_SET 15hploss = duration - 1    // 15 HP damage 1 second before max HP bonus ends
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
-  ACTION_IF (duration = 30) BEGIN OUTER_SET berserk_desc = RESOLVE_STR_REF (@901) END
-  ACTION_IF (duration = 60) BEGIN OUTER_SET berserk_desc = RESOLVE_STR_REF (@902) END
-  ACTION_IF (duration = 120) BEGIN OUTER_SET berserk_desc = RESOLVE_STR_REF (@903) END
+  ACTION_IF (duration=30) BEGIN OUTER_SET berserk_desc=RESOLVE_STR_REF (@901) END
+  ACTION_IF (duration=60) BEGIN OUTER_SET berserk_desc=RESOLVE_STR_REF (@902) END
+  ACTION_IF (duration=120) BEGIN OUTER_SET berserk_desc=RESOLVE_STR_REF (@903) END
 END ELSE BEGIN
-  ACTION_IF (duration = 30) BEGIN OUTER_SET berserk_desc = RESOLVE_STR_REF (@906) END
-  ACTION_IF (duration = 60) BEGIN OUTER_SET berserk_desc = RESOLVE_STR_REF (@907) END
-  ACTION_IF (duration = 120) BEGIN OUTER_SET berserk_desc = RESOLVE_STR_REF (@908) END
+  ACTION_IF (duration=30) BEGIN OUTER_SET berserk_desc=RESOLVE_STR_REF (@906) END
+  ACTION_IF (duration=60) BEGIN OUTER_SET berserk_desc=RESOLVE_STR_REF (@907) END
+  ACTION_IF (duration=120) BEGIN OUTER_SET berserk_desc=RESOLVE_STR_REF (@908) END
 END
 
 
-
-//
 //EEs
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+  COPY_EXISTING ~%minscrage%.SPL~ ~override~
+    SAY NAME1 @900
+    WRITE_LONG 0x50 berserk_desc
 
-COPY_EXISTING ~SPIN117.SPL~ ~override~
-  SAY NAME1 @900
-  WRITE_LONG 0x50 berserk_desc
+    LPF ALTER_EFFECT INT_VAR silent=1 match_duration=120 duration=duration END
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=18 match_parameter1=15 duration=duration END
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=17 match_parameter1=15 duration=duration END
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=12 match_parameter1=15 duration=15hploss END
 
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_duration = 120 duration = duration END
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 18 match_parameter1 = 15 duration = duration END
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 17 match_parameter1 = 15 duration = duration END
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 12 match_parameter1 = 15 duration = 15hploss END
-
-  //Prevent from stacking and make usable at will
-  LPF ADD_SPELL_EFFECT 
-    INT_VAR opcode = 321 target = 1 timing = 1 insert_point = 0
-    STR_VAR resource = ~SPIN117~
-  END
-   
-  LPF ADD_SPELL_CFEFFECT
-    INT_VAR opcode = 171 target = 1 timing = 9
-    STR_VAR resource = ~SPIN117~
-  END
-	
-  LPF ADD_SPELL_CFEFFECT
-    INT_VAR opcode = 172 target = 1 timing = 9
-    STR_VAR resource = ~SPIN117~
-  END
-BUT_ONLY
-
+    //Prevent from stacking and make usable at will
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=321 target=1 timing=1 insert_point=0 STR_VAR resource=~%minscrage%~ END
+    LPF ADD_SPELL_CFEFFECT INT_VAR opcode=171 target=1 timing=9 STR_VAR resource=~%minscrage%~ END
+    LPF ADD_SPELL_CFEFFECT INT_VAR opcode=172 target=1 timing=1 STR_VAR resource=~%minscrage%~ END
+  BUT_ONLY
 END
 
 
-//
 //BG2
 ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc~) BEGIN
+  COPY_EXISTING ~%minscrage%.SPL~ ~override~
+    SAY NAME1 @900
+    WRITE_LONG 0x50 berserk_desc
 
-COPY_EXISTING ~SPIN117.SPL~ ~override~
-  SAY NAME1 @900
-  WRITE_LONG 0x50 berserk_desc
+    LPF ALTER_EFFECT INT_VAR silent=1 match_duration=120 duration=duration END
+    LPF ALTER_EFFECT INT_VAR silent=1 match_duration=30 duration=duration END
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=18 match_parameter1=15 duration=duration END
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=17 match_parameter1=15 duration=duration END
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=12 match_parameter1=15 duration=15hploss END
 
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_duration = 120 duration = duration END
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_duration = 30 duration = duration END
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 18 match_parameter1 = 15 duration = duration END
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 17 match_parameter1 = 15 duration = duration END
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_opcode = 12 match_parameter1 = 15 duration = 15hploss END
+    // regain ability with cooldown timer
+    SPRINT ability_name @900
+    SET cooldown = RESOLVE_STR_REF (@358)
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=206 target=1 parameter1=cooldown duration=duration STR_VAR resource=~%minscrage%~ END
+    LPF ADD_SPELL_CFEFFECT INT_VAR opcode=171 target=1 timing=9 STR_VAR resource=~%minscrage%~ END
+    LPF ADD_SPELL_CFEFFECT INT_VAR opcode=172 target=1 timing=1 STR_VAR resource=~%minscrage%~ END
+  BUT_ONLY
+END
 
-  //Prevent from stacking and make usable at will  
-  LPF ADD_SPELL_EFFECT 
-    INT_VAR opcode = 206 target = 1 duration = duration
-    STR_VAR resource = ~SPIN117~
-  END
-  
-  LPF ADD_SPELL_CFEFFECT
-    INT_VAR opcode = 171 target = 1 timing = 9
-    STR_VAR resource = ~SPIN117~
-  END
-	
-  LPF ADD_SPELL_CFEFFECT
-    INT_VAR opcode = 172 target = 1 timing = 9
-    STR_VAR resource = ~SPIN117~
-  END
-  
-BUT_ONLY
 
+//BG1
+ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN
+  COPY_EXISTING ~%minscrage%.SPL~ ~override~
+    LPF ALTER_EFFECT INT_VAR silent=1 match_timing=0 duration=duration END
+    LPF ALTER_EFFECT INT_VAR silent=1 match_timing=4 duration=duration END
+
+    // regain ability after duration
+    LPF ADD_SPELL_CFEFFECT INT_VAR opcode=171 target=1 timing=4 duration=duration STR_VAR resource=~%minscrage%~ END
+    LPF ADD_SPELL_CFEFFECT INT_VAR opcode=172 target=1 timing=4 duration=duration STR_VAR resource=~%minscrage%~ END
+  BUT_ONLY
 END
 
 
 //
-//BG1
-ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN
-
-COPY_EXISTING ~SPIN117.SPL~ ~override~
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_timing = 0 duration = duration END
-  LPF ALTER_EFFECT INT_VAR silent = 1 match_timing = 4 duration = duration END
-
-  //Prevent from stacking and make usable at will
-  LPF ADD_SPELL_CFEFFECT
-    INT_VAR opcode = 171 target = 1 timing = 4 duration = duration
-    STR_VAR resource = ~SPIN117~
-  END
-	
-  LPF ADD_SPELL_CFEFFECT
-    INT_VAR opcode = 172 target = 1 timing = 9
-    STR_VAR resource = ~SPIN117~
-  END
-  
-BUT_ONLY
-
-END
-
-
-/*
-*/
+//

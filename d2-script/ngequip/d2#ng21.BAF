@@ -1,6 +1,12 @@
 IF
 	!Global("d2Player1initiate","GLOBAL",1)
 	Exists(Player1)
+	!InParty("nord")    // fix crash with NPC mod
+	!InParty("hildury")
+	!InParty("diriel")
+	!InParty("jaemal")
+	!InParty("salomeya")
+	!InParty("nikosh")
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2Player1start","GLOBAL",6)

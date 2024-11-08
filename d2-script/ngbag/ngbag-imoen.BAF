@@ -11,6 +11,17 @@ END
 
 IF
 	!Global("d2ngbagbg2","GLOBAL",1)
+	!PartyHasItem("d2#ngbag")
+	InParty("Imoen2")
+THEN
+	RESPONSE #100
+		GiveItemCreate("d2#ngbag","Imoen2",0,0,0)
+		SetGlobal("d2ngbagbg2","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngbagbg2","GLOBAL",1)
 	PartyHasItem("d2#ngbag")
 THEN
 	RESPONSE #100

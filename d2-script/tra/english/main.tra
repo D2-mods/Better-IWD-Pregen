@@ -17,6 +17,11 @@ This file contains text displayed in the game
 */
 
 
+//text with variables
+@350 = ~Unaffected by effects from %ability_name%~
+@358 = ~You cannot cast %ability_name% until the cooldown timer has run out.~
+
+
 
 //
 //Script descriptions
@@ -400,7 +405,6 @@ The character goes berserk 2 turns. He gains a +2 bonus to Strength and Dexterit
 
 
 
-
 //
 //light crossbow descriptions for IWD-in-BG2 (for ngequip)
 
@@ -548,5 +552,5 @@ Not Usable By:
  Thief~
 
 
-/*
-*/
+//
+//

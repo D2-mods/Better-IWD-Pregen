@@ -98,8 +98,10 @@ IF
 	OR(2)
 		SpellCast(Myself,0)
 		HPPercentLT(Myself,80)
-	Range([EVILCUTOFF],8)
-	!Range([GOODCUTOFF],20)
+	OR(2)
+		Range([EVILCUTOFF],4)
+		AttackedBy([EVILCUTOFF],DEFAULT)
+	!Range([GOODCUTOFF],12)
 THEN
 	RESPONSE #100
 		ForceSpellRES("BDDDOORX",LastSummonerOf())
@@ -635,8 +637,8 @@ IF
 		See(NearestEnemyOf())
 		See(NearestEnemyOf(LastSummonerOf()))
 		See(LastAttackerOf())
-	Range(LastSeenBy(),20)
-	HPPercentGT(LastSeenBy(),50)
+	Range(LastSeenBy(),7)
+	HPPercentGT(LastSeenBy(),10)
 	!General(LastSeenBy(),UNDEAD)
 	%no_wounds%
 	!HasBounceEffects(LastSeenBy())
@@ -661,7 +663,7 @@ IF
 		See(NearestEnemyOf(LastSummonerOf()))
 		See(LastAttackerOf())
 	Range(LastSeenBy(),20)
-	HPPercentGT(LastSeenBy(),50)
+	HPPercentGT(LastSeenBy(),10)
 	!General(LastSeenBy(),UNDEAD)
 	%no_wounds%
 	!HasBounceEffects(LastSeenBy())
@@ -685,8 +687,9 @@ IF
 	!GlobalTimerNotExpired("d2ddoorjump","LOCALS")
 	!GlobalTimerNotExpired("d2cooldown","LOCALS")
 	ActuallyInCombat()
+	See(NearestEnemyOf())
 	!Range(NearestEnemyOf(),20)
-	!Range([GOODCUTOFF],8)
+	!Range([GOODCUTOFF],12)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2ddoorjump","LOCALS",6)

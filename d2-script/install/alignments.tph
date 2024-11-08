@@ -95,14 +95,17 @@ COPY_EXISTING - ~ALIGNMNT.2da~  ~~
     READ_2DA_ENTRY_FORMER ~ALIGNMNT_table~ r 0 label
     PHP_EACH d2alignmentcat AS mainclass => cat BEGIN
       PATCH_IF (patch_class = 0) BEGIN
-        PATCH_IF !(~%label%~ STRING_CONTAINS_REGEXP ~%mainclass%~) BEGIN    // if %label% DOES contain %mainclass%
-          TEXT_SPRINT type ~%cat%~
-          SET i = EVAL ~%type%~
-          PATCH_IF (i = 1) BEGIN
-            FOR (col = 1; col < 10; ++col) BEGIN    // for columns 1-9 (alignments)
-              SET_2DA_ENTRY_LATER ~d2alignment_edits~ r col 1
+        PATCH_IF !(~%label%~ STRING_CONTAINS_REGEXP ~%mainclass%~) BEGIN    // if "label" DOES contain "mainclass"
+          PATCH_IF ((~%label%~ STR_EQ ~FIGHTER_DRUID~) AND (~%mainclass%~ STR_EQ ~FIGHTER~)) BEGIN
+          END ELSE BEGIN
+            TEXT_SPRINT type ~%cat%~
+            SET i = EVAL ~%type%~
+            PATCH_IF (i = 1) BEGIN
+              FOR (col = 1; col < 10; ++col) BEGIN    // for columns 1-9 (alignments)
+                SET_2DA_ENTRY_LATER ~d2alignment_edits~ r col 1
+              END
+              SET patch_class = 1
             END
-            SET patch_class = 1
           END
         END
       END

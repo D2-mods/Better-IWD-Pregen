@@ -99,7 +99,7 @@ This script manages auto-attack, while giving more nuanced control of the charac
 - IWD Pregen (iwdpgen): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only)
 
 #### Auto-attack features:
-- Melee aggro range is dependent on class (see below for full breakdown); range from 3 ft. (mages) to 25 ft..
+- Melee aggro range is dependent on class (see below for full breakdown); range from 5 ft. (mages) to 27 ft..
 - Will not attack if under the effects of Invisibility or Sanctuary.
 - Will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
 - EEs: Active retargeting if a character's current weapon cannot hit or damage an enemy.
@@ -159,25 +159,25 @@ Auto-attack breakdown
 Class: Fighter, Ranger, Paladin, including any multiclass combinations
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 25 ft.
+	2. Enemy is within 27 ft.
 	3. Attacked by enemy
 
 Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 18 ft.
+	2. Enemy is within 19 ft.
 	3. Attacked by enemy
 
 Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 12 ft.
+	2. Enemy is within 13 ft.
 
 Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 3 ft.
-	3. If THAC0 is less than 5, will attack if enemy is within 12 ft.
+	2. Enemy is within 5 ft.
+	3. If THAC0 is less than 5, will attack if enemy is within 13 ft.
   ```
 
  --
@@ -188,24 +188,24 @@ Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
 Class: Fighter, Ranger, Paladin or Barbarian (single-class or multiclass with 3+ levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 25 ft.
+	2. Enemy is within 27 ft.
 	3. Attacked by enemy
 
 Class: Monk (Level 9+), Wild Shape/Tenser's/Iron Body (without 3+ warrior levels)
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 18 ft.
+	2. Enemy is within 19 ft.
 	3. Attacked by enemy
 
 Class: Cleric, Druid, Monk, Thief or Bard, including multiclass with Wizard or Sorcerer
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 12 ft.
+	2. Enemy is within 13 ft.
 
 Class: Wizard or Sorcerer
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
-	2. Enemy is within 3 ft.
+	2. Enemy is within 5 ft.
   ```
   
 --
@@ -219,32 +219,32 @@ Nymph AI script (Call Woodland Beings)
 -
 
 **Option 1 - Revised script:**
-- Smarter spellcasting (better targeting and not as wasteful)
-- Won't cast status spells on undead or enemies with high magic resist
-- Will teleport to catch up with the party (i.e. while traveling with Boots of Speed)
-- More cautious at low HP if it has spells remaining
-- Will not attack or cast spells at enemies if invisible
-- Cooldown hotkeys to delay spellcasting
+- Smarter spellcasting (better targeting, checks magic resist, etc.).
+- May cast Barkskin, Mass Cure, Entangle, or Summon Insects once each per combat encounter. When the AI uses these spells, it doesn't require or consume any memorized spells.
+- Slightly increased movement and casting speed.
+- Teleports to catch up with the party (ex. while traveling with Boots of Speed).
+- Preserves invisibility (won't attack or cast spells).
+- Cooldown hotkeys to delay spellcasting (B to enable, E to disable).
 
 Compatible with EEs and classic BG2 engine, including SCS.  
 Not compatible with atweaks PnP Fey (use option 2).
 
-> DDoor: As in the unmodded script, the nymph may use Dimension Door at will if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
+> Dimension Door: The nymph can teleport if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
 
-> Marking: The nymph "marks" a PC as an object for various actions (by default, this is the summoner). If the marked PC is not on the map for any reason, the nymph will choose another PC on the same map. The nymph will always switch back to its summoner if in visual range. Note that the summoner, as an identifier, is not saved if a summon is still on the map (so if reloading, the script will default to Player1 as the "marked" PC).
+> Marking: The nymph "marks" a PC as an object for various actions (by default, this is the summoner). If the marked PC is not on the map for any reason, the nymph will choose another PC on the same map. The nymph will always switch back to its summoner if in visual range. Note that the summoner, as an identifier, is not saved if a summon is still on the map (so if reloading, script will default to Player1 as the "marked" PC).
 
 **Hotkeys:**
-- If the D key is pressed outside of combat, and not in visual range of enemies, the nymph will teleport to its summoner (or other PC)
-- If the B key is pressed, the nymph will enter Cooldown for 3 rounds; will not cast offensive spells or teleport to an enemy in Cooldown mode
-- If the E key is pressed, the Cooldown timer is set to 0 (deactivated)
+- If the D key is pressed the nymph will teleport to its summoner (or other PC). Only works when not in combat.
+- If the B key is pressed, the nymph will enter Cooldown for 3 rounds. Cooldown mode disables most combat actions.
+- If the E key is pressed, the Cooldown timer is set to 0 (deactivated).
 
 --
 
 **Option 2 - Patch existing script:**
 - Adds Cooldown hotkeys (B to enable, E to disable)
 - Adds D hotkey to teleport to party
-- Will teleport to party if not in visual range (and not invisible)
-- Will preserve invisibility
+- Teleports to party if not in visual range (and not invisible)
+- Preserves invisibility (won't attack or cast spells)
 - Usable with atweaks PnP Fey, as well as AI mods that still use NYMPH.BCS (ex. SCS)
 
 NOTE: Dimension Door is more limited with this patch. Will only teleport to the summoner or Player1.
@@ -254,9 +254,9 @@ NOTE: Dimension Door is more limited with this patch. Will only teleport to the 
 </details>
 
 <details>
-  <summary>Baldur's Gate (in BG1 engine)</summary>
+  <summary>Baldur's Gate (original BG1 engine)</summary>
 
-Baldur's Gate (in BG1 engine)
+Baldur's Gate (original BG1 engine)
 -
 
 - Characters will preserve Hide/Invisibility/Sanctuary
@@ -445,7 +445,7 @@ NOTE: If the separate "Give party a Bag of Holding" component is not installed, 
 Give party a Bag of Holding at game start (classic and EEs)
 -
 
-- The first 3 components give a Bag of Holding with differing max capacities. 
+- The first 3 options give a Bag of Holding with differing max capacities. 
 - The "Bottomless" option has a capacity of 32767 items, same number used by Tweaks Anthology.
 - Compatible with all IE games that support Bags of Holding (except PsT:EE for now).
 

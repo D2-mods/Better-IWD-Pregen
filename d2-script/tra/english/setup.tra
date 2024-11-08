@@ -7,13 +7,9 @@ This file contains text shown in weidu installer
 @10100 = ~Better IWD Pregen~
 
 @10200 = ~Better AI for Call Woodland Beings (EEs, BG2)~
-	@10201 = ~Use revised script for nymph summon. Compatible with SCS.
-
-(AI can cast Barkskin, Mass Cure, Entangle, or Summon Insects once each per combat encounter. Enemy summons can also cast these spells.)
+	@10201 = ~Use revised script for nymph summon. Compatible with SCS. (Cooldown hotkeys, faster movement, AI can cast Barkskin, Mass Cure, Entangle, or Summon Insects once each per combat encounter.)
 ~
-	@10202 = ~Use existing script, but patch in a few actions. Use with atweaks PnP Fey or other major revisions.
-
-(Adds Cooldown mode hotkeys, adds Dimension Door hotkey/scripting, preserves invisibility)
+	@10202 = ~Use existing script, but patch in a few actions. Use with atweaks PnP Fey or other major revisions. (Adds Cooldown mode hotkeys, adds Dimension Door hotkey/scripting, preserves invisibility)
 ~
 
 @9999 = ~Auto-assign script to new characters~
