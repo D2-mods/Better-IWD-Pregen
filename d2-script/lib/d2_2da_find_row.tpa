@@ -2,11 +2,13 @@
 //can auto-set entry or auto-delete a row
 
 /*
-no_backstab removes a kit from all 3 backstab 2das (backstab, sneakatt, crippstr)
-d2_edit_2da_entry sets an entry by matching row/colummn header names
-d2_get_2da_entry reads an entry by matching row/colummn header names
-d2_splprot_adder add new row to splprot.2da, or uses existing row if found
-d2_clone_hla_table creates new HLA table for a kit by cloning current one, or copying from another class/kit
+no_backstab         - removes a kit from all 3 backstab 2das (backstab, sneakatt, crippstr)
+d2_edit_2da_entry   - sets an entry by matching row/colummn header names
+d2_get_2da_entry    - reads an entry by matching row/colummn header names
+d2_splprot_adder    - adds new row to splprot.2da, or uses existing row if found
+d2_clone_hla_table  - creates new HLA table for kit by cloning current one, or copying from another class/kit
+d2_2da_row_adder    - for 2das with few or set columns (add full string to table)
+d2_weapprof_styles  - updated function for weapon styles (for prof function, see weapontypes2.tph)
 */
 
 
@@ -21,6 +23,8 @@ no_backstab             ACTION
 d2_splprot_adder        PATCH or ACTION
 d2_clone_hla_table      ACTION
 d2_2da_row_adder        PATCH or ACTION
+d2_weapprof_styles      PATCH or ACTION
+d2_get_kitnum           PATCH or ACTION
 */
 
 ////////////////////////////////////////////////////////////
@@ -33,8 +37,8 @@ DEFINE_ACTION_FUNCTION d2_edit_2da_entry
   INT_VAR col_read=0
   STR_VAR 2da=~~ col_name=~~ row_name=~~ entry=~*~
 BEGIN
-  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^.]%col_name%[^.]~) BEGIN
-  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^.]%row_name%[^.]~) BEGIN
+  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^0-9^a-z^_]%col_name%[^0-9^a-z^_]~) BEGIN
+  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^0-9^a-z^_]%row_name%[^0-9^a-z^_]~) BEGIN
     COPY_EXISTING ~%2da%.2da~  ~override~
       LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
       LPF 2da_find_row_set INT_VAR col_read=col_read col_write=col_number STR_VAR row_name=EVAL ~%row_name%~ entry=EVAL ~%entry%~ END
@@ -47,8 +51,8 @@ DEFINE_PATCH_FUNCTION d2_edit_2da_entry
   INT_VAR col_read=0
   STR_VAR col_name=~~ row_name=~~ entry=~*~
 BEGIN
-  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^.]%col_name%[^.]~) BEGIN
-  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^.]%row_name%[^.]~) BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^0-9^a-z^_]%col_name%[^0-9^a-z^_]~) BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^0-9^a-z^_]%row_name%[^0-9^a-z^_]~) BEGIN
     LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
     LPF 2da_find_row_set INT_VAR col_read=col_read col_write=col_number STR_VAR row_name=EVAL ~%row_name%~ entry=EVAL ~%entry%~ END
   END
@@ -66,8 +70,8 @@ DEFINE_ACTION_FUNCTION d2_get_2da_entry
   STR_VAR 2da=~~ col_name=~~ row_name=~~ entry=~RET variable~
   RET entry
 BEGIN
-  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^.]%col_name%[^.]~) BEGIN
-  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^.]%row_name%[^.]~) BEGIN
+  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^0-9^a-z^_]%col_name%[^0-9^a-z^_]~) BEGIN
+  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^0-9^a-z^_]%row_name%[^0-9^a-z^_]~) BEGIN
     COPY_EXISTING ~%2da%.2da~  ~override~
       LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
       LPF 2da_find_row INT_VAR col_read=col_read STR_VAR row_name=EVAL ~%row_name%~ RET row_number columns END
@@ -82,8 +86,8 @@ DEFINE_PATCH_FUNCTION d2_get_2da_entry
   STR_VAR col_name=~~ row_name=~~ entry=~RET variable~
   RET entry
 BEGIN
-  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^.]%col_name%[^.]~) BEGIN
-  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^.]%row_name%[^.]~) BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^0-9^a-z^_]%col_name%[^0-9^a-z^_]~) BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^0-9^a-z^_]%row_name%[^0-9^a-z^_]~) BEGIN
     LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
     LPF 2da_find_row INT_VAR col_read=col_read STR_VAR row_name=EVAL ~%row_name%~ RET row_number columns END
     READ_2DA_ENTRY row_number col_number columns entry
@@ -614,6 +618,211 @@ DEFINE_PATCH_FUNCTION d2_2da_row_adder INT_VAR columns=4 STR_VAR string=~~ BEGIN
 
     INSERT_2DA_ROW row_count col_count ~%string%~
     PRETTY_PRINT_2DA
+  END
+END
+
+////////////////////////////////////////////////////////////
+
+//If "amount" is 0 or higher, then it is used for all styles
+//"kit" is the header row (ex. kit=BERSERKER)
+
+/*
+Higher numbers will lower to match base Fighter class
+If no INT_VARs are set, will give Fighter class styles
+*/
+
+DEFINE_ACTION_FUNCTION d2_weapprof_styles
+  INT_VAR amount = ~-1~
+    a = ~-1~    // 2 handed
+    b = ~-1~    // shield
+    c = ~-1~    // single
+    d = ~-1~    // 2 weapon
+  STR_VAR kit = none
+BEGIN
+
+  COPY_EXISTING ~weapprof.2da~  ~override~
+
+    PATCH_IF (RESOURCE_CONTAINS ~weapprof.2da~  ~[^0-9^a-z^_]%kit%[^0-9^a-z^_]~) BEGIN
+
+      // check amount
+      PATCH_IF (amount >= 0) BEGIN
+        SET a=amount SET b=amount SET c=amount SET d=amount
+      END
+      PATCH_IF (a<0 AND b<0 AND c<0 AND d<0) BEGIN
+        SET a=5 SET b=5 SET c=5 SET d=5
+      END
+
+      // variables
+      COUNT_2DA_ROWS 3 weapprof_rows
+      READ_2DA_ENTRIES_NOW ~weapprof_table~ 3
+      COUNT_2DA_COLS weapprof_cols
+  
+      LPF 2da_find_column STR_VAR col_name=fighter RET col_number END
+      SET fighter_col = col_number
+      LPF 2da_find_column STR_VAR col_name=EVAL ~%kit%~ RET col_number END
+      SET kit_col = col_number
+
+      PATCH_IF (fighter_col>3 AND fighter_col<weapprof_cols) BEGIN
+      PATCH_IF (kit_col>3 AND kit_col<weapprof_cols) BEGIN
+
+        // patch
+        FOR (r = 1; r < weapprof_rows; ++r) BEGIN
+          READ_2DA_ENTRY_FORMER ~weapprof_table~ r 1 value
+
+          // 2 handed
+          PATCH_IF (value=111 AND a >= 0) BEGIN
+            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
+            PATCH_IF (a > fighter_slots) BEGIN SET a = fighter_slots END
+            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col a
+          END
+
+          // shield
+          PATCH_IF (value=112 AND b >= 0) BEGIN
+            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
+            PATCH_IF (b > fighter_slots) BEGIN SET b = fighter_slots END
+            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col b
+          END
+
+          // single
+          PATCH_IF (value=113 AND c >= 0) BEGIN
+            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
+            PATCH_IF (c > fighter_slots) BEGIN SET c = fighter_slots END
+            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col c
+          END
+
+          // 2 weapon
+          PATCH_IF (value=114 AND d >= 0) BEGIN
+            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
+            PATCH_IF (d > fighter_slots) BEGIN SET d = fighter_slots END
+            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col d
+          END
+        END
+
+        // make edits
+        SET_2DA_ENTRIES_NOW ~d2weapprof_edits~ 3
+        PRETTY_PRINT_2DA
+
+      END
+      END
+    END
+  IF_EXISTS BUT_ONLY
+
+END
+
+
+//
+DEFINE_PATCH_FUNCTION d2_weapprof_styles
+  INT_VAR amount = ~-1~
+    a = ~-1~    // 2 handed
+    b = ~-1~    // shield
+    c = ~-1~    // single
+    d = ~-1~    // 2 weapon
+  STR_VAR kit = none
+BEGIN
+
+  PATCH_IF (~%SOURCE_RES%~ STR_EQ ~weapprof~) BEGIN
+
+    PATCH_IF (RESOURCE_CONTAINS ~weapprof.2da~  ~[^0-9^a-z^_]%kit%[^0-9^a-z^_]~) BEGIN
+
+      // check amount
+      PATCH_IF (amount >= 0) BEGIN
+        SET a=amount SET b=amount SET c=amount SET d=amount
+      END
+      PATCH_IF (a<0 AND b<0 AND c<0 AND d<0) BEGIN
+        SET a=5 SET b=5 SET c=5 SET d=5
+      END
+
+      // variables
+      COUNT_2DA_ROWS 3 weapprof_rows
+      READ_2DA_ENTRIES_NOW ~weapprof_table~ 3
+      COUNT_2DA_COLS weapprof_cols
+  
+      LPF 2da_find_column STR_VAR col_name=fighter RET col_number END
+      SET fighter_col = col_number
+      LPF 2da_find_column STR_VAR col_name=EVAL ~%kit%~ RET col_number END
+      SET kit_col = col_number
+
+      PATCH_IF (fighter_col>3 AND fighter_col<weapprof_cols) BEGIN
+      PATCH_IF (kit_col>3 AND kit_col<weapprof_cols) BEGIN
+
+        // patch
+        FOR (r = 1; r < weapprof_rows; ++r) BEGIN
+          READ_2DA_ENTRY_FORMER ~weapprof_table~ r 1 value
+
+          // 2 handed
+          PATCH_IF (value=111 AND a >= 0) BEGIN
+            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
+            PATCH_IF (a > fighter_slots) BEGIN SET a = fighter_slots END
+            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col a
+          END
+
+          // shield
+          PATCH_IF (value=112 AND b >= 0) BEGIN
+            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
+            PATCH_IF (b > fighter_slots) BEGIN SET b = fighter_slots END
+            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col b
+          END
+
+          // single
+          PATCH_IF (value=113 AND c >= 0) BEGIN
+            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
+            PATCH_IF (c > fighter_slots) BEGIN SET c = fighter_slots END
+            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col c
+          END
+
+          // 2 weapon
+          PATCH_IF (value=114 AND d >= 0) BEGIN
+            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
+            PATCH_IF (d > fighter_slots) BEGIN SET d = fighter_slots END
+            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col d
+          END
+        END
+
+        // make edits
+        SET_2DA_ENTRIES_NOW ~d2weapprof_edits~ 3
+        PRETTY_PRINT_2DA
+
+      END
+      END
+    END
+  END
+
+END
+
+////////////////////////////////////////////////////////////
+
+//returns kitlist number for a kit ("kit" is name in kitlist.2da)
+//returns -1 if kit not found
+
+DEFINE_ACTION_FUNCTION d2_get_kitnum STR_VAR kit=~~ RET kitnum BEGIN
+  OUTER_SET kitnum = ~-1~
+  ACTION_IF (RESOURCE_CONTAINS ~kitlist.2da~ ~[^0-9^a-z^_]%kit%[^0-9^a-z^_]~) BEGIN
+    COPY_EXISTING - ~kitlist.2da~  ~~
+      TEXT_SPRINT ids_name ~%kit%~
+      LPF 2da_find_row INT_VAR col_read=1 STR_VAR row_name=EVAL ~%ids_name%~ RET row_number columns END
+      READ_2DA_ENTRY row_number 0 columns kitnum
+  END ELSE BEGIN
+    PRINT ~LAF d2_get_kitnum: %kit% not found~
+  END
+END
+
+DEFINE_PATCH_FUNCTION d2_get_kitnum STR_VAR kit=~~ RET kitnum BEGIN
+  SET kitnum = ~-1~
+  PATCH_IF (RESOURCE_CONTAINS ~kitlist.2da~ ~[^0-9^a-z^_]%kit%[^0-9^a-z^_]~) BEGIN
+    PATCH_IF (~%SOURCE_RES%~ STR_EQ ~kitlist~) BEGIN
+      TEXT_SPRINT ids_name ~%kit%~
+      LPF 2da_find_row INT_VAR col_read=1 STR_VAR row_name=EVAL ~%ids_name%~ RET row_number columns END
+      READ_2DA_ENTRY row_number 0 columns kitnum
+    END ELSE BEGIN
+      INNER_ACTION BEGIN
+        COPY_EXISTING - ~kitlist.2da~  ~~
+          TEXT_SPRINT ids_name ~%kit%~
+          LPF 2da_find_row INT_VAR col_read=1 STR_VAR row_name=EVAL ~%ids_name%~ RET row_number columns END
+          READ_2DA_ENTRY row_number 0 columns kitnum
+      END
+    END
+  END ELSE BEGIN
+    PATCH_PRINT ~LAF d2_get_kitnum: %kit% not found~
   END
 END
 

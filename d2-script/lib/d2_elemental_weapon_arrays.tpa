@@ -9,6 +9,13 @@ d2acidweap
 */
 
 
+//clear arrays (everything gets added back)
+ACTION_CLEAR_ARRAY ~d2fireweap~
+ACTION_CLEAR_ARRAY ~d2coldweap~
+ACTION_CLEAR_ARRAY ~d2electricalweap~
+ACTION_CLEAR_ARRAY ~d2acidweap~
+
+
 ACTION_DEFINE_ASSOCIATIVE_ARRAY d2fireweap BEGIN    // resource => type (weap or temp)
   bdblun09 => fireweap
   bddagg01 => fireweap
@@ -195,7 +202,7 @@ END
 
 //Include mod items (if already in override)
 ACTION_IF (FILE_EXISTS ~override/d2_elemental_weapon_arrays~) BEGIN
-  INCLUDE ~override/d2_elemental_weapon_arrays~
+  REINCLUDE ~override/d2_elemental_weapon_arrays~
 END
 
 

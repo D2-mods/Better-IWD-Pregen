@@ -16,7 +16,7 @@ BEGIN
 
   PATCH_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     FOR (cat = 0; cat < 38; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END    // cannot add item type (including to bags)
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END    // cannot add item type (including to bags)
     END
 	
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 51 END
@@ -25,17 +25,17 @@ BEGIN
   
   PATCH_IF (GAME_IS ~bg2 tob tutu tutu_totsc ca~) BEGIN
     FOR (cat = 0; cat < 28; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 	
     FOR (cat = 29; cat < 38; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
   END
   
   PATCH_IF (GAME_IS ~iwdee iwd_in_bg2~) BEGIN
     FOR (cat = 0; cat < 36; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
   
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 37 END
@@ -46,23 +46,23 @@ BEGIN
   
   PATCH_IF (GAME_IS ~how totlm~) BEGIN
     FOR (cat = 0; cat < 12; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 	
     FOR (cat = 14; cat < 33; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 	
     FOR (cat = 34; cat < 39; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
   	
     FOR (cat = 40; cat < 45; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
   	
     FOR (cat = 49; cat < 58; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
   
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 46 END
@@ -72,23 +72,37 @@ BEGIN
   
   PATCH_IF (GAME_IS ~iwd2~) BEGIN
     FOR (cat = 3; cat < 12; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 	
     FOR (cat = 13; cat < 39; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 		
     FOR (cat = 40; cat < 58; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 		
     FOR (cat = 59; cat < 74; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 	
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 0 END
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 1 END
+  END
+
+  PATCH_IF (GAME_IS ~pstee~) BEGIN
+    FOR (cat = 0; cat < 36; ++cat) BEGIN
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END    // cannot add item type (including to bags)
+    END
+
+    FOR (cat = 73; cat < 78; ++cat) BEGIN
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END    // cannot add item type (including to bags)
+    END
+	
+    LPF REMOVE_STORE_PURCHASE INT_VAR category = 39 END
+    LPF REMOVE_STORE_PURCHASE INT_VAR category = 40 END
+    LPF REMOVE_STORE_PURCHASE INT_VAR category = 57 END
   END
 	
 END
@@ -107,7 +121,7 @@ COPY_EXISTING ~%store%.STO~ ~override~
 
   PATCH_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     FOR (cat = 0; cat < 38; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END    // cannot add item type (including to bags)
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END    // cannot add item type (including to bags)
     END
 	
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 51 END
@@ -116,17 +130,17 @@ COPY_EXISTING ~%store%.STO~ ~override~
   
   PATCH_IF (GAME_IS ~bg2 tob tutu tutu_totsc ca~) BEGIN
     FOR (cat = 0; cat < 28; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 	
     FOR (cat = 29; cat < 38; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
   END
   
   PATCH_IF (GAME_IS ~iwdee iwd_in_bg2~) BEGIN
     FOR (cat = 0; cat < 36; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
   
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 37 END
@@ -137,23 +151,23 @@ COPY_EXISTING ~%store%.STO~ ~override~
   
   PATCH_IF (GAME_IS ~how totlm~) BEGIN
     FOR (cat = 0; cat < 12; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 	
     FOR (cat = 14; cat < 33; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 	
     FOR (cat = 34; cat < 39; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
   	
     FOR (cat = 40; cat < 45; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
   	
     FOR (cat = 49; cat < 58; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
   
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 46 END
@@ -163,23 +177,37 @@ COPY_EXISTING ~%store%.STO~ ~override~
   
   PATCH_IF (GAME_IS ~iwd2~) BEGIN
     FOR (cat = 3; cat < 12; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 	
     FOR (cat = 13; cat < 39; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 		
     FOR (cat = 40; cat < 58; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 		
     FOR (cat = 59; cat < 74; ++cat) BEGIN
-      LPF REMOVE_STORE_PURCHASE INT_VAR category = %cat% END
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END
     END
 	
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 0 END
     LPF REMOVE_STORE_PURCHASE INT_VAR category = 1 END
+  END
+
+  PATCH_IF (GAME_IS ~pstee~) BEGIN
+    FOR (cat = 0; cat < 36; ++cat) BEGIN
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END    // cannot add item type (including to bags)
+    END
+
+    FOR (cat = 73; cat < 78; ++cat) BEGIN
+      LPF REMOVE_STORE_PURCHASE INT_VAR category = cat END    // cannot add item type (including to bags)
+    END
+	
+    LPF REMOVE_STORE_PURCHASE INT_VAR category = 39 END
+    LPF REMOVE_STORE_PURCHASE INT_VAR category = 40 END
+    LPF REMOVE_STORE_PURCHASE INT_VAR category = 57 END
   END
   
 BUT_ONLY

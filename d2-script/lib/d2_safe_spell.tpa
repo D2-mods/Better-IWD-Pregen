@@ -12,13 +12,30 @@ function matches the "block_opcode" variable for adding effect (default 12 = dam
 if "block_opcode" is not in the file, nothing happens (silently skipped)
 */
 
+/*target notes
+if "source" is set to 1, then effect protects the caster
+otherwise, it uses the allies/neutrals/enemies variables
+deletes old effects (i.e. you won't have multiple effects with different allies/enemies protections)
+if source > 0, then it only deletes effects with "source" as target (parameter2=43)
+*/
+
 
 DEFINE_PATCH_FUNCTION d2_safe_spell
-  INT_VAR opcode=318 allies=1 neutrals=1 enemies=0 block_opcode=12 duration=0
+  INT_VAR opcode=318 allies=1 neutrals=1 enemies=0 block_opcode=12 duration=0 source=0
   STR_VAR insert=first
 BEGIN
 
-  //set protection
+  // prep
+  PATCH_IF (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN SET ee_game = 1 END
+  PATCH_IF (duration < 0) BEGIN  SET duration = 0 END
+  PATCH_IF (allies > 1) BEGIN SET allies = 1 END
+  PATCH_IF (neutrals > 1) BEGIN SET neutrals = 1 END
+  PATCH_IF (enemies > 1) BEGIN SET enemies = 1 END
+  PATCH_IF (allies < 0) BEGIN SET allies = 0 END
+  PATCH_IF (neutrals < 0) BEGIN SET neutrals = 0 END
+  PATCH_IF (enemies < 0) BEGIN SET enemies = 0 END
+
+  // set protection
   PATCH_IF (allies=1 AND neutrals=1 AND enemies=1) BEGIN  SET safe = 9999 END  // all protected
   PATCH_IF (allies=1 AND neutrals=1 AND enemies=0) BEGIN  SET safe = 52 END    // not enemies
   PATCH_IF (allies=1 AND neutrals=0 AND enemies=1) BEGIN  SET safe = 999 END   // allies and enemies
@@ -27,25 +44,29 @@ BEGIN
   PATCH_IF (allies=0 AND neutrals=1 AND enemies=0) BEGIN  SET safe = 0  END    // neutrals only (not implemented)
   PATCH_IF (allies=0 AND neutrals=0 AND enemies=1) BEGIN  SET safe = 51 END    // enemies only
   PATCH_IF (allies=0 AND neutrals=0 AND enemies=0) BEGIN  SET safe = 0  END    // none protected
+  PATCH_IF (source > 0) BEGIN SET safe = 43 END
 
-  //set opcode + remove old effects (with matching parameters)
-  PATCH_IF (GAME_IS ~bgee bg2ee iwdee eet~) BEGIN
-    PATCH_IF (opcode != 318 AND opcode != 324) BEGIN
-      SET opcode = 318    // for EEs
+  // set opcode
+  PATCH_IF (ee_game > 0) BEGIN
+    PATCH_IF (opcode!=318 AND opcode!=324) BEGIN
+      SET opcode = 318
     END
+  END ELSE BEGIN
+    SET opcode = 206
+  END
+
+  // remove old effects
+  PATCH_IF (safe=43) BEGIN
+    LPF DELETE_EFFECT INT_VAR match_opcode=318 match_parameter2=safe STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
+    LPF DELETE_EFFECT INT_VAR match_opcode=324 match_parameter2=safe STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
+    LPF DELETE_EFFECT INT_VAR match_opcode=206 match_parameter2=safe STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
+  END ELSE BEGIN
     PATCH_FOR_EACH param IN ~49~ ~50~ ~51~ ~52~ BEGIN
       LPF DELETE_EFFECT INT_VAR match_opcode=318 match_parameter2=param STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
       LPF DELETE_EFFECT INT_VAR match_opcode=324 match_parameter2=param STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
-    END
-  END ELSE BEGIN
-    SET opcode = 206    // for classic IWD
-    PATCH_FOR_EACH param IN ~49~ ~50~ ~51~ ~52~ BEGIN
       LPF DELETE_EFFECT INT_VAR match_opcode=206 match_parameter2=param STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
     END
   END
-
-  //
-  PATCH_IF (duration < 0) BEGIN  SET duration = 0 END
 
   //create effect
   PATCH_IF (safe != 0) BEGIN
@@ -55,12 +76,15 @@ BEGIN
       STR_VAR resource=EVAL ~%DEST_RES%~ insert=EVAL ~%insert%~
     END
 
+    // all protected
     PATCH_IF (safe = 9999) BEGIN
-      LPF ALTER_EFFECT INT_VAR silent=1 multi_match=1 match_opcode=opcode parameter2=0 END    // all protected
+      LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=opcode parameter2=0 STR_VAR resource=EVAL ~%DEST_RES%~ END
     END
+
+    // protect allies and enemies
     PATCH_IF (safe = 999) BEGIN
-      LPF ALTER_EFFECT INT_VAR silent=1 multi_match=1 match_opcode=opcode parameter2=49 END    // allies
-      LPF CLONE_EFFECT INT_VAR silent=1 multi_match=1 match_opcode=opcode parameter2=51 END    // enemies
+      LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=opcode parameter2=49 STR_VAR resource=EVAL ~%DEST_RES%~ END
+      LPF CLONE_EFFECT INT_VAR silent=1 match_opcode=opcode parameter2=51 STR_VAR resource=EVAL ~%DEST_RES%~ END
     END
   END
 

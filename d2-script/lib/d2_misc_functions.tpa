@@ -33,6 +33,9 @@ DEFINE_ACTION_FUNCTION d2_portrait_icon
 
 BEGIN
 
+OUTER_SET icon = ~-1~                 // default is no change
+ACTION_IF !(GAME_IS ~pstee~) BEGIN    // not used for pstee
+
   COPY_EXISTING ~STATDESC.2DA~ ~override~
 
     // Set some variables
@@ -40,7 +43,6 @@ BEGIN
     READ_2DA_ENTRIES_NOW ~statdesc_table~ 1
     COUNT_2DA_ROWS 1 rows
     SET row_count = (rows - 1)    // count starts at 0
-    SET icon = ~-1~
 
     // uses existing icon if already added (from my mods)
     FOR (r = 3; r < rows; ++r) BEGIN
@@ -62,8 +64,9 @@ BEGIN
       INSERT_2DA_ROW rows 1 ~%icon% %name% %bam%~    // add new line with variables
       PRETTY_PRINT_2DA
     END
-  BUT_ONLY
+  IF_EXISTS BUT_ONLY
 
+END
 END
 
 ////////////////////////////////////////////////////////////

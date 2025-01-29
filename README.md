@@ -32,7 +32,7 @@ Tweak components:
 	- Won't cause issues if the item is already obtainable
 3. **Unnerf Animate Dead (IWD2)**
 	- Also corrects chance of each summon to 50/50
-	- This is skipped if IWD2EE 'Spell Revisions' is installed
+	- This is skipped if IWD2EE "Spell Revisions" is installed
 4. **Shapeshift movement bonuses bypass Free Action (EEs)**
 	- Can set to bypass or be blocked by Free Action
 5. **Increase movement speed of IWD shapeshifts (IWD1, IWDEE)**
@@ -81,7 +81,7 @@ Tweak components:
 - Script components should be installed after AI mods (ex. SCS or atweaks).
 - Note that all tweaks are fine to install even after mods like SCS (this is the order I use for testing).
 - If using tweaks from other mods that do similar things, whichever is installed last will usually be used.
-- All tweaks have at least 2 subcomponents. i.e. if you say to 'install all components', it won't automatically install any tweaks.
+- All tweaks have at least 2 subcomponents. i.e. if you say to "install all components", it won't automatically install any tweaks.
 
 Scroll down for additional info on some of the tweaks.
 
@@ -229,9 +229,13 @@ Nymph AI script (Call Woodland Beings)
 Compatible with EEs and classic BG2 engine, including SCS.  
 Not compatible with atweaks PnP Fey (use option 2).
 
-> Dimension Door: The nymph can teleport if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
+--
 
-> Marking: The nymph "marks" a PC as an object for various actions (by default, this is the summoner). If the marked PC is not on the map for any reason, the nymph will choose another PC on the same map. The nymph will always switch back to its summoner if in visual range. Note that the summoner, as an identifier, is not saved if a summon is still on the map (so if reloading, script will default to Player1 as the "marked" PC).
+Dimension Door: The nymph can teleport if conditions are met. It will alway teleport to either the nearest enemy or to a PC (usually, its summoner). It will not use Dimension Door if invisible, unless instructed to by the player (with the D key).
+
+Marking: The nymph "marks" a PC as an object for various actions (by default, this is the summoner). If the marked PC is not on the map for any reason, the nymph will choose another PC on the same map. The nymph will always switch back to its summoner if in visual range. Note that the summoner, as an identifier, is not saved if a summon is still on the map (so if reloading, script will default to Player1 as the "marked" PC).
+
+--
 
 **Hotkeys:**
 - If the D key is pressed the nymph will teleport to its summoner (or other PC). Only works when not in combat.
@@ -242,7 +246,7 @@ Not compatible with atweaks PnP Fey (use option 2).
 
 **Option 2 - Patch existing script:**
 - Adds Cooldown hotkeys (B to enable, E to disable)
-- Adds D hotkey to teleport to party
+- Adds D hotkey to teleport to party (out of combat only)
 - Teleports to party if not in visual range (and not invisible)
 - Preserves invisibility (won't attack or cast spells)
 - Usable with atweaks PnP Fey, as well as AI mods that still use NYMPH.BCS (ex. SCS)
