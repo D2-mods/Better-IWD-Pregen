@@ -105,6 +105,9 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.7
+- IWD2: Updated crash fix from last update ("Give party starting items" with G3 NPC mod). New version of NPC mod broke the previous fix, so it's been adjusted to work with both old and new versions of the mod.
+
 v7.6
 - Fixed possible mod conflict issues with "Start with bag of holding" component (scripting related).
 - IWD2: Fixed a possible crash if using "Give party starting items" component and G3 IWD2 NPC mod.

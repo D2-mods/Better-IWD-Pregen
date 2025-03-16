@@ -104,8 +104,12 @@ ACTION_IF (GAME_IS ~iwd2~) BEGIN
     SAY NAME1 @710 SAY UNIDENTIFIED_DESC @713
     SAY NAME2 @710
 
+  OUTER_SET iwd2npc = 0
+  ACTION_IF (FILE_EXISTS ~Characters/SIR_NORD.CHR~) BEGIN OUTER_SET iwd2npc = 1 END
+  ACTION_IF (FILE_EXISTS_IN_GAME ~avweapga.itm~) BEGIN OUTER_SET iwd2npc = 1 END
+
   COPY - ~%ngequip%/d2#ng21.BAF~ ~inlined/d2#ng21.BAF~
-    PATCH_IF !(FILE_EXISTS ~Characters/SIR_NORD.CHR~) BEGIN
+    PATCH_IF (iwd2npc = 0) BEGIN
       REPLACE_TEXTUALLY EXACT_MATCH ~!InParty("nord")~ ~~
       REPLACE_TEXTUALLY EXACT_MATCH ~!InParty("hildury")~ ~~
       REPLACE_TEXTUALLY EXACT_MATCH ~!InParty("diriel")~ ~~

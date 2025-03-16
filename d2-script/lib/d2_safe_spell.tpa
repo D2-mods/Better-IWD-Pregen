@@ -26,6 +26,7 @@ DEFINE_PATCH_FUNCTION d2_safe_spell
 BEGIN
 
   // prep
+  SET ee_game = 0
   PATCH_IF (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN SET ee_game = 1 END
   PATCH_IF (duration < 0) BEGIN  SET duration = 0 END
   PATCH_IF (allies > 1) BEGIN SET allies = 1 END

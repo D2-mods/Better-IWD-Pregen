@@ -822,7 +822,7 @@ DEFINE_PATCH_FUNCTION d2_get_kitnum STR_VAR kit=~~ RET kitnum BEGIN
       END
     END
   END ELSE BEGIN
-    PATCH_PRINT ~LAF d2_get_kitnum: %kit% not found~
+    PATCH_PRINT ~LPF d2_get_kitnum: %kit% not found~
   END
 END
 

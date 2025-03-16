@@ -98,6 +98,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY d2_color_string_array BEGIN
   ~0xfffcdcfd~ => cloud    // very light purple
   ~0xff98fbca~ => mana     // very light green
   ~0xff080888~ => blood    // blood red
+  ~0xff4e2c5d~ => dark     // dark purple (reddish)
 //elemental
   ~0xff00d7ff~ => magic
   ~0xff002a9c~ => fire
