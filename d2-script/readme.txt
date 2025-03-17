@@ -107,6 +107,7 @@ Updates
 ==================================================
 v7.7
 - IWD2: Updated crash fix from last update ("Give party starting items" with G3 NPC mod). New version of NPC mod broke the previous fix, so it's been adjusted to work with both old and new versions of the mod.
+- Fixed possible install error on Mac systems, caused by using text files without extensions.
 
 v7.6
 - Fixed possible mod conflict issues with "Start with bag of holding" component (scripting related).

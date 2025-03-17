@@ -201,8 +201,8 @@ END
 
 
 //Include mod items (if already in override)
-ACTION_IF (FILE_EXISTS ~override/d2_elemental_weapon_arrays~) BEGIN
-  REINCLUDE ~override/d2_elemental_weapon_arrays~
+ACTION_IF (FILE_EXISTS ~override/d2_elemental_weapon_arrays.txt~) BEGIN
+  REINCLUDE ~override/d2_elemental_weapon_arrays.txt~
 END
 
 
@@ -264,9 +264,9 @@ BEGIN
 
 
 //add array template to override
-ACTION_IF !(FILE_EXISTS ~override/d2_elemental_weapon_arrays~) BEGIN
+ACTION_IF !(FILE_EXISTS ~override/d2_elemental_weapon_arrays.txt~) BEGIN
 
-<<<<<<<< .../temp/d2_elemental_weapon_arrays
+<<<<<<<< .../temp/newfile
 ACTION_DEFINE_ASSOCIATIVE_ARRAY d2fireweap BEGIN
   fire => fireweap
   fire => firetemp
@@ -291,7 +291,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY d2acidweap BEGIN
 END
 >>>>>>>>
 
-COPY ~.../temp/d2_elemental_weapon_arrays~  ~override~
+COPY ~.../temp/newfile~  ~override/d2_elemental_weapon_arrays.txt~
 
 END
 
@@ -316,7 +316,7 @@ END
       END
   
       //add item to file in override
-      COPY_EXISTING ~override/d2_elemental_weapon_arrays~  ~override~
+      COPY ~override/d2_elemental_weapon_arrays.txt~  ~override~
         REPLACE_TEXTUALLY ~%element2% => %result%~  ~%element2% => %result%%WNL%  %item% => %result%~
       BUT_ONLY UNLESS ~%item% => %result%~
 
