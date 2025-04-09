@@ -33,17 +33,22 @@ Tweak components:
 8. All classes get full HP bonuses from Constitution (classic and EEs)
 9. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
 10. Salamander auras hit only enemies of the caster (IWDEE)
-11. Allow Minsc to use his Berserk ability at will (BG games)
-12. Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)
-13. Remove alignment restrictions for classes (classic and EEs)
-14. Prevent paladins and rangers falling at low rep (EEs)
+11. Misc spell tweaks (classic and EEs):
+	- Damage party friendly (relative to caster)
+	- Hit stun on damage (1 second)
+	- No mage school restrictions
+12. Allow Minsc to use his Berserk ability at will (BG games)
+13. Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)
+14. Remove alignment restrictions for classes (classic and EEs)
+15. Prevent paladins and rangers falling at low rep (EEs)
 
 --
 
 Additional info:
 - All components can be installed independently and in any order, except for auto-assigning the script.
-- Script components should be installed after AI mods (ex. SCS or atweaks).
-- All tweaks have at least 2 subcomponents. Some have 3-6 options.
+- All components should be safe to install at end-or-order. If another mod says to install last, you can try it both ways.
+- If using tweaks from other mods that do similar things, whichever is installed last will usually be used.
+- All tweaks have at least 2 subcomponents. i.e. if you say to "install all components", it won't automatically install any tweaks.
 
 
 ==================================================
@@ -105,6 +110,16 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.8
+- new component: Misc spell tweaks (classic and EEs). This has 3 tweaks:
+	- Damage party friendly (relative to caster)
+	- Hit stun on damage (1 second)
+	- No mage school restrictions
+- Safe to install at end-of-order. Install after any mods that adds spells or items.
+- It has multiple subcomponents. You can install all tweaks, just 1 tweak, or any combo of 2.
+- The damage ones will also check item spells (wands, potions, etc.).
+- See readme on GitHub for more info.
+
 v7.7
 - IWD2: Updated crash fix from last update ("Give party starting items" with G3 NPC mod). New version of NPC mod broke the previous fix, so it's been adjusted to work with both old and new versions of the mod.
 - Fixed possible install error on Mac systems, caused by using text files without extensions.

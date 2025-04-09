@@ -459,7 +459,7 @@ by default, adds as last effect or below a match
 */
 
 DEFINE_PATCH_FUNCTION d2_addhitstun
-  INT_VAR duration=~-1~ no_saves=0 match_opcode=~-1~ overwrite=1 probability=~-1~
+  INT_VAR duration=~-1~ no_saves=0 match_opcode=~-1~ overwrite=1 probability=~-1~ multi_match=999
   STR_VAR insert=below
 BEGIN
   PATCH_IF (duration < 1) BEGIN SET duration = 1 END
@@ -472,7 +472,7 @@ BEGIN
 
   PATCH_IF (match_opcode >= 0) BEGIN
     LPF CLONE_EFFECT
-      INT_VAR silent=1 check_globals=0 multi_match=1 match_opcode=match_opcode
+      INT_VAR silent=1 check_globals=0 multi_match=multi_match match_opcode=match_opcode
               opcode=45 timing=0 duration=duration parameter1=0 parameter2=0 savingthrow=savingthrow
               probability1=probability probability2=0 dicenumber=0 dicesize=0 special=0
       STR_VAR insert=EVAL ~%insert%~

@@ -79,11 +79,14 @@ This file contains text shown in weidu installer
 	@41109 = ~all salamanders, hits no one~
 	@41110 = ~Avenger form only, hits allies only~
 
-/*
-@41200 = ~~
-	@41201 = ~~
-	@41202 = ~~
-*/
+@41200 = ~Misc spell tweaks (classic and EEs)~
+	@41201 = ~All tweaks~
+	@41202 = ~Damage party friendly (relative to caster)~
+	@41203 = ~Hit stun on damage (1 second)~
+	@41204 = ~No mage school restrictions (IWD2 note: Changes all wizard spells to Generalist school)~
+	@41205 = ~Damage party friendly, Hit stun on damage~
+	@41206 = ~Damage party friendly, No mage school restrictions~
+	@41207 = ~Hit stun on damage, No mage school restrictions~
 
 @41300 = ~Allow Minsc to use his Berserk ability at will (BG games)~    // includes the timing fix component
 	@41301 = ~Use at will, and reduce duration to 5 rounds (30 seconds)~

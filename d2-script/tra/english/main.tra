@@ -22,6 +22,14 @@ This file contains text displayed in the game
 @358 = ~You cannot cast %ability_name% until the cooldown timer has run out.~
 
 
+//No mage school restrictions (text edits)
+@667701 = ~Note: "No mage school restrictions" installed (d2-script)~
+@667702 = ~not learn~            // check1
+@667703 = ~opposition school~    // check2
+
+//for mod kits, will add Note line if check1 or check2 is in description
+
+
 
 //
 //Script descriptions
@@ -187,40 +195,6 @@ This spell brings forth a long-dead skeleton or zombie from deep within the eart
 
 WARNING: At higher levels, the Zombie Lords and Festering Drowned Dead summoned by this spell have powerful supernatural auras.  The effects of their auras may harm your own party members if they fall within the area of affect.~
 
-
-
-
-//
-//Katana descriptions (for ngequip)
-@700 = ~Katana~
-@701 = ~The katana is a single-edged, slightly curved sword that ends with a chisel point. The katana is perhaps one of the finest swords ever made, the steps to its creation a long and secret process that is more art form than anything else. This blade is an important facet of Kara-Turan culture. To touch or wield a samurai's katana is to insult the samurai and to incite his wrath. For a gaijin, or foreigner, to own such a blade is a rare occurrence. Either the gaijin is a greatly honored friend of an important minister, or the gaijin has murdered a samurai.
-
-STATISTICS:
-
-Damage: 1d10 (slashing)
-Speed Factor: 4
-Proficiency Type: Katana
-Type: One-handed
-Requires:
- 6 Strength
-
-Weight: 6~
-
-@702 = ~The katana is a single-edged, slightly curved sword that ends with a chisel point. The katana is perhaps one of the finest swords ever made, the steps to its creation a long and secret process, that is more art form than anything else.  This blade is an important facet of Kara-Tur culture.  To touch or wield a samurai's katana is to insult the samurai and to incite his wrath.  For a gaijin, or foreigner, to own such a blade is a rare occurrence. Either the gaijin is a greatly honored friend of an important minister, or  the gaijin has murdered a samurai.
-
-STATISTICS:
-
-Damage:  1D10
-Damage type:  slashing
-Weight:  6
-Speed Factor: 4
-Proficiency Type: Katana
-Type:  1-handed
-Requires: 6 Strength
-Not Usable By:
- Druid
- Cleric
- Mage~
 
 
 

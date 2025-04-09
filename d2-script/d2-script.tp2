@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~7.7~
+VERSION ~7.8~
 AUTO_EVAL_STRINGS
 
 ALWAYS
@@ -38,6 +38,7 @@ ALWAYS
   OUTER_TEXT_SPRINT nymph      ~%MOD_FOLDER%/nymph~
   OUTER_TEXT_SPRINT tobex      ~%MOD_FOLDER%/tobex~
   OUTER_TEXT_SPRINT workspace  ~weidu_external/Workspace~
+  OUTER_TEXT_SPRINT exclusions ~%MOD_FOLDER%/config.txt~
 
 END
 
@@ -104,7 +105,7 @@ INCLUDE ~%install%/ngauto.tph~
 
 BEGIN @4
 REQUIRE_COMPONENT ~d2-script.tp2~ 10 ~~
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~~
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @51
 SUBCOMPONENT @9999
 LABEL ~D2-SCRIPT-NGAUTO4~
 OUTER_TEXT_SPRINT ngauto  ~iwdpgen~    // IWD Pregen (iwdpgen)
@@ -369,6 +370,71 @@ INCLUDE ~%install%/salamanders.tph~
 
 ////////////////////////////////////////////////////////////
 
+//Misc spell tweaks
+
+BEGIN @41201    // all
+DESIGNATED 140
+//REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @50
+REQUIRE_PREDICATE !(GAME_IS ~pst~) @50
+SUBCOMPONENT @41200
+LABEL ~D2-TWEAKS-SPELLTWEAKS1~
+OUTER_SET spelltweaks = 1
+INCLUDE ~%install%/spelltweaks.tph~
+
+BEGIN @41202    // Damage party friendly (relative to caster)
+REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc~) ~~
+//REQUIRE_PREDICATE !(GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) ~~
+SUBCOMPONENT @41200
+LABEL ~D2-TWEAKS-SPELLTWEAKS2~
+OUTER_SET spelltweaks = 2
+INCLUDE ~%install%/spelltweaks.tph~
+
+BEGIN @41203    // Hit stun on damage (1 second)
+SUBCOMPONENT @41200
+LABEL ~D2-TWEAKS-SPELLTWEAKS3~
+OUTER_SET spelltweaks = 3
+INCLUDE ~%install%/spelltweaks.tph~
+
+BEGIN @41204    // No mage school restrictions
+//REQUIRE_PREDICATE !(GAME_IS ~iwd2~) ~~
+REQUIRE_PREDICATE !(GAME_IS ~pst pstee~) ~~
+SUBCOMPONENT @41200
+LABEL ~D2-TWEAKS-SPELLTWEAKS4~
+OUTER_SET spelltweaks = 4
+INCLUDE ~%install%/spelltweaks.tph~
+
+BEGIN @41205    // Damage party friendly, Hit stun on damage
+//REQUIRE_PREDICATE !(GAME_IS ~iwd2~) ~~
+REQUIRE_PREDICATE !(GAME_IS ~pst pstee~) ~~
+REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc~) ~~
+//REQUIRE_PREDICATE !(GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) ~~
+SUBCOMPONENT @41200
+LABEL ~D2-TWEAKS-SPELLTWEAKS5~
+OUTER_SET spelltweaks = 5
+INCLUDE ~%install%/spelltweaks.tph~
+
+BEGIN @41206    // Damage party friendly, No mage school restrictions
+//REQUIRE_PREDICATE !(GAME_IS ~iwd2~) ~~
+REQUIRE_PREDICATE !(GAME_IS ~pst pstee~) ~~
+REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc~) ~~
+//REQUIRE_PREDICATE !(GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) ~~
+SUBCOMPONENT @41200
+LABEL ~D2-TWEAKS-SPELLTWEAKS6~
+OUTER_SET spelltweaks = 6
+INCLUDE ~%install%/spelltweaks.tph~
+
+BEGIN @41207    // Hit stun on damage, No mage school restrictions
+//REQUIRE_PREDICATE !(GAME_IS ~iwd2~) ~~
+REQUIRE_PREDICATE !(GAME_IS ~pst pstee~) ~~
+REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc~) ~~
+//REQUIRE_PREDICATE !(GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) ~~
+SUBCOMPONENT @41200
+LABEL ~D2-TWEAKS-SPELLTWEAKS7~
+OUTER_SET spelltweaks = 7
+INCLUDE ~%install%/spelltweaks.tph~
+
+////////////////////////////////////////////////////////////
+
 //Allow Minsc to use his Berserk ability at will (BG games)
 
 BEGIN @41301    // Use at will, and reduce duration to 5 rounds (30 seconds)
@@ -460,8 +526,8 @@ INCLUDE ~%install%/alignments.tph~
 
 BEGIN @41601    // for both (paladins and rangers)
 DESIGNATED 180
-REQUIRE_PREDICATE ((GAME_IS ~bgee bg2ee iwdee eet~) AND
-                   (FILE_EXISTS_IN_GAME ~fallen.2da~)) @50
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @50
+REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~fallen.2da~) @50
 SUBCOMPONENT @41600
 LABEL ~D2-TWEAKS-NOFALLING1~
 OUTER_SET nofalling = 1

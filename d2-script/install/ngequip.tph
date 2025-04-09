@@ -39,19 +39,15 @@ COPY - ~.../temp/d2autoequip~  ~inlined/d2autoequip.BAF~
 
 ////////////////////////////////////////////////////////////
 
+// add cheaper katana
+COPY_EXISTING ~SW1H43.ITM~ ~override/d2#ngkat.ITM~
+  WRITE_LONG 0x34 100    // reduce base price to 100 gold
+  TEXT_SPRINT katana ~%DEST_RES%~
+IF_EXISTS
+
+////////////////////////////////////////////////////////////
+
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
-  
-  ACTION_IF (FILE_EXISTS_IN_GAME ~SW1H43.ITM~) BEGIN          // add katana
-    COPY_EXISTING ~SW1H43.ITM~ ~override/d2#ngkat.ITM~
-      SAY NAME1 @700 SAY UNIDENTIFIED_DESC @701
-      SAY NAME2 @700
-      WRITE_LONG 0x34 100    // reduce base price to 100 gold
-  END
-  ELSE BEGIN
-    COPY ~%ngequip%/d2#ngkat.ITM~ ~override~
-      SAY NAME1 @700 SAY UNIDENTIFIED_DESC @701
-      SAY NAME2 @700
-  END
 	
   COPY ~%ngequip%/d2#ngrb0.BAM~ ~override~                    // add starting robe
   COPY ~%ngequip%/d2#ngrb0.ITM~ ~override~
@@ -141,18 +137,6 @@ END
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
-
-  ACTION_IF (FILE_EXISTS_IN_GAME ~SW1H43.ITM~) BEGIN
-    COPY_EXISTING ~SW1H43.ITM~ ~override/d2#ngkat.ITM~
-      SAY NAME1 @700 SAY UNIDENTIFIED_DESC @702
-      SAY NAME2 @700
-      WRITE_LONG 0x34 100    // reduce base price to 100 gold
-  END
-  ELSE BEGIN
-    COPY ~%ngequip%/d2#ngkat.ITM~ ~override~
-      SAY NAME1 @700 SAY UNIDENTIFIED_DESC @702
-      SAY NAME2 @700
-  END
   
   COPY ~%ngequip%/d2#ngrb0.BAM~ ~override~
   COPY ~%ngequip%/d2#ngrb0.ITM~ ~override~

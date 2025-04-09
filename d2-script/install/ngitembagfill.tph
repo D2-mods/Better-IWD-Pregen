@@ -1,18 +1,23 @@
-//Use to add items to d2#ngbag (empty by default)
+/*
+Use to add items to d2#ngbag (empty by default)
+*/
 
-////////////////////////////////////////////////////////////
 
 //Add throwing hammers if Thrown Hammers mod is installed
-
 ACTION_IF (FILE_EXISTS ~override/t-hamm03.ITM~) BEGIN
   COPY_EXISTING ~d2#ngbag.STO~  ~override~
     LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 5 STR_VAR item_name = ~t-hamm03~ flags = identified END    // throwing hammer
   BUT_ONLY
 END
 
-////////////////////////////////////////////////////////////
 
-ACTION_IF (GAME_IS ~iwdee~) BEGIN
+//IWD, Greataxe resource
+OUTER_TEXT_SPRINT greataxe  ~2HAXE~    // for iwd-in-bg2 mod
+ACTION_IF (GAME_IS ~iwdee~) BEGIN  OUTER_TEXT_SPRINT greataxe  ~AX2H01~  END
+
+
+//
+ACTION_IF (GAME_IS ~iwdee iwd_in_bg2~) BEGIN
   COPY_EXISTING ~d2#ngbag.STO~  ~override~
     LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 5 STR_VAR item_name = ~AX1H04~ flags = identified END     // throwing axe
     LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 10 STR_VAR item_name = ~DAGG05~ flags = identified END    // throwing dagger
@@ -36,14 +41,14 @@ ACTION_IF (GAME_IS ~iwdee~) BEGIN
     LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~BLUN02~ flags = identified END      // flail
     LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~SW1H01~ flags = identified END      // bastard sword
     LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~HALB01~ flags = identified END      // halberd
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~AX2H01~ flags = identified END      // greataxe (do not use 2HAXE)
+    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~%greataxe%~ flags = identified END  // greataxe
     LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~SW2H01~ flags = identified END      // greatsword
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~d2#ngkat~ flags = identified END    // katana
+    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~%katana%~ flags = identified END    // katana
   BUT_ONLY
 END
 
-////////////////////////////////////////////////////////////
 
+//
 ACTION_IF (GAME_IS ~how totlm~) BEGIN
   COPY_EXISTING ~d2#ngbag.STO~  ~override~
     LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 5 STR_VAR item_name = ~AX1H04~ flags = identified END     // throwing axe
@@ -70,8 +75,8 @@ ACTION_IF (GAME_IS ~how totlm~) BEGIN
   BUT_ONLY
 END
 
-////////////////////////////////////////////////////////////
 
+//
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
   COPY_EXISTING ~d2#ngbag.STO~  ~override~
     LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 5 STR_VAR item_name = ~00HAMT01~ flags = identified END     // throwing hammer
@@ -100,36 +105,6 @@ ACTION_IF (GAME_IS ~iwd2~) BEGIN
   BUT_ONLY
 END
 
-////////////////////////////////////////////////////////////
 
-ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
-  COPY_EXISTING ~d2#ngbag.STO~  ~override~
-    LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 5 STR_VAR item_name = ~AX1H04~ flags = identified END     // throwing axe
-    LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 10 STR_VAR item_name = ~DAGG05~ flags = identified END    // throwing dagger
-    LPF ADD_STORE_ITEM_EX INT_VAR charge1 = 1 stack = 2 STR_VAR item_name = ~SLNG01~ flags = identified END     // sling
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~BOW05~ flags = identified END       // shortbow
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~BOW03~ flags = identified END       // longbow
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~XBOW04~ flags = identified END      // crossbow
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~STAF01~ flags = identified END      // staff
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~DAGG01~ flags = identified END      // dagger
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~SW1H07~ flags = identified END      // short sword
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~BLUN01~ flags = identified END      // club
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~MAUL~ flags = identified END        // hammer
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~BLUN04~ flags = identified END      // mace
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~SPER01~ flags = identified END      // spear
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~AX1H01~ flags = identified END      // battle axe
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~BLUN06~ flags = identified END      // morning star
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~SW1H46~ flags = identified END      // wakizashi
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~SCIMITA~ flags = identified END     // scimitar
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~SW1H48~ flags = identified END      // ninjato
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~SW1H04~ flags = identified END      // long sword
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~BLUN02~ flags = identified END      // flail
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~SW1H01~ flags = identified END      // bastard sword
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~HALB01~ flags = identified END      // halberd
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~2HAXE~ flags = identified END       // greataxe
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~SW2H01~ flags = identified END      // greatsword
-    LPF ADD_STORE_ITEM_EX STR_VAR item_name = ~d2#ngkat~ flags = identified END    // katana
-  BUT_ONLY
-END
-
-////////////////////////////////////////////////////////////
+//
+//

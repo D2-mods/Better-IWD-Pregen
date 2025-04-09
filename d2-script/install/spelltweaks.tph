@@ -1,0 +1,337 @@
+/*
+misc spell tweaks
+*/
+
+
+ACTION_IF !(IS_AN_INT spelltweaks) BEGIN  OUTER_SET spelltweaks=1  END
+ACTION_IF (spelltweaks<1 OR spelltweaks>7) BEGIN  OUTER_SET spelltweaks=1  END
+ACTION_IF (spelltweaks = 1) BEGIN  OUTER_SET safespell=1 OUTER_SET hitstun=1 OUTER_SET noschools=1  END
+ACTION_IF (spelltweaks = 2) BEGIN  OUTER_SET safespell=1 OUTER_SET hitstun=0 OUTER_SET noschools=0  END
+ACTION_IF (spelltweaks = 3) BEGIN  OUTER_SET safespell=0 OUTER_SET hitstun=1 OUTER_SET noschools=0  END
+ACTION_IF (spelltweaks = 4) BEGIN  OUTER_SET safespell=0 OUTER_SET hitstun=0 OUTER_SET noschools=1  END
+ACTION_IF (spelltweaks = 5) BEGIN  OUTER_SET safespell=1 OUTER_SET hitstun=1 OUTER_SET noschools=0  END
+ACTION_IF (spelltweaks = 6) BEGIN  OUTER_SET safespell=1 OUTER_SET hitstun=0 OUTER_SET noschools=1  END
+ACTION_IF (spelltweaks = 7) BEGIN  OUTER_SET safespell=0 OUTER_SET hitstun=1 OUTER_SET noschools=1  END
+
+//ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET noschools = 0  END
+ACTION_IF (GAME_IS ~pstee~) BEGIN  OUTER_SET noschools = 0  END
+ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN  OUTER_SET safespell = 0  END
+
+OUTER_SET bg2_engine = 0
+ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN  OUTER_SET bg2_engine = 1 END
+
+OUTER_SET ee_game = 0
+ACTION_IF (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN OUTER_SET ee_game = 1 END
+
+
+
+//
+OUTER_TEXT_SPRINT marker  ~d2spelltweaks.txt~
+ACTION_IF !(FILE_EXISTS ~%marker%~) BEGIN
+<<<<<<<< .../inlined/file
+misc spell tweaks:
+>>>>>>>>
+COPY ~.../inlined/file~  ~override/%marker%~
+END
+
+OUTER_TEXT_SPRINT tweakslist  ~~
+ACTION_IF (safespell > 0) BEGIN  OUTER_TEXT_SPRINT tweakslist  ~%tweakslist%%WNL%safespell_installed~  END
+ACTION_IF (hitstun > 0)   BEGIN  OUTER_TEXT_SPRINT tweakslist  ~%tweakslist%%WNL%hitstun_installed~  END
+ACTION_IF (noschools > 0) BEGIN  OUTER_TEXT_SPRINT tweakslist  ~%tweakslist%%WNL%noschools_installed~  END
+APPEND ~%marker%~  ~%tweakslist%~
+
+
+
+//
+OUTER_SET splcheck = 0x99
+ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET splcheck = 0xa9  END    // iwd2
+
+COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
+  PATCH_IF (SOURCE_SIZE > splcheck) BEGIN    // skip if no headers
+    READ_SHORT 0x1c type       // 1 = wizard
+    READ_SHORT 0x68 headers    // if range/headers both < 2, it's probably a subspell or non-damage spell
+    READ_BYTE  0x27 sec        // 4, 5, 6, 9, 10, 11 ("secondary type" is an attack spell)
+
+    PATCH_IF (splcheck = 0x99) BEGIN
+      READ_BYTE  0x7e target     // 1=target, 4=area, 5=self, 7=self(free action)
+      READ_SHORT 0x98 proj
+      READ_SHORT 0x80 range
+    END ELSE BEGIN
+      READ_BYTE  0x8e target    // iwd2
+      READ_SHORT 0xa8 proj
+      READ_SHORT 0x90 range
+    END
+
+    SET patch_damage = 1
+    PATCH_IF (target=5 AND proj<2) BEGIN SET patch_damage = 0 END    // ignore of target=self
+    PATCH_IF (target=7 AND proj<2) BEGIN SET patch_damage = 0 END    // same as above (cast as free action)
+    PATCH_IF (range<2 AND headers<2) BEGIN SET patch_damage = 0 END    // not a subspell
+    PATCH_IF (sec=4 OR sec=5 OR sec=6) BEGIN SET patch_damage = 1 END
+    PATCH_IF (sec=9 OR sec=10 OR sec=11) BEGIN SET patch_damage = 1 END
+
+/*
+    // exclusions (config.txt)
+    PATCH_IF (FILE_CONTAINS ~%exclusions%~ ~[^0-9^a-z^_]%SOURCE_RES%[^0-9^a-z^_]~) BEGIN
+      SET patch_damage = 0
+    END
+*/
+
+    SET patch_spell = 0
+    PATCH_IF (patch_damage > 0) BEGIN
+      GET_OFFSET_ARRAY spl_headers  SPL_V10_HEADERS
+      PHP_EACH spl_headers AS num => header_off BEGIN                    // array of headers
+        GET_OFFSET_ARRAY2 spl_effects header_off SPL_V10_HEAD_EFFECTS
+        PHP_EACH spl_effects AS num => effect_off BEGIN                  // array of effects on each header
+          PATCH_IF (patch_spell = 0) BEGIN
+            READ_SHORT effect_off opcode                                 // opcode
+            PATCH_IF (opcode = 12) BEGIN
+              SET patch_spell = 1
+            END
+          END
+        END
+      END
+
+      PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine=0) BEGIN
+        LPF d2_safe_spell INT_VAR duration=1 STR_VAR insert=above END    // EEs, IWD1, IWD2
+      END
+
+      PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine>0) BEGIN
+        READ_SHORT 0x98 proj
+        SET ids_num = proj - 1
+        LOOKUP_IDS_SYMBOL_OF_INT res ~projectl~ ids_num
+        PATCH_IF !(~%res%~ STR_EQ ~cloud~) BEGIN    // not stinking cloud proj (shared by enemy damage SPL)
+          PATCH_IF (FILE_EXISTS_IN_GAME ~%res%.pro~) BEGIN
+            TEXT_SPRINT $d2safespell_bg2(~%res%~) ~proj~
+          END
+        END
+      END
+
+      PATCH_IF (hitstun>0 AND patch_spell>0) BEGIN
+        SET overwrite = 0
+//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^d2~) BEGIN  SET overwrite=1  END
+        LPF d2_addhitstun INT_VAR match_opcode=12 overwrite=overwrite END
+      END
+    END
+
+    PATCH_IF (noschools>0 AND type=1) BEGIN
+      WRITE_LONG 0x1e (THIS BAND BNOT BIT6)    // abjurer
+      WRITE_LONG 0x1e (THIS BAND BNOT BIT7)    // conjurer
+      WRITE_LONG 0x1e (THIS BAND BNOT BIT8)    // diviner
+      WRITE_LONG 0x1e (THIS BAND BNOT BIT9)    // enchanter
+      WRITE_LONG 0x1e (THIS BAND BNOT BIT10)    // illusionist
+      WRITE_LONG 0x1e (THIS BAND BNOT BIT11)    // invoker
+      WRITE_LONG 0x1e (THIS BAND BNOT BIT12)    // necro
+      WRITE_LONG 0x1e (THIS BAND BNOT BIT13)    // transmuter
+      PATCH_IF (GAME_IS ~iwd2~) BEGIN  WRITE_BYTE 0x25 9  END    // 9 = Generalist school (only needed for IWD2)
+    END
+  END
+BUT_ONLY
+
+
+//check spells cast from items
+OUTER_SET itmcheck = 0xa9
+ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET itmcheck = 0xb9  END    // iwd2
+
+COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
+  PATCH_IF (SOURCE_SIZE > itmcheck) BEGIN    // skip if no header
+    READ_SHORT 0x1c cat
+
+    PATCH_IF (itmcheck = 0xa9) BEGIN
+      READ_BYTE  0x72 header     // 3 = magical
+      READ_BYTE  0x7e target     // 1=target, 4=area, 5=self, 7=self(free action)
+      READ_SHORT 0x9c proj
+    END ELSE BEGIN
+      READ_BYTE  0x82 header     // iwd2
+      READ_BYTE  0x8e target
+      READ_SHORT 0xac proj
+    END
+
+    SET sec = 0
+    PATCH_IF (ee_game>0 OR bg2_engine>0) BEGIN
+      READ_BYTE  0x8b sec        // 4, 5, 6, 9, 10, 11 ("secondary type" is an attack spell)
+    END
+
+    SET patch_damage = 1
+    PATCH_IF (target=5 AND proj<2) BEGIN SET patch_damage = 0 END    // ignore of target=self
+    PATCH_IF (target=7 AND proj<2) BEGIN SET patch_damage = 0 END    // same as above (cast as free action)
+    PATCH_IF (sec=4 OR sec=5 OR sec=6) BEGIN SET patch_damage = 1 END
+    PATCH_IF (sec=9 OR sec=10 OR sec=11) BEGIN SET patch_damage = 1 END
+    PATCH_IF (header != 3) BEGIN SET patch_damage = 0 END
+    PATCH_IF (proj = 3) BEGIN SET patch_damage = 1 END    // exploding arrow
+    PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~00CIKEG~) BEGIN SET patch_damage = 0 END    // iwd2 exploding keg
+
+    SET patch_item = 0
+    PATCH_IF (patch_damage > 0) BEGIN
+      GET_OFFSET_ARRAY itm_headers  ITM_V10_HEADERS
+      PHP_EACH itm_headers AS num => header_off BEGIN                    // array of headers
+        GET_OFFSET_ARRAY2 itm_effects header_off ITM_V10_HEAD_EFFECTS
+        PHP_EACH itm_effects AS num => effect_off BEGIN                  // array of effects on each header
+          PATCH_IF (patch_item = 0) BEGIN
+            READ_SHORT effect_off opcode                                 // opcode
+            PATCH_IF (opcode = 12) BEGIN
+              SET patch_item = 1
+            END
+          END
+        END
+      END
+
+      PATCH_IF (safespell>0 AND patch_item>0 AND bg2_engine=0) BEGIN
+        LPF d2_safe_spell INT_VAR duration=1 STR_VAR insert=above END    // EEs, IWD1, IWD2
+      END
+
+      PATCH_IF (safespell>0 AND patch_item>0 AND bg2_engine>0) BEGIN
+        READ_SHORT 0x9c proj
+        SET ids_num = proj - 1
+        LOOKUP_IDS_SYMBOL_OF_INT res ~projectl~ ids_num
+        PATCH_IF !(~%res%~ STR_EQ ~cloud~) BEGIN    // not stinking cloud proj (shared by enemy damage SPL)
+          PATCH_IF (FILE_EXISTS_IN_GAME ~%res%.pro~) BEGIN
+            TEXT_SPRINT $d2safespell_bg2(~%res%~) ~proj~
+          END
+        END
+      END
+
+      PATCH_IF (hitstun>0 AND patch_item>0) BEGIN
+        SET overwrite = 0
+//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^d2~) BEGIN  SET overwrite=1  END
+        LPF d2_addhitstun INT_VAR match_opcode=12 overwrite=overwrite END
+      END
+    END
+
+
+    // scroll usability
+    // NOTE: tested config option but disabling does not hide "Write Magic" button
+    PATCH_IF (noschools>0 AND cat=11) BEGIN    // 11 = scrolls
+      WRITE_BYTE 0x2d (THIS BAND BNOT BIT0)    // diviner
+      WRITE_BYTE 0x2d (THIS BAND BNOT BIT1)    // enchanter
+      WRITE_BYTE 0x2d (THIS BAND BNOT BIT2)    // illusionist
+      WRITE_BYTE 0x2d (THIS BAND BNOT BIT3)    // invoker
+      WRITE_BYTE 0x2d (THIS BAND BNOT BIT4)    // necro
+      WRITE_BYTE 0x2d (THIS BAND BNOT BIT5)    // transmuter
+      WRITE_BYTE 0x2f (THIS BAND BNOT BIT6)    // abjurer
+      WRITE_BYTE 0x2f (THIS BAND BNOT BIT7)    // conjurer
+    END
+  END
+BUT_ONLY
+
+
+//bg2 (classic), edit PRO files
+ACTION_IF (safespell>0 AND bg2_engine>0) BEGIN
+  ACTION_PHP_EACH d2safespell_bg2 AS res => proj BEGIN
+    SILENT
+    COPY_EXISTING ~%res%.pro~  ~override~
+      PATCH_IF (SOURCE_SIZE > 0x226) BEGIN
+        PATCH_PRINT ~Patching %res%.PRO ...~
+        WRITE_LONG 0x200 THIS | BIT6
+      END
+    BUT_ONLY
+  END
+END
+
+
+//
+ACTION_IF (noschools > 0) BEGIN
+
+/*keep kitlist settings unchanged (not needed)
+  COPY_EXISTING ~kitlist.2da~  ~override~
+    LPF d2_edit_2da_entry INT_VAR col_read=1 STR_VAR row_name=ABJURER col_name=unusable entry=d2spell END
+    LPF d2_edit_2da_entry INT_VAR col_read=1 STR_VAR row_name=CONJURER col_name=unusable entry=d2spell END
+    LPF d2_edit_2da_entry INT_VAR col_read=1 STR_VAR row_name=DIVINER col_name=unusable entry=d2spell END
+    LPF d2_edit_2da_entry INT_VAR col_read=1 STR_VAR row_name=ENCHANTER col_name=unusable entry=d2spell END
+    LPF d2_edit_2da_entry INT_VAR col_read=1 STR_VAR row_name=ILLUSIONIST col_name=unusable entry=d2spell END
+    LPF d2_edit_2da_entry INT_VAR col_read=1 STR_VAR row_name=INVOKER col_name=unusable entry=d2spell END
+    LPF d2_edit_2da_entry INT_VAR col_read=1 STR_VAR row_name=NECROMANCER col_name=unusable entry=d2spell END
+    LPF d2_edit_2da_entry INT_VAR col_read=1 STR_VAR row_name=TRANSMUTER col_name=unusable entry=d2spell END
+    REPLACE_TEXTUALLY ~d2spell~ ~0x00004000~
+  BUT_ONLY
+*/
+
+
+  // iwd2 (edit listmage.2da)
+  // NOTE: this is done for completeness, it's not actually needed to make spells learnable
+  COPY_EXISTING ~listmage.2da~  ~override~
+    // variables
+    COUNT_2DA_ROWS 3 listmage_rows
+    READ_2DA_ENTRIES_NOW ~listmage_table~ 3
+
+    // scan table
+    FOR (row = 1; row < listmage_rows; ++row) BEGIN
+      // get spell level
+      SET spllevel = 0
+      FOR (col = 1; col < 9; ++col) BEGIN
+        READ_2DA_ENTRY_FORMER ~listmage_table~ row col entry
+        PATCH_IF (spllevel=0 AND entry>0) BEGIN  SET spllevel = entry  END
+      END
+
+      // set values
+      FOR (col = 1; col < 9; ++col) BEGIN
+        SET_2DA_ENTRY_LATER ~listmage_edits~ row col spllevel
+      END
+    END
+
+    // make edits
+    SET_2DA_ENTRIES_NOW ~listmage_edits~ 3
+    PRETTY_PRINT_2DA
+
+  IF_EXISTS BUT_ONLY
+
+
+  //edit descriptions
+  OUTER_SPRINT note @667701
+  OUTER_SPRINT check1 @667702
+  OUTER_SPRINT check2 @667703
+
+  // preset strings (used in all games)
+  ACTION_FOR_EACH string IN
+    ~9564~ ~9565~ ~9566~ ~9567~
+    ~9568~ ~9569~ ~9570~ ~9571~
+  BEGIN
+    ACTION_GET_STRREF EVAL ~%string%~ desc
+    ACTION_IF !(~%desc%~ STR_EQ ~~) BEGIN
+      ACTION_IF (~%desc%~ STRING_CONTAINS_REGEXP ~%note%~) BEGIN    // if "desc" does NOT contain "note" text
+        OUTER_TEXT_SPRINT desc ~%desc%%WNL%%WNL%%note%~
+      END
+    END
+    STRING_SET_EVALUATE string  ~%desc%~
+  END
+
+  // mods or changed strings
+  ACTION_IF (RESOURCE_CONTAINS ~kitlist.2da~ ~berserker~) BEGIN    // returns false if file not in game
+    COPY_EXISTING - ~kitlist.2da~  ~override~
+      COUNT_2DA_ROWS 3 kitlist_rows
+      READ_2DA_ENTRIES_NOW ~kitlist_table~ 3
+      FOR (r = 1; r < kitlist_rows; ++r) BEGIN
+        READ_2DA_ENTRY_FORMER ~kitlist_table~ r 8 class
+        PATCH_IF !(IS_AN_INT class) BEGIN SET class = 0 END
+
+        SET patch = 0
+        PATCH_IF (class=1 OR class=5 OR class=7 OR class=10 OR class=13 OR class=14 OR class=17 OR class=19) BEGIN
+          SET patch = 1
+        END
+
+        PATCH_IF (patch > 0) BEGIN
+          READ_2DA_ENTRY_FORMER ~kitlist_table~ r 4 string
+          PATCH_IF (IS_AN_INT string AND string > 0) BEGIN
+            GET_STRREF EVAL ~%string%~ desc
+            SET check = 0
+            PATCH_IF !(~%desc%~ STRING_CONTAINS_REGEXP ~%check1%~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%desc%~ STRING_CONTAINS_REGEXP ~%check2%~) BEGIN  SET check = 1  END
+
+            PATCH_IF (check > 0) BEGIN
+              PATCH_IF (~%desc%~ STRING_CONTAINS_REGEXP ~%note%~) BEGIN    // if "desc" does NOT contain "note" text
+                TEXT_SPRINT desc ~%desc%%WNL%%WNL%%note%~
+              END
+            END
+
+            INNER_ACTION BEGIN
+              STRING_SET_EVALUATE string  ~%desc%~
+            END
+          END
+        END
+      END
+  END
+
+END
+
+
+//
+//

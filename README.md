@@ -17,7 +17,7 @@ Script components:
 2. **Better AI for Call Woodland Beings (EEs, BG2)**
 	- Option 1: Use revised script for nymph summon (compatible with SCS)
 	- Option 2: Use existing script, but patch in a few actions (use with revision mods)
-	- This component needs to be installed after AI mods (ex. SCS or atweaks)
+	- Note: This component needs to be installed after AI mods (ex. SCS or atweaks)
 3. **Auto-assign script to new characters**
 	- Can choose any of the 3-4 scripts from this mod
 
@@ -26,7 +26,7 @@ Script components:
 Tweak components:
 -
 
-1. **Adjust enemy damage at higher difficulties (classic IWD, IWD2)**
+1. **Adjust enemy damage at higher difficulties (IWD1, IWD2)**
 	- IWD2: includes exe patch by Bubb (required for damage adjust to work)
 2. **Add or remove Avarine Decanter (IWD2)**
 	- Won't cause issues if the item is already obtainable
@@ -53,7 +53,7 @@ Tweak components:
 	- Option 1: 2e-style HP bonuses (i.e. BG-style)
 	- Option 2: 3e-style bonuses (+1 or -1 every 2 Con) (WARNING: Prism will spawn dead in BG1.)
 	- Option 3: Mixed (use 3e-style at 10+, normal BG penalties at under 10)
-	- Will not overwrite any previous changes to Con effects, except for HP bonus
+	- Note: Does not overwrite any previous changes to Con effects, except for HP bonus
 9. **Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)**
 	- Can set delay to 1 round or 5 rounds (stat reduction does not stack)
 	- Note: Crippling Strike is capped at -7 stat reduction in unmodded IWDEE
@@ -63,23 +63,28 @@ Tweak components:
 
 --
 
-11. **Allow Minsc to use his Berserk ability at will (BG games)**
+11. **Misc spell tweaks (classic and EEs):**
+	- Damage party friendly (relative to caster)
+	- Hit stun on damage (1 second)
+	- No mage school restrictions
+	- Note: There are multiple options. You can install all, 1 tweak, or any combo of 2.
+12. **Allow Minsc to use his Berserk ability at will (BG games)**
 	- Options to set duration to 5 rounds, 1 turn, or 2 turns
-12. **Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)**
+13. **Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)**
 	- IWDEE: makes shortbows look like shortbows in the inventory screen
-13. **Remove alignment restrictions for classes (classic and EEs)**
-	- Will patch any mod-added kits as well, including multiclass kits
+	- IWD-in-BG2: makes scimitars look like scimitars (instead of long sword)
+14. **Remove alignment restrictions for classes (classic and EEs)**
+	- This patches any mod-added kits as well, including multiclass kits
 	- Has options to skip certain classes (paladins, clerics, monks, etc.)
-14. **Prevent paladins and rangers falling at low rep (EEs)**
-	- Will patch any mod-added kits as well
+15. **Prevent paladins and rangers falling at low rep (EEs)**
+	- This patches any mod-added kits as well
 	- Can optionally install for only rangers or only paladins
 
 --
 
 **Additional info:**
 - All components can be installed independently and in any order, except for auto-assigning the script.
-- Script components should be installed after AI mods (ex. SCS or atweaks).
-- Note that all tweaks are fine to install even after mods like SCS (this is the order I use for testing).
+- All components should be safe to install at end-or-order. If another mod says to install last, you can try it both ways.
 - If using tweaks from other mods that do similar things, whichever is installed last will usually be used.
 - All tweaks have at least 2 subcomponents. i.e. if you say to "install all components", it won't automatically install any tweaks.
 
@@ -505,6 +510,43 @@ Uncap Crippling Strike:
 - By default, the stat reduction is capped at -7 (EE v2.5 and v2.6.6).
 - The dialogue box and Record screen could show higher numbers, but the effect never went past -7.
 - Main purpose is to allow Assassins to reach -10 in IWD:EE.
+  
+--
+
+</details>
+
+<details>
+  <summary>Misc spell tweaks (classic and EEs)</summary>
+
+Misc spell tweaks (classic and EEs)
+-
+
+- This has 3 tweaks:
+	- Damage party friendly (relative to caster)
+	- Hit stun on damage (1 second)
+	- No mage school restrictions
+- Safe to install at end-of-order. Install after any mods that adds spells or items.
+- It has multiple subcomponents. You can install all tweaks, just 1 tweak, or any combo of 2.
+- The damage ones will also check item spells (wands, potions, etc.).
+
+--
+
+**Additional info (spell tweaks):**
+- Opcode 12 (damage) required on the SPL for the damage tweaks. (poison, disease, etc. are not patched)
+- The damage ones ignore spells that target the caster with no projectile (ex. self-damage from berserker Enrage)
+- The damage ones ignore most subspells. (note: installer will always check SPLs with long range or an offensive "secondary type")
+- "No mage school restrictions" is both a tweak and a workaround for a serious issue with sorcerer kits (spell schools missing from selection screen). More info in this post at G3 forums: https://www.gibberlings3.net/forums/topic/36181-spell-selection-issue-sorcererscharacter-creation/#comment-318196
+- "No mage school restrictions" will also make all arcane scrolls usable by any specialist. (note: Making the spell appear in the selection screen also makes the "Write Magic" button appear, even if scroll is unusable).
+- Hit stun note: Acid effects like Melf's Arrow will stun only on the initial hit. Some SPLs will have multiple stun effects but they all apply instantly. Repeating area effects like Cloudkill will stun with each hit.
+- Hit stun note: For spells with saving throws for half damage, stun is only if save is failed. Also, this doesn't overwrite any stun effects already on the spell, so spells with longer stun durations will still have those.
+
+--
+
+**Game-specific info:**
+- PSTEE: "No mage school restrictions" not available (Note: this is currently the only component usable with PSTEE).
+- BG1 (classic): "Damage party friendly" not available
+- IWD1/IWD2 (classic): Projectiles that apply damage directly are skipped for damage tweaks (ex. Agannazar's Scorcher). Most of the common spells like fireball, skull trap, etc. will be patched.
+- IWD2: "No mage school restrictions" will change all arcane spells to Generalist school. This is required to make all spells learnable by all specialists (note: editing listmage.2da doesn't work for this).
   
 --
 
