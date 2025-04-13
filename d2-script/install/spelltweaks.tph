@@ -23,6 +23,9 @@ ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN  OUTER_SET bg2
 OUTER_SET ee_game = 0
 ACTION_IF (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN OUTER_SET ee_game = 1 END
 
+OUTER_SET iwd_classic = 0
+ACTION_IF (GAME_IS ~iwd how totlm iwd2~) BEGIN OUTER_SET iwd_classic = 1 END
+
 
 
 //
@@ -51,6 +54,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
     READ_SHORT 0x1c type       // 1 = wizard
     READ_SHORT 0x68 headers    // if range/headers both < 2, it's probably a subspell or non-damage spell
     READ_BYTE  0x27 sec        // 4, 5, 6, 9, 10, 11 ("secondary type" is an attack spell)
+    READ_BYTE 0x25 school      // 2 = conjurer, 8 = transmuter
 
     PATCH_IF (splcheck = 0x99) BEGIN
       READ_BYTE  0x7e target     // 1=target, 4=area, 5=self, 7=self(free action)
@@ -68,6 +72,8 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
     PATCH_IF (range<2 AND headers<2) BEGIN SET patch_damage = 0 END    // not a subspell
     PATCH_IF (sec=4 OR sec=5 OR sec=6) BEGIN SET patch_damage = 1 END
     PATCH_IF (sec=9 OR sec=10 OR sec=11) BEGIN SET patch_damage = 1 END
+    PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^EFF~) BEGIN SET patch_damage = 1 END    // iwd2 (possible damage)
+    PATCH_IF (iwd_classic>0 AND proj=209) BEGIN  SET patch_damage = 1  END    // iwd malavon's rage
 
 /*
     // exclusions (config.txt)
@@ -91,19 +97,46 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
         END
       END
 
+      // party friendly
       PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine=0) BEGIN
-        LPF d2_safe_spell INT_VAR duration=1 STR_VAR insert=above END    // EEs, IWD1, IWD2
+        SET neutrals = 1
+//        PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^spin~) BEGIN  SET neutrals=0  END
+        LPF d2_safe_spell INT_VAR neutrals=neutrals STR_VAR insert=above END    // EEs, IWD1, IWD2
       END
 
       PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine>0) BEGIN
-        READ_SHORT 0x98 proj
-        SET ids_num = proj - 1
-        LOOKUP_IDS_SYMBOL_OF_INT res ~projectl~ ids_num
+        SET proj_num = proj - 1
+        LOOKUP_IDS_SYMBOL_OF_INT res ~projectl~ proj_num
         PATCH_IF !(~%res%~ STR_EQ ~cloud~) BEGIN    // not stinking cloud proj (shared by enemy damage SPL)
           PATCH_IF (FILE_EXISTS_IN_GAME ~%res%.pro~) BEGIN
             TEXT_SPRINT $d2safespell_bg2(~%res%~) ~proj~
           END
         END
+      END
+
+      // hit stun
+      PATCH_IF (sec = 9) BEGIN  SET patch_spell = 0  END    // skip terrain spells (Cloudkill, etc.)
+      PATCH_IF (sec=1 OR sec=2 OR sec=3 OR sec=7) BEGIN  SET patch_spell = 0  END    // skip barrier/counter damage
+      PATCH_IF (school=2 AND target=4) BEGIN  SET patch_spell = 0  END
+//      PATCH_IF (target=4 AND school=8) BEGIN  SET patch_spell = 0  END
+      PATCH_IF (school=2 AND sec=10) BEGIN  SET patch_spell = 1  END
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPWI810~) BEGIN SET patch_spell = 0 END
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPWI016~) BEGIN SET patch_spell = 0 END
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPIN917~) BEGIN SET patch_spell = 0 END
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPPR450~) BEGIN SET patch_spell = 1 END
+      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^EFF~) BEGIN SET patch_spell = 0 END    // iwd2 (skip unknown SPLs)
+      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~EFFHW~) BEGIN SET patch_spell = 1 END    // iwd2 (horrid wilting)
+      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~EFFWT~) BEGIN SET patch_spell = 1 END    // iwd2 (horrid wilting)
+
+      PATCH_IF !(GAME_IS ~pst pstee~) BEGIN
+        PATCH_IF (proj=187 OR proj=95 OR proj=279 OR proj=229) BEGIN  SET patch_spell = 0  END
+      END
+      PATCH_IF (iwd_classic > 0) BEGIN
+        PATCH_IF (proj=212 OR proj=214 OR proj=301 OR proj=300 OR proj=213) BEGIN  SET patch_spell = 0  END
+      END ELSE
+      PATCH_IF !(GAME_IS ~pst pstee~) BEGIN
+        PATCH_IF (proj = 98) BEGIN  SET patch_spell = 0  END    // ice storm in non-IWD lasts 4 rounds
+        PATCH_IF (proj = 209) BEGIN  SET patch_spell = 0  END    // beholder blast in non-IWD
       END
 
       PATCH_IF (hitstun>0 AND patch_spell>0) BEGIN
@@ -176,13 +209,14 @@ COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
       END
 
       PATCH_IF (safespell>0 AND patch_item>0 AND bg2_engine=0) BEGIN
-        LPF d2_safe_spell INT_VAR duration=1 STR_VAR insert=above END    // EEs, IWD1, IWD2
+        SET neutrals = 1
+//        PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^spin~) BEGIN  SET neutrals=0  END
+        LPF d2_safe_spell INT_VAR neutrals=neutrals STR_VAR insert=above END    // EEs, IWD1, IWD2
       END
 
       PATCH_IF (safespell>0 AND patch_item>0 AND bg2_engine>0) BEGIN
-        READ_SHORT 0x9c proj
-        SET ids_num = proj - 1
-        LOOKUP_IDS_SYMBOL_OF_INT res ~projectl~ ids_num
+        SET proj_num = proj - 1
+        LOOKUP_IDS_SYMBOL_OF_INT res ~projectl~ proj_num
         PATCH_IF !(~%res%~ STR_EQ ~cloud~) BEGIN    // not stinking cloud proj (shared by enemy damage SPL)
           PATCH_IF (FILE_EXISTS_IN_GAME ~%res%.pro~) BEGIN
             TEXT_SPRINT $d2safespell_bg2(~%res%~) ~proj~

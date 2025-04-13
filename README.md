@@ -537,17 +537,20 @@ Misc spell tweaks (classic and EEs)
 - The damage ones ignore most subspells. (note: installer will always check SPLs with long range or an offensive "secondary type")
 - "No mage school restrictions" is both a tweak and a workaround for a serious issue with sorcerer kits (spell schools missing from selection screen). More info in this post at G3 forums: https://www.gibberlings3.net/forums/topic/36181-spell-selection-issue-sorcererscharacter-creation/#comment-318196
 - "No mage school restrictions" will also make all arcane scrolls usable by any specialist. (note: Making the spell appear in the selection screen also makes the "Write Magic" button appear, even if scroll is unusable).
-- Hit stun note: Acid effects like Melf's Arrow will stun only on the initial hit. Some SPLs will have multiple stun effects but they all apply instantly. Repeating area effects like Cloudkill will stun with each hit.
-- Hit stun note: For spells with saving throws for half damage, stun is only if save is failed. Also, this doesn't overwrite any stun effects already on the spell, so spells with longer stun durations will still have those.
+- Hit stun note: Does not remove any stun effects already on the spell, so longer durations will still be there.
+- Hit stun note: Applies only once per spell. (ex. Melf's arrow stuns only on initial hit.)
+- Hit stun note: For spells with saving throws for half damage, stun is only if save is failed.
+- Hit stun note: skips repeating area damage (ex. Cloudkill). Similar mod spells are skipped if Secondary type is set to BATTLEGROUND.
+- Hit stun note: skips counter/barrier spells (Fire Shield, Blade Barrier, etc.). Similar mod spells are skipped if Secondary type is set to any PROTECTIONS type.
 
 --
 
 **Game-specific info:**
-- PSTEE: "No mage school restrictions" not available (Note: this is currently the only component usable with PSTEE).
+- PSTEE: "No mage school restrictions" not available. (note: many PSTEE spells use hardcoded projectiles or effects, so the damage ones only apply to a few spells)
 - BG1 (classic): "Damage party friendly" not available
-- IWD1/IWD2 (classic): Projectiles that apply damage directly are skipped for damage tweaks (ex. Agannazar's Scorcher). Most of the common spells like fireball, skull trap, etc. will be patched.
+- IWD1/IWD2 (classic): Projectiles that apply damage directly are skipped for damage tweaks (ex. Agannazar's Scorcher). Most spells like fireball, skull trap, etc. will be patched.
 - IWD2: "No mage school restrictions" will change all arcane spells to Generalist school. This is required to make all spells learnable by all specialists (note: editing listmage.2da doesn't work for this).
-  
+
 --
 
 </details>

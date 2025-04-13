@@ -110,6 +110,13 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.9
+Spell tweaks updates:
+- "Hit stun on damage" now skips repeating area damage (ex. Cloudkill). Similar mod spells are skipped if Secondary type is set to BATTLEGROUND.
+- "Hit stun on damage" now skips counter/barrier spells (Fire Shield, Blade Barrier, etc.). Similar mod spells are skipped if Secondary type is set to any PROTECTIONS type.
+- "Hit stun on damage" now skips beholder rays damage.
+- "Party friendly damage" now catches more stuff in IWD2 (including some damage applied directly by projectiles or hardcoded effects).
+
 v7.8
 - new component: Misc spell tweaks (classic and EEs). This has 3 tweaks:
 	- Damage party friendly (relative to caster)
