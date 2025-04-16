@@ -110,6 +110,10 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.10
+- Spell damage tweaks now working with IWD2EE mod ("Damage party friendly", "Hit stun on damage"). Specifically, the installer now accounts for the IWD2EE damage opcode (opcode 500 with "EXDAMAGE" function).
+- IWD1/IWD2: "Damage party friendly" now working with Blade Barrier and Circle of Bones. A few other adjustments. (note: hardcoded effects or projectiles will still get through. If unsure, test if a spell hits PCs before using.)
+
 v7.9
 Spell tweaks updates:
 - "Hit stun on damage" now skips repeating area damage (ex. Cloudkill). Similar mod spells are skipped if Secondary type is set to BATTLEGROUND.

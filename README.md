@@ -84,7 +84,7 @@ Tweak components:
 
 **Additional info:**
 - All components can be installed independently and in any order, except for auto-assigning the script.
-- All components should be safe to install at end-or-order. If another mod says to install last, you can try it both ways.
+- All components should be safe to install at end-of-order. If another mod says to install last, you can try it both ways.
 - If using tweaks from other mods that do similar things, whichever is installed last will usually be used.
 - All tweaks have at least 2 subcomponents. i.e. if you say to "install all components", it won't automatically install any tweaks.
 

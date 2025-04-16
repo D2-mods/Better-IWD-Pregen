@@ -19,12 +19,12 @@ ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN  OUTER_SET safespell = 0  END
 
 OUTER_SET bg2_engine = 0
 ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN  OUTER_SET bg2_engine = 1 END
-
 OUTER_SET ee_game = 0
 ACTION_IF (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN OUTER_SET ee_game = 1 END
-
 OUTER_SET iwd_classic = 0
 ACTION_IF (GAME_IS ~iwd how totlm iwd2~) BEGIN OUTER_SET iwd_classic = 1 END
+OUTER_SET is_iwd2ee = 0
+ACTION_IF (FILE_EXISTS ~IEex.dll~ AND FILE_EXISTS ~IWD2EE.exe~) BEGIN OUTER_SET is_iwd2ee = 1 END
 
 
 
@@ -42,6 +42,25 @@ ACTION_IF (safespell > 0) BEGIN  OUTER_TEXT_SPRINT tweakslist  ~%tweakslist%%WNL
 ACTION_IF (hitstun > 0)   BEGIN  OUTER_TEXT_SPRINT tweakslist  ~%tweakslist%%WNL%hitstun_installed~  END
 ACTION_IF (noschools > 0) BEGIN  OUTER_TEXT_SPRINT tweakslist  ~%tweakslist%%WNL%noschools_installed~  END
 APPEND ~%marker%~  ~%tweakslist%~
+
+
+
+//iwd2ee stuff
+DEFINE_PATCH_FUNCTION exdamage_protect STR_VAR type=EXDAMAGE BEGIN
+  LPF CLONE_EFFECT
+    INT_VAR check_globals=0 multi_match=1 match_opcode=500
+            opcode=206 parameter1=0 parameter2=52 timing=0 duration=0 savingthrow=0 dicesize=0 diceroll=0 special=0
+    STR_VAR match_resource=~%type%~ resource=~%SOURCE_RES%~
+  END
+END
+
+DEFINE_PATCH_FUNCTION exdamage_stun STR_VAR type=EXDAMAGE BEGIN
+  LPF CLONE_EFFECT
+    INT_VAR check_globals=0 match_opcode=500
+            opcode=45 parameter1=0 parameter2=0 timing=0 duration=1 dicesize=0 diceroll=0 special=0
+    STR_VAR match_resource=~%type%~ insert=below
+  END
+END
 
 
 
@@ -70,10 +89,12 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
     PATCH_IF (target=5 AND proj<2) BEGIN SET patch_damage = 0 END    // ignore of target=self
     PATCH_IF (target=7 AND proj<2) BEGIN SET patch_damage = 0 END    // same as above (cast as free action)
     PATCH_IF (range<2 AND headers<2) BEGIN SET patch_damage = 0 END    // not a subspell
-    PATCH_IF (sec=4 OR sec=5 OR sec=6) BEGIN SET patch_damage = 1 END
+    PATCH_IF (sec=4 OR sec=5 OR sec=6 OR sec=7) BEGIN SET patch_damage = 1 END
     PATCH_IF (sec=9 OR sec=10 OR sec=11) BEGIN SET patch_damage = 1 END
-    PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^EFF~) BEGIN SET patch_damage = 1 END    // iwd2 (possible damage)
+    PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^EFF~) BEGIN SET patch_damage = 1 END    // iwd2 subspells
     PATCH_IF (iwd_classic>0 AND proj=209) BEGIN  SET patch_damage = 1  END    // iwd malavon's rage
+    PATCH_IF (iwd_classic>0 AND proj=308) BEGIN  SET patch_damage = 1  END    // iwd circle of bones
+    PATCH_IF (iwd_classic>0 AND proj=311) BEGIN  SET patch_damage = 1  END    // iwd circle of blades
 
 /*
     // exclusions (config.txt)
@@ -83,6 +104,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
 */
 
     SET patch_spell = 0
+    SET patch_iwd2ee = 0
     PATCH_IF (patch_damage > 0) BEGIN
       GET_OFFSET_ARRAY spl_headers  SPL_V10_HEADERS
       PHP_EACH spl_headers AS num => header_off BEGIN                    // array of headers
@@ -90,18 +112,29 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
         PHP_EACH spl_effects AS num => effect_off BEGIN                  // array of effects on each header
           PATCH_IF (patch_spell = 0) BEGIN
             READ_SHORT effect_off opcode                                 // opcode
-            PATCH_IF (opcode = 12) BEGIN
-              SET patch_spell = 1
-            END
+            PATCH_IF (opcode = 12) BEGIN SET patch_spell = 1 END
+            PATCH_IF (opcode = 500) BEGIN SET patch_iwd2ee = 1 END
           END
+        END
+      END
+
+      // check iwd2ee
+      SET exdamage = 0
+      PATCH_IF (patch_iwd2ee>0 AND is_iwd2ee>0) BEGIN
+        PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~EXDAMAGE~) BEGIN
+          SET exdamage = 1
         END
       END
 
       // party friendly
       PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine=0) BEGIN
         SET neutrals = 1
-//        PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^spin~) BEGIN  SET neutrals=0  END
+//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^spin~) BEGIN  SET neutrals=0  END
         LPF d2_safe_spell INT_VAR neutrals=neutrals STR_VAR insert=above END    // EEs, IWD1, IWD2
+      END
+
+      PATCH_IF (safespell>0 AND exdamage>0 AND bg2_engine=0) BEGIN
+        LPF exdamage_protect END
       END
 
       PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine>0) BEGIN
@@ -115,34 +148,40 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
       END
 
       // hit stun
-      PATCH_IF (sec = 9) BEGIN  SET patch_spell = 0  END    // skip terrain spells (Cloudkill, etc.)
-      PATCH_IF (sec=1 OR sec=2 OR sec=3 OR sec=7) BEGIN  SET patch_spell = 0  END    // skip barrier/counter damage
-      PATCH_IF (school=2 AND target=4) BEGIN  SET patch_spell = 0  END
-//      PATCH_IF (target=4 AND school=8) BEGIN  SET patch_spell = 0  END
-      PATCH_IF (school=2 AND sec=10) BEGIN  SET patch_spell = 1  END
-      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPWI810~) BEGIN SET patch_spell = 0 END
-      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPWI016~) BEGIN SET patch_spell = 0 END
-      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPIN917~) BEGIN SET patch_spell = 0 END
-      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPPR450~) BEGIN SET patch_spell = 1 END
-      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^EFF~) BEGIN SET patch_spell = 0 END    // iwd2 (skip unknown SPLs)
-      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~EFFHW~) BEGIN SET patch_spell = 1 END    // iwd2 (horrid wilting)
-      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~EFFWT~) BEGIN SET patch_spell = 1 END    // iwd2 (horrid wilting)
+      SET stuncheck = 1
+      PATCH_IF (sec = 9) BEGIN  SET stuncheck = 0  END    // skip terrain spells (Cloudkill, etc.)
+      PATCH_IF (sec=1 OR sec=2 OR sec=3 OR sec=7) BEGIN  SET stuncheck = 0  END    // skip barrier/counter damage
+      PATCH_IF (school=2 AND target=4) BEGIN  SET stuncheck = 0  END
+//      PATCH_IF (target=4 AND school=8) BEGIN  SET stuncheck = 0  END
+      PATCH_IF (school=2 AND sec=10) BEGIN  SET stuncheck = 1  END
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPWI810~) BEGIN SET stuncheck = 0 END
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPWI016~) BEGIN SET stuncheck = 0 END
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPIN917~) BEGIN SET stuncheck = 0 END
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPPR450~) BEGIN SET stuncheck = 1 END
+      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^EFF~) BEGIN SET stuncheck = 0 END    // iwd2 (skip unknown SPLs)
+      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~EFFHW~) BEGIN SET stuncheck = 1 END    // iwd2 (horrid wilting)
+      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~EFFWT~) BEGIN SET stuncheck = 1 END    // iwd2 (horrid wilting)
 
       PATCH_IF !(GAME_IS ~pst pstee~) BEGIN
-        PATCH_IF (proj=187 OR proj=95 OR proj=279 OR proj=229) BEGIN  SET patch_spell = 0  END
+        PATCH_IF (proj=187 OR proj=95 OR proj=279 OR proj=229) BEGIN  SET stuncheck = 0  END
       END
       PATCH_IF (iwd_classic > 0) BEGIN
-        PATCH_IF (proj=212 OR proj=214 OR proj=301 OR proj=300 OR proj=213) BEGIN  SET patch_spell = 0  END
+        PATCH_IF (proj=212 OR proj=214 OR proj=301 OR proj=309) BEGIN  SET stuncheck = 0  END
+        PATCH_IF (proj=300 OR proj=213 OR proj=308 OR proj=311) BEGIN  SET stuncheck = 0  END
       END ELSE
       PATCH_IF !(GAME_IS ~pst pstee~) BEGIN
-        PATCH_IF (proj = 98) BEGIN  SET patch_spell = 0  END    // ice storm in non-IWD lasts 4 rounds
-        PATCH_IF (proj = 209) BEGIN  SET patch_spell = 0  END    // beholder blast in non-IWD
+        PATCH_IF (proj = 98) BEGIN  SET stuncheck = 0  END    // ice storm in non-IWD lasts 4 rounds
+        PATCH_IF (proj = 209) BEGIN  SET stuncheck = 0  END    // beholder blast in non-IWD
       END
 
-      PATCH_IF (hitstun>0 AND patch_spell>0) BEGIN
+      PATCH_IF (hitstun>0 AND patch_spell>0 AND stuncheck>0) BEGIN
         SET overwrite = 0
 //      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^d2~) BEGIN  SET overwrite=1  END
         LPF d2_addhitstun INT_VAR match_opcode=12 overwrite=overwrite END
+      END
+
+      PATCH_IF (hitstun>0 AND exdamage>0 AND stuncheck>0) BEGIN
+        LPF exdamage_stun END
       END
     END
 
@@ -161,6 +200,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
 BUT_ONLY
 
 
+//
 //check spells cast from items
 OUTER_SET itmcheck = 0xa9
 ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET itmcheck = 0xb9  END    // iwd2
@@ -187,34 +227,50 @@ COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
     SET patch_damage = 1
     PATCH_IF (target=5 AND proj<2) BEGIN SET patch_damage = 0 END    // ignore of target=self
     PATCH_IF (target=7 AND proj<2) BEGIN SET patch_damage = 0 END    // same as above (cast as free action)
-    PATCH_IF (sec=4 OR sec=5 OR sec=6) BEGIN SET patch_damage = 1 END
+    PATCH_IF (sec=4 OR sec=5 OR sec=6 OR sec=7) BEGIN SET patch_damage = 1 END
     PATCH_IF (sec=9 OR sec=10 OR sec=11) BEGIN SET patch_damage = 1 END
     PATCH_IF (header != 3) BEGIN SET patch_damage = 0 END
     PATCH_IF (proj = 3) BEGIN SET patch_damage = 1 END    // exploding arrow
     PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~00CIKEG~) BEGIN SET patch_damage = 0 END    // iwd2 exploding keg
+    PATCH_IF (iwd_classic>0 AND proj=209) BEGIN  SET patch_damage = 1  END    // iwd malavon's rage
+    PATCH_IF (iwd_classic>0 AND proj=308) BEGIN  SET patch_damage = 1  END    // iwd circle of bones
+    PATCH_IF (iwd_classic>0 AND proj=311) BEGIN  SET patch_damage = 1  END    // iwd circle of blades
 
-    SET patch_item = 0
+    SET patch_spell = 0
+    SET patch_iwd2ee = 0
     PATCH_IF (patch_damage > 0) BEGIN
       GET_OFFSET_ARRAY itm_headers  ITM_V10_HEADERS
       PHP_EACH itm_headers AS num => header_off BEGIN                    // array of headers
         GET_OFFSET_ARRAY2 itm_effects header_off ITM_V10_HEAD_EFFECTS
         PHP_EACH itm_effects AS num => effect_off BEGIN                  // array of effects on each header
-          PATCH_IF (patch_item = 0) BEGIN
+          PATCH_IF (patch_spell = 0) BEGIN
             READ_SHORT effect_off opcode                                 // opcode
-            PATCH_IF (opcode = 12) BEGIN
-              SET patch_item = 1
-            END
+            PATCH_IF (opcode = 12) BEGIN SET patch_spell = 1 END
+            PATCH_IF (opcode = 500) BEGIN SET patch_iwd2ee = 1 END
           END
         END
       END
 
-      PATCH_IF (safespell>0 AND patch_item>0 AND bg2_engine=0) BEGIN
+      // check iwd2ee
+      SET exdamage = 0
+      PATCH_IF (patch_iwd2ee>0 AND is_iwd2ee>0) BEGIN
+        PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~EXDAMAGE~) BEGIN
+          SET exdamage = 1
+        END
+      END
+
+      // party friendly
+      PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine=0) BEGIN
         SET neutrals = 1
-//        PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^spin~) BEGIN  SET neutrals=0  END
+//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^spin~) BEGIN  SET neutrals=0  END
         LPF d2_safe_spell INT_VAR neutrals=neutrals STR_VAR insert=above END    // EEs, IWD1, IWD2
       END
 
-      PATCH_IF (safespell>0 AND patch_item>0 AND bg2_engine>0) BEGIN
+      PATCH_IF (safespell>0 AND exdamage>0 AND bg2_engine=0) BEGIN
+        LPF exdamage_protect END
+      END
+
+      PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine>0) BEGIN
         SET proj_num = proj - 1
         LOOKUP_IDS_SYMBOL_OF_INT res ~projectl~ proj_num
         PATCH_IF !(~%res%~ STR_EQ ~cloud~) BEGIN    // not stinking cloud proj (shared by enemy damage SPL)
@@ -224,10 +280,30 @@ COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
         END
       END
 
-      PATCH_IF (hitstun>0 AND patch_item>0) BEGIN
+      // hit stun
+      SET stuncheck = 1
+      PATCH_IF (sec = 9) BEGIN  SET stuncheck = 0  END    // skip terrain spells (Cloudkill, etc.)
+      PATCH_IF (sec=1 OR sec=2 OR sec=3 OR sec=7) BEGIN  SET stuncheck = 0  END    // skip barrier/counter damage
+      PATCH_IF !(GAME_IS ~pst pstee~) BEGIN
+        PATCH_IF (proj=187 OR proj=95 OR proj=279 OR proj=229) BEGIN  SET stuncheck = 0  END
+      END
+      PATCH_IF (iwd_classic > 0) BEGIN
+        PATCH_IF (proj=212 OR proj=214 OR proj=301 OR proj=309) BEGIN  SET stuncheck = 0  END
+        PATCH_IF (proj=300 OR proj=213 OR proj=308 OR proj=311) BEGIN  SET stuncheck = 0  END
+      END ELSE
+      PATCH_IF !(GAME_IS ~pst pstee~) BEGIN
+        PATCH_IF (proj = 98) BEGIN  SET stuncheck = 0  END    // ice storm in non-IWD lasts 4 rounds
+        PATCH_IF (proj = 209) BEGIN  SET stuncheck = 0  END    // beholder blast in non-IWD
+      END
+
+      PATCH_IF (hitstun>0 AND patch_spell>0 AND stuncheck>0) BEGIN
         SET overwrite = 0
 //      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^d2~) BEGIN  SET overwrite=1  END
         LPF d2_addhitstun INT_VAR match_opcode=12 overwrite=overwrite END
+      END
+
+      PATCH_IF (hitstun>0 AND exdamage>0 AND stuncheck>0) BEGIN
+        LPF exdamage_stun END
       END
     END
 
@@ -248,6 +324,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
 BUT_ONLY
 
 
+
 //bg2 (classic), edit PRO files
 ACTION_IF (safespell>0 AND bg2_engine>0) BEGIN
   ACTION_PHP_EACH d2safespell_bg2 AS res => proj BEGIN
@@ -260,6 +337,7 @@ ACTION_IF (safespell>0 AND bg2_engine>0) BEGIN
     BUT_ONLY
   END
 END
+
 
 
 //
@@ -362,6 +440,7 @@ ACTION_IF (noschools > 0) BEGIN
           END
         END
       END
+    // end inlined COPY
   END
 
 END

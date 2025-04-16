@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~7.9~
+VERSION ~7.10~
 AUTO_EVAL_STRINGS
 
 ALWAYS
