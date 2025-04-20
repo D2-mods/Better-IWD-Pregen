@@ -1,0 +1,27 @@
+//
+//
+
+
+//this is for games that don't use .pro files
+//deletes projectl.ids and missile.ids if a mod added them (these are used for .pro files)
+//having these files in the override can mess with editors like NI
+ACTION_IF (GAME_IS ~bg1 totsc iwd how totlm iwd2 pst~) BEGIN
+
+  OUTER_SET delete_pro = 0
+  ACTION_FOR_EACH file IN ~projectl~ ~missile~ BEGIN
+    ACTION_IF (FILE_EXISTS ~override/%file%.ids~) BEGIN
+      DELETE ~override/%file%.ids~
+      OUTER_SET delete_pro = 1
+    END
+  END
+
+  ACTION_IF (delete_pro > 0) BEGIN
+    ACTION_BASH_FOR ~override~ ~.*\.pro$~ BEGIN    // delete PRO files (not supported by game)
+      DELETE ~%BASH_FOR_FILESPEC%~
+    END
+  END
+END
+
+
+//
+//

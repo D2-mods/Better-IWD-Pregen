@@ -532,9 +532,9 @@ Misc spell tweaks (classic and EEs)
 --
 
 **Additional info (spell tweaks):**
-- Opcode 12 (damage) required on the SPL for the damage tweaks. (poison, disease, etc. are not patched)
-- The damage ones ignore spells that target the caster with no projectile (ex. self-damage from berserker Enrage)
-- The damage ones ignore most subspells. (note: installer will always check SPLs with long range or an offensive "secondary type")
+- The damage tweaks ignore poison, disease, and other hardcoded damage effects.
+- The damage tweaks ignore spells that target the caster with no projectile (ex. self-damage from berserker Enrage)
+- The damage tweaks ignore most subspells. (note: installer will always check SPLs with long range or an offensive "secondary type")
 - "No mage school restrictions" is both a tweak and a workaround for a serious issue with sorcerer kits (spell schools missing from selection screen). More info in this post at G3 forums: https://www.gibberlings3.net/forums/topic/36181-spell-selection-issue-sorcererscharacter-creation/#comment-318196
 - "No mage school restrictions" will also make all arcane scrolls usable by any specialist. (note: Making the spell appear in the selection screen also makes the "Write Magic" button appear, even if scroll is unusable).
 - Hit stun note: Does not remove any stun effects already on the spell, so longer durations will still be there.
@@ -547,9 +547,9 @@ Misc spell tweaks (classic and EEs)
 
 **Game-specific info:**
 - PSTEE: "No mage school restrictions" not available. (note: many PSTEE spells use hardcoded projectiles or effects, so the damage ones only apply to a few spells)
-- BG1 (classic): "Damage party friendly" not available
-- IWD1/IWD2 (classic): Projectiles that apply damage directly are skipped for damage tweaks (ex. Agannazar's Scorcher). Most spells like fireball, skull trap, etc. will be patched.
-- IWD2: "No mage school restrictions" will change all arcane spells to Generalist school. This is required to make all spells learnable by all specialists (note: editing listmage.2da doesn't work for this).
+- BG1 (classic): "Damage party friendly" not available.
+- IWD1/IWD2 (classic): Projectiles that apply damage directly are skipped for damage tweaks (ex. Agannazar's Scorcher). Most spells like fireball, skull trap, etc. will be patched. If unsure, test spell on PCs before using.
+- IWD2: "No mage school restrictions" will change all arcane spells to Generalist school. This is the only way to make it work for IWD2. This means that bonuses from feats or other sources will not apply. (Specialists will still have a bonus spell slot and will still be identified as the specialist for scripts and dialogues.)
 
 --
 

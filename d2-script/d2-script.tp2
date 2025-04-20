@@ -38,7 +38,6 @@ ALWAYS
   OUTER_TEXT_SPRINT nymph      ~%MOD_FOLDER%/nymph~
   OUTER_TEXT_SPRINT tobex      ~%MOD_FOLDER%/tobex~
   OUTER_TEXT_SPRINT workspace  ~weidu_external/Workspace~
-  OUTER_TEXT_SPRINT exclusions ~%MOD_FOLDER%/config.txt~
 
 END
 
@@ -261,7 +260,7 @@ INCLUDE ~%install%/ngbagD.tph~
 BEGIN @40801    // 2E-style HP bonuses (i.e. BG-style)
 DESIGNATED 100
 REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR (GAME_INCLUDES ~bg2~) OR
-                   (GAME_INCLUDES ~iwd~) OR (GAME_IS ~ca~ )) @50
+                   (GAME_INCLUDES ~iwd~) OR (GAME_IS ~pst pstee ca~ )) @50
 SUBCOMPONENT @40800
 LABEL ~D2-TWEAKS-CONBON2E~
 OUTER_TEXT_SPRINT style ~2e~

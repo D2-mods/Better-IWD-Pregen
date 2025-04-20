@@ -5,17 +5,20 @@ This file is for bottomless, 50 items, or 100 items options.
 
 
 //prep
-ACTION_IF (capacity=1) BEGIN  OUTER_SET capacity = 32767 
+ACTION_IF (capacity=1) BEGIN
+  OUTER_SET capacity = 32767 
   OUTER_SET bg2_desc = RESOLVE_STR_REF (@731)
   OUTER_SET id2_desc = RESOLVE_STR_REF (@735)
 END
 
-ACTION_IF (capacity=2) BEGIN  OUTER_SET capacity = 50
+ACTION_IF (capacity=2) BEGIN
+  OUTER_SET capacity = 50
   OUTER_SET bg2_desc = RESOLVE_STR_REF (@732)
   OUTER_SET id2_desc = RESOLVE_STR_REF (@736)
 END
 
-ACTION_IF (capacity=3) BEGIN  OUTER_SET capacity = 100
+ACTION_IF (capacity=3) BEGIN
+  OUTER_SET capacity = 100
   OUTER_SET bg2_desc = RESOLVE_STR_REF (@733)
   OUTER_SET id2_desc = RESOLVE_STR_REF (@737)
 END
@@ -209,8 +212,11 @@ ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWE
   // end COPY
 
   COPY_EXISTING ~d2#ngbag_backup.ITM~ ~override/d2#ngbag.ITM~    // revert edits to item file
-    PATCH_IF (GAME_IS ~iwd2~) BEGIN WRITE_LONG 0x54 id2_desc END
-    ELSE BEGIN WRITE_LONG 0x54 bg2_desc END
+    PATCH_IF (GAME_IS ~iwd2~) BEGIN
+      WRITE_LONG 0x54 id2_desc
+    END ELSE BEGIN
+      WRITE_LONG 0x54 bg2_desc
+    END
   // end COPY
 
 END

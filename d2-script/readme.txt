@@ -113,6 +113,8 @@ Updates
 v7.10
 - Spell damage tweaks now working with IWD2EE mod ("Damage party friendly", "Hit stun on damage"). Specifically, the installer now accounts for the IWD2EE damage opcode (opcode 500 with "EXDAMAGE" function).
 - IWD1/IWD2: "Damage party friendly" now working with Blade Barrier and Circle of Bones. A few other adjustments. (note: hardcoded effects or projectiles will still get through. If unsure, test if a spell hits PCs before using.)
+- BG2 (classic): Better method for updating TobEx.dll if TobEx Afterlife/Improved GUI is detected (script component). The installer already accounted for these, but with the old way it was possible to miss detecting Improved GUI.
+- PST/PSTEE: "full HP bonuses from Constitution" now installable.
 
 v7.9
 Spell tweaks updates:

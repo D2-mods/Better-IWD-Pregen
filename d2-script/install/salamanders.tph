@@ -91,7 +91,7 @@ ACTION_IF (patch_cloudburst = 1) BEGIN
   //patch base game Cloudburst
   ACTION_IF (FILE_EXISTS_IN_GAME ~SPPR325.SPL~) BEGIN
     COPY_EXISTING ~SPPR325.spl~  ~override~
-      LPF d2_safe_spell END    // use default settings (protects allies/neutrals)
+      LPF d2_safe_spell STR_VAR insert=above END    // use default settings (protects allies/neutrals)
     BUT_ONLY
   END
 
@@ -105,7 +105,7 @@ ACTION_IF (patch_cloudburst = 1) BEGIN
       PATCH_IF (SOURCE_SIZE > 0x99) BEGIN    // skip if no headers
         READ_SHORT 0x98 proj
         PATCH_IF proj = cloudburst BEGIN
-          LPF d2_safe_spell END
+          LPF d2_safe_spell STR_VAR insert=above END
         END
       END
 

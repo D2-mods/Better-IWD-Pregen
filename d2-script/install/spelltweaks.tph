@@ -14,8 +14,10 @@ ACTION_IF (spelltweaks = 6) BEGIN  OUTER_SET safespell=1 OUTER_SET hitstun=0 OUT
 ACTION_IF (spelltweaks = 7) BEGIN  OUTER_SET safespell=0 OUTER_SET hitstun=1 OUTER_SET noschools=1  END
 
 //ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET noschools = 0  END
-ACTION_IF (GAME_IS ~pstee~) BEGIN  OUTER_SET noschools = 0  END
 ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN  OUTER_SET safespell = 0  END
+OUTER_SET not_pst = 1
+ACTION_IF (GAME_IS ~pstee~) BEGIN  OUTER_SET noschools=0 OUTER_SET not_pst=0  END
+ACTION_IF (GAME_IS ~pst~) BEGIN  OUTER_SET safespell=0 OUTER_SET noschools=0 OUTER_SET not_pst=0  END
 
 OUTER_SET bg2_engine = 0
 ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN  OUTER_SET bg2_engine = 1 END
@@ -162,14 +164,14 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
       PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~EFFHW~) BEGIN SET stuncheck = 1 END    // iwd2 (horrid wilting)
       PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~EFFWT~) BEGIN SET stuncheck = 1 END    // iwd2 (horrid wilting)
 
-      PATCH_IF !(GAME_IS ~pst pstee~) BEGIN
+      PATCH_IF (not_pst > 0) BEGIN
         PATCH_IF (proj=187 OR proj=95 OR proj=279 OR proj=229) BEGIN  SET stuncheck = 0  END
       END
       PATCH_IF (iwd_classic > 0) BEGIN
         PATCH_IF (proj=212 OR proj=214 OR proj=301 OR proj=309) BEGIN  SET stuncheck = 0  END
         PATCH_IF (proj=300 OR proj=213 OR proj=308 OR proj=311) BEGIN  SET stuncheck = 0  END
       END ELSE
-      PATCH_IF !(GAME_IS ~pst pstee~) BEGIN
+      PATCH_IF (not_pst > 0) BEGIN
         PATCH_IF (proj = 98) BEGIN  SET stuncheck = 0  END    // ice storm in non-IWD lasts 4 rounds
         PATCH_IF (proj = 209) BEGIN  SET stuncheck = 0  END    // beholder blast in non-IWD
       END
@@ -194,7 +196,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
       WRITE_LONG 0x1e (THIS BAND BNOT BIT11)    // invoker
       WRITE_LONG 0x1e (THIS BAND BNOT BIT12)    // necro
       WRITE_LONG 0x1e (THIS BAND BNOT BIT13)    // transmuter
-      PATCH_IF (GAME_IS ~iwd2~) BEGIN  WRITE_BYTE 0x25 9  END    // 9 = Generalist school (only needed for IWD2)
+      PATCH_IF (splcheck = 0xa9) BEGIN  WRITE_BYTE 0x25 9  END    // 9 = Generalist school (only needed for IWD2)
     END
   END
 BUT_ONLY
@@ -284,14 +286,15 @@ COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
       SET stuncheck = 1
       PATCH_IF (sec = 9) BEGIN  SET stuncheck = 0  END    // skip terrain spells (Cloudkill, etc.)
       PATCH_IF (sec=1 OR sec=2 OR sec=3 OR sec=7) BEGIN  SET stuncheck = 0  END    // skip barrier/counter damage
-      PATCH_IF !(GAME_IS ~pst pstee~) BEGIN
+
+      PATCH_IF (not_pst > 0) BEGIN
         PATCH_IF (proj=187 OR proj=95 OR proj=279 OR proj=229) BEGIN  SET stuncheck = 0  END
       END
       PATCH_IF (iwd_classic > 0) BEGIN
         PATCH_IF (proj=212 OR proj=214 OR proj=301 OR proj=309) BEGIN  SET stuncheck = 0  END
         PATCH_IF (proj=300 OR proj=213 OR proj=308 OR proj=311) BEGIN  SET stuncheck = 0  END
       END ELSE
-      PATCH_IF !(GAME_IS ~pst pstee~) BEGIN
+      PATCH_IF (not_pst > 0) BEGIN
         PATCH_IF (proj = 98) BEGIN  SET stuncheck = 0  END    // ice storm in non-IWD lasts 4 rounds
         PATCH_IF (proj = 209) BEGIN  SET stuncheck = 0  END    // beholder blast in non-IWD
       END

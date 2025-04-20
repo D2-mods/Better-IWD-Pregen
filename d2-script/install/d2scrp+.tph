@@ -38,11 +38,9 @@ BEGIN
 
   ACTION_IF (FILE_EXISTS ~%workspace%/%baf_to_add%.BAF~) BEGIN
     EXTEND_BOTTOM ~d2scrp+.BCS~  ~%workspace%/%baf_to_add%.BAF~
-  END
-  ELSE BEGIN
-    ACTION_IF (FILE_EXISTS ~%blocks%/%baf_to_add%.BAF~) BEGIN
-      EXTEND_BOTTOM ~d2scrp+.BCS~  ~%blocks%/%baf_to_add%.BAF~
-    END
+  END ELSE
+  ACTION_IF (FILE_EXISTS ~%blocks%/%baf_to_add%.BAF~) BEGIN
+    EXTEND_BOTTOM ~d2scrp+.BCS~  ~%blocks%/%baf_to_add%.BAF~
   END
 
 END
