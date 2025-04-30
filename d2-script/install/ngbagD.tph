@@ -4,32 +4,32 @@ Bottomless, and Gold is exchanged when adding/removing items (experimental)
 
 
 //prep
-DEFINE_PATCH_FUNCTION d2goldbag BEGIN
+DEFINE_PATCH_FUNCTION d2goldbag INT_VAR markup=150 resell=50 BEGIN
   WRITE_LONG 0x10 THIS | BIT13    // make buy price ignore rep
-  WRITE_LONG 0x14 180             // sell markup (bag "sells" to character)
-  WRITE_LONG 0x18 65              // buy markup (bag "buys" from character)
+  WRITE_LONG 0x14 markup    // sell markup (bag "sells" to character)
+  WRITE_LONG 0x18 resell    // buy markup (bag "buys" from character)
   WRITE_SHORT 0x22 capacity
 END
 
+COPY ~%ngbag%/ngbagD.BAM~ ~override/d2#ngbag.BAM~
 
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
 
-  COPY ~%ngbag%/ngbagD.BAM~ ~override/d2#ngbag.BAM~
   COPY ~%ngbag%/d2hbee1.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @730 SAY UNIDENTIFIED_DESC @734
     SAY NAME2 @730
     WRITE_ASCII 0x3a ~d2#ngbag~ #8    // set inventory icon
-	
+
   COPY ~%ngbag%/d2hbee1.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
-    LPF d2goldbag END
-	
+    LPF d2goldbag INT_VAR markup=140 resell=65 END
+
   ACTION_IF (GAME_INCLUDES ~bg2~) BEGIN
     EXTEND_BOTTOM ~AR0602.BCS~ ~%ngbag%/ngbag-imoen.BAF~
   END
-  
+
   ACTION_IF (GAME_INCLUDES ~sod~) BEGIN
     EXTEND_BOTTOM ~bd0120.BCS~  ~%ngbag%/ngbag-sodscript.BAF~
   END
@@ -53,23 +53,42 @@ END
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
 ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
-  COPY ~%ngbag%/ngbagD.BAM~ ~override/d2#ngbag.BAM~
   COPY ~%ngbag%/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
     SAY NAME2 @730 SAY DESC @734
     WRITE_ASCII 0x3a ~d2#ngbag~ #8    // set inventory icon
-	
+
   COPY ~%ngbag%/d2hbee0.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
-    LPF d2goldbag END
-	
+    LPF d2goldbag INT_VAR markup=130 resell=80 END
+
   ACTION_FOR_EACH script IN ~BALDUR~ ~BALDUR25~ ~bdbaldur~ BEGIN
     ACTION_IF (FILE_EXISTS_IN_GAME ~%script%.BCS~) BEGIN
       EXTEND_TOP ~%script%.BCS~  ~%ngbag%/ngbag-script.BAF~
     END
   END
-  
+
 END
+END
+
+////////////////////////////////////////////////////////////
+
+//pstee
+
+ACTION_IF (GAME_IS ~pstee~) BEGIN
+  COPY ~%ngbag%/pstbag.ITM~ ~override/d2#ngbag.ITM~
+    SAY NAME1 @730
+    SAY NAME2 @730 SAY DESC @778734
+    WRITE_ASCII 0x3a ~d2#ngbag~ #8
+    WRITE_ASCII 0x44 WMTPOT #8       // ground bottle icon (match Argent77's bag mod)
+    WRITE_ASCII 0x10 INT_12O1 #8     // drop sound
+    WRITE_ASCII 0x58 INT_12O #8      // pick up sound
+
+  COPY ~%ngbag%/pstbag.STO~ ~override/d2#ngbag.STO~
+    SAY 0xc @730
+    LPF d2goldbag INT_VAR markup=130 resell=80 END
+
+  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/ngbag-script.BAF~
 END
 
 ////////////////////////////////////////////////////////////
@@ -79,10 +98,9 @@ END
 ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
   COPY_EXISTING ~d2#ngbag_backup.STO~ ~override/d2#ngbag.STO~    // revert edits to store file
-    LPF d2goldbag END
+    LPF d2goldbag INT_VAR markup=130 resell=80 END
   // end COPY
-  
-  COPY ~%ngbag%/ngbagD.BAM~ ~override/d2#ngbag.BAM~
+
   COPY_EXISTING ~d2#ngbag_backup.ITM~ ~override/d2#ngbag.ITM~    // revert edits to item file
     SAY DESC @734
     WRITE_ASCII 0x3a ~d2#ngbag~ #8    // set inventory icon

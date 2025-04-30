@@ -1,6 +1,6 @@
 # Better IWD Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
-Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2 (including EET/BGT/IWD2EE).
+Supports: classic and EE versions of BG1, BG2, IWD, and IWD2 (including EET/BGT/IWD2EE).
 
 --
 
@@ -347,15 +347,15 @@ IWDEE:
 - Winter wolf will move slightly faster than in natural form.
 - Polar bear is similar speed or slightly slower (depending on angle of movement).
 
-Classic:
+IWD1 (classic):
 - Increases movement of all Druid shapeshifts. 
 - The winter wolf moves faster than in natural form. 
 - Polar bear gets a huge increase. It now moves similar speed to natural form (instead of ridiculously slow).
 - The boring beetle and elementals are slightly slower than natural form.
 
 Additional info:
-- There are no conflicts with this tweak and the similar tweak in my Polymorph fixes mod. If differing options are chosen, the game will use whichever is installed last.
-- Classic: The 2 installer options are identical. Game doesn't have a polymorph spell.
+- There are no conflicts with this tweak and the similar tweak in my [Polymorph fixes](https://github.com/D2-mods/Polymorph-fixes-for-IWDEE) mod. If differing options are chosen, the game will use whichever is installed last.
+- Classic IWD: The 2 installer options are identical. Game doesn't have a polymorph spell.
   
 --
 
@@ -369,8 +369,8 @@ Give party starting equipment (IWD games)
 
 This component gives the party basic starting weapons, as well as the "Worn Garment" armor. Weapons are given based on proficiencies (IWDEE), or class (IWD2), or randomly (classic IWD). There's also an option to start with a bag, containing at least 1 of each weapon type. More info below.
 
-> Note: For IWD2, the pre-made parties already start out equipped, so this just makes it more fair for custom parties.  
-> This component is fully compatible with the IWD2EE mod. It's also compatible with IWD-in-BG2, if you really want to use that version.
+- Note: For IWD2, the pre-made parties already start out equipped, so this just makes it more fair for custom parties.  
+- This component is fully compatible with the IWD2EE mod. It's also compatible with IWD-in-BG2, if you really want to use that version.
 
 --
 
@@ -384,7 +384,7 @@ After about 1 round, the script will never run again for that playthrough for th
 
 **Option 1 (auto-equip):**
 
-Instructions:
+How it works:
 - Start a new game with new characters (you can also load one saved at the start).
 - Wait a few seconds for the script to run for each character.
 - That's it. The items will be either equipped or in the inventory.
@@ -464,7 +464,10 @@ Give party a Bag of Holding at game start (classic and EEs)
 
 You start with a bottomless bag (60000+ capacity), but unlike other bags, gold is added or taken away whenever items are transferred. Otherwise, it works like a regular bag.
 
-Note that taking items out of the bag isn't cheap. I set to a 180% markup, so comparable to the more expensive merchants. However, the gold you get for putting items into the bag is higher than what you'd get from most stores and there's no depreciation. In BG2, the amounts are comparable to the best ToB merchants. In IWD, there are several merchants that will pay more, but most will only accept certain item types.
+v7.14 changes:
+- BGEE/BG2EE have 65% resell and 140% markup if buying back.
+- IWDEE/PSTEE have 80% resell and 130% markup if buying back.
+- previously, all games had 65% resell and 180% markup.
 
 
 <details>
@@ -472,9 +475,9 @@ Note that taking items out of the bag isn't cheap. I set to a 180% markup, so co
 
 --
 
-**Info:**
-- Bag screen won't show any numbers (for current gold or amounts transferred).
-- You can sell items in the bag to merchants (still costs gold to remove from bag).
+**Notes:**
+- Bag screen doesn't show current gold amount (except in PSTEE).
+- You can sell items in the bag to merchants. (still costs gold to remove from bag)
 - Reputation has no effect.
 - Charisma of the active character (the one with the bag) adjusts price for buying items back.
 
@@ -549,7 +552,8 @@ Misc spell tweaks (classic and EEs)
 - PSTEE: "No mage school restrictions" not available. (note: many PSTEE spells use hardcoded projectiles or effects, so the damage ones only apply to a few spells)
 - BG1 (classic): "Damage party friendly" not available.
 - IWD1/IWD2 (classic): Projectiles that apply damage directly are skipped for damage tweaks (ex. Agannazar's Scorcher). Most spells like fireball, skull trap, etc. will be patched. If unsure, test spell on PCs before using.
-- IWD2: "No mage school restrictions" will change all arcane spells to Generalist school. This is the only way to make it work for IWD2. This means that bonuses from feats or other sources will not apply. (Specialists will still have a bonus spell slot and will still be identified as the specialist for scripts and dialogues.)
+- IWD1 (classic): "Damage party friendly" does not reliably protect from wands/item spells unless they are casting an actual spell. Most wands apply effects directly instead of casting a spell.
+- IWD2: "No mage school restrictions" will change all arcane spells to Generalist school. This is the only way to make it work for IWD2. This means that bonuses from feats or other sources will not apply. (note: Specialists will still have a bonus spell slot and will still be identified as the specialist for scripts and dialogues.)
 
 --
 

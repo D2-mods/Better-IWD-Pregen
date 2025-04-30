@@ -1,0 +1,129 @@
+/*
+This is an edit of ALTER_STORE_ITEM function by Luke.
+https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/page/5/#comment-262048
+
+added support for PSTEE
+Can set PST's "sale_trigger" stingref. Text should be a scripting check, e.g. "Global" check.
+*/
+
+//added "checkstack", only use for stackable items (fixes bugs caused by charges=0 in bags)
+//used for "items stack to 999" tweak (d2-script mod), which can change nonstackable items to stackable.
+
+
+DEFINE_PATCH_FUNCTION d2_alter_store_item
+  INT_VAR
+    duration         = ~-1~
+    charges1         = ~-1~
+    charges2         = ~-1~
+    charges3         = ~-1~
+    flags            = ~-1~
+    number_in_stock  = ~-1~
+    infinite_supply  = ~-1~
+    sale_trigger     = ~-1~    // stringref (scripting check)
+    flags_mode       = 0       // 0=overwrite, 1=set bits, 2=clear bits
+    checkstack       = 0       // if checkstack=1, then sets charges1=1 if currently 0 (for matched resource)
+    patch_all        = 0       // patch all items, ignores match_resource
+  STR_VAR
+    match_resource = ~~    // can be 1 item, can be a list, can be regexp (ex. modder id)
+    resource       = ~~    // skipped if patch_all is set
+  RET
+    duration charges1 charges2 charges3 flags    // RET info for a single match_resource
+    number_in_stock infinite_supply sale_trigger
+BEGIN
+  SET patch_store = 0
+  PATCH_IF !(~%match_resource%~ STR_EQ ~~) BEGIN  SET patch_store = 1  END
+
+  PATCH_IF (patch_all>0 OR patch_store>0) BEGIN
+    READ_LONG 0x034 ofs_items_for_sales
+    READ_LONG 0x038 num_items_for_sales
+
+    // add checks
+    SET stuff = 0x1c
+    PATCH_IF (GAME_IS ~pstee~) BEGIN  SET stuff = 0x58  END
+    SET is_iwd2 = 0
+    PATCH_IF (GAME_IS ~iwd2~) BEGIN  SET is_iwd2 = 1  END
+
+    // set patch variables (to not conflict with RET vars)
+    SET item_duration         = duration
+    SET item_charges1         = charges1
+    SET item_charges2         = charges2
+    SET item_charges3         = charges3
+    SET item_flags            = flags
+    SET item_amount           = number_in_stock
+    SET item_infinite         = infinite_supply
+    SET item_psttrigger       = sale_trigger
+
+    FOR (idx = 0; idx < num_items_for_sales; ++idx) BEGIN
+      SET ofs = ofs_items_for_sales + idx * stuff
+      READ_ASCII ofs s (8) NULL
+      SET patch_item = 0
+      PATCH_IF !(~%match_resource%~ STRING_CONTAINS_REGEXP ~%s%~) BEGIN  SET patch_item = 1  END
+      PATCH_IF !(~%s%~ STRING_CONTAINS_REGEXP ~%match_resource%~) BEGIN  SET patch_item = 1  END
+//      PATCH_IF (~%match_resource%~ STR_EQ ~%s%~) BEGIN  SET patch_item = 1  END
+
+      PATCH_IF (patch_all<1 AND patch_item>0) BEGIN
+        PATCH_IF !(~%resource%~ STR_EQ ~~) BEGIN
+          WRITE_ASCIIE ofs ~%resource%~ #8
+        END
+      END
+
+      PATCH_IF (patch_all>0 OR patch_item>0) BEGIN
+        PATCH_IF (item_duration != ~-1~) BEGIN
+          WRITE_SHORT (ofs + 0x8) item_duration
+        END
+        PATCH_IF (item_charges1 != ~-1~) BEGIN
+          WRITE_SHORT (ofs + 0xa) item_charges1
+        END
+        PATCH_IF (item_charges2 != ~-1~) BEGIN
+          WRITE_SHORT (ofs + 0xc) item_charges2
+        END
+        PATCH_IF (item_charges3 != ~-1~) BEGIN
+          WRITE_SHORT (ofs + 0xe) item_charges3
+        END
+        PATCH_IF (item_amount != ~-1~) BEGIN
+          WRITE_LONG (ofs + 0x14) item_amount
+        END
+        PATCH_IF (item_infinite != ~-1~) BEGIN
+          WRITE_LONG (ofs + 0x18) item_infinite
+        END
+        PATCH_IF (stuff=0x58 && item_psttrigger != ~-1~) BEGIN
+          WRITE_LONG (ofs + 0x1c) item_psttrigger
+        END
+        PATCH_IF (item_flags != ~-1~) BEGIN
+          PATCH_IF (flags_mode = 1) BEGIN // set specific bits
+            WRITE_LONG (ofs + 0x10) (THIS BOR item_flags)
+          END ELSE PATCH_IF (flags_mode = 2) BEGIN  // clear specific bits
+            WRITE_LONG (ofs + 0x10) (THIS BAND BNOT item_flags)
+          END ELSE BEGIN  // default: overwrite all item_flags
+            WRITE_LONG (ofs + 0x10) item_flags
+          END
+        END
+
+        // RET vars (note: use with single match_resource)
+        READ_SHORT (ofs + 0x8) duration
+        READ_SHORT (ofs + 0xa) charges1    // this MUST be higher than 0 if item is in a bag and stackable
+        READ_SHORT (ofs + 0xc) charges2
+        READ_SHORT (ofs + 0xe) charges3
+        READ_LONG (ofs + 0x10) flags
+        READ_LONG (ofs + 0x14) number_in_stock
+        READ_LONG (ofs + 0x18) infinite_supply
+        PATCH_IF (stuff = 0x58) BEGIN
+          READ_LONG (ofs + 0x1c) sale_trigger    // pstee only
+        END
+
+
+        // iwd2: charges1=quantity stack=1, others: charges1=1 stack=quantity
+        PATCH_IF (checkstack>0 && charges1<1) BEGIN
+          SET charges1=1
+          PATCH_IF (is_iwd2 > 0) BEGIN  SET charges1=number_in_stock SET number_in_stock=1  END
+          WRITE_SHORT (ofs + 0xa) charges1
+          WRITE_LONG (ofs + 0x14) number_in_stock
+        END
+      END
+    END    // end of FOR checks
+  END
+END
+
+
+//
+//

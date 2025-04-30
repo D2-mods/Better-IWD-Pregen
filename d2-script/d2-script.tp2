@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~7.10~
+VERSION ~7.14~
 AUTO_EVAL_STRINGS
 
 ALWAYS
@@ -228,30 +228,35 @@ INCLUDE ~%install%/ngitembag.tph~
 
 BEGIN @40701    // "Bottomless" bag (same as Tweaks Anthology component)
 DESIGNATED 90
-REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc iwd pst pstee~) @50
+REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc iwd pst~) @50
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGA~
 OUTER_SET capacity = 1
 INCLUDE ~%install%/ngbag.tph~
+INCLUDE ~%install%/ngbag_biff.tph~    // for pstee
 
 BEGIN @40702    // Capacity = 50 items (IWD2 default)
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGB~
 OUTER_SET capacity = 2
 INCLUDE ~%install%/ngbag.tph~
+INCLUDE ~%install%/ngbag_biff.tph~    // for pstee
 
 BEGIN @40703    // Capacity = 100 items (BG2 default)
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGC~
 OUTER_SET capacity = 3
 INCLUDE ~%install%/ngbag.tph~
+INCLUDE ~%install%/ngbag_biff.tph~    // for pstee
 
 BEGIN @40704    // Bottomless, and Gold is exchanged when adding/removing items (experimental)
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @51
+REQUIRE_PREDICATE (FILE_EXISTS ~engine.lua~) @51
+REQUIRE_PREDICATE (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) @51
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGD~
 OUTER_SET capacity = 65000
 INCLUDE ~%install%/ngbagD.tph~
+INCLUDE ~%install%/ngbag_biff.tph~    // for pstee
 
 ////////////////////////////////////////////////////////////
 
@@ -277,6 +282,35 @@ SUBCOMPONENT @40800
 LABEL ~D2-TWEAKS-CONBON25~
 OUTER_TEXT_SPRINT style ~25~
 INCLUDE ~%install%/conbonus.tph~
+
+////////////////////////////////////////////////////////////
+
+//Make items stackable to 999
+
+BEGIN @40901    // Stackable or nonmagical, no weapons
+DESIGNATED 110
+SUBCOMPONENT @40900
+LABEL ~D2-TWEAKS-STACKABLE1~
+OUTER_SET stackable = 1
+INCLUDE ~%install%/stackableitems2.tph~
+
+BEGIN @40902    // Stackable items only
+SUBCOMPONENT @40900
+LABEL ~D2-TWEAKS-STACKABLE2~
+OUTER_SET stackable = 2
+INCLUDE ~%install%/stackableitems2.tph~
+
+BEGIN @40903    // Stackable or nonmagical, with weapons
+SUBCOMPONENT @40900
+LABEL ~D2-TWEAKS-STACKABLE3~
+OUTER_SET stackable = 3
+INCLUDE ~%install%/stackableitems2.tph~
+
+BEGIN @40904    // All magical and nonmagical items (skips items with charges)
+SUBCOMPONENT @40900
+LABEL ~D2-TWEAKS-STACKABLE4~
+OUTER_SET stackable = 4
+INCLUDE ~%install%/stackableitems2.tph~
 
 ////////////////////////////////////////////////////////////
 

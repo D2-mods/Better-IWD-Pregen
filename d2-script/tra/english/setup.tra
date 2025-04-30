@@ -56,11 +56,11 @@ This file contains text shown in weidu installer
 	@40802 = ~3e-style bonuses (+1 or -1 every 2 Con) (note: Prism will spawn dead in BG1)~
 	@40803 = ~Mixed (use 3e-style at 10+, normal BG penalties at under 10)~
 
-/*
-@40900 = ~~
-	@40901 = ~~
-	@40902 = ~~
-*/
+@40900 = ~Make items stackable to 999~
+	@40901 = ~Stackable or nonmagical, no weapons~
+	@40902 = ~Stackable items only~
+	@40903 = ~Stackable or nonmagical, with weapons~
+	@40904 = ~All magical and nonmagical items (skips items with charges)~
 
 @41000 = ~Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)~
 	@41001 = ~Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)~

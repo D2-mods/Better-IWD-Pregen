@@ -312,6 +312,7 @@ Special: Gold is exchanged when adding or removing items
 
 Weight: 5~
 
+
 //
 //iwd2
 @735 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
@@ -333,6 +334,33 @@ STATISTICS:
 
 Capacity: 100 items
 Weight: 5 lb.~
+
+
+//
+//pstee bags
+@778731 = ~BAG OF HOLDING
+Weight: 5
+
+As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
+
+@778732 = ~BAG OF HOLDING
+Capacity: 50
+Weight: 5
+
+As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
+
+@778733 = ~BAG OF HOLDING
+Capacity: 100
+Weight: 5
+
+As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
+
+@778734 = ~BAG OF HOLDING
+Special:
+   Gold is exchanged when adding or removing items
+Weight: 5
+
+As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
 
 
 
@@ -375,6 +403,7 @@ Duration: 2 turns
 Area of Effect: The caster
 
 The character goes berserk 2 turns. He gains a +2 bonus to Strength and Dexterity, and becomes immune to charm, confusion, fear, feeblemind, hold, imprisonment, level drain, maze, stun, and sleep; he also gains 15 temporary Hit Points. When the state ends, the character will take 15 points of piercing damage.~
+
 
 
 

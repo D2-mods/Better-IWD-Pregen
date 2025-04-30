@@ -4,23 +4,39 @@ This file is for bottomless, 50 items, or 100 items options.
 */
 
 
+/*IWD2 bags:
+each row counts as 1 item, nonstackables cannot stack, stackables stack up to ITM max
+100 arrows (80 stack size) will be 1 row of 80 and 1 row of 20, and count as 2 items
+5 long swords will be 5 rows of 1 long sword
+*/
+
+/*BG2 bags (also EEs and HoW/TotlM):
+each item counts as 1 item, nonstackables can stack in a row, no limit to stack size
+100 arrows (80 stack size) will be 1 row of 100, and count as 100 items
+5 long swords will be 1 row with 5 long swords
+*/
+
+
 //prep
 ACTION_IF (capacity=1) BEGIN
   OUTER_SET capacity = 32767 
-  OUTER_SET bg2_desc = RESOLVE_STR_REF (@731)
-  OUTER_SET id2_desc = RESOLVE_STR_REF (@735)
+  ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET id2_desc = RESOLVE_STR_REF (@735)  END ELSE
+  ACTION_IF (GAME_IS ~pstee~) BEGIN  OUTER_SET pst_desc = RESOLVE_STR_REF (@778731)  END ELSE
+  BEGIN  OUTER_SET bg2_desc = RESOLVE_STR_REF (@731)  END
 END
 
 ACTION_IF (capacity=2) BEGIN
   OUTER_SET capacity = 50
-  OUTER_SET bg2_desc = RESOLVE_STR_REF (@732)
-  OUTER_SET id2_desc = RESOLVE_STR_REF (@736)
+  ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET id2_desc = RESOLVE_STR_REF (@736)  END ELSE
+  ACTION_IF (GAME_IS ~pstee~) BEGIN  OUTER_SET pst_desc = RESOLVE_STR_REF (@778732)  END ELSE
+  BEGIN  OUTER_SET bg2_desc = RESOLVE_STR_REF (@732)  END
 END
 
 ACTION_IF (capacity=3) BEGIN
   OUTER_SET capacity = 100
-  OUTER_SET bg2_desc = RESOLVE_STR_REF (@733)
-  OUTER_SET id2_desc = RESOLVE_STR_REF (@737)
+  ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET id2_desc = RESOLVE_STR_REF (@737)  END ELSE
+  ACTION_IF (GAME_IS ~pstee~) BEGIN  OUTER_SET pst_desc = RESOLVE_STR_REF (@778733)  END ELSE
+  BEGIN  OUTER_SET bg2_desc = RESOLVE_STR_REF (@733)  END
 END
 
 
@@ -192,6 +208,31 @@ ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc ca~) BEGIN
     EXTEND_BOTTOM ~TC0009.BCS~ ~%ngbag%/ngbag-ca.BAF~
   END
   
+  EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/ngbag-script.BAF~
+END
+
+////////////////////////////////////////////////////////////
+
+//pstee
+
+ACTION_IF (GAME_IS ~pstee~) BEGIN
+  OUTER_TEXT_SPRINT icon  ~II130~
+  COPY ~%ngbag%/pstbag.ITM~ ~override/d2#ngbag.ITM~
+    SAY NAME1 @730
+    SAY NAME2 @730 WRITE_LONG 0x54 pst_desc
+    WRITE_ASCII 0x3a ~%icon%~ #8
+    WRITE_ASCII 0x44 WMTPOT #8       // ground bottle icon (match Argent77's bag mod)
+    WRITE_ASCII 0x10 INT_12O1 #8     // drop sound
+    WRITE_ASCII 0x58 INT_12O #8      // pick up sound
+
+  COPY ~%ngbag%/pstbag.STO~ ~override/d2#ngbag.STO~
+    SAY 0xc @730
+    WRITE_SHORT 0x22 capacity
+
+  ACTION_IF !(FILE_EXISTS_IN_GAME ~%icon%.BAM~) BEGIN
+    COPY ~%ngbag%/pstbag.BAM~ ~override/%icon%.BAM~
+  END
+
   EXTEND_TOP ~BALDUR.BCS~ ~%ngbag%/ngbag-script.BAF~
 END
 

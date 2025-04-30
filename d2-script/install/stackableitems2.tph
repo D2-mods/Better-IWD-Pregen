@@ -1,0 +1,165 @@
+/*
+Make items stackable to 999
+note: items already stackable are always patched
+*/
+
+
+ACTION_IF !(IS_AN_INT stackable) BEGIN  OUTER_SET stackable = 1  END
+ACTION_IF (stackable<1 OR stackable>4) BEGIN  OUTER_SET stackable = 1  END
+ACTION_IF (stackable = 1) BEGIN  OUTER_SET weapons=0 OUTER_SET nonstackables=1 OUTER_SET allmagical=0 END  // + basic items
+ACTION_IF (stackable = 2) BEGIN  OUTER_SET weapons=1 OUTER_SET nonstackables=0 OUTER_SET allmagical=0 END  // stackables only
+ACTION_IF (stackable = 3) BEGIN  OUTER_SET weapons=1 OUTER_SET nonstackables=1 OUTER_SET allmagical=0 END  // + weapons
+ACTION_IF (stackable = 4) BEGIN  OUTER_SET weapons=1 OUTER_SET nonstackables=1 OUTER_SET allmagical=1 END  // + magic items
+OUTER_SET printarrays = 0    // 1 = weidu shows items changed from nonstackable to stackable
+
+
+DEFINE_ACTION_FUNCTION stackableitems INT_VAR stack=999 weapons=1 nonstackables=1 allmagical=0 printarrays=0 BEGIN
+
+//  ACTION_CLEAR_ARRAY d2stackableitems
+//  ACTION_CLEAR_ARRAY d2stackableitems2
+
+  OUTER_SET itmcheck = 0xa9
+  ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET itmcheck = 0xb9  END    // iwd2
+  OUTER_SET container = 36
+  OUTER_SET bags = 58    // used for iwd2 (also in bg2 but unused)
+
+  COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
+    PATCH_IF (SOURCE_SIZE > 0x71) BEGIN    // ITM check
+      PATCH_IF (~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~Z!BAG~) BEGIN    // skip bg1 bags from cdtweaks
+
+        // skip bag category (note: not used in all games)
+        READ_SHORT 0x1c cat
+        PATCH_IF (cat!=container && cat!=bags) BEGIN    // not bag
+
+          // skip undroppable or critical items
+          READ_LONG 0x18 item_flags
+          SET droppable = item_flags & BIT2
+          SET displayable = item_flags & BIT3
+          SET critical = item_flags & BIT0
+          SET conversable = item_flags & BIT11    // used for key items in iwd2 (can't put in bags)
+          PATCH_IF (droppable && displayable && NOT critical && NOT conversable) BEGIN
+
+    // check nonstackables (option 3)
+    READ_SHORT 0x38 amount
+    PATCH_IF (nonstackables<1 && amount<2) BEGIN  SET amount = stack  END
+
+    PATCH_IF (allmagical < 1) BEGIN
+      SET magical = item_flags & BIT6
+      PATCH_IF (magical && amount<2) BEGIN  SET amount = stack  END    // skip magical unless already stackable
+    END
+
+    // check weapons (option 2)
+    READ_SHORT 0x68 exts
+    PATCH_IF (weapons<1 && stack>amount && exts>0) BEGIN
+      SET header = 3
+      PATCH_IF (exts>0 && itmcheck=0xa9) BEGIN  READ_BYTE  0x72 header  END    // 3 = magical
+      PATCH_IF (exts>0 && itmcheck=0xb9) BEGIN  READ_BYTE  0x82 header  END    // iwd2
+      PATCH_IF (header!=3 && amount<2) BEGIN  SET amount = stack  END    // skip if weapon and nonstackable
+    END
+
+    // check header1 charges (prevent stacking bug)
+    PATCH_IF (stack>amount && exts>0) BEGIN
+      SET charges = 0
+      PATCH_IF (exts>0 && itmcheck=0xa9) BEGIN  READ_SHORT 0x94 charges  END
+      PATCH_IF (exts>0 && itmcheck=0xb9) BEGIN  READ_SHORT 0xa4 charges  END
+      PATCH_IF (charges > 1) BEGIN  SET amount = stack  END
+    END
+
+    // exclude some d2-weapon nonmagicals (if skipping magic items)
+    PATCH_IF (allmagical<1 && stack>amount && exts>0) BEGIN
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~d2bow01~) BEGIN  SET amount = stack  END
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~d2swd01~) BEGIN  SET amount = stack  END
+    END
+
+    // skip if any header is a spell (unless already stackable)
+    PATCH_IF (stack>amount && exts>0 && amount<2) BEGIN
+      SET has_spell = 0
+      GET_OFFSET_ARRAY itm_headers  ITM_V10_HEADERS
+      PHP_EACH itm_headers AS num => header_off BEGIN    // array of headers
+        PATCH_IF (has_spell = 0) BEGIN
+          READ_BYTE header_off ability
+          PATCH_IF (ability = 3) BEGIN  SET has_spell = 1  END
+        END
+      END
+      PATCH_IF (has_spell > 0) BEGIN  SET amount = stack  END
+    END
+
+    PATCH_IF (stack > amount) BEGIN    // set if higher
+      WRITE_SHORT 0x38 stack
+      PATCH_IF (amount < 2) BEGIN
+        SPRINT $d2stackableitems(~%SOURCE_RES%~) ~%stack%~   // items changed from nonstackable to stackable
+      END
+    END
+
+          END
+        END
+      END
+    END
+  BUT_ONLY
+
+
+  // scan stores (makes new array)
+  OUTER_SET stocheck = 0x9c
+  ACTION_IF (GAME_IS ~how totlm iwd2~) BEGIN  OUTER_SET stocheck = 0xf0  END
+  OUTER_SET container = 5
+  ACTION_IF (GAME_IS ~how totlm iwd2~) BEGIN  OUTER_SET container = 4  END
+
+  COPY_EXISTING_REGEXP - GLOB ~.*\.STO~  ~~
+    PATCH_IF (SOURCE_SIZE > stocheck) BEGIN    // no chance of items if smaller
+      READ_LONG 0x8 type      // 4 = container
+      READ_LONG 0x38 items    // number of items in bag
+      PATCH_IF (type=container && items>0) BEGIN
+
+        // make store => items array
+        TEXT_SPRINT list  ~~
+        PHP_EACH d2stackableitems AS item => stack BEGIN
+          PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~[^a-z^0-9^_]%item%[^a-z^0-9^_]~) BEGIN
+            PATCH_IF (~%list%~ STR_EQ ~~) BEGIN
+              TEXT_SPRINT list  ~%item%~
+            END ELSE BEGIN
+              TEXT_SPRINT list  ~%list% %item%~
+            END
+          END
+        END
+        SPRINT $d2stackableitems2(~%SOURCE_RES%~) ~%list%~    // store => list
+
+      END
+    END
+  BUT_ONLY
+
+
+  // patch bags (set stackables to minimum of 1 charge)
+  // fixes possible bugs if stackables have 0 charges (EEs: disappearing items, classic: underflow)
+  ACTION_PHP_EACH d2stackableitems2 AS store => list BEGIN
+    ACTION_IF !(~%list%~ STR_EQ ~~) BEGIN
+      COPY_EXISTING ~%store%.sto~  ~override~
+        PHP_EACH d2stackableitems AS item => stack BEGIN
+
+  PATCH_IF !(~%list%~ STRING_CONTAINS_REGEXP ~%item%~) BEGIN
+    LPF d2_alter_store_item INT_VAR checkstack=1 STR_VAR match_resource=EVAL ~%item%~ END
+  END
+
+        END
+      BUT_ONLY
+    END
+  END
+
+
+  // testing
+  ACTION_IF (printarrays > 0) BEGIN
+    ACTION_PHP_EACH d2stackableitems AS item => stack BEGIN    // print items changed from nonstackable to stackable
+      PRINT ~%item% => %stack%~
+    END
+    ACTION_PHP_EACH d2stackableitems2 AS store => list BEGIN    // print bags with items from above array
+      PRINT ~%store% => %list%~
+    END
+  END
+
+END
+
+
+LAF stackableitems INT_VAR weapons=weapons nonstackables=nonstackables allmagical=allmagical printarrays=printarrays END
+
+
+//
+//

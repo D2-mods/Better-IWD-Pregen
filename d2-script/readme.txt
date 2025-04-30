@@ -1,22 +1,27 @@
 Better IWD Pregen
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases
-Compatible with classic and EE versions of BG1, BG2, IWD, and IWD2 (including EET/BGT/IWD2EE).
+Supports: classic and EE versions of BG1, BG2, IWD1, and IWD2 (including EET/BGT/IWD2EE).
 
 --
 
-A minimalist script and tweak pack for Infinity Engine games. This mod was started as an attempt to make an improved version of the 'IWD Pregen' party AI script from Icewind Dale: Enhanced Edition.
+A minimalist script and tweak pack for Infinity Engine games. This mod was started as an attempt to make an improved version of the "IWD Pregen" party AI script from Icewind Dale: Enhanced Edition.
 
 See GitHub page for additional info on scripts and tweaks.
 
-
-==================================================
-Install info
-==================================================
-Extract to game folder and run the setup to install or uninstall. I'm not familiar with Mac/Linux, but installing should be the same as other weidu mods. It's best to install this mod near the end of the order.
-
 --
 
+Update notes:
+- added PSTEE support for several tweaks
+- added Misc spell tweaks component (see components section)
+- added "Make items stackable to 999" (weapons and magic items optional)
+
+NOTE: Generalized Biffing is not required for PSTEE. The bag from this mod will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas, creatures, or stores.
+
+
+==================================================
+Components
+==================================================
 Script components:
 1. Better IWD Pregen
 2. Better AI for Call Woodland Beings (EEs, BG2)
@@ -29,24 +34,27 @@ Tweak components:
 4. Shapeshift movement bonuses bypass Free Action (EEs)
 5. Increase movement speed of IWD shapeshifts (IWD1, IWDEE)
 6. Give party starting equipment (IWD games)
+	- Option 1: Items are auto-equipped or added to inventory
+	- Option 2: Start with a bag, containing a mix of weapons
 7. Give party a Bag of Holding at game start (classic and EEs)
 8. All classes get full HP bonuses from Constitution (classic and EEs)
-9. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
-10. Salamander auras hit only enemies of the caster (IWDEE)
-11. Misc spell tweaks (classic and EEs):
+9. Make items stackable to 999 (classic and EEs)
+10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+11. Salamander auras hit only enemies of the caster (IWDEE)
+12. Misc spell tweaks (classic and EEs):
 	- Damage party friendly (relative to caster)
 	- Hit stun on damage (1 second)
 	- No mage school restrictions
-12. Allow Minsc to use his Berserk ability at will (BG games)
-13. Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)
-14. Remove alignment restrictions for classes (classic and EEs)
-15. Prevent paladins and rangers falling at low rep (EEs)
+13. Allow Minsc to use his Berserk ability at will (BG games)
+14. Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)
+15. Remove alignment restrictions for classes (classic and EEs)
+16. Prevent paladins and rangers falling at low rep (EEs)
 
 --
 
 Additional info:
 - All components can be installed independently and in any order, except for auto-assigning the script.
-- All components should be safe to install at end-or-order. If another mod says to install last, you can try it both ways.
+- All components should be safe to install at end of order. If another mod says to install last, you can try it both ways.
 - If using tweaks from other mods that do similar things, whichever is installed last will usually be used.
 - All tweaks have at least 2 subcomponents. i.e. if you say to "install all components", it won't automatically install any tweaks.
 
@@ -110,6 +118,29 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.14
+- update to "Start with bag" component: Adjusted markup and resell prices for the gold-exchanging bag option (EE-only). Numbers are also slightly different for IWDEE/PSTEE. The main change is that buy back prices if you need an item back aren't as insanely marked up now (was at 180%, now at 130% or 140%, depending on game).
+
+v7.13
+- pstee: added support for "Start with bag of holding" component.
+- NOTE: Generalized Biffing is not required. Bag does not reset when doing Modron Maze.
+
+v7.12
+Bug fixes for "stackable to 999" component:
+- Option 4 now skips weapons with charges (possible bugs, UI issues).
+- Any item with per day charges is now skipped (EEs: putting drained item on a not-drained item makes the drained item disappear, if stackable).
+- Installer now checks items in a bag/container. Any item changed from nonstackable to stackable is set to 1 charge if it was at 0 charges before. This fixes bugs caused by having 0 charge stackables in bags (underflow or drained/disappearing items).
+
+v7.11
+- added component: Make items stackable to 999. Has 4 options:
+	- Option 1: Stackable or nonmagical, no weapons
+	- Option 2: Stackable items only
+	- Option 3: Stackable or nonmagical, with weapons
+	- Option 4: All magical and nonmagical items (skips items with charges)
+- items with charges are skipped if it can carry more than 1 charge (prevents stacking bug).
+- critical or conversable items are always skipped.
+- NOTE: It's safe to equip an item in a stack. Only 1 item in the stack is considered equipped.
+
 v7.10
 - Spell damage tweaks now working with IWD2EE mod ("Damage party friendly", "Hit stun on damage"). Specifically, the installer now accounts for the IWD2EE damage opcode (opcode 500 with "EXDAMAGE" function).
 - IWD1/IWD2: "Damage party friendly" now working with Blade Barrier and Circle of Bones. A few other adjustments. (note: hardcoded effects or projectiles will still get through. If unsure, test if a spell hits PCs before using.)

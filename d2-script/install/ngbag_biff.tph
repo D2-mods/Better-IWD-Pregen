@@ -1,0 +1,17 @@
+/*
+biff bag files for pstee
+workaround for Modron Maze warp resetting files if not biffed
+*/ 
+
+
+ACTION_IF (GAME_IS ~pstee~) BEGIN
+  MAKE_BIFF d2ngbag BEGIN ~override~  ~^d2.*bag~ END
+
+  ACTION_BASH_FOR ~override~  ~^d2.*bag~ BEGIN
+    DELETE ~%BASH_FOR_FILESPEC%~
+  END
+END
+
+
+//
+//
