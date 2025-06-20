@@ -7,7 +7,9 @@ Supports: classic and EE versions of BG1, BG2, IWD1, and IWD2 (including EET/BGT
 
 A minimalist script and tweak pack for Infinity Engine games. This mod was started as an attempt to make an improved version of the "IWD Pregen" party AI script from Icewind Dale: Enhanced Edition.
 
-See GitHub page for additional info on scripts and tweaks.
+- See GitHub page for additional info on scripts and tweaks.
+- This mod supports any mods using the engines of supported games.
+- Older EEs that don't support v2.0+ opcodes are treated the same as original BG2 engine.
 
 --
 
@@ -118,8 +120,33 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.17
+- Script components no longer fail to install on older EE versions. EEs that don't support v2.0+ opcodes will have the same scripting as original BG2 engine.
+- Minsc rage component now only uses EE version of tweak for EE v2.0+. Older EEs will be the same as original BG2 engine (ability is usable again only after duration ends).
+- Spell tweaks component no longer crashes EE versions older than v2.0.
+
+v7.16
+"Items stackable to 999" notes:
+- iwd2: fixed an issue that made it so items in stores (if 2+ in stock) were purchased in the full stack, instead of individually. (note: selling stackables in IWD2 may increase stack size instead of store quantity. This is just how the engine works. This is only an issue if you sold something and wanted to buy it back.)
+- bg1/iwd1 (classic): fixed an issue that made it not work for many items. Items in these games need an ability header to be stackable, so the installer now adds an empty header for items that don't already have one.
+- installer won't give DLG-related weidu warnings anymore for BG1, IWD2, IWD-in-BG2, or Classic Adventures.
+
+"Give party starting items" notes:
+- iwd1 (classic): improved scripting. Previously, you sometimes had to open/close the inventory before items were added. They should be added without having to do this now.
+- iwdee: It now always gives the starting robe if the character does not start with a usable armor, even if no other part of the script triggers (ex. starting a new game in HoW).
+- iwd1/iwd2 (classic): every PC always starts with the starting robe if they don't already have it.
+- Autoequip option: the scripting now runs once for all 6 PC slots, whether or not they are filled. (i.e. a character that joins later will not have the scripting run for it)
+
+v7.15
+- Bag component: fixed harmless NI warning with EET when looking at AR0602.bcs (BG2 starting area).
+- IWD2: damage tweak now aborted during install if iwd2.exe isn't detected.
+- IWD1 (classic): added component note for damage tweak that it also disables XP bonuses. Damage and XP bonuses cannot be toggled separately for original IWD1.
+- updated Stackable items component: it now also scans all DLG/BCS files for scripting that takes items from the party. Only items changed from nonstackable to stackable by this tweak are checked. Any scripting that could possibly take a whole stack of items will be changed to have a single item taken. (note: for original BG1 and IWD1, a full stack is still taken.)
+- bg2 (classic): fixed web possibly being party friendly with Damage party friendly tweak. (an unused item in the base game was causing the web projectile to be flagged for patching)
+- bg1 (classic): Stackable items component now fixes some bg1 DLG errors to prevent weidu warning messages. Only files that could potentially affect this mod's install are fixed.
+
 v7.14
-- update to "Start with bag" component: Adjusted markup and resell prices for the gold-exchanging bag option (EE-only). Numbers are also slightly different for IWDEE/PSTEE. The main change is that buy back prices if you need an item back aren't as insanely marked up now (was at 180%, now at 130% or 140%, depending on game).
+- update to "Start with bag" component: Adjusted buy and sell markups for the gold-exchanging bag option (EE-only). Numbers are also slightly different for IWDEE/PSTEE. The main change is that buy back prices if you need an item back aren't as insanely marked up now (was at 180%, now at 130% or 140%, depending on game).
 
 v7.13
 - pstee: added support for "Start with bag of holding" component.

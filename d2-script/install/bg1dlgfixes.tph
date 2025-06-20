@@ -1,0 +1,121 @@
+/*
+fix some bg1 and iwd2 dlgs to prevent weidu warnings
+also fixes some iwd-in-bg2 dlgs, in case someone plays this version
+*/
+
+
+ACTION_IF (GAME_IS ~bg1 totsc~) BEGIN
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY bg1dlgfixes_old BEGIN
+  ~ALBERT.DLG~  => ~CreateCreature("RUFIE",[3803.695])~
+  ~CHARLE.DLG~  => ~CreateCreature("GALLOR",[3077.1261])~
+  ~RAMAZI.DLG~  => ~CreateCreature("ABELA",[260.170])~
+  ~THALAN.DLG~  => ~CreateCreature("MELICA",[286.398])~
+  ~DEGROD.DLG~  => ~])~
+  ~OBE.DLG~     => ~])~
+  ~QUINN.DLG~   => ~GiveItemCreate("MISC32",LastTalkedToBy)~
+  ~ULCAST.DLG~  => ~GiveItemCreate("SW1H19",LastTalkedToBy)~
+  ~FERGUS.DLG~  => ~);~
+END
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY bg1dlgfixes_new BEGIN
+  ~ALBERT.DLG~  => ~CreateCreature("RUFIE",[3803.695],0)~
+  ~CHARLE.DLG~  => ~CreateCreature("GALLOR",[3077.1261],0)~
+  ~RAMAZI.DLG~  => ~CreateCreature("ABELA",[260.170],0)~
+  ~THALAN.DLG~  => ~CreateCreature("MELICA",[286.398],0)~
+  ~DEGROD.DLG~  => ~],0)~
+  ~OBE.DLG~     => ~],0)~
+  ~QUINN.DLG~   => ~GiveItemCreate("MISC32",LastTalkedToBy,0,0,0)~
+  ~ULCAST.DLG~  => ~GiveItemCreate("SW1H19",LastTalkedToBy,0,0,0)~
+  ~FERGUS.DLG~  => ~)~
+END
+
+SILENT
+ACTION_PHP_EACH bg1dlgfixes_old AS file_to_patch => old_line BEGIN
+  COPY_EXISTING ~%file_to_patch%~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      PHP_EACH bg1dlgfixes_new AS match_file => new_line BEGIN
+        PATCH_IF (~%file_to_patch%~ STR_EQ ~%match_file%~) BEGIN
+          REPLACE_TEXTUALLY EXACT_MATCH ~%old_line%~  ~%new_line%~
+        END
+      END
+    END
+  IF_EXISTS BUT_ONLY
+END
+VERBOSE
+
+END
+
+
+//iwd2
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
+  COPY_EXISTING ~11OSWALD.dlg~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~#53cKulda#~ ~"53cKulda"~
+    END
+  BUT_ONLY
+
+  COPY_EXISTING ~41NICK.dlg~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      SPRINT match   ~See("OriaEssence".*)~
+      SPRINT string  ~See("OriaEssence",0)~
+      REPLACE_TEXTUALLY ~%match%~  ~%string%~
+    END
+  BUT_ONLY
+
+  COPY_EXISTING ~61NHEERO.dlg~  ~override~
+                ~50JARI.dlg~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      SPRINT match   ~See(\[ENEMY\].*)~
+      SPRINT string  ~See([ENEMY],0)~
+      REPLACE_TEXTUALLY ~%match%~  ~%string%~
+    END
+  BUT_ONLY
+END
+
+
+//iwd-in-bg2
+ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
+  COPY_EXISTING ~DEDION.dlg~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~ClassEx~ ~Class~
+      REPLACE_TEXTUALLY ~CLERIC~  ~CLERIC_ALL~
+      REPLACE_TEXTUALLY ~MAGE~    ~MAGE_ALL~
+    END
+  IF_EXISTS BUT_ONLY
+
+  COPY_EXISTING ~DORRICK.dlg~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      TEXT_SPRINT match   ~AddXPVar("Level_7.*)~
+      TEXT_SPRINT string  ~AddXP2DA("Level_7_Average")~
+      REPLACE_TEXTUALLY ~%match%~  ~%string%~
+    END
+  IF_EXISTS BUT_ONLY
+
+  COPY_EXISTING ~DMIREK.dlg~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      TEXT_SPRINT match    ~AddXPVar("Level_2.*)~
+      TEXT_SPRINT string   ~AddXP2DA("Level_2_Average")~
+      TEXT_SPRINT match2   ~SetSavedLocationPoint(2084.*)~
+      TEXT_SPRINT string2  ~SaveLocation("LOCALS","#saved_loc",[2084.1714])~
+      TEXT_SPRINT match3   ~ReturnToSavedLocation()~
+      TEXT_SPRINT string3  ~MoveToSavedLocationn("#savedloc","LOCALS")~    // nn is typo in action.ids (used by other scripts)
+      REPLACE_TEXTUALLY ~%match%~  ~%string%~
+      REPLACE_TEXTUALLY ~%match2%~  ~%string2%~
+      REPLACE_TEXTUALLY ~%match3%~  ~%string3%~
+    END
+  IF_EXISTS BUT_ONLY
+
+  COPY_EXISTING ~DMURDAUG.dlg~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~ClassEx~ ~Class~
+      TEXT_SPRINT match   ~AddXPVar("Level_12.*)~
+      TEXT_SPRINT string  ~AddXP2DA("Level_12_Very_Hard")~
+      REPLACE_TEXTUALLY ~%match%~  ~%string%~
+    END
+  IF_EXISTS BUT_ONLY
+END
+
+
+//
+//

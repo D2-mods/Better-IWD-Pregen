@@ -1,7 +1,11 @@
+//iwd1 starting items (Player1)
+//
+
 IF
 	!Global("d2Player1prep","GLOBAL",1)
-	Exists(Player1)
-	NumItems("STAF01",Player1,1)
+	OR(2)
+		NumItems("STAF01",Player1,1)
+		!Exists(Player1)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2Player1equip","GLOBAL",6)
@@ -10,8 +14,9 @@ END
 
 IF
 	!Global("d2Player1melee","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 	!HasItem("SW1H04",Player1)
+	NumItems("STAF01",Player1,1)
 THEN
 	RESPONSE #100
 		GiveItemCreate("SW1H04",Player1,0,0,0)    // longsword
@@ -21,12 +26,13 @@ END
 
 IF
 	!Global("d2Player1random","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 	!HasItem("DAGG05",Player1)
 	!HasItem("SHLD10",Player1)
+	NumItems("STAF01",Player1,1)
 THEN
 	RESPONSE #50
-		GiveItemCreate("DAGG05",Player1,0,0,0)    // throwing daggers
+		GiveItemCreate("DAGG05",Player1,10,0,0)    // throwing daggers
 		SetGlobal("d2Player1random","GLOBAL",1)
 		Continue()
 	RESPONSE #50
@@ -37,8 +43,9 @@ END
 
 IF
 	!Global("d2Player1ranged","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 	!HasItem("SLNG01",Player1)
+	NumItems("STAF01",Player1,1)
 THEN
 	RESPONSE #100
 		GiveItemCreate("SLNG01",Player1,0,0,0)    // sling
@@ -49,8 +56,9 @@ END
 
 IF
 	!Global("d2Player1robe","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 	!HasItem("d2#ngrb0",Player1)
+	NumItems("STAF01",Player1,1)
 THEN
 	RESPONSE #100
 		GiveItemCreate("d2#ngrb0",Player1,0,0,0)    // worn garment
@@ -69,11 +77,15 @@ THEN
 		Continue()
 END
 
+/*
 IF
-	!Global("d2Player1robe","GLOBAL",0)
+	Global("d2Player1robe","GLOBAL",1)
 	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 	!HasItem("d2#ngrb0",Player1)
+	NumItems("STAF01",Player1,1)
 THEN
 	RESPONSE #100
 		SetGlobal("d2Player1robe","GLOBAL",0)
+		Continue()
 END
+*/

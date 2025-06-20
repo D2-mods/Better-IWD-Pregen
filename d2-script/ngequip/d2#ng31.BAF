@@ -1,10 +1,14 @@
+//iwd-in-bg2 (bg2 engine) starting items
+//
+
 IF
 	!Global("d2Player1prep","GLOBAL",1)
-	Exists(Player1)
-	NumItems("STAF01",Player1,1)
+	OR(2)
+		NumItems("STAF01",Player1,1)
+		!Exists(Player1)
 THEN
 	RESPONSE #100
-		SetGlobalTimer("d2Player1equip","GLOBAL",6)
+		SetGlobalTimer("d2Player1equip","GLOBAL",10)
 		Continue()
 END
 
@@ -16,7 +20,7 @@ IF
 		NumItemsGT("STAF01",Player1,1)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,DestroyItem("STAF01"))
+//		ActionOverride(Player1,DestroyItem("STAF01"))    // less buggy keeping the staff
 		SetGlobal("d2Player1prep","GLOBAL",1)
 		Continue()
 END
@@ -312,7 +316,8 @@ END
 
 IF
 	!Global("d2Player1robe","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!Global("d2Player1robecheck","GLOBAL",1)
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 	!HasItemSlot(Player1,SLOT_ARMOR)
 	!HasItem("d2#ngrb0",Player1)
 THEN
@@ -320,6 +325,19 @@ THEN
 		ActionOverride(Player1,CreateItem("d2#ngrb0",0,0,0))
 		ActionOverride(Player1,FillSlot(SLOT_ARMOR))    // worn garment
 		SetGlobal("d2Player1robe","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robecheck","GLOBAL",1)
+	Global("d2Player1robe","GLOBAL",1)
+	!GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		HasItemSlot(Player1,SLOT_ARMOR)
+		HasItem("d2#ngrb0",Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1robecheck","GLOBAL",1)
 		Continue()
 END
 
@@ -334,6 +352,7 @@ THEN
 		Continue()
 END
 
+/*
 IF
 	!Global("d2Player1staff","GLOBAL",1)
 	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
@@ -342,4 +361,6 @@ IF
 THEN
 	RESPONSE #100
 		SetGlobal("d2Player1melee","GLOBAL",0)
+		Continue()
 END
+*/

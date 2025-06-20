@@ -2,7 +2,7 @@
 //same as vanilla script, but with shaman abilities added
 
 
-ACTION_IF (GAME_IS ~iwdee bgee bg2ee eet~) BEGIN
+ACTION_IF (ee_game > 0) BEGIN
 
   OUTER_SET was_it_patched = 0
 

@@ -1,7 +1,11 @@
+//iwd1 starting items (Player6)
+//
+
 IF
 	!Global("d2Player6prep","GLOBAL",1)
-	Exists(Player6)
-	NumItems("STAF01",Player6,1)
+	OR(2)
+		NumItems("STAF01",Player6,1)
+		!Exists(Player6)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2Player6equip","GLOBAL",6)
@@ -10,9 +14,10 @@ END
 
 IF
 	!Global("d2Player6random","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player6equip","GLOBAL")
+//	GlobalTimerNotExpired("d2Player6equip","GLOBAL")
 	!HasItem("SHLD05",Player2)
 	!HasItem("SHLD03",Player2)
+	NumItems("STAF01",Player6,1)
 THEN
 	RESPONSE #50
 		GiveItemCreate("SHLD05",Player2,0,0,0)    // large shield
@@ -26,9 +31,10 @@ END
 
 IF
 	!Global("d2Player6ranged","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player6equip","GLOBAL")
+//	GlobalTimerNotExpired("d2Player6equip","GLOBAL")
 	!HasItem("BOW05",Player2)
 	!HasItem("XBOW04",Player2)
+	NumItems("STAF01",Player6,1)
 THEN
 	RESPONSE #50
 		GiveItemCreate("BOW05",Player2,0,0,0)    // shortbow
@@ -44,8 +50,9 @@ END
 
 IF
 	!Global("d2Player6robe","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player6equip","GLOBAL")
+//	GlobalTimerNotExpired("d2Player6equip","GLOBAL")
 	!HasItem("d2#ngrb0",Player6)
+	NumItems("STAF01",Player6,1)
 THEN
 	RESPONSE #100
 		GiveItemCreate("d2#ngrb0",Player6,0,0,0)    // worn garment
@@ -64,11 +71,15 @@ THEN
 		Continue()
 END
 
+/*
 IF
-	!Global("d2Player6robe","GLOBAL",0)
+	Global("d2Player6robe","GLOBAL",1)
 	GlobalTimerNotExpired("d2Player6equip","GLOBAL")
 	!HasItem("d2#ngrb0",Player6)
+	NumItems("STAF01",Player6,1)
 THEN
 	RESPONSE #100
 		SetGlobal("d2Player6robe","GLOBAL",0)
+		Continue()
 END
+*/

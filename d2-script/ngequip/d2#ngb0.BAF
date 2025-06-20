@@ -1,7 +1,11 @@
+//iwdee item bag
+//
+
 IF
 	!Global("d2Player1prep","GLOBAL",1)
-	Exists(Player1)
-	NumItems("STAF01",Player1,1)
+	OR(2)
+		NumItems("STAF01",Player1,1)
+		!Exists(Player1)
 THEN
 	RESPONSE #100
 		SetGlobalTimer("d2Player1equip","GLOBAL",6)
@@ -13,7 +17,7 @@ IF
 	HasItem("STAF01",Player1)
 	OR(2)
 		!Global("d2Player1robe","GLOBAL",1)
-		NumItemsGT("STAF01",Player1,1)
+		!Global("d2Player1prep","GLOBAL",1)
 THEN
 	RESPONSE #100
 		ActionOverride(Player1,DestroyItem("STAF01"))
@@ -23,7 +27,8 @@ END
 
 IF
 	!Global("d2Player1robe","GLOBAL",1)
-	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!Global("d2Player1robecheck","GLOBAL",1)
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 	!HasItemSlot(Player1,SLOT_ARMOR)
 	!HasItem("d2#ngrb0",Player1)
 THEN
@@ -31,6 +36,19 @@ THEN
 		ActionOverride(Player1,CreateItem("d2#ngrb0",0,0,0))
 		ActionOverride(Player1,XEquipItem("d2#ngrb0",Player1,SLOT_ARMOR,EQUIP))    // worn garment
 		SetGlobal("d2Player1robe","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robecheck","GLOBAL",1)
+	Global("d2Player1robe","GLOBAL",1)
+	!GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		HasItemSlot(Player1,SLOT_ARMOR)
+		HasItem("d2#ngrb0",Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1robecheck","GLOBAL",1)
 		Continue()
 END
 
@@ -45,11 +63,14 @@ THEN
 		Continue()
 END
 
+/*
 IF
-	!Global("d2Player1robe","GLOBAL",0)
+	Global("d2Player1robe","GLOBAL",1)
 	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
 	!HasItem("d2#ngrb0",Player1)
 THEN
 	RESPONSE #100
 		SetGlobal("d2Player1robe","GLOBAL",0)
+		Continue()
 END
+*/

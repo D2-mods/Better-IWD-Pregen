@@ -18,21 +18,21 @@ each item counts as 1 item, nonstackables can stack in a row, no limit to stack 
 
 
 //prep
-ACTION_IF (capacity=1) BEGIN
+ACTION_IF (capacity = 1) BEGIN
   OUTER_SET capacity = 32767 
   ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET id2_desc = RESOLVE_STR_REF (@735)  END ELSE
   ACTION_IF (GAME_IS ~pstee~) BEGIN  OUTER_SET pst_desc = RESOLVE_STR_REF (@778731)  END ELSE
   BEGIN  OUTER_SET bg2_desc = RESOLVE_STR_REF (@731)  END
 END
 
-ACTION_IF (capacity=2) BEGIN
+ACTION_IF (capacity = 2) BEGIN
   OUTER_SET capacity = 50
   ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET id2_desc = RESOLVE_STR_REF (@736)  END ELSE
   ACTION_IF (GAME_IS ~pstee~) BEGIN  OUTER_SET pst_desc = RESOLVE_STR_REF (@778732)  END ELSE
   BEGIN  OUTER_SET bg2_desc = RESOLVE_STR_REF (@732)  END
 END
 
-ACTION_IF (capacity=3) BEGIN
+ACTION_IF (capacity = 3) BEGIN
   OUTER_SET capacity = 100
   ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET id2_desc = RESOLVE_STR_REF (@737)  END ELSE
   ACTION_IF (GAME_IS ~pstee~) BEGIN  OUTER_SET pst_desc = RESOLVE_STR_REF (@778733)  END ELSE
@@ -242,7 +242,7 @@ END
 
 ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN  
 
-  COPY_EXISTING ~d2#ngbag_backup.STO~ ~override/d2#ngbag.STO~    // revert edits to store file
+  COPY_EXISTING ~d2#ngbak.STO~ ~override/d2#ngbag.STO~    // revert edits to store file
     PATCH_IF (GAME_IS ~iwd2 how totlm~) BEGIN
       WRITE_SHORT 0x9c capacity
     END
@@ -252,7 +252,7 @@ ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWE
     END
   // end COPY
 
-  COPY_EXISTING ~d2#ngbag_backup.ITM~ ~override/d2#ngbag.ITM~    // revert edits to item file
+  COPY_EXISTING ~d2#ngbak.ITM~ ~override/d2#ngbag.ITM~    // revert edits to item file
     PATCH_IF (GAME_IS ~iwd2~) BEGIN
       WRITE_LONG 0x54 id2_desc
     END ELSE BEGIN

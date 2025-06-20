@@ -1,3 +1,7 @@
+//auto-assign script for new characters
+//
+
+
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~iwd2 iwd how totlm~) BEGIN
@@ -17,7 +21,7 @@ THEN
 END
 >>>>>>>>
 
-COPY - ~.../temp/ngauto~  ~%workspace%/ngauto.BAF~
+COPY - ~.../temp/ngauto~  ~inlined/ngauto.BAF~
   EVALUATE_BUFFER
 
 
@@ -41,7 +45,7 @@ THEN
 END
 >>>>>>>>
 
-COPY - ~.../temp/ngauto~  ~%workspace%/ngauto.BAF~
+COPY - ~.../temp/ngauto~  ~inlined/ngauto.BAF~
   EVALUATE_BUFFER
 
 
@@ -62,17 +66,17 @@ THEN
 END
 >>>>>>>>
 
-COPY - ~.../temp/ngauto~  ~%workspace%/ngauto.BAF~
+COPY - ~.../temp/ngauto~  ~inlined/ngauto.BAF~
   EVALUATE_BUFFER
-COPY - ~%workspace%/ngauto.BAF~  ~%workspace%/ngauto2.BAF~
+COPY - ~inlined/ngauto.BAF~  ~inlined/ngauto2.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player2~
-COPY - ~%workspace%/ngauto.BAF~  ~%workspace%/ngauto3.BAF~
+COPY - ~inlined/ngauto.BAF~  ~inlined/ngauto3.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player3~
-COPY - ~%workspace%/ngauto.BAF~  ~%workspace%/ngauto4.BAF~
+COPY - ~inlined/ngauto.BAF~  ~inlined/ngauto4.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player4~
-COPY - ~%workspace%/ngauto.BAF~  ~%workspace%/ngauto5.BAF~
+COPY - ~inlined/ngauto.BAF~  ~inlined/ngauto5.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player5~
-COPY - ~%workspace%/ngauto.BAF~  ~%workspace%/ngauto6.BAF~
+COPY - ~inlined/ngauto.BAF~  ~inlined/ngauto6.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player6~
 
 
@@ -81,7 +85,7 @@ END
 
 ////////////////////////////////////////////////////////////
 
-//fix SCRLEV.IDS for IWD games
+//fix SCRLEV.IDS for iwd1/iwd2 (symbolic names matched with wrong script offsets)
 ACTION_IF (GAME_IS ~iwd2~) BEGIN
   COPY ~%iwd2%/SCRLEV2.IDS~ ~override/SCRLEV.IDS~
 END
@@ -95,11 +99,11 @@ END
 ACTION_IF !(GAME_IS ~bg1 totsc~) BEGIN
 
   ACTION_IF (FILE_EXISTS_IN_GAME ~DPLAYER2.BCS~) BEGIN
-    EXTEND_TOP ~DPLAYER2.BCS~ ~%workspace%/ngauto.BAF~
+    EXTEND_TOP ~DPLAYER2.BCS~ ~inlined/ngauto.BAF~
   END
   
   ACTION_IF (FILE_EXISTS_IN_GAME ~DPLAYER3.BCS~) BEGIN
-    EXTEND_TOP ~DPLAYER3.BCS~ ~%workspace%/ngauto.BAF~
+    EXTEND_TOP ~DPLAYER3.BCS~ ~inlined/ngauto.BAF~
   END
 
 END
@@ -109,12 +113,12 @@ ELSE BEGIN    // for classic BG1
     ~DPLAYER2~
     ~DPLAYER3~
   BEGIN
-    EXTEND_TOP ~%script%.BCS~  ~%workspace%/ngauto.BAF~
-    EXTEND_TOP ~%script%.BCS~  ~%workspace%/ngauto2.BAF~
-    EXTEND_TOP ~%script%.BCS~  ~%workspace%/ngauto3.BAF~
-    EXTEND_TOP ~%script%.BCS~  ~%workspace%/ngauto4.BAF~
-    EXTEND_TOP ~%script%.BCS~  ~%workspace%/ngauto5.BAF~
-    EXTEND_TOP ~%script%.BCS~  ~%workspace%/ngauto6.BAF~
+    EXTEND_TOP ~%script%.BCS~  ~inlined/ngauto.BAF~
+    EXTEND_TOP ~%script%.BCS~  ~inlined/ngauto2.BAF~
+    EXTEND_TOP ~%script%.BCS~  ~inlined/ngauto3.BAF~
+    EXTEND_TOP ~%script%.BCS~  ~inlined/ngauto4.BAF~
+    EXTEND_TOP ~%script%.BCS~  ~inlined/ngauto5.BAF~
+    EXTEND_TOP ~%script%.BCS~  ~inlined/ngauto6.BAF~
   END
 
 END
@@ -131,18 +135,15 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     ~BG2600~  // EET
   BEGIN
 
-    ACTION_IF (FILE_EXISTS_IN_GAME ~%area%.BCS~) BEGIN
-      COPY_EXISTING ~%area%.BCS~ ~override~
-        DECOMPILE_AND_PATCH BEGIN
-          REPLACE_TEXTUALLY ~BDDEFAI~ ~%ngauto%~    // default script for main PC
-        END
-      BUT_ONLY
-    END
+    COPY_EXISTING ~%area%.BCS~ ~override~
+      DECOMPILE_AND_PATCH BEGIN
+        REPLACE_TEXTUALLY ~BDDEFAI~ ~%ngauto%~    // default script for main PC
+      END
+    IF_EXISTS BUT_ONLY
   END
 
 
   COPY_EXISTING ~partyai.2DA~ ~override~
-  
     COUNT_2DA_ROWS 1 row_count
     FOR (row = 3; row < row_count; ++row) BEGIN
       READ_2DA_ENTRY row 1 1 ~match~
@@ -153,8 +154,7 @@ ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
     
     SET_2DA_ENTRIES_NOW ~d2partyai_edits~ 1
     PRETTY_PRINT_2DA
-    
-  BUT_ONLY
+  IF_EXISTS BUT_ONLY
   
 END
 

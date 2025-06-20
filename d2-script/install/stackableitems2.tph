@@ -12,17 +12,17 @@ ACTION_IF (stackable = 3) BEGIN  OUTER_SET weapons=1 OUTER_SET nonstackables=1 O
 ACTION_IF (stackable = 4) BEGIN  OUTER_SET weapons=1 OUTER_SET nonstackables=1 OUTER_SET allmagical=1 END  // + magic items
 OUTER_SET printarrays = 0    // 1 = weidu shows items changed from nonstackable to stackable
 
+INCLUDE ~%install%/bg1dlgfixes.tph~    // prevent weidu warnings with stackableitems patching
+
 
 DEFINE_ACTION_FUNCTION stackableitems INT_VAR stack=999 weapons=1 nonstackables=1 allmagical=0 printarrays=0 BEGIN
-
-//  ACTION_CLEAR_ARRAY d2stackableitems
-//  ACTION_CLEAR_ARRAY d2stackableitems2
 
   OUTER_SET itmcheck = 0xa9
   ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET itmcheck = 0xb9  END    // iwd2
   OUTER_SET container = 36
   OUTER_SET bags = 58    // used for iwd2 (also in bg2 but unused)
 
+  PRINT ~making items stackable ...~
   COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
     PATCH_IF (SOURCE_SIZE > 0x71) BEGIN    // ITM check
       PATCH_IF (~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~Z!BAG~) BEGIN    // skip bg1 bags from cdtweaks
@@ -98,51 +98,128 @@ DEFINE_ACTION_FUNCTION stackableitems INT_VAR stack=999 weapons=1 nonstackables=
   BUT_ONLY
 
 
-  // scan stores (makes new array)
+  // bg1 and iwd1 need a header to be stackable (untested in pst)
+  OUTER_SET add_header = 0
+  ACTION_IF (GAME_IS ~bg1 totsc iwd how totlm pst~) BEGIN  OUTER_SET add_header = 1  END
+
+  ACTION_IF (add_header > 0) BEGIN
+    PRINT ~adding ability headers (BG1, IWD1) ...~
+    OUTER_SET stuff = 0x38                     // size of extended header
+    ACTION_PHP_EACH d2stackableitems AS item => stack BEGIN
+      COPY_EXISTING ~%item%.itm~  ~override~
+        READ_SHORT 0x68 headers
+        PATCH_IF (headers = 0) BEGIN           // if no headers
+          WRITE_SHORT   0x68 1                 // set headers to 1
+          WRITE_LONG    0x6a (THIS + stuff)    // effects offset (push back by size of header)
+          INSERT_BYTES  0x72 stuff             // where the first header starts (after the top item stuff)
+        END
+      IF_EXISTS BUT_ONLY
+    END
+  END
+
+
+  // patch bags (set stackables to minimum of 1 charge)
+  // fixes possible bugs if stackables have 0 charges (disappearing items, underflow)
   OUTER_SET stocheck = 0x9c
   ACTION_IF (GAME_IS ~how totlm iwd2~) BEGIN  OUTER_SET stocheck = 0xf0  END
   OUTER_SET container = 5
   ACTION_IF (GAME_IS ~how totlm iwd2~) BEGIN  OUTER_SET container = 4  END
 
+  PRINT ~scanning store items ...~
+//  SILENT
   COPY_EXISTING_REGEXP - GLOB ~.*\.STO~  ~~
     PATCH_IF (SOURCE_SIZE > stocheck) BEGIN    // no chance of items if smaller
       READ_LONG 0x8 type      // 4 = container
       READ_LONG 0x38 items    // number of items in bag
-      PATCH_IF (type=container && items>0) BEGIN
+//    PATCH_IF (type = container) BEGIN    // only patch bags (commented out)
+      PATCH_IF (items > 0) BEGIN
 
         // make store => items array
-        TEXT_SPRINT list  ~~
-        PHP_EACH d2stackableitems AS item => stack BEGIN
-          PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~[^a-z^0-9^_]%item%[^a-z^0-9^_]~) BEGIN
-            PATCH_IF (~%list%~ STR_EQ ~~) BEGIN
-              TEXT_SPRINT list  ~%item%~
-            END ELSE BEGIN
-              TEXT_SPRINT list  ~%list% %item%~
-            END
-          END
-        END
-        SPRINT $d2stackableitems2(~%SOURCE_RES%~) ~%list%~    // store => list
+        LPF d2stackableitems_list RET list END
+        SPRINT $d2stackableitems2(~%SOURCE_FILE%~) ~%list%~    // store => list
 
       END
+//    END
     END
-  BUT_ONLY
 
-
-  // patch bags (set stackables to minimum of 1 charge)
-  // fixes possible bugs if stackables have 0 charges (EEs: disappearing items, classic: underflow)
+  // patch files
+  PRINT ~patching store items ...~
+//  SILENT
   ACTION_PHP_EACH d2stackableitems2 AS store => list BEGIN
     ACTION_IF !(~%list%~ STR_EQ ~~) BEGIN
-      COPY_EXISTING ~%store%.sto~  ~override~
-        PHP_EACH d2stackableitems AS item => stack BEGIN
+      COPY_EXISTING ~%store%~  ~override~
 
-  PATCH_IF !(~%list%~ STRING_CONTAINS_REGEXP ~%item%~) BEGIN
-    LPF d2_alter_store_item INT_VAR checkstack=1 STR_VAR match_resource=EVAL ~%item%~ END
+  PHP_EACH d2stackableitems AS item => stack BEGIN
+    PATCH_IF !(~%list%~ STRING_CONTAINS_REGEXP ~%item%~) BEGIN
+      LPF d2_alter_store_item INT_VAR checkstack=1 STR_VAR match_resource=EVAL ~%item%~ END
+    END
   END
 
-        END
       BUT_ONLY
     END
   END
+
+
+  // check scripting (prevent taking whole stack)
+  ACTION_IF (RESOURCE_CONTAINS ~action.ids~  ~TakePartyItemNum~) BEGIN
+
+    PRINT ~scanning script actions ...~
+//    SILENT
+    ACTION_FOR_EACH ext IN ~bcs~ ~dlg~ BEGIN
+      COPY_EXISTING_REGEXP - GLOB ~.*\.%ext%$~  ~~
+        PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~TakePartyItem~) BEGIN
+
+          // make array of dlg/bcs (with items from d2stackableitems)
+          LPF d2stackableitems_list RET list END
+          SPRINT $d2stackableitems3(~%SOURCE_FILE%~) ~%list%~    // script => list
+
+        END
+      // end inlined COPY
+    END
+
+    // bg2 conversions - skip warnings (unused files)
+    ACTION_IF (GAME_IS ~iwd_in_bg2 ca~) BEGIN
+      OUTER_SPRINT $d2stackableitems3(~ALBERT.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~BREVLI.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~CHARLE.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~CULT3.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~DEGROD.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~FERGUS.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~KIERES.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~OBE.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~PHEIRK.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~PHEIRKAS.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~PPSAEM3.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~QUINN.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~RAMAZI.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~TAEROM.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~THALAN.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~TREMAI.DLG~) ~~
+      OUTER_SPRINT $d2stackableitems3(~ULCAST.DLG~) ~~
+    END
+
+    // patch files
+    PRINT ~patching script actions ...~
+//    SILENT
+    ACTION_PHP_EACH d2stackableitems3 AS file => list BEGIN
+      ACTION_IF !(~%list%~ STR_EQ ~~) BEGIN
+        COPY_EXISTING ~%file%~  ~override~
+          DECOMPILE_AND_PATCH BEGIN
+
+  PHP_EACH d2stackableitems AS item => stack BEGIN
+    PATCH_IF !(~%list%~ STRING_CONTAINS_REGEXP ~%item%~) BEGIN
+      SPRINT match  ~TakePartyItem("%item%")~
+      SPRINT string  ~TakePartyItemNum("%item%",1)~
+      REPLACE_TEXTUALLY EXACT_MATCH ~%match%~  ~%string%~
+    END
+  END
+
+          END
+        BUT_ONLY
+      END
+    END
+  END
+  VERBOSE
 
 
   // testing
@@ -150,11 +227,32 @@ DEFINE_ACTION_FUNCTION stackableitems INT_VAR stack=999 weapons=1 nonstackables=
     ACTION_PHP_EACH d2stackableitems AS item => stack BEGIN    // print items changed from nonstackable to stackable
       PRINT ~%item% => %stack%~
     END
-    ACTION_PHP_EACH d2stackableitems2 AS store => list BEGIN    // print bags with items from above array
-      PRINT ~%store% => %list%~
+    ACTION_PHP_EACH d2stackableitems2 AS store => list BEGIN    // print bags with items from store array
+      ACTION_IF !(~%list%~ STR_EQ ~~) BEGIN
+        PRINT ~%store% => %list%~
+      END
+    END
+    ACTION_PHP_EACH d2stackableitems3 AS file => list BEGIN    // print bags with items from bcs/dlg array
+      ACTION_IF !(~%list%~ STR_EQ ~~) BEGIN
+        PRINT ~%file% => %list%~
+      END
     END
   END
 
+END
+
+
+//this is run from main function
+DEFINE_PATCH_FUNCTION d2stackableitems_list STR_VAR list=~~ RET list BEGIN
+  PHP_EACH d2stackableitems AS item => stack BEGIN
+    PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~[^a-z^0-9^_]%item%[^a-z^0-9^_]~) BEGIN
+      PATCH_IF (~%list%~ STR_EQ ~~) BEGIN
+        TEXT_SPRINT list  ~%item%~
+      END ELSE BEGIN
+        TEXT_SPRINT list  ~%list% %item%~
+      END
+    END
+  END
 END
 
 

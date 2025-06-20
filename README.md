@@ -8,18 +8,27 @@ A minimalist script and tweak pack for Infinity Engine games. This mod was start
 
 --
 
+**Recent updates:**
+- added PSTEE support for several tweaks
+- added Misc spell tweaks component (see components section)
+- added "Make items stackable to 999" (weapons and magic items optional)
+
+NOTE: Generalized Biffing is not required for PSTEE. The bag from this mod will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas, creatures, or stores.
+
+--
+
 Script components:
 -
 
 1. **Better IWD Pregen**
 	- Adds 3-4 party AI scripts (d2scrp, d2scrp+, d2scrp-, iwdpgen)
- 	- More info below
+ 	- see script overview below
 2. **Better AI for Call Woodland Beings (EEs, BG2)**
 	- Option 1: Use revised script for nymph summon (compatible with SCS)
 	- Option 2: Use existing script, but patch in a few actions (use with revision mods)
 	- Note: This component needs to be installed after AI mods (ex. SCS or atweaks)
 3. **Auto-assign script to new characters**
-	- Can choose any of the 3-4 scripts from this mod
+	- Can choose any of the 3-4 scripts from this mod.
 
 --
 
@@ -27,64 +36,79 @@ Tweak components:
 -
 
 1. **Adjust enemy damage at higher difficulties (IWD1, IWD2)**
+	- IWD1: modifies both damage and XP bonus (they can't be changed separately)
 	- IWD2: includes exe patch by Bubb (required for damage adjust to work)
 2. **Add or remove Avarine Decanter (IWD2)**
-	- Won't cause issues if the item is already obtainable
+	- The add option is silently skipped if item is already obtainable.
 3. **Unnerf Animate Dead (IWD2)**
-	- Also corrects chance of each summon to 50/50
-	- This is skipped if IWD2EE "Spell Revisions" is installed
+	- Also corrects chance of each summon to 50/50.
+	- skipped if IWD2EE "Spell Revisions" is installed.
 4. **Shapeshift movement bonuses bypass Free Action (EEs)**
-	- Can set to bypass or be blocked by Free Action
+	- Can set to bypass or be blocked by Free Action.
+	- This only patches official base-game shapeshifts.
 5. **Increase movement speed of IWD shapeshifts (IWD1, IWDEE)**
-	- EEs: increases Polar Bear and Winter Wolf movement
+	- EEs: increases Polar Bear and Winter Wolf movement.
 	- classic: increases all forms (most are still slower than natural form)  
 
 --
 
 6. **Give party starting equipment (IWD games)**
-	- Option 1: Items are auto-equipped or added to inventory
+	- Option 1: Items are auto-equipped or added to inventory.
 	- Option 2: Start with a bag, containing a mix of weapons (choose this if using a Proficiencies overhaul)
 7. **Give party a Bag of Holding at game start (classic and EEs)**
-	- Option 1: "Bottomless" bag (same as Tweaks Anthology component)
+	- Option 1: "Bottomless" bag (capacity = 32767)
 	- Option 2: Capacity = 50 items (IWD2 default)
 	- Option 3: Capacity = 100 items (BG2 default)
 	- Option 4: Bottomless, and Gold is exchanged when adding/removing items (EE-only)
 8. **All classes get full HP bonuses from Constitution (classic and EEs)**
 	- Option 1: 2e-style HP bonuses (i.e. BG-style)
-	- Option 2: 3e-style bonuses (+1 or -1 every 2 Con) (WARNING: Prism will spawn dead in BG1.)
+	- Option 2: 3e-style bonuses (+1 or -1 every 2 Con) (note: Prism will spawn dead in BG1)
 	- Option 3: Mixed (use 3e-style at 10+, normal BG penalties at under 10)
-	- Note: Does not overwrite any previous changes to Con effects, except for HP bonus
-9. **Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)**
-	- Can set delay to 1 round or 5 rounds (stat reduction does not stack)
-	- Note: Crippling Strike is capped at -7 stat reduction in unmodded IWDEE
-10. **Salamander auras hit only enemies of the caster (IWDEE)**
-	- Can patch just Avenger form or enemy auras as well
-	- Can optionally make Cloudburst party friendly  
+	- Note: does not overwrite any previous changes to Con effects, except for HP bonus.
+9. **Make items stackable to 999 (classic and EEs)**
+	- Option 1: Stackable or nonmagical, no weapons
+	- Option 2: Stackable items only
+	- Option 3: Stackable or nonmagical, with weapons
+	- Option 4: All magical and nonmagical items (skips items with charges)
+	- See tweaks section for more technical info.
 
 --
 
-11. **Misc spell tweaks (classic and EEs):**
+10. **Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)**
+	- Can set delay to 1 round or 5 rounds (stat reduction does not stack)
+	- Note: Crippling Strike is capped at -7 stat reduction in unmodded IWDEE.
+11. **Salamander auras hit only enemies of the caster (IWDEE)**
+	- Can patch just Avenger form or enemy auras as well.
+	- Can optionally make Cloudburst party friendly.
+12. **Misc spell tweaks (classic and EEs):**
 	- Damage party friendly (relative to caster)
 	- Hit stun on damage (1 second)
 	- No mage school restrictions
 	- Note: There are multiple options. You can install all, 1 tweak, or any combo of 2.
-12. **Allow Minsc to use his Berserk ability at will (BG games)**
-	- Options to set duration to 5 rounds, 1 turn, or 2 turns
-13. **Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)**
-	- IWDEE: makes shortbows look like shortbows in the inventory screen
+13. **Allow Minsc to use his Berserk ability at will (BG games)**
+	- Options to set duration to 5 rounds, 1 turn, or 2 turns.
+	- This does not remove the berserking effect or add/modify other effects.
+	- EEs: Can be recast at any time (stat bonuses do not stack).
+	- BG1 (classic): Regain ability after duration runs out.
+	- BG2 (classic): Regain ability immediately, but cannot recast until duration runs out.
+
+--
+
+14. **Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)**
+	- IWDEE: makes shortbows look like shortbows in the inventory screen.
 	- IWD-in-BG2: makes scimitars look like scimitars (instead of long sword)
-14. **Remove alignment restrictions for classes (classic and EEs)**
-	- This patches any mod-added kits as well, including multiclass kits
+15. **Remove alignment restrictions for classes (classic and EEs)**
+	- This patches any mod-added kits as well, including multiclass kits.
 	- Has options to skip certain classes (paladins, clerics, monks, etc.)
-15. **Prevent paladins and rangers falling at low rep (EEs)**
-	- This patches any mod-added kits as well
-	- Can optionally install for only rangers or only paladins
+16. **Prevent paladins and rangers falling at low rep (EEs)**
+	- This patches any mod-added kits as well.
+	- Can optionally install for only rangers or only paladins.
 
 --
 
 **Additional info:**
 - All components can be installed independently and in any order, except for auto-assigning the script.
-- All components should be safe to install at end-of-order. If another mod says to install last, you can try it both ways.
+- All components should be safe to install at end of order. If another mod says to install last, you can try it both ways.
 - If using tweaks from other mods that do similar things, whichever is installed last will usually be used.
 - All tweaks have at least 2 subcomponents. i.e. if you say to "install all components", it won't automatically install any tweaks.
 
@@ -298,7 +322,8 @@ Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 
 > Suppress Extra Difficulty Damage=1
 
-NOTE: For IWD2, this setting doesn't work in the unmodded game. Thanks to an exe patch by Bubb, the option can be enabled. This patch is included with Bubb's permission.
+- IWD1: modifies both damage and XP bonus (they can't be changed separately)
+- IWD2: includes exe patch by Bubb (required for damage adjust to work)
   
 --
 
@@ -312,7 +337,7 @@ Unnerf Animate Dead (IWD2)
 
 - The nerfed version caps at the Level 9 summons.
 - Also corrects the chance of each creature type to 50/50 (was 51/49).
-- Skipped if the IWD2EE "Spell Revisions" component is installed.
+- Skipped if the IWD2EE Spell Revisions component is installed (it splits skeletons and zombies into separate spells).
 
 --
 
@@ -342,18 +367,18 @@ You can also unnerf this spell by deleting SPWI501.SPL from the override.
 Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
 -
 
-IWDEE:
+**IWDEE:**
 - Increases movement of polar bear and winter wolf forms. 
 - Winter wolf will move slightly faster than in natural form.
 - Polar bear is similar speed or slightly slower (depending on angle of movement).
 
-IWD1 (classic):
+**IWD1 (classic):**
 - Increases movement of all Druid shapeshifts. 
 - The winter wolf moves faster than in natural form. 
 - Polar bear gets a huge increase. It now moves similar speed to natural form (instead of ridiculously slow).
 - The boring beetle and elementals are slightly slower than natural form.
 
-Additional info:
+**Additional info:**
 - There are no conflicts with this tweak and the similar tweak in my [Polymorph fixes](https://github.com/D2-mods/Polymorph-fixes-for-IWDEE) mod. If differing options are chosen, the game will use whichever is installed last.
 - Classic IWD: The 2 installer options are identical. Game doesn't have a polymorph spell.
   
@@ -367,18 +392,12 @@ Additional info:
 Give party starting equipment (IWD games)
 -
 
-This component gives the party basic starting weapons, as well as the "Worn Garment" armor. Weapons are given based on proficiencies (IWDEE), or class (IWD2), or randomly (classic IWD). There's also an option to start with a bag, containing at least 1 of each weapon type. More info below.
+This component gives the party basic starter weapons, as well as the Worn Garment robe. Weapons are given based on proficiencies (IWDEE), or class (IWD2), or randomly (IWD1). There's also an option to start with a bag, containing at least 1 of each weapon type. More info below.
 
-- Note: For IWD2, the pre-made parties already start out equipped, so this just makes it more fair for custom parties.  
-- This component is fully compatible with the IWD2EE mod. It's also compatible with IWD-in-BG2, if you really want to use that version.
-
---
-
-**Scripting notes:**
-
-This is a global script that runs once per character slot per game. If the character exists, the script will start for that slot. It specifically looks for a quarterstaff in the inventory (which level 1 characters will always start with). It will not give starting items if already equipped (i.e. you imported a character from a previous playthrough).
-
-After about 1 round, the script will never run again for that playthrough for that character slot.
+- for IWD2, the pre-made parties already start out equipped, so this just makes it more fair for custom parties.
+- this is a global script that runs once for all 6 PC slots, whether or not they are filled. (i.e. a character that joins later will not have the scripting run for it)
+- This is compatible with the IWD2EE and IWD-in-BG2 mods.
+- IWDEE note: if the starting cutscene interrupts the scripting, save and reload to make the scripting run. This should only happen rarely. (loading the autosave should also work)
 
 --
 
@@ -388,7 +407,6 @@ How it works:
 - Start a new game with new characters (you can also load one saved at the start).
 - Wait a few seconds for the script to run for each character.
 - That's it. The items will be either equipped or in the inventory.
-- For classic IWD, you may need to open/close the Inventory screen 1-2 times to make the script run.
 
 **NOTE: Auto-equip option is not compatible with proficiency overhauls.**
 
@@ -402,11 +420,12 @@ How it works:
 - Items are created based on a character's proficiencies (up to 1 melee and 1 ranged).
 - Characters with no melee profs will keep the starting staff.
 - Weapons are added to the quickslots or inventory.
-- No known issues.
+- The starting robe is given to any PC that isn't equipped with an armor.
+- Note: If nothing happens, save and reload to make the scripting run. (This should only happen rarely.)
 
 --
 
-**Classic IWD:**
+**IWD1 (classic):**
 - This game doesn't have a way to detect proficiencies from a script.
 - The party receives a randomized set of items (a few items are non-random).
 - Total amount of items received is based on size of the initial party.
@@ -420,15 +439,13 @@ How it works:
 - Each character receives one melee and one ranged weapon.
 - Items are slightly randomized. Possible items are based on character class.
 - Weapons are moved to the quickslots, but are NOT auto-equipped.
-- Do one of the following to equip weapons:
-	- Save and reload
-	- Open and exit Character arbitration
-	- Pick up and re-equip each weapon
+- Do one of the following to equip weapons: (1) Save and reload, (2) Open and exit Character arbitration, (3) Pick up and re-equip each weapon.
 
 --
 
 **IWD-in-BG2:**
-- Works the same as in IWD:EE.
+- Scripting is very similar to IWDEE.
+- Might be slightly delayed 1-2 seconds at the start.
 - Quickslot icon is not automatically updated.
 - To update the icon, pick up and re-equip each weapon (save/reload doesn't work).
 
@@ -442,8 +459,10 @@ How it works:
 
 This component will give the party a bag, containing a selection of weapons. A single bag is given and the player can choose what to do with unwanted items (i.e. sell or throw away). The contents is the same regardless of party size. The bag contains at least one of each weapon type, so it should be compatible with any Proficiencies overhauls.
 
-NOTE: If the separate "Give party a Bag of Holding" component is not installed, then items can only be taken out of the weapon bag. If it is installed, then the bag is changed to a normal Bag of Holding.
-  
+If the separate "Give party a Bag of Holding" component is not installed, then items can only be taken out of the bag. If it is installed, then the bag is changed to a normal Bag of Holding. Note that install order doesn't matter. I wrote them to end up with identical files installed either way together.
+
+IWDEE note: if this component is installed together with the gold-exchanging bag, then it will cost gold to take items out. Items will still cost less than buying from Pomab. The bag also contains some items not otherwise obtainable in the prologue.
+
 --
 
 </details>
@@ -454,34 +473,24 @@ NOTE: If the separate "Give party a Bag of Holding" component is not installed, 
 Give party a Bag of Holding at game start (classic and EEs)
 -
 
-- The first 3 options give a Bag of Holding with differing max capacities. 
-- The "Bottomless" option has a capacity of 32767 items, same number used by Tweaks Anthology.
-- Compatible with all IE games that support Bags of Holding (except PsT:EE for now).
+- The first 3 options give a Bag of Holding with differing max capacities (50, 100, or bottomless).
+- The "Bottomless" option has a capacity of 32767 items.
+- Compatible with all IE games that support Bags of Holding. (not compatible with original BG1, PST, or IWD1 without HoW/TotLM)
 
 --
 
-**Option 4 (EEs) - Bottomless, and Gold is exchanged when adding/removing items (experimental)**
+**Option 4 (EE-only) - Bottomless, and Gold is exchanged when adding/removing items**
 
-You start with a bottomless bag (60000+ capacity), but unlike other bags, gold is added or taken away whenever items are transferred. Otherwise, it works like a regular bag.
+Gold is added or taken away when items are transferred. Otherwise, it works like a regular bag.
 
-v7.14 changes:
-- BGEE/BG2EE have 65% resell and 140% markup if buying back.
-- IWDEE/PSTEE have 80% resell and 130% markup if buying back.
-- previously, all games had 65% resell and 180% markup.
-
-
-<details>
-  <summary>Additional info (Option 4):</summary>
-
---
-
-**Notes:**
+- BGEE/BG2EE: get 65% base price, pay 140% to buy back.
+- IWDEE/PSTEE: get 80% base price, pay 130% to buy back.
 - Bag screen doesn't show current gold amount (except in PSTEE).
 - You can sell items in the bag to merchants. (still costs gold to remove from bag)
 - Reputation has no effect.
 - Charisma of the active character (the one with the bag) adjusts price for buying items back.
 
-NOTE: Items cannot be taken out of the bag if party lacks the gold to buy it back.
+**NOTE: Items cannot be taken out of the bag if party lacks the gold to buy it back.**
 
 --
 
@@ -492,6 +501,29 @@ NOTE: Items cannot be taken out of the bag if party lacks the gold to buy it bac
 --
 
 </details>
+
+<details>
+  <summary>Make items stackable to 999 (classic and EEs)</summary>
+
+Make items stackable to 999 (classic and EEs)
+-
+
+- This has 4 options:
+	- Option 1: Stackable or nonmagical, no weapons
+	- Option 2: Stackable items only
+	- Option 3: Stackable or nonmagical, with weapons
+	- Option 4: All magical and nonmagical items (skips items with charges)
+- Skips items with multiple charges or per day charges (stacking bugs, UI issues).
+- Critical and conversable items are always skipped.
+- It's safe to equip an item in a stack. Only 1 item in the stack is considered equipped.
+
+--
+
+**Additional info:**
+- Also patches store/bag items so that stackable items always have at least 1 charge (prevents underflow or disappearing items).
+- Also patches script actions (i.e. make script take 1 item instead of a whole stack).
+- bg1/iwd1 note: original BG1 and IWD1 don't support removal of a single item from a stack (BG1 has an action that doesn't work). Drop extras on the ground if trading items in these games.
+- Weidu warnings note: installer can potentially bring up weidu warning messages when scanning DLG files. This is harmless for this mod and won't prevent the install of this component. (note: for original BG2 or IWD1, you won't get these messages if using the G3 fixpacks.)
   
 --
 
@@ -528,13 +560,13 @@ Misc spell tweaks (classic and EEs)
 	- Damage party friendly (relative to caster)
 	- Hit stun on damage (1 second)
 	- No mage school restrictions
-- Safe to install at end-of-order. Install after any mods that adds spells or items.
+- Safe to install at end of order. Install after any mods that adds spells or items.
 - It has multiple subcomponents. You can install all tweaks, just 1 tweak, or any combo of 2.
 - The damage ones will also check item spells (wands, potions, etc.).
 
 --
 
-**Additional info (spell tweaks):**
+**Additional info:**
 - The damage tweaks ignore poison, disease, and other hardcoded damage effects.
 - The damage tweaks ignore spells that target the caster with no projectile (ex. self-damage from berserker Enrage)
 - The damage tweaks ignore most subspells. (note: installer will always check SPLs with long range or an offensive "secondary type")
@@ -566,15 +598,17 @@ Allow Minsc to use his Berserk ability at will (BG games)
 -
 
 - Can set duration to 30, 60, or 120 seconds.
+- This does not remove the berserking effect or add/modify other effects.
 - The way it works differs by game:
 	- EEs: Can be recast at any time (stat bonuses do not stack).
-	- BG1: Regain ability after duration runs out.
-	- BG2: Regain ability immediately, but cannot recast until duration runs out.
-- BG2EE: Fixes a timing error, which caused Minsc to always take damage when the ability ended, even at full health.
-- BG2: Fixes incorrect durations for some effects (tested in BG2 fixpack v13)
+	- BG1 (classic): Regain ability after duration runs out.
+	- BG2 (classic): Regain immediately, but cannot recast until duration runs out.
+- BG2EE: Also fixes a timing error, which caused Minsc to always take damage when the ability ended, even at full health.
+- BG2: Fixes incorrect durations for some effects (tested in BG2 fixpack v13).
+- EE variant is for v2.0+. Older versions will use the same as classic BG2 engine.
 
-NOTE: Will be skipped if Rashemi Berserker (Artisan's Kitpack) is installed
-  
+NOTE: May be skipped if some mod changes for Minsc are installed.
+
 --
 
 </details>
@@ -588,8 +622,8 @@ Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 - IWDEE: Patch shortbows to use shortbow appearance (as in classic IWD)
 - IWD-in-BG2: Patch scimitars to use scimitar appearance (was using long sword)
 
-NOTE: Shortbow appearance can't be set for IWD-in-BG2
-  
+NOTE: Shortbow appearance can't be set for IWD-in-BG2.
+
 --
 
 </details>

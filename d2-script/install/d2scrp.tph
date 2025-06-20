@@ -50,11 +50,11 @@ COPY_EXISTING ~d2scrp.BCS~  ~scripts/d2scrp.BS~    // copy to scripts folder
 
 //Script text
 OUTER_SET name = RESOLVE_STR_REF (@100)
-ACTION_IF (GAME_IS ~bgee bg2ee iwdee eet~)                  BEGIN OUTER_SET desc = RESOLVE_STR_REF (@101) END
-ACTION_IF (GAME_IS ~iwd2~)                                  BEGIN OUTER_SET desc = RESOLVE_STR_REF (@102) END
-ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN OUTER_SET desc = RESOLVE_STR_REF (@103) END
-ACTION_IF (GAME_IS ~iwd how totlm~)                         BEGIN OUTER_SET desc = RESOLVE_STR_REF (@104) END
-ACTION_IF (GAME_IS ~bg1 totsc~)                             BEGIN OUTER_SET desc = RESOLVE_STR_REF (@105) END
+ACTION_IF (ee_game > 0)              BEGIN OUTER_SET desc = RESOLVE_STR_REF (@101) END ELSE
+ACTION_IF (GAME_IS ~iwd how totlm~)  BEGIN OUTER_SET desc = RESOLVE_STR_REF (@104) END ELSE
+ACTION_IF (GAME_IS ~iwd2~)           BEGIN OUTER_SET desc = RESOLVE_STR_REF (@102) END ELSE
+ACTION_IF (GAME_IS ~bg1 totsc~)      BEGIN OUTER_SET desc = RESOLVE_STR_REF (@105) END ELSE
+ACTION_IF !(GAME_IS ~pst pstee~)     BEGIN OUTER_SET desc = RESOLVE_STR_REF (@103) END
 
 COPY_EXISTING ~SCRPDESC.2DA~  ~override~
   LPF 2da_find_row_delete STR_VAR row_name = ~d2scrp~ RET row_number columns END

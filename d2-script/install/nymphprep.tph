@@ -7,6 +7,7 @@ variables for nymph script
 OUTER_SET is_ee = 0
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN  OUTER_SET is_ee = 1  END
 ACTION_IF (GAME_IS ~iwdee~)          BEGIN  OUTER_SET is_ee = 2  END
+ACTION_IF (ee_game = 0) BEGIN  OUTER_SET is_ee = 0  END
 
 ACTION_IF (is_ee > 0) BEGIN
   LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1002) STR_VAR color=orange RET newstring END

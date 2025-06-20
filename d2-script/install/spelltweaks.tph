@@ -28,6 +28,13 @@ ACTION_IF (GAME_IS ~iwd how totlm iwd2~) BEGIN OUTER_SET iwd_classic = 1 END
 OUTER_SET is_iwd2ee = 0
 ACTION_IF (FILE_EXISTS ~IEex.dll~ AND FILE_EXISTS ~IWD2EE.exe~) BEGIN OUTER_SET is_iwd2ee = 1 END
 
+//ee v1.3 uses the same as BG2 engine
+ACTION_IF (GAME_IS ~bgee bg2ee iwdee eet~) BEGIN
+  ACTION_IF (ee_game = 0) BEGIN
+    OUTER_SET bg2_engine = 1
+  END
+END
+
 
 
 //
@@ -275,10 +282,12 @@ COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
       PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine>0) BEGIN
         SET proj_num = proj - 1
         LOOKUP_IDS_SYMBOL_OF_INT res ~projectl~ proj_num
-        PATCH_IF !(~%res%~ STR_EQ ~cloud~) BEGIN    // not stinking cloud proj (shared by enemy damage SPL)
+        PATCH_IF !(~%res%~ STR_EQ ~cloud~) BEGIN    // skip web, stinking cloud
+        PATCH_IF !(~%res%~ STR_EQ ~web~) BEGIN
           PATCH_IF (FILE_EXISTS_IN_GAME ~%res%.pro~) BEGIN
             TEXT_SPRINT $d2safespell_bg2(~%res%~) ~proj~
           END
+        END
         END
       END
 

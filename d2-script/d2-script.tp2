@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~7.14~
+VERSION ~7.17~
 AUTO_EVAL_STRINGS
 
 ALWAYS
@@ -249,12 +249,12 @@ OUTER_SET capacity = 3
 INCLUDE ~%install%/ngbag.tph~
 INCLUDE ~%install%/ngbag_biff.tph~    // for pstee
 
-BEGIN @40704    // Bottomless, and Gold is exchanged when adding/removing items (experimental)
+BEGIN @40704    // Bottomless, and Gold is exchanged when adding/removing items
 REQUIRE_PREDICATE (FILE_EXISTS ~engine.lua~) @51
 REQUIRE_PREDICATE (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) @51
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGD~
-OUTER_SET capacity = 65000
+OUTER_SET capacity = 32767
 INCLUDE ~%install%/ngbagD.tph~
 INCLUDE ~%install%/ngbag_biff.tph~    // for pstee
 
@@ -480,20 +480,21 @@ OUTER_SET duration = 30
 INCLUDE ~%install%/minscrage.tph~
 
 BEGIN @41302    // Use at will, and reduce duration to 1 turn (60 seconds)
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) ~~
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE60~
 OUTER_SET duration = 60
 INCLUDE ~%install%/minscrage.tph~
 
 BEGIN @41303    // Use at will, but do not lower duration (120 seconds)
-REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) ~~
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE120~
 OUTER_SET duration = 120
 INCLUDE ~%install%/minscrage.tph~
 
 BEGIN @41304    // Only install timing fix (prevents taking damage if at full HP when ability ends)
+REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) ~~
 REQUIRE_PREDICATE (GAME_IS ~bg2ee eet~) @51
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE0~

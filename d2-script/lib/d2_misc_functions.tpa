@@ -16,6 +16,9 @@ d2_remove_spelltypes          PATCH
 d2_mindamageboost             PATCH
 d2_addhitstun                 PATCH
 castsound_to_opcode           PATCH
+d2_immunity_spl_block         PATCH
+read_or_set_scriptname        PATCH
+read_or_set_areascript        PATCH
 */
 
 ////////////////////////////////////////////////////////////
@@ -510,6 +513,106 @@ DEFINE_PATCH_FUNCTION castsound_to_opcode INT_VAR match_opcode=~-1~ STR_VAR inse
         STR_VAR resource=EVAL ~%castsound%~ insert=EVAL ~%insert%~
       END
     END
+  END
+END
+
+////////////////////////////////////////////////////////////
+
+//matches an op101 (immunity to effect) to block a specific resource
+//"opcode" can be 318, 324, or 206
+
+/*
+"block" is resource to block in patched SPL
+"effect" is the number in parameter2 of op101 to match (default 13 = kill target)
+*/
+
+//silently skipped if resource doesn't exist
+//silently skipped if op101 with "effect" is not in file
+//automatically switches to opcode 206 if game is not EE v2.0+
+
+DEFINE_PATCH_FUNCTION d2_immunity_spl_block INT_VAR opcode=318 effect=13 STR_VAR block=vorpal BEGIN
+//  PATCH_IF (FILE_EXISTS_IN_GAME ~%block%.spl~) BEGIN
+  PATCH_IF !(RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~[^0-9^a-z]%block%[^0-9^a-z]~) BEGIN
+    PATCH_IF (opcode!=324 && opcode!=206) BEGIN  SET opcode=318  END
+    PATCH_IF !(FILE_EXISTS ~engine.lua~) BEGIN  SET opcode=206  END
+    PATCH_IF !(RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN  SET opcode=206  END
+
+    PATCH_IF !(GAME_IS ~bg1 totsc pst~) BEGIN
+      LPF CLONE_EFFECT
+        INT_VAR silent=1 match_opcode=101 match_parameter2=effect
+                opcode=opcode parameter1=0 parameter2=0 special=0
+        STR_VAR resource=EVAL ~%block%~
+      END
+    END
+  END
+//  END
+END
+
+////////////////////////////////////////////////////////////
+
+//read or set script name/death variable (all IE games)
+//does not change scriptname if it has one already
+//if "name" variable not set, it automatically uses the CRE resource
+//if "replace" is set to 1, it overwrites existing name
+//scriptname and deathvar are the same thing, you can return either if needed
+
+DEFINE_PATCH_FUNCTION read_or_set_scriptname INT_VAR replace=0 STR_VAR name=~~ RET scriptname deathvar BEGIN
+  PATCH_IF (~%SOURCE_EXT%~ STR_EQ ~cre~) BEGIN
+    PATCH_IF (~%name%~ STR_EQ ~~) BEGIN  TEXT_SPRINT name  ~%DEST_RES%~  END
+    SET offset = 0x280
+    PATCH_IF (GAME_IS ~iwd2~) BEGIN  SET offset = 0x394  END
+    PATCH_IF (GAME_IS ~iwd how totlm~) BEGIN  SET offset = 0x2e8  END
+
+    READ_ASCII offset deathvar (32) NULL
+    SET novar = 0
+    PATCH_IF (~%deathvar%~ STR_EQ ~~) BEGIN  SET novar = 1  END
+    PATCH_IF (~%deathvar%~ STR_EQ ~None~) BEGIN  SET novar = 1  END
+
+    PATCH_IF (novar>0 OR replace>0) BEGIN    // use "name" var if none or if replace=1
+      TEXT_SPRINT deathvar  ~%name%~
+    END
+    WRITE_EVALUATED_ASCII  offset ~%deathvar%~ #32
+    TEXT_SPRINT scriptname  ~%deathvar%~
+  END
+
+  // if not a cre file
+  ELSE BEGIN
+    TEXT_SPRINT deathvar  ~~
+    TEXT_SPRINT scriptname  ~~
+    PATCH_PRINT ~LPF read_or_set_scriptname: not a CRE file~
+  END
+END
+
+////////////////////////////////////////////////////////////
+
+//read or set area script (all IE games)
+//does not change current script if it has one already
+//if "script" variable not set, it automatically uses the ARE resource
+//if "replace" is set to 1, it overwrites existing script
+
+DEFINE_PATCH_FUNCTION read_or_set_areascript INT_VAR replace=0 STR_VAR script=~~ RET areascript script BEGIN
+  PATCH_IF (~%SOURCE_EXT%~ STR_EQ ~are~) BEGIN
+    PATCH_IF (~%script%~ STR_EQ ~~) BEGIN  TEXT_SPRINT script  ~%DEST_RES%~  END
+    SET offset = 0x94
+    PATCH_IF (GAME_IS ~iwd2~) BEGIN  SET offset = 0xa4  END
+
+    READ_ASCII offset bcs (8) NULL
+    SET noscript = 0
+    PATCH_IF (~%bcs%~ STR_EQ ~~) BEGIN  SET noscript = 1  END
+    PATCH_IF (~%bcs%~ STR_EQ ~None~) BEGIN  SET noscript = 1  END
+
+    PATCH_IF (noscript=0 && replace<1) BEGIN    // use current script if it has one, unless replace=1
+      TEXT_SPRINT script  ~%bcs%~
+    END
+    WRITE_EVALUATED_ASCII  offset ~%script%~ #8
+    TEXT_SPRINT areascript  ~%script%~
+  END
+
+  // if not an ARE
+  ELSE BEGIN
+    TEXT_SPRINT script  ~~
+    TEXT_SPRINT areascript  ~~
+    PATCH_PRINT ~LPF read_or_set_areascript: not a ARE file~
   END
 END
 

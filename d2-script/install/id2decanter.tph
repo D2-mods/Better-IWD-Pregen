@@ -4,16 +4,16 @@
 
 //add Decanter
 ACTION_IF (decanter = 1) BEGIN
+  OUTER_SET bonus = 1
+  ACTION_IF (FILE_EXISTS ~override/00BPak0.bcs~) BEGIN  OUTER_SET bonus = 0  END
+  ACTION_IF (MOD_IS_INSTALLED ~Setup-IWD2-Ease.tp2~ 9) BEGIN  OUTER_SET bonus = 0  END
+  ACTION_IF (bonus = 0) BEGIN  PRINT @52  END
+END
 
-  ACTION_IF ((FILE_EXISTS ~override/00BPak0.bcs~) OR 
-             (MOD_IS_INSTALLED ~Setup-IWD2-Ease.tp2~ 9)
-  ) BEGIN
 
-    PRINT @52    // skips if added
-  END ELSE BEGIN
+//write script ("IWD2_BONUS_PACK" is checked in Nym DLG)
+ACTION_IF (decanter=1 && bonus>0) BEGIN
 
-//
-//write script (variable is used by Nym in his DLG)
 <<<<<<<< .../inlined/00BPak0.BAF
 IF
     Global("IWD2_BONUS_PACK","GLOBAL",0)
@@ -25,7 +25,6 @@ END
 >>>>>>>>
 COMPILE ~.../inlined/00BPak0.BAF~
 
-  END
 END
 
 
@@ -34,8 +33,11 @@ END
 //remove Decanter (edits Nym's DLG)
 ACTION_IF (decanter = 0) BEGIN
 
-  COPY_EXISTING ~50NYM.DLG~  ~override~  DECOMPILE_AND_PATCH BEGIN
-      REPLACE_TEXTUALLY ~50Nym2~ ~50Nym~    // makes Nym always open his regular store
+  COPY_EXISTING ~50NYM.DLG~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      SPRINT match  ~50Nym2~    // has decanter
+      SPRINT string  ~50Nym~    // no decanter
+      REPLACE_TEXTUALLY ~%match%~  ~%string%~    // always open "50Nym" (no decanter)
     END
   BUT_ONLY
 

@@ -1,5 +1,6 @@
-////Adjust enemy damage at higher difficulties (classic IWD, IWD2)
-//
+/*
+Adjust enemy damage at higher difficulties (classic IWD, IWD2)
+*/
 
 
 ACTION_IF (suppressdamage = 1) BEGIN OUTER_SET read=0 OUTER_SET set=1 END
@@ -16,7 +17,10 @@ END
 
 //IWD2
 ACTION_IF (FILE_EXISTS ~icewind2.ini~) BEGIN
-  OUTER_SPRINT exe_name ~iwd2.exe~    // exe edit is by Bubb
+  ACTION_IF !(FILE_EXISTS ~iwd2.exe~) BEGIN  ABORT @55  END
+
+  // exe edit by Bubb
+  OUTER_SPRINT exe_name ~iwd2.exe~
   COPY ~%exe_name%~ ~%exe_name%~
     WRITE_BYTE 0x1AA1E5 0x89
     WRITE_BYTE 0x1AA1EB 0x90
@@ -31,5 +35,6 @@ ACTION_IF (FILE_EXISTS ~icewind2.ini~) BEGIN
 END
 
 
-/*
-*/
+
+//
+//

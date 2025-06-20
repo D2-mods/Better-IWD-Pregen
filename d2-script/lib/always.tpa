@@ -1,0 +1,27 @@
+//misc stuff
+//
+
+
+//
+OUTER_SET ee_game = 0
+ACTION_IF (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN OUTER_SET ee_game = 1 END
+ACTION_IF !(FILE_EXISTS ~engine.lua~) BEGIN OUTER_SET ee_game = 0 END
+
+
+//fix #BONECIR.SPL (wrong signature)
+ACTION_IF (FILE_EXISTS_IN_GAME ~#BONECIR.SPL~) BEGIN
+  COPY_EXISTING ~#BONECIR.SPL~  ~override~
+    WRITE_ASCII 0x0 ~SPL ~ #4
+  BUT_ONLY
+END
+
+
+//backup CREs (prevent NI warning if mod changes script names)
+ACTION_IF !(FILE_EXISTS ~override/d2ivar1.cre~) BEGIN
+  COPY_EXISTING ~imoen10.cre~  ~override/d2ivar1.cre~  WRITE_ASCII 0x280 ~Imoen~ #32  IF_EXISTS
+  COPY_EXISTING ~imoen10.cre~  ~override/d2ivar2.cre~  WRITE_ASCII 0x280 ~Imoen2~ #32  IF_EXISTS
+END
+
+
+/*
+*/

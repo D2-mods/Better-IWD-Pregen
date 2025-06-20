@@ -21,8 +21,8 @@ This file contains text shown in weidu installer
 
 
 //Tweaks
-@40100 = ~Adjust enemy damage at higher difficulties (classic IWD, IWD2)~
-	@40101 = ~Enemies don't do extra damage~
+@40100 = ~Adjust enemy damage at higher difficulties (IWD1, IWD2)~
+	@40101 = ~Enemies don't do extra damage (IWD1 note: disables double XP on Insane/HoF)~
 	@40102 = ~Enemies do extra damage (default)~
 
 @40200 = ~Add or remove Avarine Decanter (IWD2)~
@@ -46,17 +46,17 @@ This file contains text shown in weidu installer
 	@40602 = ~Start with a bag, containing a mix of weapons (choose this if using a Proficiencies overhaul)~
 
 @40700 = ~Give party a Bag of Holding at game start (classic and EEs)~
-	@40701 = ~"Bottomless" bag (same as Tweaks Anthology component)~
+	@40701 = ~"Bottomless" bag (capacity = 32767)~
 	@40702 = ~Capacity = 50 items (IWD2 default)~
 	@40703 = ~Capacity = 100 items (BG2 default)~
-	@40704 = ~Bottomless, and Gold is exchanged when adding/removing items (experimental)~
+	@40704 = ~Bottomless, and Gold is exchanged when adding/removing items~
 
 @40800 = ~All classes get full HP bonuses from Constitution (classic and EEs)~
 	@40801 = ~2e-style HP bonuses (BG-style)~
 	@40802 = ~3e-style bonuses (+1 or -1 every 2 Con) (note: Prism will spawn dead in BG1)~
 	@40803 = ~Mixed (use 3e-style at 10+, normal BG penalties at under 10)~
 
-@40900 = ~Make items stackable to 999~
+@40900 = ~Make items stackable to 999 (classic and EEs)~
 	@40901 = ~Stackable or nonmagical, no weapons~
 	@40902 = ~Stackable items only~
 	@40903 = ~Stackable or nonmagical, with weapons~
@@ -96,8 +96,8 @@ This file contains text shown in weidu installer
 @41360 = ~Not available for Rashemi Berserker (Artisan's Kitpack)~
 
 @41400 = ~Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)~
-	@41401 = ~Yes~
-	@41402 = ~Yes, but not mod items~
+	@41401 = ~All items~
+	@41402 = ~Skip mod items~
 
 @41500 = ~Remove alignment restrictions for classes (classic and EEs)~
 	@41501 = ~for all classes~
@@ -120,14 +120,15 @@ This file contains text shown in weidu installer
 
 @50 = ~Component not available~
 @51 = ~EE component~
-@52 = ~NOTE: The Avarine Decanter was already added. No changes were made to the game.
+@52 = ~Note: Avarine Decanter was already added. No changes were made to the game.
 ~
-@53 = ~NOTE: See GitHub page for summon list and additional info.
+@53 = ~Note: See GitHub page for summon list and additional info.
 ~
-@54 = ~NOTE: See GitHub page for additional info, including known issues/exploits.
+@54 = ~Note: See GitHub page for additional info, including known issues.
 ~
-@55 = ~~
-@56 = ~NOTE: This patch makes the AI for CWB summons preserve invisibility, as well as make usable the B, E, and D hotkeys (Cooldown mode controls and Dimension Door when out-of-battle).
+@55 = ~Component skipped because iwd2.exe was not found.
+~
+@56 = ~Note: This patch makes the AI for nymph summons preserve invisibility, and makes usable the B, E, and D hotkeys (Cooldown mode controls and Dimension Door controls).
 ~
 
 

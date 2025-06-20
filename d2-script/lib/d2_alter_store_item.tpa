@@ -37,11 +37,9 @@ BEGIN
     READ_LONG 0x034 ofs_items_for_sales
     READ_LONG 0x038 num_items_for_sales
 
-    // add checks
+    // pst check
     SET stuff = 0x1c
     PATCH_IF (GAME_IS ~pstee~) BEGIN  SET stuff = 0x58  END
-    SET is_iwd2 = 0
-    PATCH_IF (GAME_IS ~iwd2~) BEGIN  SET is_iwd2 = 1  END
 
     // set patch variables (to not conflict with RET vars)
     SET item_duration         = duration
@@ -112,10 +110,16 @@ BEGIN
         END
 
 
-        // iwd2: charges1=quantity stack=1, others: charges1=1 stack=quantity
+        // iwd2 bags: charges1=quantity stack=1, others: charges1=1 stack=quantity
         PATCH_IF (checkstack>0 && charges1<1) BEGIN
           SET charges1=1
-          PATCH_IF (is_iwd2 > 0) BEGIN  SET charges1=number_in_stock SET number_in_stock=1  END
+          PATCH_IF (GAME_IS ~iwd2~) BEGIN
+            READ_LONG 0x8 type      // 4 = iwd2 container
+            PATCH_IF (type = 4) BEGIN
+              SET charges1=number_in_stock SET number_in_stock=1
+            END
+          END
+
           WRITE_SHORT (ofs + 0xa) charges1
           WRITE_LONG (ofs + 0x14) number_in_stock
         END

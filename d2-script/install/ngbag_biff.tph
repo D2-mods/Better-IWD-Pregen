@@ -1,15 +1,18 @@
 /*
 biff bag files for pstee
 workaround for Modron Maze warp resetting files if not biffed
-*/ 
+*/
 
 
 ACTION_IF (GAME_IS ~pstee~) BEGIN
-  MAKE_BIFF d2ngbag BEGIN ~override~  ~^d2.*bag~ END
+  OUTER_TEXT_SPRINT to_biff  ~weidu_external/d2ngbag~
+  ACTION_IF !(DIRECTORY_EXISTS ~%to_biff%~) BEGIN  MKDIR ~%to_biff%~  END
 
   ACTION_BASH_FOR ~override~  ~^d2.*bag~ BEGIN
-    DELETE ~%BASH_FOR_FILESPEC%~
+    MOVE ~%BASH_FOR_FILESPEC%~  ~%to_biff%~
   END
+
+  MAKE_BIFF d2ngbag BEGIN ~%to_biff%~  ~^d2.*bag~ END
 END
 
 

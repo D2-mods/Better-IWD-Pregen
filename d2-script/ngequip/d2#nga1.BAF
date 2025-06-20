@@ -1,3 +1,6 @@
+//item bag ammo (all except iwd2)
+//
+
 IF
 	!Global("d2ngbolt","GLOBAL",1)
 	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
