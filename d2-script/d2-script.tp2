@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~7.17~
+VERSION ~7.18~
 AUTO_EVAL_STRINGS
 
 ALWAYS
@@ -210,10 +210,11 @@ INCLUDE ~%install%/id1fasterdruids.tph~
 
 BEGIN @40601    // Items are auto-equipped or added to inventory
 DESIGNATED 80
-REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 iwd how totlm iwd_in_bg2~) @50
+REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 iwd how totlm iwd_in_bg2 ca~) @50
 SUBCOMPONENT @40600
 LABEL ~D2-TWEAKS-NGEQUIP~
 INCLUDE ~%install%/ngequip.tph~
+INCLUDE ~%install%/tofavatarfix.tph~
 
 BEGIN @40602    // Start with a bag, containing a mix of weapons
 REQUIRE_PREDICATE !(GAME_IS ~iwd~) @50
@@ -221,6 +222,7 @@ SUBCOMPONENT @40600
 LABEL ~D2-TWEAKS-NGITEMBAG~
 OUTER_SET capacity = 1
 INCLUDE ~%install%/ngitembag.tph~
+INCLUDE ~%install%/tofavatarfix.tph~
 
 ////////////////////////////////////////////////////////////
 

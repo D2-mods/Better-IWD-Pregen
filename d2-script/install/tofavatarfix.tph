@@ -1,0 +1,55 @@
+/*
+fix issues with ToF "Eliminate race/class restrictions"
+- fixes nonhuman monk avatars disappearing if equipping an armor (ex. robe from IWD "Start with items" component)
+- fixes half-orc monks missing paperdoll, sets half-orcs to use cleric appearance
+*/
+
+
+ACTION_IF (ee_game > 0) BEGIN
+
+  // fix invisible avatars
+  DEFINE_ACTION_FUNCTION monkavatars BEGIN
+    ACTION_FOR_EACH anim IN
+      ~override/6501.ini~  // elves
+      ~override/6511.ini~ 
+      ~override/6502.ini~  // dwarves
+      ~override/6512.ini~ 
+      ~override/6503.ini~  // halflings
+      ~override/6513.ini~ 
+      ~override/6504.ini~  // gnomes
+      ~override/6514.ini~
+    BEGIN
+      COPY ~%anim%~  ~%anim%~
+        REPLACE_TEXTUALLY ~^armor_max_code.*$~  ~armor_max_code=4~
+      IF_EXISTS BUT_ONLY
+    END
+  END
+
+  // half-orcs use cleric appearance
+  DEFINE_ACTION_FUNCTION halforctype1 BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~6505.ini~) BEGIN
+      COPY_EXISTING ~6005.ini~ ~override/6505.ini~  REPLACE_TEXTUALLY ~cleric_~ ~monk_~
+    END
+    ACTION_IF (FILE_EXISTS_IN_GAME ~6515.ini~) BEGIN
+      COPY_EXISTING ~6015.ini~ ~override/6515.ini~  REPLACE_TEXTUALLY ~cleric_~ ~monk_~
+    END
+  END
+
+  // half-orcs use human monk appearance
+  DEFINE_ACTION_FUNCTION halforctype2 BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~6505.ini~) BEGIN
+      COPY_EXISTING ~6500.ini~ ~override/6505.ini~  REPLACE_TEXTUALLY ~_human~ ~_halforc~
+    END
+    ACTION_IF (FILE_EXISTS_IN_GAME ~6515.ini~) BEGIN
+      COPY_EXISTING ~6510.ini~ ~override/6515.ini~  REPLACE_TEXTUALLY ~_human~ ~_halforc~
+    END
+  END
+
+  LAF monkavatars END
+  LAF halforctype1 END
+
+END
+
+
+//
+//

@@ -1,7 +1,7 @@
 Better IWD Pregen
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases
-Supports: classic and EE versions of BG1, BG2, IWD1, and IWD2 (including EET/BGT/IWD2EE).
+Supports: classic and EE versions of BG1, BG2, IWD1, and IWD2 (including EET/BGT/IWD2EE)
 
 --
 
@@ -9,7 +9,7 @@ A minimalist script and tweak pack for Infinity Engine games. This mod was start
 
 - See GitHub page for additional info on scripts and tweaks.
 - This mod supports any mods using the engines of supported games.
-- Older EEs that don't support v2.0+ opcodes are treated the same as original BG2 engine.
+- Older EEs that don't support v2.0+ features are treated the same as original BG2 engine.
 
 --
 
@@ -43,7 +43,7 @@ Tweak components:
 9. Make items stackable to 999 (classic and EEs)
 10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
 11. Salamander auras hit only enemies of the caster (IWDEE)
-12. Misc spell tweaks (classic and EEs):
+12. Misc spell tweaks (classic and EEs)
 	- Damage party friendly (relative to caster)
 	- Hit stun on damage (1 second)
 	- No mage school restrictions
@@ -120,6 +120,12 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.18
+IWD "Start with items" notes:
+- now also installable on Classic Adventures. Also made scripting on original BG2 engine more reliable (other than CA, this is only relevant for IWD-in-BG2).
+- fixed possible mod conflict with "Eliminate race/class restrictions" from Talents of Faerun mod. The ToF component uses a wrong setting for nonhuman monk avatars, which causes the avatar to disappear permanently if equipping an armor (either on equip or unequip), i.e. the starting robe would previously make the avatar disappear.
+- this will also fix a couple possible issues with half-orc monk avatars, also caused by ToF (missing paperdoll, uses human appearance instead of half-orc).
+
 v7.17
 - Script components no longer fail to install on older EE versions. EEs that don't support v2.0+ opcodes will have the same scripting as original BG2 engine.
 - Minsc rage component now only uses EE version of tweak for EE v2.0+. Older EEs will be the same as original BG2 engine (ability is usable again only after duration ends).

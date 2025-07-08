@@ -39,7 +39,7 @@ Tweak components:
 	- IWD1: modifies both damage and XP bonus (they can't be changed separately)
 	- IWD2: includes exe patch by Bubb (required for damage adjust to work)
 2. **Add or remove Avarine Decanter (IWD2)**
-	- The add option is silently skipped if item is already obtainable.
+	- The "Add" option is silently skipped if item is already obtainable.
 3. **Unnerf Animate Dead (IWD2)**
 	- Also corrects chance of each summon to 50/50.
 	- skipped if IWD2EE "Spell Revisions" is installed.

@@ -8,7 +8,7 @@
 ACTION_IF (GAME_IS ~iwdee~)         BEGIN OUTER_TEXT_SPRINT d2autoequip ~DisplayStringNoName(Player1,@1010)~ END
 ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN OUTER_TEXT_SPRINT d2autoequip ~DisplayString(Player1,@1011)~ END
 ACTION_IF (GAME_IS ~iwd2~)          BEGIN OUTER_TEXT_SPRINT d2autoequip ~DisplayMessage(@1012)~ END
-ACTION_IF (GAME_IS ~iwd_in_bg2~)    BEGIN OUTER_TEXT_SPRINT d2autoequip ~DisplayStringNoName(Player1,@1013)~ END
+ACTION_IF (GAME_IS ~iwd_in_bg2 ca~) BEGIN OUTER_TEXT_SPRINT d2autoequip ~DisplayStringNoName(Player1,@1013)~ END
 
 <<<<<<<< .../temp/d2autoequip
 IF
@@ -135,7 +135,7 @@ END
 
 ////////////////////////////////////////////////////////////
 
-ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
+ACTION_IF (GAME_IS ~iwd_in_bg2 ca~) BEGIN
   
   COPY ~%ngequip%/d2#ngrb0.BAM~  ~override~
   COPY ~%ngequip%/d2#ngrb0.ITM~  ~override~
@@ -160,6 +160,13 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
   EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng33.BAF~
   EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng32.BAF~
   EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#ng31.BAF~
+
+END
+
+////////////////////////////////////////////////////////////
+
+//extra patching for IWD-in-BG2
+ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
 
 //fixing text for light crossbows (was annoying to look at while testing)
   COPY_EXISTING ~xbow04.ITM~  ~override~
@@ -210,6 +217,28 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
     END
   BUT_ONLY
   
+END
+
+////////////////////////////////////////////////////////////
+
+//extra patching for classic adventures
+//starting area is TC0009
+
+ACTION_IF (GAME_IS ~ca~) BEGIN
+
+  COPY_EXISTING ~baldur.bcs~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      // temp patch (check resource)
+      PATCH_IF !(FILE_EXISTS_IN_GAME ~maul.itm~)    BEGIN  REPLACE_TEXTUALLY ~"maul"~  ~"hamm01"~  END
+      PATCH_IF !(FILE_EXISTS_IN_GAME ~scimita.itm~) BEGIN  REPLACE_TEXTUALLY ~"scimita"~  ~"SW1H20"~  END
+      PATCH_IF !(FILE_EXISTS_IN_GAME ~2HAXE.itm~)   BEGIN  REPLACE_TEXTUALLY ~"2HAXE"~  ~"AX1H01"~  END
+
+      //delay until after starting area script
+      SPRINT match    ~NumItems("STAF01",Player1,1)~
+      SPRINT trigger  ~Global("NewGame","TC0009",1)~
+      REPLACE_TEXTUALLY EXACT_MATCH ~%match%~  ~%trigger%~
+    END
+  BUT_ONLY
 END
 
 ////////////////////////////////////////////////////////////

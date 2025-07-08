@@ -33,9 +33,24 @@ IF
 	!HasItem("d2#ngrb0",Player1)
 THEN
 	RESPONSE #100
-		ActionOverride(Player1,CreateItem("d2#ngrb0",0,0,0))
-		ActionOverride(Player1,FillSlot(SLOT_ARMOR))    // worn garment
+		ActionOverride(Player1,CreateItem("d2#ngrb0",0,0,0))    // worn garment
+		ActionOverride(Player1,FillSlot(SLOT_ARMOR))
 		SetGlobal("d2Player1robe","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robecheck","GLOBAL",1)
+	Global("d2Player1robe","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player1)
+	!HasItemSlot(Player1,SLOT_ARMOR)
+	!HasItem("d2#ngrb0",Player1)
+THEN
+	RESPONSE #100
+		GiveItemCreate("d2#ngrb0",Player1,0,0,0)    // worn garment
+		ActionOverride(Player1,FillSlot(SLOT_ARMOR))
+		SetGlobal("d2Player1robecheck","GLOBAL",1)
 		Continue()
 END
 

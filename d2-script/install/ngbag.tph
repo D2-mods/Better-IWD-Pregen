@@ -247,7 +247,7 @@ ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWE
       WRITE_SHORT 0x9c capacity
     END
 
-    PATCH_IF (GAME_IS ~iwdee iwd_in_bg2~) BEGIN
+    PATCH_IF (GAME_IS ~iwdee iwd_in_bg2 ca~) BEGIN
       WRITE_SHORT 0x22 capacity
     END
   // end COPY

@@ -113,7 +113,7 @@ END
 
 ////////////////////////////////////////////////////////////
 
-ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
+ACTION_IF (GAME_IS ~iwd_in_bg2 ca~) BEGIN
   
   COPY ~%ngequip%/d2#ngrb0.BAM~  ~override~
   COPY ~%ngequip%/d2#ngrb0.ITM~  ~override~
@@ -138,6 +138,13 @@ ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
   EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng32.BAF~
   EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#nga1.BAF~    // ammo
   EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#ngb3.BAF~
+
+END
+
+////////////////////////////////////////////////////////////
+
+//extra patching for IWD-in-BG2
+ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
 
 //fixing text for light crossbows (was annoying to look at while testing)
   COPY_EXISTING ~xbow04.ITM~  ~override~
@@ -192,6 +199,23 @@ END
 
 ////////////////////////////////////////////////////////////
 
+//extra patching for classic adventures
+//starting area is TC0009
+
+ACTION_IF (GAME_IS ~ca~) BEGIN
+
+  COPY_EXISTING ~baldur.bcs~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      //delay until after starting area script
+      SPRINT match    ~NumItems("STAF01",Player1,1)~
+      SPRINT trigger  ~Global("NewGame","TC0009",1)~
+      REPLACE_TEXTUALLY EXACT_MATCH ~%match%~  ~%trigger%~
+    END
+  BUT_ONLY
+END
+
+////////////////////////////////////////////////////////////
+
 //Add and fill bag, or just fill if it already exists
 
 ACTION_IF (FILE_EXISTS ~override/d2#ngbag.STO~) BEGIN
@@ -212,7 +236,7 @@ ACTION_IF !(FILE_EXISTS ~override/d2#ngbag.STO~) BEGIN
   COPY_EXISTING ~d2#ngbag.ITM~  ~override/d2#ngbak.ITM~    // backup to make it easy to revert changes
   COPY_EXISTING ~d2#ngbag.ITM~  ~override~
     SAY NAME1 @726 SAY NAME2 @726
-    PATCH_IF (GAME_IS ~iwdee iwd_in_bg2~) BEGIN SAY DESC @727 END
+    PATCH_IF (GAME_IS ~iwdee iwd_in_bg2 ca~) BEGIN SAY DESC @727 END
     PATCH_IF (GAME_IS ~how totlm~) BEGIN SAY DESC @728 END
     PATCH_IF (GAME_IS ~iwd2~) BEGIN SAY DESC @729 END
     WRITE_ASCII 0x3a ~iholding~ #8    // set inventory icon
