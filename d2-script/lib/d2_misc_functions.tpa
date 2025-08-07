@@ -19,6 +19,7 @@ castsound_to_opcode           PATCH
 d2_immunity_spl_block         PATCH
 read_or_set_scriptname        PATCH
 read_or_set_areascript        PATCH
+hla_multiclass_minlevel       PATCH
 */
 
 ////////////////////////////////////////////////////////////
@@ -614,6 +615,40 @@ DEFINE_PATCH_FUNCTION read_or_set_areascript INT_VAR replace=0 STR_VAR script=~~
     TEXT_SPRINT areascript  ~~
     PATCH_PRINT ~LPF read_or_set_areascript: not a ARE file~
   END
+END
+
+////////////////////////////////////////////////////////////
+
+//use with lu*.2da files for mage or cleric multiclasses
+//sets MIN_LEV column to 1, 32, or 16 (checks SPL info to determine)
+
+DEFINE_PATCH_FUNCTION hla_multiclass_minlevel BEGIN
+  COUNT_2DA_ROWS 3 hla_rows
+  READ_2DA_ENTRIES_NOW ~hla_table~ 3
+
+  FOR (r = 1; r < hla_rows; ++r) BEGIN
+    READ_2DA_ENTRY_FORMER ~hla_table~ r 1 ability
+    PATCH_IF !(~%ability%~ STRING_CONTAINS_REGEXP ~GA_~) BEGIN
+
+      INNER_PATCH_SAVE res ~%ability%~ BEGIN
+        REPLACE_TEXTUALLY ~GA_~  ~~
+      END
+
+      PATCH_IF (FILE_EXISTS_IN_GAME ~%res%.spl~) BEGIN
+        INNER_ACTION BEGIN
+          COPY_EXISTING - ~%res%.spl~  ~~
+            READ_SHORT 0x1c type
+            READ_LONG 0x34 level
+            SET minlev = 1
+            PATCH_IF (type=1 && level=9) BEGIN  SET minlev = 32  END
+            PATCH_IF (type=2 && level=7) BEGIN  SET minlev = 16  END
+        END
+        SET_2DA_ENTRY_LATER ~hla_edits~ r 4 minlev
+      END
+    END
+  END
+  SET_2DA_ENTRIES_NOW ~hla_edits~ 3
+  PRETTY_PRINT_2DA
 END
 
 ////////////////////////////////////////////////////////////

@@ -1,0 +1,39 @@
+/*
+Max summons and traps (EEs)
+*/
+
+
+ACTION_IF !(IS_AN_INT caps) BEGIN  OUTER_SET caps = 1  END
+ACTION_IF (caps<1 OR caps>6) BEGIN  OUTER_SET caps = 1  END
+ACTION_IF (caps = 1) BEGIN  OUTER_SET summons=999 OUTER_SET celestials=999 OUTER_SET traps=999 END  // 
+ACTION_IF (caps = 2) BEGIN  OUTER_SET summons=12  OUTER_SET celestials=12  OUTER_SET traps=999 END  // 
+ACTION_IF (caps = 3) BEGIN  OUTER_SET summons=999 OUTER_SET celestials=3   OUTER_SET traps=999 END  // 
+ACTION_IF (caps = 4) BEGIN  OUTER_SET summons=12  OUTER_SET celestials=3   OUTER_SET traps=999 END  // 
+ACTION_IF (caps = 5) BEGIN  OUTER_SET summons=999 OUTER_SET celestials=1   OUTER_SET traps=999 END  // 
+ACTION_IF (caps = 6) BEGIN  OUTER_SET summons=12  OUTER_SET celestials=1   OUTER_SET traps=999 END  // 
+
+DEFINE_ACTION_FUNCTION summons INT_VAR celestials=1 limit=999 BEGIN
+  COPY_EXISTING ~SUMMLIMT.2DA~  ~override~
+    LPF d2_edit_2da_entry STR_VAR row_name=normal col_name=limit entry=EVAL ~%limit%~ END
+    LPF d2_edit_2da_entry STR_VAR row_name=celestial col_name=limit entry=EVAL ~%celestials%~ END
+    PRETTY_PRINT_2DA
+  IF_EXISTS BUT_ONLY
+END
+
+DEFINE_ACTION_FUNCTION traps INT_VAR limit=999 BEGIN
+  COPY_EXISTING ~TRAPLIMT.2DA~  ~override~
+    COUNT_2DA_ROWS 2 rows
+    FOR (r = 1; r < rows; ++r) BEGIN
+      SET_2DA_ENTRY_LATER ~makeedits~ r 1 limit
+    END
+    SET_2DA_ENTRIES_NOW ~makeedits~ 2
+    PRETTY_PRINT_2DA
+  IF_EXISTS BUT_ONLY
+END
+
+LAF summons INT_VAR limit=summons celestials=celestials END
+LAF traps INT_VAR limit=traps END
+
+
+/*
+*/

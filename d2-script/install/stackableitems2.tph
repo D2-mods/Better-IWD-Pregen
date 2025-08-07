@@ -25,7 +25,8 @@ DEFINE_ACTION_FUNCTION stackableitems INT_VAR stack=999 weapons=1 nonstackables=
   PRINT ~making items stackable ...~
   COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
     PATCH_IF (SOURCE_SIZE > 0x71) BEGIN    // ITM check
-      PATCH_IF (~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~Z!BAG~) BEGIN    // skip bg1 bags from cdtweaks
+//      PATCH_IF (~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~Z!BAG~) BEGIN    // already skipped with itm_headers check
+      PATCH_IF (~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^rnd~) BEGIN    // skip random treasure files
 
         // skip bag category (note: not used in all games)
         READ_SHORT 0x1c cat
@@ -257,6 +258,16 @@ END
 
 
 LAF stackableitems INT_VAR weapons=weapons nonstackables=nonstackables allmagical=allmagical printarrays=printarrays END
+
+
+//fix a SoD random item
+OUTER_SPRINT item  ~RNDTRI03~
+OUTER_SET container = 34
+COPY_EXISTING ~BD0130.ARE~  ~override~
+  LPF REPLACE_AREA_ITEM STR_VAR old_item=~%item%~ new_item=~%item%~ END
+//  LPF DELETE_AREA_ITEM STR_VAR item_to_delete=~%item%~ END
+//  LPF ADD_AREA_ITEM INT_VAR container_to_add_to=container STR_VAR item_to_add=~%item%~ END
+IF_EXISTS BUT_ONLY
 
 
 //

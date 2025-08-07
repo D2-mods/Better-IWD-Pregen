@@ -51,6 +51,7 @@ Tweak components:
 14. Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)
 15. Remove alignment restrictions for classes (classic and EEs)
 16. Prevent paladins and rangers falling at low rep (EEs)
+17. Max summons and traps (EEs)
 
 --
 
@@ -120,6 +121,11 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.19
+- Added component: Max summons and traps (EE-only). Has 6 options with various max summon or celestial numbers. Traps are always set to 999 with any option.
+- SoD + "Items stackable to 999": fixed a random treasure (in BD0130 container 33) becoming 20 items instead of 1 item.
+- iwdee + EE fixpack: fixed a compat issue with the salamander auras tweak. The party friendly Cloudburst options weren't blocking the lightning damage if EEFP was installed.
+
 v7.18
 IWD "Start with items" notes:
 - now also installable on Classic Adventures. Also made scripting on original BG2 engine more reliable (other than CA, this is only relevant for IWD-in-BG2).

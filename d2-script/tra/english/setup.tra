@@ -114,6 +114,14 @@ This file contains text shown in weidu installer
 	@41605 = ~Option 2, but not for mod kits~
 	@41606 = ~Option 3, but not for mod kits~
 
+@41700 = ~Max summons and traps (EEs)~
+	@41701 = ~999 summons (all), 999 traps~
+	@41702 = ~12 summons (all), 999 traps~
+	@41703 = ~999 summons, 3 celestials, 999 traps~
+	@41704 = ~12 summons, 3 celestials, 999 traps~
+	@41705 = ~999 summons, 1 celestial, 999 traps~
+	@41706 = ~12 summons, 1 celestial, 999 traps~
+
 
 
 //WeiDU Messages

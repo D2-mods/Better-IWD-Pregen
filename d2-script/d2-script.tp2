@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~7.18~
+VERSION ~7.19~
 AUTO_EVAL_STRINGS
 
 ALWAYS
@@ -600,6 +600,43 @@ LABEL ~D2-TWEAKS-NOFALLING6~
 OUTER_SET nofalling = 6
 INCLUDE ~%install%/nofalling.tph~
 */
+
+////////////////////////////////////////////////////////////
+
+//Max summons and traps (EEs)
+
+BEGIN @41701    // 999 summons (all), 999 traps
+DESIGNATED 190
+REQUIRE_PREDICATE (RESOURCE_CONTAINS ~SUMMLIMT.2da~ ~limit~) ~~
+REQUIRE_PREDICATE (RESOURCE_CONTAINS ~TRAPLIMT.2da~ ~thief~) ~~
+SUBCOMPONENT @41700
+OUTER_SET caps = 1
+INCLUDE ~%install%/summoncap.tph~
+
+BEGIN @41702    // 12 summons (all), 999 traps
+SUBCOMPONENT @41700
+OUTER_SET caps = 2
+INCLUDE ~%install%/summoncap.tph~
+
+BEGIN @41703    // 999 summons, 3 celestials, 999 traps
+SUBCOMPONENT @41700
+OUTER_SET caps = 3
+INCLUDE ~%install%/summoncap.tph~
+
+BEGIN @41704    // 12 summons, 3 celestials, 999 traps
+SUBCOMPONENT @41700
+OUTER_SET caps = 4
+INCLUDE ~%install%/summoncap.tph~
+
+BEGIN @41705    // 999 summons, 1 celestial, 999 traps
+SUBCOMPONENT @41700
+OUTER_SET caps = 5
+INCLUDE ~%install%/summoncap.tph~
+
+BEGIN @41706    // 12 summons, 1 celestial, 999 traps
+SUBCOMPONENT @41700
+OUTER_SET caps = 6
+INCLUDE ~%install%/summoncap.tph~
 
 ////////////////////////////////////////////////////////////
 

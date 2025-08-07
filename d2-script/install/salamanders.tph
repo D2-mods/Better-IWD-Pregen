@@ -89,10 +89,10 @@ END
 ACTION_IF (patch_cloudburst = 1) BEGIN
 
   //patch base game Cloudburst
-  ACTION_IF (FILE_EXISTS_IN_GAME ~SPPR325.SPL~) BEGIN
-    COPY_EXISTING ~SPPR325.spl~  ~override~
+  ACTION_FOR_EACH spell IN ~SPPR325~ ~SPPR325a~ BEGIN
+    COPY_EXISTING ~%spell%.spl~  ~override~
       LPF d2_safe_spell STR_VAR insert=above END    // use default settings (protects allies/neutrals)
-    BUT_ONLY
+    IF_EXISTS BUT_ONLY
   END
 
   //
