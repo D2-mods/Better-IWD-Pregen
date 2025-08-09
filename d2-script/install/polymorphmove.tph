@@ -1,0 +1,78 @@
+/*
+Shapeshift movement bonuses bypass Free Action
+for EEs and classic BG2 (other games don't give move bonuses)
+This does not patch mod files.
+*/
+
+
+OUTER_SET effect = 126
+OUTER_SET mode = 2
+OUTER_SET haste = 16
+ACTION_IF (polymove > 0) BEGIN  OUTER_SET effect = 176 OUTER_SET haste = 317  END
+ACTION_IF (ee_game > 0) BEGIN  OUTER_SET mode = 5  END
+
+OUTER_SET mods = 1
+INCLUDE ~%install%/polymorpharrays.tph~
+INCLUDE ~%install%/polymorphmods.tph~
+
+
+//variables not used (this is copy pasted from polymorphtalk.tph)
+DEFINE_ACTION_FUNCTION polymorphmove INT_VAR druids=1 polymorph=1 mods=1 BEGIN
+
+  // make array
+  ACTION_PHP_EACH polymorphspells AS spell => type BEGIN
+    ACTION_IF (druids > 0) BEGIN
+      ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~druid~) BEGIN
+        OUTER_SPRINT $polymorphmove (~%spell%.spl~) ~patch~
+      END
+    END
+    ACTION_IF (polymorph > 0) BEGIN
+      ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~poly~) BEGIN
+        OUTER_SPRINT $polymorphmove (~%spell%.spl~) ~patch~
+      END
+    END
+  END
+  ACTION_PHP_EACH polymorphitems AS item => type BEGIN
+    ACTION_IF (druids > 0) BEGIN
+      ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~druid~) BEGIN
+        OUTER_SPRINT $polymorphmove (~%item%.itm~) ~patch~
+      END
+    END
+    ACTION_IF (polymorph > 0) BEGIN
+      ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~poly~) BEGIN
+        OUTER_SPRINT $polymorphmove (~%item%.itm~) ~patch~
+      END
+    END
+  END
+
+  // patch shapeshifts
+  ACTION_PHP_EACH polymorphmove AS file => patch BEGIN
+    COPY_EXISTING ~%file%~  ~override~
+      PATCH_IF (effect = 176) BEGIN
+        LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=126 opcode=effect END
+      END ELSE BEGIN
+        LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=176 opcode=effect END
+      END
+
+      PATCH_IF (mode = 5) BEGIN
+        LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=effect match_parameter2=2 parameter2=mode END
+      END ELSE BEGIN
+        LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=effect match_parameter2=5 parameter2=mode END
+      END
+
+      PATCH_IF (haste = 317) BEGIN
+        LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=16 opcode=haste END
+      END ELSE BEGIN
+        LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=317 opcode=haste END
+      END
+    IF_EXISTS BUT_ONLY
+  END
+
+END
+
+
+LAF polymorphmove END
+
+
+//
+//

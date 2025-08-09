@@ -1,0 +1,63 @@
+/*
+works on EEs and classic BG2
+can talk while shapeshifted, does not allow spellcasting
+*/
+
+
+ACTION_IF !(IS_AN_INT polytalk) BEGIN  OUTER_SET polytalk = 1  END
+ACTION_IF (polytalk<1 OR polytalk>6) BEGIN  OUTER_SET polytalk = 1  END
+ACTION_IF (polytalk = 1) BEGIN  OUTER_SET druids=1 OUTER_SET polymorph=1 OUTER_SET mods=1 END  // druid + polymorph
+ACTION_IF (polytalk = 2) BEGIN  OUTER_SET druids=1 OUTER_SET polymorph=0 OUTER_SET mods=1 END  // druid only
+ACTION_IF (polytalk = 3) BEGIN  OUTER_SET druids=0 OUTER_SET polymorph=1 OUTER_SET mods=1 END  // polymorph only
+ACTION_IF (polytalk = 4) BEGIN  OUTER_SET druids=1 OUTER_SET polymorph=1 OUTER_SET mods=0 END  // option 1, no mods
+ACTION_IF (polytalk = 5) BEGIN  OUTER_SET druids=1 OUTER_SET polymorph=0 OUTER_SET mods=0 END  // option 2, no mods
+ACTION_IF (polytalk = 6) BEGIN  OUTER_SET druids=0 OUTER_SET polymorph=1 OUTER_SET mods=0 END  // option 3, no mods
+
+INCLUDE ~%install%/polymorpharrays.tph~
+INCLUDE ~%install%/polymorphmods.tph~
+
+
+//
+DEFINE_ACTION_FUNCTION polymorphtalk INT_VAR druids=1 polymorph=1 mods=1 BEGIN
+
+  // make array
+  ACTION_PHP_EACH polymorphspells AS spell => type BEGIN
+    ACTION_IF (druids > 0) BEGIN
+      ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~druid~) BEGIN
+        OUTER_SPRINT $polymorphtalk (~%spell%.spl~) ~patch~
+      END
+    END
+    ACTION_IF (polymorph > 0) BEGIN
+      ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~poly~) BEGIN
+        OUTER_SPRINT $polymorphtalk (~%spell%.spl~) ~patch~
+      END
+    END
+  END
+  ACTION_PHP_EACH polymorphitems AS item => type BEGIN
+    ACTION_IF (druids > 0) BEGIN
+      ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~druid~) BEGIN
+        OUTER_SPRINT $polymorphtalk (~%item%.itm~) ~patch~
+      END
+    END
+    ACTION_IF (polymorph > 0) BEGIN
+      ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~poly~) BEGIN
+        OUTER_SPRINT $polymorphtalk (~%item%.itm~) ~patch~
+      END
+    END
+  END
+
+  // patch shapeshifts
+  ACTION_PHP_EACH polymorphtalk AS file => patch BEGIN
+    COPY_EXISTING ~%file%~  ~override~
+      LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=144 match_parameter2=7 probability2=100 END
+    IF_EXISTS BUT_ONLY
+  END
+
+END
+
+
+LAF polymorphtalk INT_VAR druids=druids polymorph=polymorph mods=mods END
+
+
+//
+//

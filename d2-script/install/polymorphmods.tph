@@ -1,0 +1,70 @@
+/*
+run after polymorpharrays.tph
+all mod files count as both druid and polymorph
+*/
+
+
+ACTION_IF !(IS_AN_INT d2polymorpharray) BEGIN
+ACTION_IF (IS_AN_INT mods && mods>0) BEGIN
+
+
+OUTER_SPRINT type  ~druidpoly~    // count all mod stuff as both
+
+COPY_EXISTING_REGEXP - GLOB ~.*\.spl$~  ~~
+  SET check = 0
+  SET shapeshift = 0
+  PHP_EACH polymorphspells AS spell => array BEGIN
+    PATCH_IF (~%SOURCE_RES%~ STR_EQ ~%spell%~) BEGIN    // skip stuff already in array
+      SET check = 1
+    END
+  END
+  PATCH_IF (check = 0) BEGIN
+    GET_OFFSET_ARRAY spl_headers  SPL_V10_HEADERS
+    PHP_EACH spl_headers AS num => header_off BEGIN      // array of headers
+      GET_OFFSET_ARRAY2 spl_effects header_off SPL_V10_HEAD_EFFECTS
+      PHP_EACH spl_effects AS num => effect_off BEGIN    // array of effects on each header
+        PATCH_IF (shapeshift = 0) BEGIN
+          READ_SHORT effect_off opcode                   // opcode
+          PATCH_IF (opcode = 135) BEGIN  SET shapeshift = 1  END
+          PATCH_IF (opcode = 53) BEGIN  SET shapeshift = 1  END
+        END
+      END
+    END
+  END
+  PATCH_IF (shapeshift > 0) BEGIN
+    SPRINT $polymorphspells (~%SOURCE_RES%~) ~%type%~
+  END
+BUT_ONLY
+
+COPY_EXISTING_REGEXP - GLOB ~.*\.itm$~  ~~
+  SET check = 0
+  SET shapeshift = 0
+  PHP_EACH polymorphitems AS item => array BEGIN
+    PATCH_IF (~%SOURCE_RES%~ STR_EQ ~%item%~) BEGIN    // skip stuff already in array
+      SET check = 1
+    END
+  END
+  PATCH_IF (check = 0) BEGIN
+    GET_OFFSET_ARRAY itm_equip  ITM_V10_GEN_EFFECTS
+    PHP_EACH itm_equip AS num => equip_off BEGIN    // array of equipped effects
+      PATCH_IF (shapeshift = 0) BEGIN
+        READ_SHORT equip_off opcode                 // opcode
+        PATCH_IF (opcode = 135) BEGIN  SET shapeshift = 1  END
+        PATCH_IF (opcode = 53) BEGIN  SET shapeshift = 1  END
+      END
+    END
+  END
+  PATCH_IF (shapeshift > 0) BEGIN
+    SPRINT $polymorphitems (~%SOURCE_RES%~) ~%type%~
+  END
+BUT_ONLY
+
+
+OUTER_SET d2polymorpharray = 1
+
+END
+END
+
+
+//
+//

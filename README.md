@@ -43,29 +43,33 @@ Tweak components:
 3. **Unnerf Animate Dead (IWD2)**
 	- Also corrects chance of each summon to 50/50.
 	- skipped if IWD2EE "Spell Revisions" is installed.
-4. **Shapeshift movement bonuses bypass Free Action (EEs)**
+4. **Shapeshift movement bonuses bypass Free Action (EEs, BG2)**
 	- Can set to bypass or be blocked by Free Action.
-	- This only patches official base-game shapeshifts.
+	- This patches any mod-added spells as well.
 5. **Increase movement speed of IWD shapeshifts (IWD1, IWDEE)**
-	- EEs: increases Polar Bear and Winter Wolf movement.
-	- classic: increases all forms (most are still slower than natural form)  
+	- Increases speed of all IWD animal and elemental forms.
+	- Winter Wolf moves slightly faster than natural form. The rest are still slower, but fast enough to be usable out of combat.
 
 --
 
-6. **Give party starting equipment (IWD games)**
+6. **Shapeshifts can talk (EEs, BG2)**
+	- This does not allow spellcasting, but you can talk to NPCs, merchants, etc.
+	- This patches any mod-added spells as well.
+	- Can optionally install for only druids or only polymorphs.
+7. **Give party starting equipment (IWD games)**
 	- Option 1: Items are auto-equipped or added to inventory.
 	- Option 2: Start with a bag, containing a mix of weapons (choose this if using a Proficiencies overhaul)
-7. **Give party a Bag of Holding at game start (classic and EEs)**
+8. **Give party a Bag of Holding at game start (classic and EEs)**
 	- Option 1: "Bottomless" bag (capacity = 32767)
 	- Option 2: Capacity = 50 items (IWD2 default)
 	- Option 3: Capacity = 100 items (BG2 default)
 	- Option 4: Bottomless, and Gold is exchanged when adding/removing items (EE-only)
-8. **All classes get full HP bonuses from Constitution (classic and EEs)**
+9. **All classes get full HP bonuses from Constitution (classic and EEs)**
 	- Option 1: 2e-style HP bonuses (i.e. BG-style)
 	- Option 2: 3e-style bonuses (+1 or -1 every 2 Con) (note: Prism will spawn dead in BG1)
 	- Option 3: Mixed (use 3e-style at 10+, normal BG penalties at under 10)
 	- Note: does not overwrite any previous changes to Con effects, except for HP bonus.
-9. **Make items stackable to 999 (classic and EEs)**
+10. **Make items stackable to 999 (classic and EEs)**
 	- Option 1: Stackable or nonmagical, no weapons
 	- Option 2: Stackable items only
 	- Option 3: Stackable or nonmagical, with weapons
@@ -74,18 +78,18 @@ Tweak components:
 
 --
 
-10. **Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)**
+11. **Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)**
 	- Can set delay to 1 round or 5 rounds (stat reduction does not stack)
 	- Note: Crippling Strike is capped at -7 stat reduction in unmodded IWDEE.
-11. **Salamander auras hit only enemies of the caster (IWDEE)**
+12. **Salamander auras hit only enemies of the caster (IWDEE)**
 	- Can patch just Avenger form or enemy auras as well.
 	- Can optionally make Cloudburst party friendly.
-12. **Misc spell tweaks (classic and EEs):**
+13. **Misc spell tweaks (classic and EEs):**
 	- Damage party friendly (relative to caster)
 	- Hit stun on damage (1 second)
 	- No mage school restrictions
 	- Note: There are multiple options. You can install all, 1 tweak, or any combo of 2.
-13. **Allow Minsc to use his Berserk ability at will (BG games)**
+14. **Allow Minsc to use his Berserk ability at will (BG games)**
 	- Options to set duration to 5 rounds, 1 turn, or 2 turns.
 	- This does not remove the berserking effect or add/modify other effects.
 	- EEs: Can be recast at any time (stat bonuses do not stack).
@@ -94,15 +98,19 @@ Tweak components:
 
 --
 
-14. **Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)**
+15. **Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)**
 	- IWDEE: makes shortbows look like shortbows in the inventory screen.
 	- IWD-in-BG2: makes scimitars look like scimitars (instead of long sword)
-15. **Remove alignment restrictions for classes (classic and EEs)**
+16. **Remove alignment restrictions for classes (classic and EEs)**
 	- This patches any mod-added kits as well, including multiclass kits.
 	- Has options to skip certain classes (paladins, clerics, monks, etc.)
-16. **Prevent paladins and rangers falling at low rep (EEs)**
+17. **Prevent paladins and rangers falling at low rep (EEs)**
 	- This patches any mod-added kits as well.
 	- Can optionally install for only rangers or only paladins.
+18. **Max summons and traps (EEs)**
+	- Sets summon cap to 999 or 12.
+	- Sets celestial cap to 999, 12, 3, or 1
+	- Sets traps cap to 999.
 
 --
 
@@ -356,7 +364,7 @@ Unnerf Animate Dead (IWD2)
 **NOTE: Festering Drowned Dead emits an aura, affecting living creatures, with several possible negative effects (including instant death) on a failed save vs. Fortitude. The aura prevents saving the game while active.**
 
 You can also unnerf this spell by deleting SPWI501.SPL from the override.
-  
+
 --
 
 </details>
@@ -367,21 +375,16 @@ You can also unnerf this spell by deleting SPWI501.SPL from the override.
 Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
 -
 
-**IWDEE:**
-- Increases movement of polar bear and winter wolf forms. 
-- Winter wolf will move slightly faster than in natural form.
-- Polar bear is similar speed or slightly slower (depending on angle of movement).
-
-**IWD1 (classic):**
-- Increases movement of all Druid shapeshifts. 
-- The winter wolf moves faster than in natural form. 
+- Increases movement of all IWD animal and elemental forms.
+- Winter wolf moves slightly faster than in natural form. 
 - Polar bear gets a huge increase. It now moves similar speed to natural form (instead of ridiculously slow).
-- The boring beetle and elementals are slightly slower than natural form.
+- The boring beetle and elementals are still slower than natural form, but fast enough to be usable out of combat.
 
-**Additional info:**
+Compatibility:
 - There are no conflicts with this tweak and the similar tweak in my [Polymorph fixes](https://github.com/D2-mods/Polymorph-fixes-for-IWDEE) mod. If differing options are chosen, the game will use whichever is installed last.
 - Classic IWD: The 2 installer options are identical. Game doesn't have a polymorph spell.
-  
+- If using the cdtweaks "Increase Party Movement Speed" tweak, movement will be slower than natural form when out of combat. It adjusts by a percentage of base movement, and natural form has higher base speed so it gets a bigger boost. When in combat, or if the movement boost is disabled, changes from this tweak will apply normally.
+
 --
 
 </details>
@@ -619,7 +622,7 @@ NOTE: May be skipped if some mod changes for Minsc are installed.
 Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 -
 
-- IWDEE: Patch shortbows to use shortbow appearance (as in classic IWD)
+- IWDEE: Patch shortbows to use shortbow appearance (as in IWD1 with 1pp)
 - IWD-in-BG2: Patch scimitars to use scimitar appearance (was using long sword)
 
 NOTE: Shortbow appearance can't be set for IWD-in-BG2.

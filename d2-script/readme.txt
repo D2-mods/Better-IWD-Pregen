@@ -33,25 +33,26 @@ Tweak components:
 1. Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
-4. Shapeshift movement bonuses bypass Free Action (EEs)
+4. Shapeshift movement bonuses bypass Free Action (EEs, BG2)
 5. Increase movement speed of IWD shapeshifts (IWD1, IWDEE)
-6. Give party starting equipment (IWD games)
+6. Shapeshifts can talk (EEs, BG2)
+7. Give party starting equipment (IWD games)
 	- Option 1: Items are auto-equipped or added to inventory
 	- Option 2: Start with a bag, containing a mix of weapons
-7. Give party a Bag of Holding at game start (classic and EEs)
-8. All classes get full HP bonuses from Constitution (classic and EEs)
-9. Make items stackable to 999 (classic and EEs)
-10. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
-11. Salamander auras hit only enemies of the caster (IWDEE)
-12. Misc spell tweaks (classic and EEs)
+8. Give party a Bag of Holding at game start (classic and EEs)
+9. All classes get full HP bonuses from Constitution (classic and EEs)
+10. Make items stackable to 999 (classic and EEs)
+11. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
+12. Salamander auras hit only enemies of the caster (IWDEE)
+13. Misc spell tweaks (classic and EEs)
 	- Damage party friendly (relative to caster)
 	- Hit stun on damage (1 second)
 	- No mage school restrictions
-13. Allow Minsc to use his Berserk ability at will (BG games)
-14. Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)
-15. Remove alignment restrictions for classes (classic and EEs)
-16. Prevent paladins and rangers falling at low rep (EEs)
-17. Max summons and traps (EEs)
+14. Allow Minsc to use his Berserk ability at will (BG games)
+15. Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)
+16. Remove alignment restrictions for classes (classic and EEs)
+17. Prevent paladins and rangers falling at low rep (EEs)
+18. Max summons and traps (EEs)
 
 --
 
@@ -121,6 +122,12 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.20
+- Added component: Shapeshifts can talk (EEs, BG2). This does not allow spellcasting, but you can talk to NPCs, merchants, etc.
+- iwdee: faster shapeshifts tweak now also increases boring beetle and elemental speeds. They are still slightly slower than natural form, but fast enough to be usable out of combat.
+- Shapeshift movement tweaks now account for EE fixpack changes.
+- Updated "Shapeshift movement bonuses bypass Free Action": This now also checks haste. Some mods give shapeshifts haste instead of a movement bonus to increase walking speeds. Also, this is now installable on classic BG2. This also now accounts for mod abilities.
+
 v7.19
 - Added component: Max summons and traps (EE-only). Has 6 options with various max summon or celestial numbers. Traps are always set to 999 with any option.
 - SoD + "Items stackable to 999": fixed a random treasure (in BD0130 container 33) becoming 20 items instead of 1 item.

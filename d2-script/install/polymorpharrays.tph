@@ -1,0 +1,89 @@
+//
+//
+
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY polymorphspells BEGIN
+  SPCL611 => druid
+  SPCL612 => druid
+  SPCL613 => druid
+  SPCL643 => druid    // werewolves
+  SPCL644 => druid
+  SPCL632 => druid    // avenger
+  SPCL633 => druid
+  SPCL634 => druid
+  SPCL107 => druid    // iwd animals
+  SPCL108 => druid
+  SPCL101 => druid
+  SPCL112 => druid    // iwd elementals
+  SPCL113 => druid
+  SPCL114 => druid
+//polymorphs
+  SPWI493 => polymorph    // polymorph self
+  SPWI494 => polymorph
+  SPWI495 => polymorph
+  SPWI496 => polymorph
+  SPWI497 => polymorph
+  SPWI498 => polymorph
+  SPWI499 => polymorph
+  SPIN152 => polymorph    // shapechange
+  SPIN153 => polymorph
+  SPIN154 => polymorph
+  SPIN155 => polymorph
+  SPIN156 => polymorph
+  SPIN157 => polymorph
+  spwi480 => polymorph    // iwd forms
+  spwi481 => polymorph
+  spwi482 => polymorph
+  spin198 => polymorph
+END
+
+//includes EE fixpack files
+ACTION_DEFINE_ASSOCIATIVE_ARRAY polymorphitems BEGIN
+  BRBRP    => druid
+  WOLFM    => druidpoly
+  BRBLP    => druid
+  PLYBEAR1 => druidpoly
+  PLYBEAR2 => druidpoly
+  cdbrbrp  => druid    // werewolves
+  cdbrbrp2 => druid
+  werewlf1 => druid
+  werewlf2 => druid
+  BRBRP1   => druid
+  brbrp2   => druid
+  plyspid2 => druid    // avenger
+  plyspid  => druidpoly
+  PLYWYVRN => druid
+  PLYSALA  => druid
+  plywwolf => druid    // iwd animals
+  plybeetl => druid
+  plypbear => druid
+  FELEM    => druid    // iwd elementals
+  EELEM    => druid
+  WELEM    => druid
+//polymorphs
+  PLYFLIND => polymorph    // polymorph self
+  PLYMSTAR => polymorph
+  PLYJELLY => polymorph
+  PLYWOLF1 => polymorph
+  cdmindfl => polymorph    // shapechange
+  cdgoliro => polymorph
+  TROLLALL => polymorph
+  WOLFGR   => polymorph
+  FIRERN   => polymorph
+  EARTHRN  => polymorph
+  cdpolybb => polymorph    // iwd forms
+  cdpolypb => polymorph
+  cdpolyww => polymorph
+  cdshwele => polymorph
+//other
+  clck04   => polymorph    // bg1 cloak
+  CDWOLFM  => polymorph
+  clck27   => polymorph    // bg2 cloak
+  POLYRAT  => polymorph
+  PLYTROLL => polymorph
+  SQUIRP   => polymorph    // polymorph other
+END
+
+
+/*
+*/

@@ -33,12 +33,12 @@ This file contains text shown in weidu installer
 	@40301 = ~Use unnerfed Animate Dead, and correct chance of each creature type to 50/50~
 	@40302 = ~Use nerfed Animate Dead, but correct chance of each creature type to 50/50~
 
-@40400 = ~Shapeshift movement bonuses bypass Free Action (EEs)~
+@40400 = ~Shapeshift movement bonuses bypass Free Action (EEs, BG2)~
 	@40401 = ~Bypass Free Action~
 	@40402 = ~Blocked by Free Action~
 
 @40500 = ~Increase movement speed of IWD shapeshifts (IWD1, IWDEE)~
-	@40501 = ~for Druids and Polymorph Self~
+	@40501 = ~for Druids and Polymorph spells~
 	@40502 = ~for Druids only~
 
 @40600 = ~Give party starting equipment (IWD games)~
@@ -121,6 +121,14 @@ This file contains text shown in weidu installer
 	@41704 = ~12 summons, 3 celestials, 999 traps~
 	@41705 = ~999 summons, 1 celestial, 999 traps~
 	@41706 = ~12 summons, 1 celestial, 999 traps~
+
+@41800 = ~Shapeshifts can talk (EEs, BG2)~
+	@41801 = ~for Druids and Polymorph spells~
+	@41802 = ~for Druids only~
+	@41803 = ~for Polymorphs only~
+	@41804 = ~Option 1, skip mod stuff~
+	@41805 = ~Option 2, skip mod stuff~
+	@41806 = ~Option 3, skip mod stuff~
 
 
 
