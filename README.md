@@ -12,6 +12,7 @@ A minimalist script and tweak pack for Infinity Engine games. This mod was start
 - added PSTEE support for several tweaks
 - added Misc spell tweaks component (see components section)
 - added "Make items stackable to 999" (weapons and magic items optional)
+- added Shapeshifts can talk (EEs, BG2)
 
 NOTE: Generalized Biffing is not required for PSTEE. The bag from this mod will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas, creatures, or stores.
 

@@ -84,7 +84,7 @@ DEFINE_ACTION_FUNCTION add_movement_equip
 	
 BEGIN
 
-COPY_EXISTING ~%item%.itm~ ~override~
+COPY_EXISTING ~%item%.itm~  ~override~
   PATCH_IF ((%bypass% < 0) OR (%bypass% > 1)) BEGIN 
     SET bypass = 1 
   END
@@ -92,7 +92,7 @@ COPY_EXISTING ~%item%.itm~ ~override~
   SET adjust = (50 * %bypass%)
   SET entry = (126 + %adjust%)
 
-  PATCH_IF GAME_IS ~iwdee~ BEGIN
+  PATCH_IF (GAME_IS ~iwdee~) BEGIN
     SET icon = 193
   END
   ELSE BEGIN
@@ -131,7 +131,7 @@ COPY_EXISTING ~%item%.itm~ ~override~
     parameter1=%speed%
     parameter2=%mode%
   END
-BUT_ONLY
+IF_EXISTS BUT_ONLY
 
 END
 
@@ -219,7 +219,7 @@ DEFINE_ACTION_FUNCTION add_movement_spell
 	
 BEGIN
 
-COPY_EXISTING ~%spell%.spl~ ~override~
+COPY_EXISTING ~%spell%.spl~  ~override~
   PATCH_IF ((%bypass% < 0) OR (%bypass% > 1)) BEGIN 
     SET bypass = 0 
   END
@@ -227,7 +227,7 @@ COPY_EXISTING ~%spell%.spl~ ~override~
   SET adjust = (50 * %bypass%)
   SET entry = (126 + %adjust%)
 
-  PATCH_IF GAME_IS ~iwdee~ BEGIN
+  PATCH_IF (GAME_IS ~iwdee~) BEGIN
     SET icon = 193
   END
   ELSE BEGIN
@@ -270,7 +270,7 @@ COPY_EXISTING ~%spell%.spl~ ~override~
     parameter1=%speed%
     parameter2=%mode%
   END
-BUT_ONLY
+IF_EXISTS BUT_ONLY
 
 END
 
@@ -288,7 +288,7 @@ BEGIN
   LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=38 END
   LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=110 END
   
-  PATCH_IF GAME_IS ~iwdee~ BEGIN
+  PATCH_IF (GAME_IS ~iwdee~) BEGIN
     LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=193 END
   END
   ELSE BEGIN
@@ -307,8 +307,7 @@ DEFINE_ACTION_FUNCTION delete_movement_effects
   
 BEGIN
 
-ACTION_IF (FILE_EXISTS_IN_GAME ~%item%.itm~) BEGIN
-  COPY_EXISTING ~%item%.itm~ ~override~
+  COPY_EXISTING ~%item%.itm~  ~override~
     LPF DELETE_EFFECT INT_VAR match_opcode=126 END
     LPF DELETE_EFFECT INT_VAR match_opcode=176 END
     LPF DELETE_EFFECT INT_VAR match_opcode=16 END
@@ -316,17 +315,15 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~%item%.itm~) BEGIN
     LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=38 END
     LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=110 END
   
-    PATCH_IF GAME_IS ~iwdee~ BEGIN
+    PATCH_IF (GAME_IS ~iwdee~) BEGIN
       LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=193 END
     END
     ELSE BEGIN
       LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=195 END
     END
-  BUT_ONLY
-END
+  IF_EXISTS BUT_ONLY
 
-ACTION_IF (FILE_EXISTS_IN_GAME ~%spell%.spl~) BEGIN
-  COPY_EXISTING ~%spell%.spl~ ~override~
+  COPY_EXISTING ~%spell%.spl~  ~override~
     LPF DELETE_EFFECT INT_VAR match_opcode=126 END
     LPF DELETE_EFFECT INT_VAR match_opcode=176 END
     LPF DELETE_EFFECT INT_VAR match_opcode=16 END
@@ -334,14 +331,13 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~%spell%.spl~) BEGIN
     LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=38 END
     LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=110 END
   
-    PATCH_IF GAME_IS ~iwdee~ BEGIN
+    PATCH_IF (GAME_IS ~iwdee~) BEGIN
       LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=193 END
     END
     ELSE BEGIN
       LPF DELETE_EFFECT INT_VAR match_opcode=142 match_parameter2=195 END
     END
-  BUT_ONLY
-END
+  IF_EXISTS BUT_ONLY
 
 END
 

@@ -1,0 +1,244 @@
+//Items are auto-equipped or added to inventory
+
+////////////////////////////////////////////////////////////
+
+//Adds a dialogue message
+//Only enabled for IWD2 and IWD-in-BG2 (reminder to update quick icons)
+
+ACTION_IF (GAME_IS ~iwdee~)         BEGIN OUTER_TEXT_SPRINT d2autoequip ~DisplayStringNoName(Player1,@1010)~ END
+ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN OUTER_TEXT_SPRINT d2autoequip ~DisplayString(Player1,@1011)~ END
+ACTION_IF (GAME_IS ~iwd2~)          BEGIN OUTER_TEXT_SPRINT d2autoequip ~DisplayMessage(@1012)~ END
+ACTION_IF (GAME_IS ~iwd_in_bg2 ca~) BEGIN OUTER_TEXT_SPRINT d2autoequip ~DisplayStringNoName(Player1,@1013)~ END
+
+<<<<<<<< .../temp/d2autoequip
+IF
+	!Global("d2autoequip","GLOBAL",1)
+	GlobalTimerExpired("d2Player1equip","GLOBAL")
+	PartyHasItem("d2#ngrb0")
+THEN
+	RESPONSE #100
+		SetGlobal("d2autoequip","GLOBAL",1)
+		%d2autoequip%
+END
+
+IF
+	!Global("d2autoequip","GLOBAL",1)
+	GlobalTimerExpired("d2Player1equip","GLOBAL")
+	!PartyHasItem("d2#ngrb0")
+THEN
+	RESPONSE #100
+		SetGlobal("d2autoequip","GLOBAL",1)
+END
+>>>>>>>>
+
+COPY - ~.../temp/d2autoequip~  ~inlined/d2autoequip.BAF~
+  EVALUATE_BUFFER
+  PATCH_IF (GAME_IS ~iwd2~) BEGIN
+    REPLACE_TEXTUALLY ~ngrb0~  ~ngrb2~
+  END
+
+////////////////////////////////////////////////////////////
+
+// add cheaper katana
+COPY_EXISTING ~SW1H43.ITM~  ~override/d2#ngkat.ITM~
+  WRITE_LONG 0x34 100    // reduce base price to 100 gold
+  TEXT_SPRINT katana ~%DEST_RES%~
+IF_EXISTS
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~iwdee~) BEGIN
+	
+  COPY ~%ngequip%/d2#ngrb0.BAM~  ~override~                    // add starting robe
+  COPY ~%ngequip%/d2#ngrb0.ITM~  ~override~
+    SAY NAME1 @710 SAY UNIDENTIFIED_DESC @711
+    SAY NAME2 @710
+
+  COPY - ~%ngequip%/d2#ng01.BAF~  ~inlined/d2#ng02.BAF~    // create baf files for each PC
+    REPLACE_TEXTUALLY ~Player1~  ~Player2~
+  COPY - ~%ngequip%/d2#ng01.BAF~  ~inlined/d2#ng03.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player3~
+  COPY - ~%ngequip%/d2#ng01.BAF~  ~inlined/d2#ng04.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player4~
+  COPY - ~%ngequip%/d2#ng01.BAF~  ~inlined/d2#ng05.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player5~
+  COPY - ~%ngequip%/d2#ng01.BAF~  ~inlined/d2#ng06.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player6~
+
+//EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2autoequip.BAF~       // add scripts to baldur.BCS
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng06.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng05.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng04.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng03.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng02.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#ng01.BAF~
+  
+END
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
+  COPY ~%ngequip%/d2#ngrb0.BAM~  ~override~
+  COPY ~%ngequip%/d2#ngrb0.ITM~  ~override~
+    SAY NAME1 @710 SAY UNIDENTIFIED_DESC @712
+    SAY NAME2 @710
+
+//EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2autoequip.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#ng16.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#ng15.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#ng14.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#ng13.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#ng12.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#ng11.BAF~
+END
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
+  COPY ~%ngequip%/d2#ngrb0.BAM~  ~override~
+  COPY ~%ngequip%/d2#ngrb2.ITM~  ~override~
+    SAY NAME1 @710 SAY UNIDENTIFIED_DESC @713
+    SAY NAME2 @710
+
+  OUTER_SET iwd2npc = 0
+  ACTION_IF (FILE_EXISTS ~Characters/SIR_NORD.CHR~) BEGIN OUTER_SET iwd2npc = 1 END
+  ACTION_IF (FILE_EXISTS_IN_GAME ~avweapga.itm~) BEGIN OUTER_SET iwd2npc = 1 END
+
+  COPY - ~%ngequip%/d2#ng21.BAF~  ~inlined/d2#ng21.BAF~
+    PATCH_IF (iwd2npc > 0) BEGIN
+      SPRINT match   ~!HasItem("00ROBE03",Player1)~
+      SPRINT string  ~!HasItem("AVROBEER",Player1)~
+      REPLACE_TEXTUALLY EXACT_MATCH ~%match%~  ~%match%%WNL%%TAB%%string%~
+    END ELSE BEGIN
+      REPLACE_TEXTUALLY ~!InParty~  ~//~
+    END
+
+  COPY - ~inlined/d2#ng21.BAF~  ~inlined/d2#ng22.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player2~
+  COPY - ~inlined/d2#ng21.BAF~  ~inlined/d2#ng23.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player3~
+  COPY - ~inlined/d2#ng21.BAF~  ~inlined/d2#ng24.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player4~
+  COPY - ~inlined/d2#ng21.BAF~  ~inlined/d2#ng25.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player5~
+  COPY - ~inlined/d2#ng21.BAF~  ~inlined/d2#ng26.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player6~
+
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2autoequip.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng26.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng25.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng24.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng23.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng22.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng21.BAF~
+END
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~iwd_in_bg2 ca~) BEGIN
+  
+  COPY ~%ngequip%/d2#ngrb0.BAM~  ~override~
+  COPY ~%ngequip%/d2#ngrb0.ITM~  ~override~
+    SAY NAME1 @710 SAY UNIDENTIFIED_DESC @712
+    SAY NAME2 @710
+  
+  COPY - ~%ngequip%/d2#ng31.BAF~  ~inlined/d2#ng32.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player2~
+  COPY - ~%ngequip%/d2#ng31.BAF~  ~inlined/d2#ng33.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player3~
+  COPY - ~%ngequip%/d2#ng31.BAF~  ~inlined/d2#ng34.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player4~
+  COPY - ~%ngequip%/d2#ng31.BAF~  ~inlined/d2#ng35.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player5~
+  COPY - ~%ngequip%/d2#ng31.BAF~  ~inlined/d2#ng36.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player6~
+
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2autoequip.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng36.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng35.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng34.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng33.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~inlined/d2#ng32.BAF~
+  EXTEND_TOP ~BALDUR.BCS~  ~%ngequip%/d2#ng31.BAF~
+
+END
+
+////////////////////////////////////////////////////////////
+
+//extra patching for IWD-in-BG2
+ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
+
+//fixing text for light crossbows (was annoying to look at while testing)
+  COPY_EXISTING ~xbow04.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @150
+  COPY_EXISTING ~hqlxbow.ITM~  ~override~
+    SAY NAME1 @151 SAY UNIDENTIFIED_DESC @251
+    SAY NAME2 @151
+  COPY_EXISTING ~xbow05.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @152 SAY DESC @252
+  COPY_EXISTING ~xbow06.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @153 SAY DESC @253
+  COPY_EXISTING ~ULXBW2A.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @154 SAY DESC @254
+  COPY_EXISTING ~ULXBW3A.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @155 SAY DESC @255
+  COPY_EXISTING ~ULXBW3B.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @156 SAY DESC @256
+  COPY_EXISTING ~ULXBW5A.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @157 SAY DESC @257
+
+  COPY_EXISTING ~AR1006.BCS~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player1,0,0,0)~  ~ActionOverride(Player1,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player2,0,0,0)~  ~ActionOverride(Player2,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player3,0,0,0)~  ~ActionOverride(Player3,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player4,0,0,0)~  ~ActionOverride(Player4,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player5,0,0,0)~  ~ActionOverride(Player5,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player6,0,0,0)~  ~ActionOverride(Player6,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~ActionOverride(Player1,FillSlot(SLOT_WEAPON0))~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player2,FillSlot(SLOT_WEAPON0))~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player3,FillSlot(SLOT_WEAPON0))~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player4,FillSlot(SLOT_WEAPON0))~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player5,FillSlot(SLOT_WEAPON0))~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player6,FillSlot(SLOT_WEAPON0))~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player1,EquipMostDamagingMelee())~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player2,EquipMostDamagingMelee())~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player3,EquipMostDamagingMelee())~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player4,EquipMostDamagingMelee())~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player5,EquipMostDamagingMelee())~  ~~
+      REPLACE_TEXTUALLY ~ActionOverride(Player6,EquipMostDamagingMelee())~  ~~
+    END
+  BUT_ONLY
+  
+END
+
+////////////////////////////////////////////////////////////
+
+//extra patching for classic adventures
+//starting area is TC0009
+
+ACTION_IF (GAME_IS ~ca~) BEGIN
+
+  COPY_EXISTING ~baldur.bcs~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      // temp patch (check resource)
+      PATCH_IF !(FILE_EXISTS_IN_GAME ~maul.itm~)    BEGIN  REPLACE_TEXTUALLY ~"maul"~  ~"hamm01"~  END
+      PATCH_IF !(FILE_EXISTS_IN_GAME ~scimita.itm~) BEGIN  REPLACE_TEXTUALLY ~"scimita"~  ~"SW1H20"~  END
+      PATCH_IF !(FILE_EXISTS_IN_GAME ~2HAXE.itm~)   BEGIN  REPLACE_TEXTUALLY ~"2HAXE"~  ~"AX1H01"~  END
+
+      //delay until after starting area script
+      SPRINT match    ~NumItems("STAF01",Player1,1)~
+      SPRINT trigger  ~Global("NewGame","TC0009",1)~
+      REPLACE_TEXTUALLY EXACT_MATCH ~%match%~  ~%trigger%~
+    END
+  BUT_ONLY
+END
+
+////////////////////////////////////////////////////////////

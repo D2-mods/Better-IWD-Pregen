@@ -16,6 +16,21 @@ INCLUDE ~%install%/polymorpharrays.tph~
 INCLUDE ~%install%/polymorphmods.tph~
 
 
+//check IWDification
+//files that don't exist are skipped silently
+ACTION_IF (FILE_EXISTS_IN_GAME ~CDIA482.itm~) BEGIN
+  ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
+    LAF add_movement_equip INT_VAR speed=150 STR_VAR item = CDIA482 END  // wolf
+    LAF add_movement_equip INT_VAR speed=150 STR_VAR item = CDIA481 END  // bear
+    LAF add_movement_equip INT_VAR speed=150 STR_VAR item = CDIA480 END  // beetle
+  END
+  LAF add_movement_equip INT_VAR speed=150 STR_VAR item = cdidrww END  // wolf
+  LAF add_movement_equip INT_VAR speed=150 STR_VAR item = cdidrpb END  // bear
+  LAF add_movement_equip INT_VAR speed=150 STR_VAR item = cdidrbb END  // beetle
+  LAF add_movement_equip INT_VAR speed=130 STR_VAR item = cdidrwe END  // water elemental
+END
+
+
 //variables not used (this is copy pasted from polymorphtalk.tph)
 DEFINE_ACTION_FUNCTION polymorphmove INT_VAR druids=1 polymorph=1 mods=1 BEGIN
 

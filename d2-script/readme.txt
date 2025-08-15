@@ -17,6 +17,7 @@ Update notes:
 - added PSTEE support for several tweaks
 - added Misc spell tweaks component (see components section)
 - added "Make items stackable to 999" (weapons and magic items optional)
+- added Shapeshifts can talk (EEs, BG2)
 
 NOTE: Generalized Biffing is not required for PSTEE. The bag from this mod will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas, creatures, or stores.
 
@@ -122,6 +123,10 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.21
+- added missing weidu labels for a component (fixes an issue with Project Infinity).
+- minor adjustments for IWDification shapeshifts for relevant components, ex. polar bear moves similar speed as brown/black bear instead of slower.
+
 v7.20
 - Added component: Shapeshifts can talk (EEs, BG2). This does not allow spellcasting, but you can talk to NPCs, merchants, etc.
 - iwdee: faster shapeshifts tweak now also increases boring beetle and elemental speeds. They are still slightly slower than natural form, but fast enough to be usable out of combat.

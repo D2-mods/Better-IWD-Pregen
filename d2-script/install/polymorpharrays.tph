@@ -1,5 +1,8 @@
-//
-//
+/*
+base arrays for polymorph tweaks
+includes EE fixpack and IWDification
+Other mods are scanned from polymorphmods.tph
+*/
 
 
 ACTION_DEFINE_ASSOCIATIVE_ARRAY polymorphspells BEGIN
@@ -35,9 +38,19 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY polymorphspells BEGIN
   spwi481 => polymorph
   spwi482 => polymorph
   spin198 => polymorph
+//iwdification
+  cdidrbb => druid
+  cdidrpb => druid
+  cdidrww => druid
+  cdidrfe => druid
+  cdidree => druid
+  cdidrwe => druid
+  cdia480 => polymorph
+  cdia481 => polymorph
+  cdia482 => polymorph
 END
 
-//includes EE fixpack files
+
 ACTION_DEFINE_ASSOCIATIVE_ARRAY polymorphitems BEGIN
   BRBRP    => druid
   WOLFM    => druidpoly
@@ -82,8 +95,15 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY polymorphitems BEGIN
   POLYRAT  => polymorph
   PLYTROLL => polymorph
   SQUIRP   => polymorph    // polymorph other
+//iwdification
+  CDIA480 => druidpoly
+  CDIA481 => druidpoly
+  CDIA482 => druidpoly
+  cdidrfe => druid
+  cdidree => druid
+  cdidrwe => druid
 END
 
 
-/*
-*/
+//
+//
