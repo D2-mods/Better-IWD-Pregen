@@ -1,0 +1,184 @@
+//extra patching
+//
+
+
+//make rr composite bows usable by shamans (disabled by default)
+OUTER_SET rrbowpatch = 0
+
+
+/*changed method, weapontypes arrays now updates resources for tutu
+//tutu (don't remove this)
+COPY_EXISTING ~macinit.bcs~  ~override~
+  DECOMPILE_AND_PATCH BEGIN
+    REPLACE_TEXTUALLY EXACT_MATCH ~_staf01~  ~staf01~
+  END
+IF_EXISTS BUT_ONLY
+*/
+
+
+
+//patch SoD script (let pregenerated BG1 character gain SoD starting items)
+ACTION_IF (GAME_INCLUDES ~sod~) BEGIN
+
+//added to bd0120 (SoD starting area script)
+<<<<<<<< .../temp/script
+IF
+	!Global("d2sodpregenfix_%script%","GLOBAL",1)
+	PartyHasItem("%staff%")
+THEN
+    RESPONSE #100
+		SetGlobal("d2sodpregenfix_%script%","GLOBAL",1)
+		SetGlobal("BD_TURNOFF_GEARSCRIPT","BD0120",0)    // set to 1 from bdintro
+		SetGlobal("BD_Weapon","BD0120",0)
+//		SetGlobal("SOD_fromimport","GLOBAL",0)           // set to 1 when transitioning from BG1 ending
+//      Continue()    // don't include this, script needs to restart so lower blocks use correct variables
+END
+
+IF
+	!Global("d2sodpregenfix_%script%","GLOBAL",1)
+	!PartyHasItem("%staff%")
+THEN
+    RESPONSE #100
+		SetGlobal("d2sodpregenfix_%script%","GLOBAL",1)
+        Continue()
+END
+>>>>>>>>
+ACTION_FOR_EACH script IN ~bd0120~ BEGIN
+  ACTION_IF !(RESOURCE_CONTAINS ~%script%.bcs~  ~d2sodpregenfix_~) BEGIN
+    COPY - ~.../temp/script~  ~inlined/script.BAF~
+      EVALUATE_BUFFER
+    EXTEND_TOP ~%script%.bcs~  ~inlined/script.BAF~
+  END
+END
+
+//added to bdintro (runs from bd0120 near bottom)
+<<<<<<<< .../temp/script
+IF
+	!Global("d2sodnostaff_%script%","GLOBAL",1)
+	PartyHasItem("%staff%")
+THEN
+    RESPONSE #100
+		SetGlobal("d2sodnostaff_%script%","GLOBAL",1)
+		ActionOverride(Player1,DestroyItem("%staff%"))
+		ActionOverride(Player2,DestroyItem("%staff%"))
+		ActionOverride(Player3,DestroyItem("%staff%"))
+		ActionOverride(Player4,DestroyItem("%staff%"))
+		ActionOverride(Player5,DestroyItem("%staff%"))
+		ActionOverride(Player6,DestroyItem("%staff%"))
+        Continue()
+END
+
+IF
+	!Global("d2sodnostaff_%script%","GLOBAL",1)
+	!PartyHasItem("%staff%")
+THEN
+    RESPONSE #100
+		SetGlobal("d2sodnostaff_%script%","GLOBAL",1)
+        Continue()
+END
+>>>>>>>>
+ACTION_FOR_EACH script IN ~bdintro~ BEGIN
+  ACTION_IF !(RESOURCE_CONTAINS ~%script%.bcs~  ~d2sodnostaff_~) BEGIN
+    COPY - ~.../temp/script~  ~inlined/script.BAF~
+      EVALUATE_BUFFER
+    EXTEND_TOP ~%script%.bcs~  ~inlined/script.BAF~
+  END
+END
+
+END
+
+
+
+ACTION_IF (rrbowpatch > 0) BEGIN
+
+//patch rr shortbows to be usable by shamans
+ACTION_IF (ee_game > 0) BEGIN
+  OUTER_SET shamanbows = 0
+  OUTER_SET nodruids = 0
+  OUTER_SET special = 1080    // stringref says "Druid" (all EEs including with ToF)
+
+  ACTION_IF (RESOURCE_CONTAINS ~class.ids~  ~shaman~) BEGIN
+    OUTER_SET shamanbows = 1
+  END
+
+  // check if f/d restricted in shortbows
+  COPY_EXISTING - ~%shortbow%.itm~  ~~
+    READ_LONG 0x1e flags
+    PATCH_IF (flags & BIT12) BEGIN  SET nodruids = 1  END
+
+  // check if druid has 0 in shortbow prof
+  LAF d2_get_2da_entry INT_VAR col_read=1 STR_VAR 2da=weapprof col_name=druid row_name=~%shortbow_prof%~ RET entry END
+  ACTION_IF (entry = 0) BEGIN  OUTER_SET nodruids = 1  END
+
+  ACTION_IF (shamanbows > 0) BEGIN
+    COPY_EXISTING_REGEXP GLOB ~^rr#bow.*\.itm$~  ~override~
+      // set prof and unusable to same as regular shortbow
+      LPF d2_get_weapontype_fields
+        STR_VAR type=shortbow
+        RET item_prof item_unusable item_kits4
+      END
+      WRITE_BYTE 0x31  item_prof
+      WRITE_LONG 0x1e  item_unusable
+      WRITE_BYTE 0x2f  item_kits4
+
+      // restrict druids
+      PATCH_IF (nodruids > 0) BEGIN
+        LPF DELETE_EFFECT INT_VAR match_opcode=319 match_parameter1=11 match_parameter2=5 END
+        LPF CLONE_EFFECT INT_VAR multi_match=1 check_headers=0 opcode=319 parameter1=11 parameter2=5 power=0 special=special END
+      END
+    IF_EXISTS BUT_ONLY
+  END
+END
+
+END
+
+
+
+//IWD-in-BG2
+ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
+
+  // fix text for light crossbows (was annoying to look at while testing)
+  COPY_EXISTING ~xbow04.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @150
+  COPY_EXISTING ~hqlxbow.ITM~  ~override~
+    SAY NAME1 @151 SAY UNIDENTIFIED_DESC @251
+    SAY NAME2 @151
+  COPY_EXISTING ~xbow05.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @152 SAY DESC @252
+  COPY_EXISTING ~xbow06.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @153 SAY DESC @253
+  COPY_EXISTING ~ULXBW2A.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @154 SAY DESC @254
+  COPY_EXISTING ~ULXBW3A.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @155 SAY DESC @255
+  COPY_EXISTING ~ULXBW3B.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @156 SAY DESC @256
+  COPY_EXISTING ~ULXBW5A.ITM~  ~override~
+    SAY NAME1 @150 SAY UNIDENTIFIED_DESC @250
+    SAY NAME2 @157 SAY DESC @257
+
+  COPY_EXISTING ~AR1006.BCS~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+//    REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player1,0,0,0)~  ~ActionOverride(Player1,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player2,0,0,0)~  ~ActionOverride(Player2,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player3,0,0,0)~  ~ActionOverride(Player3,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player4,0,0,0)~  ~ActionOverride(Player4,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player5,0,0,0)~  ~ActionOverride(Player5,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~GiveItemCreate("staf01",Player6,0,0,0)~  ~ActionOverride(Player6,CreateItem("STAF01",0,0,0))~
+      REPLACE_TEXTUALLY ~^.*FillSlot.*$~  ~~
+      REPLACE_TEXTUALLY ~^.*EquipMostDamagingMelee.*$~  ~~
+
+    END
+  BUT_ONLY
+  
+END
+
+
+//
+//

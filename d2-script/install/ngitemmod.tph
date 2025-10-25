@@ -1,0 +1,207 @@
+/*
+don't use EVALUATE_BUFFER here (need to keep % signs for text matching)
+throwing hammers from thrown hammers mod
+javelins from project javelin
+composite shortbow from rogue rebalancing
+*/
+
+
+ACTION_IF (RESOURCE_CONTAINS ~trigger.ids~  ~ProficiencyGT~) BEGIN
+
+
+//thrown hammers mod
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%hammer_prof%,0)
+	CheckStatGT(Player1,%throwinghammer_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%throwinghammer%",5,0,0))
+		ActionOverride(Player1,XEquipItem("%throwinghammer%",Player1,SLOT_WEAPON1,EQUIP))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/hammers.baf~
+
+
+//project javelin mod
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%spear_prof%,0)
+	CheckStatGT(Player1,%throwingspear_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%throwingspear%",5,0,0))
+		ActionOverride(Player1,XEquipItem("%throwingspear%",Player1,SLOT_WEAPON1,EQUIP))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/javelins.baf~
+
+
+//rr (composite shortbow)
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(3)
+		Class(Player1,THIEF_ALL)
+		Class(Player1,BARD)
+		Class(Player1,RANGER)
+	!Class(Player1,CLERIC_ALL)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%shortbow_prof%,0)
+	CheckStatGT(Player1,%rrshortbow_strcheck%,36)
+	RandomNumGT(20,13)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%rrshortbow%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%rrshortbow%",Player1,SLOT_WEAPON1,EQUIP))
+		ActionOverride(Player1,CreateItem("%arrow%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/rrshortbows.baf~
+
+
+//shurikens (ZS_ItemPack)
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(3)
+		Class(Player1,THIEF_ALL)
+		Class(Player1,BARD)
+		Class(Player1,MONK)
+	!Class(Player1,CLERIC_ALL)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%dart_prof%,0)
+	CheckStatGT(Player1,%throwingstar_strcheck%,36)
+	CheckStatGT(Player1,17,40)    // dex check
+	RandomNumGT(20,17)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%throwingstar%",30,0,0))
+		ActionOverride(Player1,XEquipItem("%throwingstar%",Player1,SLOT_WEAPON1,EQUIP))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/throwingstar.baf~
+
+
+END
+ELSE BEGIN
+
+
+//thrown hammers mod
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%hammer_prof%)
+	CheckStatGT(Player1,%throwinghammer_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%throwinghammer%",5,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/hammers.baf~
+
+
+//project javelin mod
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%spear_prof%)
+	CheckStatGT(Player1,%throwingspear_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%throwingspear%",5,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/javelins.baf~
+
+
+//rr
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(3)
+		Class(Player1,THIEF_ALL)
+		Class(Player1,BARD)
+		Class(Player1,RANGER)
+	!Class(Player1,CLERIC_ALL)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%shortbow_prof%)
+	CheckStatGT(Player1,%rrshortbow_strcheck%,36)
+	RandomNumGT(20,13)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%rrshortbow%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))
+		ActionOverride(Player1,CreateItem("%arrow%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/rrshortbows.baf~
+
+
+//shurikens (ZS_ItemPack)
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(3)
+		Class(Player1,THIEF_ALL)
+		Class(Player1,BARD)
+		Class(Player1,MONK)
+	!Class(Player1,CLERIC_ALL)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%dart_prof%)
+	CheckStatGT(Player1,%throwingstar_strcheck%,36)
+	CheckStatGT(Player1,17,40)    // dex check
+	RandomNumGT(20,17)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%throwingstar%",30,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/throwingstar.baf~
+
+
+END
+
+
+//
+<<<<<<<< .../temp/newfile
+//
+>>>>>>>>
+COPY - ~.../temp/newfile~  ~inlined/rangedmod.baf~
+  PATCH_IF (FILE_EXISTS_IN_GAME ~%throwinghammer%.itm~) BEGIN  APPEND_FILE TEXT ~inlined/hammers.baf~  END
+  PATCH_IF (FILE_EXISTS_IN_GAME ~%throwingspear%.itm~) BEGIN  APPEND_FILE TEXT ~inlined/javelins.baf~  END
+//  EVALUATE_BUFFER
+
+COPY - ~.../temp/newfile~  ~inlined/classmod.baf~
+  PATCH_IF (FILE_EXISTS_IN_GAME ~%rrshortbow%.itm~) BEGIN  APPEND_FILE TEXT ~inlined/rrshortbows.baf~  END
+  PATCH_IF (FILE_EXISTS_IN_GAME ~%throwingstar%.itm~) BEGIN  APPEND_FILE TEXT ~inlined/throwingstar.baf~  END
+//  EVALUATE_BUFFER
+
+
+/*
+*/

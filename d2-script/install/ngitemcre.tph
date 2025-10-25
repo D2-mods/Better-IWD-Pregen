@@ -1,0 +1,182 @@
+/*
+invisible creature stuff
+*/
+
+
+//main function
+DEFINE_ACTION_FUNCTION ngequipcre INT_VAR bg2mode=0 visiblecre=0 iwd2=0 BEGIN
+
+  ACTION_IF (iwd2 > 0) BEGIN
+    OUTER_SPRINT bird  ~iwd2bird~
+    OUTER_SET bg2mode=0
+    OUTER_SET visiblecre=0
+    OUTER_SPRINT amul ~00CISEE2~
+    OUTER_SPRINT ring ~00CIDEAD~
+    OUTER_SET aiscript = 0x274
+    OUTER_SET deathvar = 0x394
+  END ELSE BEGIN
+    OUTER_SPRINT bird  ~replaceself~
+    OUTER_SPRINT amul ~minhp1~
+    OUTER_SPRINT ring ~immune2~
+    OUTER_SET aiscript = 0x248
+    OUTER_SET deathvar = 0x280
+  END
+
+  ACTION_FOR_EACH num IN ~1~ ~2~ ~3~ ~4~ ~5~ ~6~ BEGIN
+    OUTER_SPRINT creres  ~d2ngcre%num%~
+    OUTER_SPRINT script  ~d2ngcre%num%~
+
+    COPY ~%files%/%bird%.SPL~  ~override/%creres%.SPL~
+      LPF ALTER_EFFECT STR_VAR resource=~%creres%~ END
+    IF_EXISTS
+
+    COPY ~%files%/%bird%.CRE~  ~override/%creres%.CRE~
+      ADD_CRE_ITEM ~%amul%~ #0 #0 #0 ~unstealable&undroppable~ ~amulet~
+      ADD_CRE_ITEM ~%ring%~ #0 #0 #0 ~unstealable&undroppable~ ~rring~
+      WRITE_ASCII aiscript ~%script%~ #8     // set script
+      WRITE_ASCII deathvar ~%script%~ #32    // set script name
+
+      PATCH_IF (bg2mode > 0) BEGIN
+        LPF ALTER_EFFECT INT_VAR match_opcode=315 opcode=69 END
+      END
+
+      PATCH_IF (visiblecre > 0) BEGIN
+        LPF DELETE_EFFECT INT_VAR match_opcode=20 END
+        LPF DELETE_EFFECT INT_VAR match_opcode=315 END
+      END
+
+//make BCS file
+<<<<<<<< .../temp/%creres%.BAF
+>>>>>>>>
+COMPILE ~.../temp/%creres%.BAF~
+EXTEND_TOP ~%creres%.BCS~ ~inlined/slot%num%.BAF~    // fill with global actions
+
+    LAF ngequipscript END    // add cre actions (destroy self)
+    LAF ngequipsummon END    // create creature from baldur.bcs
+
+  END
+END
+
+
+
+
+//subfunctions (run by above)
+
+DEFINE_ACTION_FUNCTION ngequipscript BEGIN
+
+//add to top
+<<<<<<<< .../temp/blocks
+IF
+	!Global("%creres%move","LOCALS",1)
+THEN
+	RESPONSE #100
+		SetGlobal("%creres%move","LOCALS",1)
+//		JumpToPoint([20.20])
+		SetGlobalTimer("%creres%timer","LOCALS",6)
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/blocks.BAF~
+  EVALUATE_BUFFER
+EXTEND_TOP ~%creres%.BCS~  ~inlined/blocks.BAF~
+
+
+//add to bottom
+<<<<<<<< .../temp/blocks
+IF
+	Global("%creres%move","LOCALS",1)
+	OR(2)
+		Global("d2Player%num%melee","GLOBAL",1)
+		Global("d2Player%num%staff","GLOBAL",1)
+	Global("d2Player%num%ranged","GLOBAL",1)
+	Global("d2Player%num%robecheck","GLOBAL",1)
+	Global("d2Player%num%prep","GLOBAL",1)
+THEN
+	RESPONSE #100
+		DestroySelf()
+END
+
+IF
+	Global("%creres%move","LOCALS",1)
+	!GlobalTimerNotExpired("%creres%timer","LOCALS")
+	!GlobalTimerNotExpired("d2Player%num%equip","GLOBAL")
+THEN
+	RESPONSE #100
+		DestroySelf()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/blocks.BAF~
+  EVALUATE_BUFFER
+EXTEND_BOTTOM ~%creres%.BCS~  ~inlined/blocks.BAF~
+
+END    // end of ngequipscript
+
+
+//
+DEFINE_ACTION_FUNCTION ngequipsummon BEGIN
+
+//add to top
+<<<<<<<< .../temp/blocks
+IF
+	!Global("%creres%summon","GLOBAL",1)
+	%extratrigger%
+	OR(2)
+		Global("Chapter","GLOBAL",0)    // can trigger in prologue or chapter 1 (prevents gaining in black pits)
+		Global("Chapter","GLOBAL",1)    // note: bgt starts bg1 and bg2 both at chapter 1 (add extratrigger for it)
+	Exists(Player%num%)
+THEN
+	RESPONSE #100
+		SetGlobal("%creres%summon","GLOBAL",1)
+		CreateCreature("%creres%",[0.0],0)
+		ApplySpellRES("%creres%",Player%num%)    // keep both summon methods (about 1 second faster with 2 CREs)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/blocks.BAF~
+  SPRINT extratrigger  ~~
+  PATCH_IF (RESOURCE_CONTAINS ~ar0602.are~  ~skelded~) BEGIN    // eet or bgt
+    SPRINT extratrigger ~!Exists("skelded")~
+  END
+  EVALUATE_BUFFER
+
+  // iwd2 edit
+  PATCH_IF (iwd2 > 0) BEGIN
+    SPRINT match  ~CreateCreature.*$~
+    SPRINT string  ~CreateCreature("%creres%","%creres%",[10.10],0)~
+    REPLACE_TEXTUALLY ~%match%~ ~%string%~
+    SPRINT match  ~ApplySpellRES.*$~
+    SPRINT string  ~CreateCreature("%creres%","%creres%",[20.20],0)~
+    REPLACE_TEXTUALLY ~%match%~ ~%string%~
+  END
+EXTEND_TOP ~baldur.BCS~  ~inlined/blocks.BAF~
+
+
+//add to bottom
+<<<<<<<< .../temp/blocks
+IF
+	!Global("%creres%cancel","GLOBAL",1)
+	!Global("%creres%summon","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("%creres%cancel","GLOBAL",1)
+		SetGlobalTimer("%creres%expired","GLOBAL",6)
+		Continue()
+END
+
+IF
+	!Global("%creres%summon","GLOBAL",1)
+	GlobalTimerExpired("%creres%expired","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("%creres%summon","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/blocks.BAF~
+  EVALUATE_BUFFER
+EXTEND_BOTTOM ~baldur.BCS~  ~inlined/blocks.BAF~
+
+END    // end of ngequipsummon
+
+
+//
+//

@@ -1,0 +1,103 @@
+//iwd2
+//
+
+
+IF
+	!Global("d2Player1initiate","GLOBAL",1)
+	OR(2)
+		HasItem("%staff%",Player1)
+		!Exists(Player1)
+	!InParty("nord")    // fix crash with G3 NPC premade party
+	!InParty("hildury")
+	!InParty("diriel")
+	!InParty("jaemal")
+	!InParty("salomeya")
+	!InParty("nikosh")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2Player1start","GLOBAL",6)
+		Continue()
+END
+
+IF
+	!Global("d2Player1initiate","GLOBAL",1)
+	GlobalTimerExpired("d2Player1start","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1initiate","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1start","GLOBAL")
+	NumItemsGT("%staff%",Player1,0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2Player1equip","GLOBAL",6)
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%staff%",Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robemove","GLOBAL",1)
+	!Global("d2Player1robecheck","GLOBAL",1)
+	!Global("d2Player1robe","GLOBAL",1)
+	!HasItem("%startrobe%",Player1)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%startrobe%",Player1,0,0,0)    // worn garment
+		SetGlobal("d2Player1robe","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robemove","GLOBAL",1)
+//	!HasItemInSlot("%startrobe%",Player1,SLOT_ARMOR)    // doesn't work
+	HasItem("%startrobe%",Player1)
+	!HasItem("00LEAT01",Player1)
+	!HasItem("00CHAN01",Player1)
+	!HasItem("00HIDE06",Player1)
+	!HasItem("00ROBE03",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%startrobe%",Player1,SLOT_ARMOR,TRUE)
+		SetGlobal("d2Player1robemove","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robecheck","GLOBAL",1)
+	OR(2)
+		Global("d2Player1robemove","GLOBAL",1)
+		!GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%startrobe%",Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1robecheck","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerExpired("d2Player1equip","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+*/

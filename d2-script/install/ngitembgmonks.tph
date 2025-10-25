@@ -1,0 +1,66 @@
+/*
+monks in bgee/eet don't start with a staff
+this will check any character with no weapons at the start (ie export with empty inventory)
+*/
+
+
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ngimportstaff","GLOBAL",1)
+	!GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player1)
+	NumItemsLT("%staff%",Player1,1)    // this ignores bags
+//	Class(Player1,MONK)
+//	LevelLT(Player1,3)
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%staff%",Player1,0,0,0)    // staff
+		SetGlobal("d2Player1ngimportstaff","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ngimportstaff","GLOBAL",1)
+	OR(3)
+		!Exists(Player1)
+//		!Class(Player1,MONK)
+//		LevelGT(Player1,2)
+		HasItemSlot(Player1,SLOT_WEAPON)
+		HasItemSlot(Player1,SLOT_WEAPON1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1ngimportstaff","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/slot1.BAF~
+  EVALUATE_BUFFER
+COPY - ~inlined/slot1.BAF~ ~inlined/slot2.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player2~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot3.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player3~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot4.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player4~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot5.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player5~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot6.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player6~
+
+COPY - ~inlined/slot1.BAF~  ~inlined/bgmonks.BAF~
+  APPEND_FILE TEXT ~inlined/slot2.BAF~
+  APPEND_FILE TEXT ~inlined/slot3.BAF~
+  APPEND_FILE TEXT ~inlined/slot4.BAF~
+  APPEND_FILE TEXT ~inlined/slot5.BAF~
+  APPEND_FILE TEXT ~inlined/slot6.BAF~
+
+
+//
+ACTION_FOR_EACH script IN
+  ~ar2600~ ~bg2600~ ~_AR2600~    // don't remove _AR2600
+//  ~AR0015~
+BEGIN
+  ACTION_IF (RESOURCE_CONTAINS ~%script%.bcs~  ~d2ng~) BEGIN
+    EXTEND_TOP ~%script%.BCS~  ~inlined/bgmonks.BAF~
+  END
+END
+
+
+//
+//

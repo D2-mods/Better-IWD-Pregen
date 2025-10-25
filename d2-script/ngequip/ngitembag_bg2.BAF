@@ -1,0 +1,83 @@
+//bg2 engine
+//
+
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	OR(2)
+		HasItem("%staff%",Player1)
+		!Exists(Player1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2Player1equip","GLOBAL",6)
+		Continue()
+END
+
+IF
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!Global("d2Player1staff","GLOBAL",1)
+	NumItemsGT("%staff%",Player1,0)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("%staff%"))
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robe","GLOBAL",1)
+	!Global("d2Player1robecheck","GLOBAL",1)
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_ARMOR)
+	!HasItem("%startrobe%",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%startrobe%",0,0,0))    // worn garment
+		ActionOverride(Player1,FillSlot(SLOT_ARMOR))
+		SetGlobal("d2Player1robe","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robecheck","GLOBAL",1)
+	Global("d2Player1robe","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player1)
+	!HasItemSlot(Player1,SLOT_ARMOR)
+	!HasItem("%startrobe%",Player1)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%startrobe%",Player1,0,0,0)    // worn garment
+		ActionOverride(Player1,FillSlot(SLOT_ARMOR))
+		SetGlobal("d2Player1robecheck","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robecheck","GLOBAL",1)
+	Global("d2Player1robe","GLOBAL",1)
+	!GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		HasItemSlot(Player1,SLOT_ARMOR)
+		HasItem("%startrobe%",Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1robecheck","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerExpired("d2Player1equip","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+*/

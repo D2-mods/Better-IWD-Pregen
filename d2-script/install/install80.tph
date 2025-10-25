@@ -1,0 +1,41 @@
+//
+//
+
+
+//settings.ini
+OUTER_SPRINT file  ~%MOD_FOLDER%\settings.ini~
+OUTER_SPRINT check  ~useglobalscript.*=.*[^0-9]0[^0-9]*$~
+
+OUTER_SET useglobal = 1
+ACTION_IF (FILE_CONTAINS ~%file%~  ~%check%~) BEGIN  OUTER_SET useglobal = 0  END
+
+
+/*this is fixed
+//iwd2ee (workaround for issues)
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
+  ACTION_IF (FILE_EXISTS ~IEex.dll~ && FILE_EXISTS ~IWD2EE.exe~) BEGIN
+    ACTION_IF (ngstartmode = 1) BEGIN  OUTER_SET useglobal = 0  END    // always use nonglobal mode for Autoequip
+    ACTION_IF (ngstartmode = 2) BEGIN  OUTER_SET useglobal = 1  END    // always use global mode for Weapon Sack
+  END
+END
+*/
+
+
+//install
+ACTION_IF (ngstartmode=1 && useglobal>0) BEGIN  INCLUDE ~%install%/ngequip2.tph~  END
+ACTION_IF (ngstartmode=1 && useglobal=0) BEGIN  INCLUDE ~%install%/ngequip2alt.tph~  END
+ACTION_IF (ngstartmode=2 && useglobal>0) BEGIN  INCLUDE ~%install%/ngitembag2.tph~  END
+ACTION_IF (ngstartmode=2 && useglobal=0) BEGIN  INCLUDE ~%install%/ngitembag2alt.tph~  END
+
+//test speed with ARE edit
+//INCLUDE ~%install%/ngitemaretest.tph~
+
+//extra patching
+INCLUDE ~%install%/ngitembgmonks.tph~
+INCLUDE ~%install%/ngitemiwdstaff.tph~
+INCLUDE ~%install%/ngitemstaffdupe.tph~
+INCLUDE ~%install%/ngitembugfixes.tph~
+
+
+/*
+*/

@@ -1,0 +1,72 @@
+//ammo for weapon bag option
+//
+
+IF
+	!Global("d2ngammo","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!Exists(Player2)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%bolt%",Player1,%1slots%,0,0)
+		GiveItemCreate("%arrow%",Player1,%1slots%,0,0)
+		GiveItemCreate("%dart%",Player1,%1slots%,0,0)
+		GiveItemCreate("%bullet%",Player1,%1slots%,0,0)
+		SetGlobal("d2ngammo","GLOBAL",1)
+		Continue()
+END
+
+/*
+		GiveItemCreate("%bolt%",Player1,%2slots%,0,0)
+		GiveItemCreate("%arrow%",Player1,%2slots%,0,0)
+		GiveItemCreate("%dart%",Player1,%2slots%,0,0)
+		GiveItemCreate("%bullet%",Player1,%2slots%,0,0)
+
+		ActionOverride(Player1,CreateItem("%bolt%",%2slots%,0,0))
+		ActionOverride(Player1,CreateItem("%arrow%",%2slots%,0,0))
+		ActionOverride(Player1,CreateItem("%dart%",%2slots%,0,0))
+		ActionOverride(Player1,CreateItem("%bullet%",%2slots%,0,0))
+*/
+
+IF
+	!Global("d2ngammo","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player2)
+	!Exists(Player4)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%bolt%",Player1,%2slots%,0,0)
+		GiveItemCreate("%arrow%",Player1,%2slots%,0,0)
+		GiveItemCreate("%dart%",Player1,%2slots%,0,0)
+		GiveItemCreate("%bullet%",Player1,%2slots%,0,0)
+		SetGlobal("d2ngammo","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngammo","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player4)
+	!Exists(Player6)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%bolt%",Player1,%4slots%,0,0)
+		GiveItemCreate("%arrow%",Player1,%4slots%,0,0)
+		GiveItemCreate("%dart%",Player1,%4slots%,0,0)
+		GiveItemCreate("%bullet%",Player1,%4slots%,0,0)
+		SetGlobal("d2ngammo","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngammo","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player6)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%bolt%",Player1,%6slots%,0,0)
+		GiveItemCreate("%arrow%",Player1,%6slots%,0,0)
+		GiveItemCreate("%dart%",Player1,%6slots%,0,0)
+		GiveItemCreate("%bullet%",Player1,%6slots%,0,0)
+		SetGlobal("d2ngammo","GLOBAL",1)
+		Continue()
+END

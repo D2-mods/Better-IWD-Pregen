@@ -1,0 +1,23 @@
+//iwd2: decompiler error (these are all empty scripts)
+//runs from stackableitems2.tph
+
+
+ACTION_IF (FILE_EXISTS_IN_GAME ~test.bcs~) BEGIN
+  ACTION_FOR_EACH test IN ~TESTOCLE~ ~TEST_01~ ~TEST_02~ ~TEST_03~ BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%test%.bcs~) BEGIN
+      COPY_EXISTING ~test.bcs~ ~override/%test%.bcs~
+    END
+  END
+END
+
+
+//check files for IWD2 (prevents weidu messages)
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
+  ACTION_IF !(FILE_EXISTS_IN_GAME ~attstyle.ids~) BEGIN  COPY ~%iwd2%/attstyle.ids~  ~override~  END
+  ACTION_IF !(FILE_EXISTS_IN_GAME ~avclass.ids~) BEGIN  COPY ~%iwd2%/avclass.ids~  ~override~  END
+  ACTION_IF !(FILE_EXISTS_IN_GAME ~difflevl.ids~) BEGIN  COPY ~%iwd2%/difflevl.ids~  ~override~  END
+END
+
+
+/*
+*/

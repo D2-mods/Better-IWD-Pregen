@@ -41,11 +41,11 @@ This file contains text shown in weidu installer
 	@40501 = ~for Druids and Polymorph spells~
 	@40502 = ~for Druids only~
 
-@40600 = ~Give party starting equipment (IWD games)~
-	@40601 = ~Items are auto-equipped or added to inventory~
-	@40602 = ~Start with a bag, containing a mix of weapons (choose this if using a Proficiencies overhaul)~
+@40600 = ~Starting items tweak (all IWD games, BGEE/EET/BGT, Classic Adventures)~
+	@40601 = ~Autoequip or added to inventory~
+	@40602 = ~Weapon Sack (has at least one of each weapon type)~
 
-@40700 = ~Give party a Bag of Holding at game start (classic and EEs)~
+@40700 = ~Start with a Bag of Holding (classic and EEs)~
 	@40701 = ~"Bottomless" bag (capacity = 32767)~
 	@40702 = ~Capacity = 50 items (IWD2 default)~
 	@40703 = ~Capacity = 100 items (BG2 default)~
@@ -93,7 +93,7 @@ This file contains text shown in weidu installer
 	@41302 = ~Use at will, and reduce duration to 1 turn (60 seconds)~
 	@41303 = ~Use at will, but do not lower duration (120 seconds)~
 	@41304 = ~Only install timing fix (prevents taking damage if at full HP when ability ends)~
-@41360 = ~Not available for Rashemi Berserker (Artisan's Kitpack)~
+@41360 = ~Skipped due to mod conflict~
 
 @41400 = ~Patch visuals for shortbows (IWDEE) or scimitars (IWD-in-BG2)~
 	@41401 = ~All items~
@@ -110,9 +110,9 @@ This file contains text shown in weidu installer
 	@41601 = ~for both (paladins and rangers)~
 	@41602 = ~Rangers only (paladins can fall)~
 	@41603 = ~Paladins only (rangers can fall)~
-	@41604 = ~Option 1, but not for mod kits~
-	@41605 = ~Option 2, but not for mod kits~
-	@41606 = ~Option 3, but not for mod kits~
+	@41604 = ~Option 1, skip mod kits~
+	@41605 = ~Option 2, skip mod kits~
+	@41606 = ~Option 3, skip mod kits~
 
 @41700 = ~Max summons and traps (EEs)~
 	@41701 = ~999 summons (all), 999 traps~

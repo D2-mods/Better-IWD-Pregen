@@ -16,6 +16,18 @@ ACTION_IF (polytalk = 6) BEGIN  OUTER_SET druids=0 OUTER_SET polymorph=1 OUTER_S
 INCLUDE ~%install%/polymorpharrays.tph~
 INCLUDE ~%install%/polymorphmods.tph~
 
+/*
+//add mod files to array
+OUTER_SET scanbifs = 0
+ACTION_IF (MOD_IS_INSTALLED ~generalized_biffing.tp2~ 0) BEGIN  OUTER_SET scanbifs = 1  END
+ACTION_IF (MOD_IS_INSTALLED ~generalized_biffing.tp2~ 1) BEGIN  OUTER_SET scanbifs = 1  END
+ACTION_IF (scanbifs > 0) BEGIN
+  INCLUDE ~%install%/polymorphmods.tph~
+END ELSE BEGIN
+  INCLUDE ~%install%/polymorphmods2.tph~
+END
+*/
+
 
 //
 DEFINE_ACTION_FUNCTION polymorphtalk INT_VAR druids=1 polymorph=1 mods=1 BEGIN

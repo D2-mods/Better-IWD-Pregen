@@ -1,0 +1,88 @@
+//
+//
+
+
+DEFINE_ACTION_FUNCTION ngitemprofs INT_VAR bg2mode=0 RET createitems BEGIN
+
+  ACTION_IF (RESOURCE_CONTAINS ~trigger.ids~  ~ProficiencyGT~) BEGIN
+    OUTER_SPRINT match ~%,0)~
+    OUTER_SPRINT 2plus ~%,1)~    // specialize (> 1)
+    OUTER_SPRINT 3plus ~%,2)~    // mastery (> 2)
+    OUTER_SPRINT engine  ~ee~
+  END ELSE BEGIN
+    OUTER_SPRINT match ~CheckStatGT(Player1,0~
+    OUTER_SPRINT 2plus ~CheckStatGT(Player1,1~
+    OUTER_SPRINT 3plus ~CheckStatGT(Player1,2~
+    OUTER_SPRINT engine  ~bg2~
+  END
+
+  OUTER_SPRINT class  ~%ngequip%/ngequip_%engine%_class.baf~
+  OUTER_SPRINT melee  ~%ngequip%/ngequip_%engine%_melee.baf~
+  OUTER_SPRINT ranged  ~%ngequip%/ngequip_%engine%_ranged.baf~
+  COPY - ~%class%~ ~inlined/class1.baf~
+  COPY - ~%class%~ ~inlined/class2.baf~  REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%2plus%~
+  COPY - ~%class%~ ~inlined/class3.baf~  REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%3plus%~
+  COPY - ~%melee%~ ~inlined/melee1.baf~
+  COPY - ~%melee%~ ~inlined/melee2.baf~  REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%2plus%~
+  COPY - ~%melee%~ ~inlined/melee3.baf~  REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%3plus%~
+  COPY - ~%ranged%~ ~inlined/ranged1.baf~
+  COPY - ~%ranged%~ ~inlined/ranged2.baf~  REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%2plus%~
+  COPY - ~%ranged%~ ~inlined/ranged3.baf~  REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%3plus%~
+
+  // mod items (blank if not detected)
+  INCLUDE ~%install%/ngitemmod.tph~
+  OUTER_SPRINT rangedmod  ~inlined/rangedmod.baf~
+  OUTER_SPRINT classmod  ~inlined/classmod.baf~
+  COPY - ~%rangedmod%~ ~inlined/ranged1mod.baf~
+  COPY - ~%rangedmod%~ ~inlined/ranged2mod.baf~  REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%2plus%~
+  COPY - ~%rangedmod%~ ~inlined/ranged3mod.baf~  REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%3plus%~
+  COPY - ~%classmod%~ ~inlined/class1mod.baf~
+  COPY - ~%classmod%~ ~inlined/class2mod.baf~  REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%2plus%~
+  COPY - ~%classmod%~ ~inlined/class3mod.baf~  REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%3plus%~
+
+<<<<<<<< .../temp/newfile
+//
+>>>>>>>>
+COPY - ~.../temp/newfile~  ~inlined/newfile~
+
+  OUTER_SPRINT createitems  ~inlined/createitems.baf~
+  COPY - ~inlined/newfile~  ~%createitems%~
+    APPEND_FILE TEXT ~inlined/class3mod.baf~    // 3+ slots
+    APPEND_FILE TEXT ~inlined/class3.baf~
+    APPEND_FILE TEXT ~inlined/melee3.baf~
+    APPEND_FILE TEXT ~inlined/ranged3.baf~
+    APPEND_FILE TEXT ~inlined/ranged3mod.baf~
+
+    APPEND_FILE TEXT ~inlined/class2mod.baf~    // 2 slots
+    APPEND_FILE TEXT ~inlined/class2.baf~
+    APPEND_FILE TEXT ~inlined/melee2.baf~
+    APPEND_FILE TEXT ~inlined/ranged2.baf~
+    APPEND_FILE TEXT ~inlined/ranged2mod.baf~
+
+    APPEND_FILE TEXT ~inlined/class1mod.baf~    // 1 slot
+    APPEND_FILE TEXT ~inlined/class1.baf~
+    APPEND_FILE TEXT ~inlined/melee1.baf~
+    APPEND_FILE TEXT ~inlined/ranged1.baf~
+    APPEND_FILE TEXT ~inlined/ranged1mod.baf~
+
+END
+
+
+/*above order is better
+  OUTER_SPRINT classbaf  ~inlined/class.baf~
+  OUTER_SPRINT meleebaf  ~inlined/melee.baf~
+  OUTER_SPRINT rangedbaf  ~inlined/ranged.baf~
+
+  COPY - ~inlined/newfile~  ~%classbaf%~
+    APPEND_FILE TEXT ~inlined/class3.baf~
+    APPEND_FILE TEXT ~inlined/class2.baf~
+    APPEND_FILE TEXT ~inlined/class1.baf~
+  COPY - ~inlined/newfile~  ~%meleebaf%~
+    APPEND_FILE TEXT ~inlined/melee3.baf~
+    APPEND_FILE TEXT ~inlined/melee2.baf~
+    APPEND_FILE TEXT ~inlined/melee1.baf~
+  COPY - ~inlined/newfile~  ~%rangedbaf%~
+    APPEND_FILE TEXT ~inlined/ranged3.baf~
+    APPEND_FILE TEXT ~inlined/ranged2.baf~
+    APPEND_FILE TEXT ~inlined/ranged1.baf~
+*/

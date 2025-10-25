@@ -1,10 +1,10 @@
 /*
 Shapeshift movement bonuses bypass Free Action
 for EEs and classic BG2 (other games don't give move bonuses)
-This does not patch mod files.
 */
 
 
+//
 OUTER_SET effect = 126
 OUTER_SET mode = 2
 OUTER_SET haste = 16
@@ -14,6 +14,18 @@ ACTION_IF (ee_game > 0) BEGIN  OUTER_SET mode = 5  END
 OUTER_SET mods = 1
 INCLUDE ~%install%/polymorpharrays.tph~
 INCLUDE ~%install%/polymorphmods.tph~
+
+/*
+//add mod files to array
+OUTER_SET scanbifs = 0
+ACTION_IF (MOD_IS_INSTALLED ~generalized_biffing.tp2~ 0) BEGIN  OUTER_SET scanbifs = 1  END
+ACTION_IF (MOD_IS_INSTALLED ~generalized_biffing.tp2~ 1) BEGIN  OUTER_SET scanbifs = 1  END
+ACTION_IF (scanbifs > 0) BEGIN
+  INCLUDE ~%install%/polymorphmods.tph~
+END ELSE BEGIN
+  INCLUDE ~%install%/polymorphmods2.tph~
+END
+*/
 
 
 //check IWDification
@@ -31,7 +43,7 @@ ACTION_IF (FILE_EXISTS_IN_GAME ~CDIA482.itm~) BEGIN
 END
 
 
-//variables not used (this is copy pasted from polymorphtalk.tph)
+//
 DEFINE_ACTION_FUNCTION polymorphmove INT_VAR druids=1 polymorph=1 mods=1 BEGIN
 
   // make array

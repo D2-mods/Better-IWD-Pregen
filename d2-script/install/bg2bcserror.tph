@@ -1,0 +1,290 @@
+//fix if BG2 fixpack is not installed
+//
+
+
+ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN
+ACTION_IF !(MOD_IS_INSTALLED ~setup-bg2fixpack.tp2~ 0) BEGIN
+
+
+OUTER_SPRINT script  ~RDOG~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    HPLT(Myself,6)
+THEN
+    RESPONSE #100
+        SetInterrupt(FALSE)
+        RunAwayFrom(LastAttackerOf(Myself),50)
+        SetInterrupt(TRUE)
+END
+
+IF
+    AttackedBy([ANYONE],DEFAULT)
+THEN
+    RESPONSE #100
+        Attack(LastAttackerOf(Myself))
+END
+
+IF
+    True()
+THEN
+    RESPONSE #100
+        RandomWalk()
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+OUTER_SPRINT script  ~RDWARF~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    HPLT(Myself,4)
+THEN
+    RESPONSE #100
+        SetInterrupt(FALSE)
+        RunAwayFrom(LastAttackerOf(Myself),50)
+        SetInterrupt(TRUE)
+END
+
+IF
+    See([PC.HUMANOID])
+THEN
+    RESPONSE #100
+        Attack([PC.HUMANOID])
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+OUTER_SPRINT script  ~RETTER~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    Delay(15)
+    AttackedBy([ANYONE],DEFAULT)
+    HPLT(Myself,7)
+THEN
+    RESPONSE #100
+        RunAwayFrom(LastAttackerOf(Myself),150)
+END
+
+IF
+    See(NearestEnemyOf(Myself))
+THEN
+    RESPONSE #100
+        Attack(NearestEnemyOf(Myself))
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+OUTER_SPRINT script  ~RGIBBLER~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    HPLT(Myself,4)
+THEN
+    RESPONSE #100
+        SetInterrupt(FALSE)
+        RunAwayFrom(LastAttackerOf(Myself),50)
+        SetInterrupt(TRUE)
+END
+
+IF
+    See([PC.HUMANOID])
+THEN
+    RESPONSE #100
+        Attack([PC.HUMANOID])
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+OUTER_SPRINT script  ~RHALFLIN~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    HPLT(Myself,4)
+THEN
+    RESPONSE #100
+        SetInterrupt(FALSE)
+        RunAwayFrom(LastAttackerOf(Myself),50)
+        SetInterrupt(TRUE)
+END
+
+IF
+    See([PC.HUMANOID])
+THEN
+    RESPONSE #100
+        Attack([PC.HUMANOID])
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+OUTER_SPRINT script  ~RHOBGOBA~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    Delay(15)
+    AttackedBy([ANYONE],DEFAULT)
+    HPLT(Myself,2)
+THEN
+    RESPONSE #100
+        RunAwayFrom(LastAttackerOf(Myself),150)
+END
+
+IF
+    See(NearestEnemyOf(Myself))
+    Range(NearestEnemyOf(Myself),3)
+THEN
+    RESPONSE #30
+        SelectWeaponAbility(SLOT_WEAPON1,0)
+        Attack(NearestEnemyOf(Myself))
+    RESPONSE #70
+        RunAwayFrom(NearestEnemyOf(Myself),75)
+END
+
+IF
+    See(NearestEnemyOf(Myself))
+THEN
+    RESPONSE #100
+        SelectWeaponAbility(SLOT_AMMO0,0)
+        Attack(NearestEnemyOf(Myself))
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+OUTER_SPRINT script  ~RHOBGOBF~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    Delay(15)
+    AttackedBy([ANYONE],DEFAULT)
+    HPLT(Myself,2)
+THEN
+    RESPONSE #100
+        RunAwayFrom(LastAttackerOf(Myself),150)
+END
+
+IF
+    See(NearestEnemyOf(Myself))
+THEN
+    RESPONSE #100
+        Attack(NearestEnemyOf(Myself))
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+OUTER_SPRINT script  ~RKOBOLD~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    HPLT(Myself,8)
+THEN
+    RESPONSE #100
+        SetInterrupt(FALSE)
+        RunAwayFrom(LastAttackerOf(Myself),50)
+        SetInterrupt(TRUE)
+END
+
+IF
+    See([PC.HUMANOID])
+THEN
+    RESPONSE #100
+        Attack([PC.HUMANOID])
+END
+
+IF
+    True()
+THEN
+    RESPONSE #100
+        RandomWalk()
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+OUTER_SPRINT script  ~ROGRE~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    HPLT(Myself,8)
+THEN
+    RESPONSE #100
+        SetInterrupt(FALSE)
+        RunAwayFrom(LastAttackerOf(Myself),50)
+        SetInterrupt(TRUE)
+END
+
+IF
+    See([PC.HUMANOID])
+THEN
+    RESPONSE #100
+        Attack([PC.HUMANOID])
+END
+
+IF
+    True()
+THEN
+    RESPONSE #100
+        RandomWalk()
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+OUTER_SPRINT script  ~RSIREN~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    Delay(15)
+    AttackedBy([ANYONE],DEFAULT)
+    HPLT(Myself,3)
+THEN
+    RESPONSE #100
+        RunAwayFrom(LastAttackerOf(Myself),150)
+END
+
+IF
+    See(LastAttackerOf(Myself))
+    Range(LastAttackerOf(Myself),4)
+THEN
+    RESPONSE #30
+        SelectWeaponAbility(SLOT_WEAPON1,0)
+        Attack([PC])
+    RESPONSE #70
+        RunAwayFrom([PC],75)
+END
+
+IF
+    See(LastAttackerOf(Myself))
+THEN
+    RESPONSE #100
+        SelectWeaponAbility(SLOT_AMMO0,0)
+        Attack([PC])
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+OUTER_SPRINT script  ~RSIRINE~
+<<<<<<<< .../temp/%script%.BAF
+IF
+    HPLT(Myself,4)
+THEN
+    RESPONSE #100
+        SetInterrupt(FALSE)
+        RunAwayFrom(LastAttackerOf(Myself),50)
+        SetInterrupt(TRUE)
+END
+
+IF
+    See([PC.HUMANOID])
+THEN
+    RESPONSE #100
+        Attack([PC.HUMANOID])
+END
+>>>>>>>>
+COMPILE ~.../temp/%script%.BAF~
+
+
+END
+END
+
+
+/*
+*/

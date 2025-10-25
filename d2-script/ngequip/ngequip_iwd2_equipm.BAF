@@ -1,0 +1,200 @@
+//
+//
+
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%longsword%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%longsword%",Player1,43,TRUE)    // long sword
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%scimitar%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%scimitar%",Player1,43,TRUE)    // scimitar
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%axe%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%axe%",Player1,43,TRUE)    // battle axe
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%greataxe%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%greataxe%",Player1,43,TRUE)    // greataxe
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%flail%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%flail%",Player1,43,TRUE)    // flail
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%hammer%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%hammer%",Player1,43,TRUE)    // hammer
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%spear%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%spear%",Player1,43,TRUE)    // spear
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%halberd%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%halberd%",Player1,43,TRUE)    // halberd
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%handaxe%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%handaxe%",Player1,43,TRUE)    // handaxe
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%greatsword%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%greatsword%",Player1,43,TRUE)    // greatsword
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%morningstar%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%morningstar%",Player1,43,TRUE)    // morningstar
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%mace%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%mace%",Player1,43,TRUE)    // mace
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%shortsword%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%shortsword%",Player1,43,TRUE)    // short sword
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%club%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%club%",Player1,43,TRUE)    // club
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%dagger%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%dagger%",Player1,43,TRUE)    // dagger
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipm","GLOBAL",1)
+	Global("d2Player1staff","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasWeaponEquiped(Player1)
+	HasItem("%staff%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%staff%",Player1,43,TRUE)    // staff
+		SetGlobal("d2Player1equipm","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+*/

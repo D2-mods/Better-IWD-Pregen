@@ -1,0 +1,131 @@
+//
+//
+
+
+/*test (does not fix quick weapon not updating)
+IF
+	!Global("d2Player1equipz","GLOBAL",1)
+	Global("d2Player1equipm","GLOBAL",1)
+	Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+THEN
+	RESPONSE #100
+//		ActionOverride(Player1,EquipRanged())
+//		ActionOverride(Player1,EquipMostDamagingMelee())
+		ActionOverride(Player1,EquipWeapon())
+		SetGlobal("d2Player1equipz","GLOBAL",1)
+		Continue()
+END
+*/
+
+IF
+	!Global("d2Player1robemove","GLOBAL",1)
+	!Global("d2Player1robecheck","GLOBAL",1)
+	!Global("d2Player1robe","GLOBAL",1)
+	!HasItem("%startrobe%",Player1)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%startrobe%",Player1,0,0,0)    // worn garment
+		SetGlobal("d2Player1robe","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robemove","GLOBAL",1)
+//	!HasItemInSlot("%startrobe%",Player1,SLOT_ARMOR)    // doesn't work
+	HasItem("%startrobe%",Player1)
+	!HasItem("00LEAT01",Player1)
+	!HasItem("00CHAN01",Player1)
+	!HasItem("00HIDE06",Player1)
+	!HasItem("00ROBE03",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%startrobe%",Player1,SLOT_ARMOR,TRUE)
+		SetGlobal("d2Player1robemove","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robecheck","GLOBAL",1)
+	OR(2)
+		Global("d2Player1robemove","GLOBAL",1)
+		!GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%startrobe%",Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1robecheck","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerExpired("d2Player1equip","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+//reset if it never started (i.e. monks)
+IF
+	!Global("d2Player1ngitemcheck","GLOBAL",1)
+//	Class(Player1,MONK)
+	GlobalTimerExpired("d2Player1equip","GLOBAL")
+//	CheckPartyAverageLevel(3,LESS_THAN)
+	!HasWeaponEquiped(Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1ngitemcheck","GLOBAL",1)
+		SetGlobal("d2Player1melee","GLOBAL",0)
+		SetGlobal("d2Player1ranged","GLOBAL",0)
+		SetGlobalTimer("d2Player1equip","GLOBAL",6)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ngitemcheck","GLOBAL",1)
+//	Class(Player1,MONK)
+//	CheckPartyAverageLevel(2,GREATER_THAN)
+	HasWeaponEquiped(Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1ngitemcheck","GLOBAL",1)
+		Continue()
+END
+*/
+
+
+/*
+IF
+	!Global("d2Player1staff","GLOBAL",1)
+	GlobalTimerExpired("d2Player1equip","GLOBAL")
+	Exists(Player1)
+	!HasItem("%staff%",Player1)
+	!HasWeaponEquiped(Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		GiveItemCreate("%staff%",Player1,1,0,0)
+		SetGlobalTimer("d2Player1equip","GLOBAL",6)
+		Continue()
+END
+
+IF
+	!Global("d2Player1staff","GLOBAL",1)
+	OR(2)
+		!Exists(Player1)
+		HasWeaponEquiped(Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		Continue()
+END
+*/
+
+
+/*
+*/

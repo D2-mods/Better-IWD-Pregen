@@ -1,0 +1,79 @@
+/*
+try to delete extra staff if imported on the chr
+*/
+
+
+<<<<<<<< .../temp/blocks
+IF
+//	!Global("d2Player1ngstaffdupe","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerNotExpired("d2ngitemsdelay","GLOBAL")
+	HasItem("%staff%",Player1)
+	!Global("d2Player1staff","GLOBAL",1)
+	NumItemsGT("%staff%",Player1,0)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("%staff%"))
+		SetGlobal("d2Player1ngstaffdupe","GLOBAL",1)
+		Continue()
+END
+
+IF
+//	!Global("d2Player1ngstaffdupe","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerNotExpired("d2ngitemsdelay","GLOBAL")
+	HasItem("%staff%",Player1)
+	Global("d2Player1staff","GLOBAL",1)
+	NumItemsGT("%staff%",Player1,1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("%staff%"))
+		SetGlobal("d2Player1ngstaffdupe","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/slot1.BAF~
+  EVALUATE_BUFFER
+  PATCH_IF (GAME_IS ~iwd2~) BEGIN    // iwd2 needs timer reset
+    SPRINT match  ~Continue()~
+    SPRINT string  ~SetGlobalTimer("d2Player1equip","GLOBAL",6)~
+    REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%string% %match%~
+
+    SPRINT match  ~HasItem("%staff%",Player1)~
+    SPRINT string  ~~
+    PATCH_IF (IS_AN_INT iwd2npc && iwd2npc>0) BEGIN
+      SPRINT string  ~!InParty("nord") !InParty("hildury") !InParty("diriel") !InParty("jaemal") !InParty("salomeya") !InParty("nikosh")~
+    END
+    REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%string% %match%~
+  END
+COPY - ~inlined/slot1.BAF~ ~inlined/slot2.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player2~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot3.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player3~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot4.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player4~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot5.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player5~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot6.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player6~
+
+COPY - ~inlined/slot1.BAF~  ~inlined/ngstaffdupe.BAF~
+  APPEND_FILE TEXT ~inlined/slot2.BAF~
+  APPEND_FILE TEXT ~inlined/slot3.BAF~
+  APPEND_FILE TEXT ~inlined/slot4.BAF~
+  APPEND_FILE TEXT ~inlined/slot5.BAF~
+  APPEND_FILE TEXT ~inlined/slot6.BAF~
+
+
+//
+ACTION_IF !(GAME_IS ~iwd how totlm bg1 totsc~) BEGIN
+  ACTION_FOR_EACH script IN
+    ~ar2600~ ~bg2600~ ~AR0015~ ~_AR2600~
+    ~ar1000~ ~ar1006~ ~TC0009~
+  BEGIN
+    ACTION_IF (RESOURCE_CONTAINS ~%script%.bcs~  ~d2ng~) BEGIN
+      EXTEND_BOTTOM ~%script%.BCS~  ~inlined/ngstaffdupe.BAF~
+    END
+  END
+END
+
+
+//
+//

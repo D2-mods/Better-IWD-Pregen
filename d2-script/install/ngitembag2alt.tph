@@ -1,0 +1,255 @@
+/*
+for testing - alt with less global scripting
+*/
+
+
+INCLUDE ~%install%/ngitemprep.tph~
+INCLUDE ~%install%/ngitemcre.tph~
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~iwdee bgee eet~) BEGIN
+
+  COPY - ~%ngequip%/ngitembag_ee.BAF~  ~inlined/slot1.BAF~
+    EVALUATE_BUFFER
+  COPY - ~%ngequip%/ngammo.BAF~  ~inlined/ngammo.BAF~
+    EVALUATE_BUFFER
+
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot2.BAF~    // run for each PC
+    REPLACE_TEXTUALLY ~Player1~  ~Player2~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot3.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player3~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot4.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player4~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot5.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player5~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot6.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player6~
+
+  COPY - ~inlined/slot1.BAF~  ~inlined/ngitems.BAF~    // combine script
+    APPEND_FILE TEXT ~inlined/slot2.BAF~
+    APPEND_FILE TEXT ~inlined/slot3.BAF~
+    APPEND_FILE TEXT ~inlined/slot4.BAF~
+    APPEND_FILE TEXT ~inlined/slot5.BAF~
+    APPEND_FILE TEXT ~inlined/slot6.BAF~
+    APPEND_FILE TEXT ~inlined/ngammo.BAF~
+
+  // iwdee scripts
+  ACTION_IF (RESOURCE_CONTAINS ~ar1006.are~  ~hroth~) BEGIN
+    EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/ngammo.BAF~    // add script
+    EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/timer.BAF~
+    EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/string.BAF~
+  END
+
+  // bgee scripts
+  ACTION_FOR_EACH script IN ~ar2600~ ~bg2600~ BEGIN
+    ACTION_IF (RESOURCE_CONTAINS ~%script%.are~  ~imoen~) BEGIN
+      EXTEND_BOTTOM ~%script%.BCS~  ~inlined/ngammo.BAF~
+      EXTEND_BOTTOM ~%script%.BCS~  ~inlined/timer.BAF~
+      EXTEND_BOTTOM ~%script%.BCS~  ~inlined/string.BAF~
+    END
+  END
+
+//  EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~
+  LAF ngequipcre END    // invisible creature
+
+END
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~how totlm~) BEGIN
+
+  // change a trigger to speed up scripting
+  COPY - ~%ngequip%/ngitembag_iwd1.BAF~  ~inlined/slot1.BAF~
+    EVALUATE_BUFFER
+  COPY - ~%ngequip%/ngammo.BAF~  ~inlined/ngammo.BAF~
+    EVALUATE_BUFFER
+    SPRINT match   ~GlobalTimerNotExpired("d2Player1equip","GLOBAL")~
+    SPRINT string  ~NumItemsGT("%staff%",Player1,0)~    // iwd1: less janky without timer or variable checks
+    REPLACE_TEXTUALLY ~%match%~  ~%string%~
+
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot2.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player2~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot3.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player3~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot4.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player4~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot5.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player5~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot6.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player6~
+
+  COPY - ~inlined/slot1.BAF~  ~inlined/ngitems.BAF~
+    APPEND_FILE TEXT ~inlined/slot2.BAF~
+    APPEND_FILE TEXT ~inlined/slot3.BAF~
+    APPEND_FILE TEXT ~inlined/slot4.BAF~
+    APPEND_FILE TEXT ~inlined/slot5.BAF~
+    APPEND_FILE TEXT ~inlined/slot6.BAF~
+    APPEND_FILE TEXT ~inlined/ngammo.BAF~
+
+  EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/ngitems.BAF~
+  EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/timer.BAF~
+  EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/string.BAF~
+//  EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~
+
+END
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
+
+  OUTER_SET iwd2npc = 0
+  ACTION_IF (FILE_EXISTS ~Characters/SIR_NORD.CHR~) BEGIN OUTER_SET iwd2npc = 1 END
+  ACTION_IF (FILE_EXISTS_IN_GAME ~avweapga.itm~) BEGIN OUTER_SET iwd2npc = 1 END
+
+  COPY - ~%ngequip%/ngitembag_iwd2.BAF~  ~inlined/slot1.BAF~
+    EVALUATE_BUFFER
+    PATCH_IF (iwd2npc > 0) BEGIN
+      SPRINT match   ~!HasItem("00ROBE03",Player1)~
+      SPRINT string  ~!HasItem("AVROBEER",Player1)~
+      REPLACE_TEXTUALLY EXACT_MATCH ~%match%~  ~%match%%WNL%%TAB%%string%~
+    END ELSE BEGIN
+      REPLACE_TEXTUALLY ~!InParty~  ~//~
+    END
+
+  COPY - ~%ngequip%/ngammo.BAF~  ~inlined/ngammo.BAF~
+    EVALUATE_BUFFER
+    SPRINT match   ~GlobalTimerNotExpired("d2Player1equip","GLOBAL")~
+//    SPRINT trigger1  ~Global("d2Player1prep","GLOBAL",1)~
+//    SPRINT trigger2  ~NumItemsGT("%staff%",Player1,0)~
+    SPRINT trigger1  ~OR(2) GlobalTimerNotExpired("d2Player1equip","GLOBAL") Global("d2Player1prep","GLOBAL",1)~
+    SPRINT trigger2  ~OR(2) NumItemsGT("%staff%",Player1,0) Global("d2Player1ngimportstaff","GLOBAL",1)~
+    REPLACE_TEXTUALLY ~%match%~  ~%trigger1%%WNL%%TAB%%trigger2%~
+
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot2.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player2~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot3.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player3~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot4.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player4~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot5.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player5~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot6.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player6~
+
+  COPY - ~inlined/slot1.BAF~  ~inlined/ngitems.BAF~
+    APPEND_FILE TEXT ~inlined/slot2.BAF~
+    APPEND_FILE TEXT ~inlined/slot3.BAF~
+    APPEND_FILE TEXT ~inlined/slot4.BAF~
+    APPEND_FILE TEXT ~inlined/slot5.BAF~
+    APPEND_FILE TEXT ~inlined/slot6.BAF~
+    APPEND_FILE TEXT ~inlined/ngammo.BAF~
+
+  EXTEND_BOTTOM ~ar1000.BCS~  ~inlined/ngammo.BAF~
+  EXTEND_BOTTOM ~ar1000.BCS~  ~inlined/timer.BAF~
+  EXTEND_BOTTOM ~ar1000.BCS~  ~inlined/string.BAF~
+//  EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~
+
+  LAF ngequipcre INT_VAR iwd2=1 END
+
+END
+
+////////////////////////////////////////////////////////////
+
+ACTION_IF (GAME_IS ~iwd_in_bg2 ca bgt tutu tutu_totsc~) BEGIN
+
+  COPY - ~%ngequip%/ngitembag_bg2.BAF~  ~inlined/slot1.BAF~
+    EVALUATE_BUFFER
+/*
+    PATCH_IF (RESOURCE_CONTAINS ~TC0009.bcs~ ~TC0009~) BEGIN
+      SPRINT match    ~NumItemsGT("%staff%",Player1,0)~
+      SPRINT trigger  ~Global("NewGame","TC0009",1)~
+      REPLACE_TEXTUALLY EXACT_MATCH ~%match%~  ~%trigger%~    // ca - delay script until after variable
+    END
+*/
+  COPY - ~%ngequip%/ngammo.BAF~  ~inlined/ngammo.BAF~
+    EVALUATE_BUFFER
+
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot2.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player2~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot3.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player3~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot4.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player4~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot5.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player5~
+  COPY - ~inlined/slot1.BAF~  ~inlined/slot6.BAF~
+    REPLACE_TEXTUALLY ~Player1~  ~Player6~
+
+  COPY - ~inlined/slot1.BAF~  ~inlined/ngitems.BAF~
+    APPEND_FILE TEXT ~inlined/slot2.BAF~
+    APPEND_FILE TEXT ~inlined/slot3.BAF~
+    APPEND_FILE TEXT ~inlined/slot4.BAF~
+    APPEND_FILE TEXT ~inlined/slot5.BAF~
+    APPEND_FILE TEXT ~inlined/slot6.BAF~
+    APPEND_FILE TEXT ~inlined/ngammo.BAF~
+
+  // iwd-in-bg2
+  ACTION_IF (RESOURCE_CONTAINS ~ar1006.are~  ~hroth~) BEGIN
+    EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/ngitems.BAF~
+    EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/timer.BAF~
+    EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/string.BAF~
+  END
+
+  // ca
+  ACTION_IF (RESOURCE_CONTAINS ~TC0009.bcs~ ~TC0009~) BEGIN
+    EXTEND_BOTTOM ~TC0009.BCS~  ~inlined/ngammo.BAF~
+    EXTEND_BOTTOM ~TC0009.BCS~  ~inlined/timer.BAF~
+    EXTEND_BOTTOM ~TC0009.BCS~  ~inlined/string.BAF~
+  END
+
+  // tutu
+  ACTION_IF (RESOURCE_CONTAINS ~FW2600.are~  ~imoen~) BEGIN
+    EXTEND_BOTTOM ~_AR2600.BCS~  ~inlined/ngammo.BAF~
+    EXTEND_BOTTOM ~_AR2600.BCS~  ~inlined/timer.BAF~
+    EXTEND_BOTTOM ~_AR2600.BCS~  ~inlined/string.BAF~
+  END
+
+  // bgt
+  ACTION_IF (RESOURCE_CONTAINS ~AR0015.are~  ~imoen~) BEGIN
+    EXTEND_BOTTOM ~AR0015.BCS~  ~inlined/ngammo.BAF~
+    EXTEND_BOTTOM ~AR0015.BCS~  ~inlined/timer.BAF~
+    EXTEND_BOTTOM ~AR0015.BCS~  ~inlined/string.BAF~
+  END
+
+//  EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~
+  LAF ngequipcre INT_VAR bg2mode=1 END
+
+END
+
+////////////////////////////////////////////////////////////
+
+//Add and fill bag, or just fill if it already exists
+
+ACTION_IF (FILE_EXISTS ~override/d2#ngbag.STO~) BEGIN
+  INCLUDE ~%install%/ngitembagfill2.tph~  
+  COPY_EXISTING ~d2#ngbag.STO~  ~override/d2#ngbak.STO~    // backup just in case
+  COPY_EXISTING ~d2#ngbag.ITM~  ~override/d2#ngbak.ITM~    // backup just in case
+END
+
+ACTION_IF !(FILE_EXISTS ~override/d2#ngbag.STO~) BEGIN
+  INCLUDE ~%install%/ngbag.tph~
+  INCLUDE ~%install%/ngitembagfill2.tph~
+  COPY_EXISTING ~d2#ngbag.STO~  ~override/d2#ngbak.STO~    // backup to make it easy to revert changes
+  COPY_EXISTING ~d2#ngbag.STO~  ~override~
+    SAY 0xc @726  /* Weapon Sack */
+    LPF cannot_add_items END    // make it so items cannot be placed in the bag
+  BUT_ONLY
+
+  OUTER_SPRINT bagdesc @727
+  ACTION_IF (GAME_IS ~how totlm~) BEGIN OUTER_SPRINT bagdesc @728 END
+  ACTION_IF (GAME_IS ~iwd2~) BEGIN OUTER_SPRINT bagdesc @729 END
+
+  COPY_EXISTING ~d2#ngbag.ITM~  ~override/d2#ngbak.ITM~    // backup to make it easy to revert changes
+  COPY_EXISTING ~d2#ngbag.ITM~  ~override~
+    SAY NAME1 @726 SAY UNIDENTIFIED_DESC ~%bagdesc%~
+    SAY NAME2 @726 SAY DESC ~%bagdesc%~
+    WRITE_ASCII 0x3a ~iholding~ #8    // set inventory icon
+  BUT_ONLY
+  
+  ACTION_IF !(FILE_EXISTS_IN_GAME ~IHOLDING.BAM~) BEGIN
+    COPY ~%ngequip%/IHOLDING.BAM~  ~override~
+  END
+END
+
+////////////////////////////////////////////////////////////

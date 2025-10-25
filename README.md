@@ -1,10 +1,15 @@
 # Better IWD Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
-Supports: classic and EE versions of BG1, BG2, IWD, and IWD2 (including EET/BGT/IWD2EE).
+Supports: classic and EE versions of BG1, BG2, IWD1, and IWD2 (including EET/BGT/IWD2EE)
+> Note: A few tweaks also support PSTEE.
 
 --
 
-A minimalist script and tweak pack for Infinity Engine games. This mod was started as an attempt to make an improved version of the "IWD Pregen" party AI script from Icewind Dale: Enhanced Edition.
+A minimalist script and tweak pack for Infinity Engine games. This mod was started as an attempt to make an improved version of the IWD Pregen party AI script from Icewind Dale: Enhanced Edition.
+
+- Scroll down for additional info on scripts and tweaks.
+- This mod supports any mods using the engines of supported games.
+- Older EEs that don't support v2.0+ features are treated the same as original BG2 engine.
 
 --
 
@@ -13,8 +18,9 @@ A minimalist script and tweak pack for Infinity Engine games. This mod was start
 - added Misc spell tweaks component (see components section)
 - added "Make items stackable to 999" (weapons and magic items optional)
 - added Shapeshifts can talk (EEs, BG2)
+- major update for Starting items tweak ([update notes](https://github.com/D2-mods/Better-IWD-Pregen#starting-items-tweak-all-iwd-games-bgeeeetbgt-classic-adventures)), supports more games, supports proficiency overhauls, bug fixes, scripting improvements, etc.
 
-NOTE: Generalized Biffing is not required for PSTEE. The bag from this mod will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas, creatures, or stores.
+> PSTEE note: Generalized Biffing is not required for PSTEE. The bag from this mod will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas or store files.
 
 --
 
@@ -38,15 +44,15 @@ Tweak components:
 
 1. **Adjust enemy damage at higher difficulties (IWD1, IWD2)**
 	- IWD1: modifies both damage and XP bonus (they can't be changed separately)
-	- IWD2: includes exe patch by Bubb (required for damage adjust to work)
+	- IWD2: includes exe patch by Bubb (required for damage adjust to work), this patch is installed with both options.
 2. **Add or remove Avarine Decanter (IWD2)**
-	- The "Add" option is silently skipped if item is already obtainable.
+	- "Add" option is quietly skipped if already obtainable (you won't have duplicate items).
 3. **Unnerf Animate Dead (IWD2)**
 	- Also corrects chance of each summon to 50/50.
-	- skipped if IWD2EE "Spell Revisions" is installed.
+	- Skipped if IWD2EE "Spell Revisions" is installed. (IWD2EE splits Animate Dead into 2 spells, one for zombies and one for skeletons)
 4. **Shapeshift movement bonuses bypass Free Action (EEs, BG2)**
 	- Can set to bypass or be blocked by Free Action.
-	- This patches any mod-added spells as well.
+	- This will patch any mod-added spells as well. It may take a few extra seconds to scan files.
 5. **Increase movement speed of IWD shapeshifts (IWD1, IWDEE)**
 	- Increases speed of all IWD animal and elemental forms.
 	- Winter Wolf moves slightly faster than natural form. The rest are still slower, but fast enough to be usable out of combat.
@@ -57,10 +63,10 @@ Tweak components:
 	- This does not allow spellcasting, but you can talk to NPCs, merchants, etc.
 	- This patches any mod-added spells as well.
 	- Can optionally install for only druids or only polymorphs.
-7. **Give party starting equipment (IWD games)**
-	- Option 1: Items are auto-equipped or added to inventory.
-	- Option 2: Start with a bag, containing a mix of weapons (choose this if using a Proficiencies overhaul)
-8. **Give party a Bag of Holding at game start (classic and EEs)**
+7. **Starting items tweak (all IWD games, BGEE/EET/BGT, Classic Adventures)**
+	- Option 1: Autoequip or added to inventory (note: install after proficiency mods)
+	- Option 2: Weapon Sack (has at least one of each weapon type)
+8. **Start with a Bag of Holding (classic and EEs)**
 	- Option 1: "Bottomless" bag (capacity = 32767)
 	- Option 2: Capacity = 50 items (IWD2 default)
 	- Option 3: Capacity = 100 items (BG2 default)
@@ -90,7 +96,7 @@ Tweak components:
 	- Hit stun on damage (1 second)
 	- No mage school restrictions
 	- Note: There are multiple options. You can install all, 1 tweak, or any combo of 2.
-14. **Allow Minsc to use his Berserk ability at will (BG games)**
+14. **Allow Minsc to use his Berserk ability at will (BG1, BG2, all versions)**
 	- Options to set duration to 5 rounds, 1 turn, or 2 turns.
 	- This does not remove the berserking effect or add/modify other effects.
 	- EEs: Can be recast at any time (stat bonuses do not stack).
@@ -113,13 +119,17 @@ Tweak components:
 	- Sets celestial cap to 999, 12, 3, or 1
 	- Sets traps cap to 999.
 
---
+#
 
 **Additional info:**
 - All components can be installed independently and in any order, except for auto-assigning the script.
 - All components should be safe to install at end of order. If another mod says to install last, you can try it both ways.
 - If using tweaks from other mods that do similar things, whichever is installed last will usually be used.
 - All tweaks have at least 2 subcomponents. i.e. if you say to "install all components", it won't automatically install any tweaks.
+
+**Notes on a few mods:**
+- IWD2EE: This mod is safe to install before or after the IWD2EE compatibility patch.
+- EET_end: This mod is safe to install before or after EET_end. (basically, if SCS or another mod says to install after EET_end, you can install this mod after as well)
 
 Scroll down for additional info on some of the tweaks.
 
@@ -157,7 +167,7 @@ This script manages auto-attack, while giving more nuanced control of the charac
 - If the E key is pressed, the Cooldown mode will be deactivated.
 - If the game is saved while a character is in Cooldown mode, it will be deactivated on reload.
 
-Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering.
+> Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering.
 
 --
 
@@ -172,14 +182,16 @@ Script Compatibility:
 - EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
 - Classic: BG1, BG2, IWD, IWD2 (tested with GOG versions)
 
-Also compatible with any BG2 conversion mods (ex. BGT or Classic Adventures).
+> Also compatible with any BG2 conversion mods (ex. BGT or Classic Adventures).
 
-#### Classic BG2 engine:  
+--
+
+**Classic BG2 engine:**
 - TobEx (v26/v28): Compatibility issues should be fixed (v3.7 and later).  
 - TobEx Afterlife: Use v29.10 or later. (http://www.shsforums.net/files/file/1274-tobex-afterlife)  
 - Improved GUI mod: Use v5.1 or later. (http://www.shsforums.net/files/file/1265-bg2-improved-gui)
 
-NOTE: I'm not 100% sure the scripts work with expansionless versions of the classic games.
+> Note: I'm not 100% sure the scripts work with expansionless versions of the classic games.
   
 --
 
@@ -280,7 +292,7 @@ Marking: The nymph "marks" a PC as an object for various actions (by default, th
 - If the B key is pressed, the nymph will enter Cooldown for 3 rounds. Cooldown mode disables most combat actions.
 - If the E key is pressed, the Cooldown timer is set to 0 (deactivated).
 
---
+#
 
 **Option 2 - Patch existing script:**
 - Adds Cooldown hotkeys (B to enable, E to disable)
@@ -289,7 +301,7 @@ Marking: The nymph "marks" a PC as an object for various actions (by default, th
 - Preserves invisibility (won't attack or cast spells)
 - Usable with atweaks PnP Fey, as well as AI mods that still use NYMPH.BCS (ex. SCS)
 
-NOTE: Dimension Door is more limited with this patch. Will only teleport to the summoner or Player1.
+> Note: Dimension Door is more limited with this patch. Will only teleport to the summoner or Player1.
   
 --
 
@@ -307,7 +319,7 @@ Baldur's Gate (original BG1 engine)
 - Cooldown hotkeys working
 - No auto-Search (the FindTraps() script action doesn't work)
 
-NOTE: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range (obviously with a melee weapon equipped)
+> Note: Bard Song and Turn Undead won't prevent auto-attacking, but you can keep them active during battle if the character is standing outside melee aggro range. If you're planning to use those regularly for a character, I'd suggest giving them the d2scrp- script to keep them in Cooldown mode by default.
   
 --
 
@@ -332,8 +344,8 @@ Adjust enemy damage at higher difficulties (classic IWD, IWD2)
 > Suppress Extra Difficulty Damage=1
 
 - IWD1: modifies both damage and XP bonus (they can't be changed separately)
-- IWD2: includes exe patch by Bubb (required for damage adjust to work)
-  
+- IWD2: includes exe patch by Bubb (required for damage adjust to work), this patch is installed with both options.
+
 --
 
 </details>
@@ -381,100 +393,125 @@ Increase movement speed of IWD shapeshifts (IWD1, IWD:EE)
 - Polar bear gets a huge increase. It now moves similar speed to natural form (instead of ridiculously slow).
 - The boring beetle and elementals are still slower than natural form, but fast enough to be usable out of combat.
 
-Compatibility:
+--
+
+**Compatibility:**
 - There are no conflicts with this tweak and the similar tweak in my [Polymorph fixes](https://github.com/D2-mods/Polymorph-fixes-for-IWDEE) mod. If differing options are chosen, the game will use whichever is installed last.
-- Classic IWD: The 2 installer options are identical. Game doesn't have a polymorph spell.
-- If using the cdtweaks "Increase Party Movement Speed" tweak, movement will be slower than natural form when out of combat. It adjusts by a percentage of base movement, and natural form has higher base speed so it gets a bigger boost. When in combat, or if the movement boost is disabled, changes from this tweak will apply normally.
+- IWD1 (classic): The 2 installer options are identical. Game doesn't have a polymorph spell.
+- If using the cdtweaks "Increase Party Movement Speed" tweak, movement will usually be slower than natural form when out of combat. It adjusts by a percentage of base movement, and natural form has higher base speed so it gets a bigger boost. When in combat, or if the movement boost is disabled, changes from this tweak will apply normally.
 
 --
 
 </details>
 
 <details>
-  <summary>Give party starting equipment (IWD games)</summary>
+  <summary>Starting items tweak (all IWD games, BGEE/EET/BGT, Classic Adventures)</summary>
 
-Give party starting equipment (IWD games)
+Starting items tweak (all IWD games, BGEE/EET/BGT, Classic Adventures)
 -
 
-This component gives the party basic starter weapons, as well as the Worn Garment robe. Weapons are given based on proficiencies (IWDEE), or class (IWD2), or randomly (IWD1). There's also an option to start with a bag, containing at least 1 of each weapon type. More info below.
+This tweak gives the party basic starter weapons, as well as the Worn Garment robe. It works with newly created or pregenerated characters. It should also work with a game saved at the start. There are two options: Autoequip and Weapon Sack. More info below.
 
-- for IWD2, the pre-made parties already start out equipped, so this just makes it more fair for custom parties.
-- this is a global script that runs once for all 6 PC slots, whether or not they are filled. (i.e. a character that joins later will not have the scripting run for it)
-- This is compatible with the IWD2EE and IWD-in-BG2 mods.
-- IWDEE note: if the starting cutscene interrupts the scripting, save and reload to make the scripting run. This should only happen rarely. (loading the autosave should also work)
+> Install note: The scripting does not use preset entries for proficiencies, item resources, or STR requirements. Those are checked at install time so this tweak needs to be installed after anything that edits those.
 
 --
 
-**Option 1 (auto-equip):**
+**Update notes (v7.22 - v7.26):**
+- now supports IWD1, IWD2, IWD:EE, IWD-in-BG2, IWD2:EE, Classic Adventures, Tutu, BGEE/EET/BGT (BG1 part only).
+- Scripting is now done for all PCs simultaneously instead of one at a time.
+- EEs/BG2 engine: autoequip option now accounts for mastery and specialization (up to 3+).
+- Autoequip option is now compatible with proficiency overhauls, install this mod after anything that changes proficiencies.
+- IWDEE: fixed the issue that could pause the scripting when starting a new game. (note: fix is only for this mod. If you see this issue with other mods, saving and reloading should fix it.)
+- better reliability on original BG2 engine (i.e. fixed issues that could prevent gaining items).
+- Bag option: adjusted item order, added a couple items that were previously intentionally left out (ex. heavy crossbow).
+- accounts for some additional mod items if detected (rr shortbows, project javelin).
+- added journal entry, bug fixes, other improvements (better weapon mix for IWD1/IWD2, etc.).
 
-How it works:
-- Start a new game with new characters (you can also load one saved at the start).
-- Wait a few seconds for the script to run for each character.
-- That's it. The items will be either equipped or in the inventory.
+--
 
-**NOTE: Auto-equip option is not compatible with proficiency overhauls.**
+**How it works:**
+- Start a new game with new or pregenerated characters, or load one saved at the start.
+- Wait a couple seconds for the scripting to finish. (note: it's okay if you move too early, it should still run).
+- That's it. Items will be either equipped or in the inventory, or in the bag of holding/Weapon Sack.
+- After a round, a journal entry should also pop up as confirmation that it's done.
 
+> Exporting a CHR: if you exported a character and want it to work with this, completely empty out the inventory before Export. There's no level check so it doesn't have to be level 1. If you want to keep some items, then as long as they are unique or magic items it should be fine (don't have any weapons or armor equipped).
+
+--
+
+**Additional info:**
 
 <details>
-  <summary>Additional info:</summary>
+  <summary>Option 1 - Autoequip:</summary>
 
---
+---
 
-**IWDEE:**
-- Items are created based on a character's proficiencies (up to 1 melee and 1 ranged).
+**IWDEE, BGEE, EET:**
+- Items are given based on proficiencies (up to 1 melee and 1 ranged).
 - Characters with no melee profs will keep the starting staff.
-- Weapons are added to the quickslots or inventory.
+- This accounts for mastery and specialization (up to 3+ slots).
+- Compatible with proficiency overhauls. Install after anything that edits items or proficiencies.
+- Some classes/races will prefer certain weapon types (i.e. if multiple types are grouped together by a mod).
 - The starting robe is given to any PC that isn't equipped with an armor.
-- Note: If nothing happens, save and reload to make the scripting run. (This should only happen rarely.)
 
 --
 
 **IWD1 (classic):**
-- This game doesn't have a way to detect proficiencies from a script.
-- The party receives a randomized set of items (a few items are non-random).
-- Total amount of items received is based on size of the initial party.
-- For organization, all weapons will be in the inventories of Player1 or Player2.
+- This game doesn't have a way to detect proficiencies by script.
+- All characters are given a starting robe if they don't have one.
+- The party receives a randomized set of weapons. These are selected from 4 weapon groups (blunt, heavy, light, ranged).
+- Total amount of weapons received is based on party size (at least 2 per character).
+- All weapons will be in the inventories of the top 2 characters. (You can't script it to autoequip so it's more user-friendly to have everything in 2 inventories instead of spread out.)
 - Characters will keep the starting staff (removing it can lead to a possible crash).
+
+> Note: For each of the first 4 characters, an additional check is made. If one of the better weapon types is still missing, the party will get an extra weapon. (with 4+ PCs you usually get 0 or 1 extra)
 
 --
 
 **IWD2:**
 - This game doesn't have a way to detect Feats from a script.
+- All characters are given a starting robe if they don't have one.
 - Each character receives one melee and one ranged weapon.
 - Items are slightly randomized. Possible items are based on character class.
-- Weapons are moved to the quickslots, but are NOT auto-equipped.
-- Do one of the following to equip weapons: (1) Save and reload, (2) Open and exit Character arbitration, (3) Pick up and re-equip each weapon.
+- Some races will also favor certain weapon types (ex. elf + bow). This is a random roll, not 100% chance, and only if they have a class that starts with the weapon feat.
+- Weapons are moved to the quickslots but are not fully equipped yet (icons are not updated).
+- Do one of the following to update icons: (1) Save and reload, (2) Open and exit Character arbitration, (3) Pick up and re-equip each weapon.
 
 --
 
-**IWD-in-BG2:**
-- Scripting is very similar to IWDEE.
+**BG2 engine (IWD-in-BG2, Classic Adventures, BGT, Tutu):**
+- Scripting is very similar to EEs.
 - Might be slightly delayed 1-2 seconds at the start.
-- Quickslot icon is not automatically updated.
-- To update the icon, pick up and re-equip each weapon (save/reload doesn't work).
+- Weapons are moved to the quickslots but are not fully equipped yet (icons are not updated).
+- To update icons, save and reload or re-equip weapons (note: save/reload might not work for all items/games, so re-equip anything that doesn't update).
 
---
+---
 
 </details>
 
---
+<details>
+  <summary>Option 2 - Weapon Sack:</summary>
 
-**Option 2 (weapon bag):**
+---
 
-This component will give the party a bag, containing a selection of weapons. A single bag is given and the player can choose what to do with unwanted items (i.e. sell or throw away). The contents is the same regardless of party size. The bag contains at least one of each weapon type, so it should be compatible with any Proficiencies overhauls.
+This component will give the party a bag, containing a selection of weapons. A single bag is given and the contents is the same regardless of party size. The bag contains at least one of each weapon type.
 
-If the separate "Give party a Bag of Holding" component is not installed, then items can only be taken out of the bag. If it is installed, then the bag is changed to a normal Bag of Holding. Note that install order doesn't matter. I wrote them to end up with identical files installed either way together.
+If the separate "Give party a Bag of Holding" component is not installed, then the bag is called a Weapon Sack. Items can only be taken out of the Weapon Sack (i.e. you can't use it as a real bag). If it is installed, then the bag is changed to a normal Bag of Holding. (Note: install order doesn't matter. It will have identical files installed either way together.)
 
-IWDEE note: if this component is installed together with the gold-exchanging bag, then it will cost gold to take items out. Items will still cost less than buying from Pomab. The bag also contains some items not otherwise obtainable in the prologue.
+EE note: if this component is installed together with the gold-exchanging bag, then it will cost gold to take items out. Items will still cost less than buying from the nearby store. The bag also contains some weapon types not otherwise obtainable at the start.
+
+---
+
+</details>
 
 --
 
 </details>
 
 <details>
-  <summary>Give party a Bag of Holding at game start (classic and EEs)</summary>
+  <summary>Start with a Bag of Holding (classic and EEs)</summary>
 
-Give party a Bag of Holding at game start (classic and EEs)
+Start with a Bag of Holding (classic and EEs)
 -
 
 - The first 3 options give a Bag of Holding with differing max capacities (50, 100, or bottomless).
@@ -611,7 +648,7 @@ Allow Minsc to use his Berserk ability at will (BG games)
 - BG2: Fixes incorrect durations for some effects (tested in BG2 fixpack v13).
 - EE variant is for v2.0+. Older versions will use the same as classic BG2 engine.
 
-NOTE: May be skipped if some mod changes for Minsc are installed.
+> Note: May be skipped if certain mod changes for Minsc are installed.
 
 --
 
@@ -626,7 +663,7 @@ Patch visuals for shortbows (IWD:EE) or scimitars (IWD-in-BG2)
 - IWDEE: Patch shortbows to use shortbow appearance (as in IWD1 with 1pp)
 - IWD-in-BG2: Patch scimitars to use scimitar appearance (was using long sword)
 
-NOTE: Shortbow appearance can't be set for IWD-in-BG2.
+> Note: Shortbow appearance can't be set for IWD-in-BG2.
 
 --
 

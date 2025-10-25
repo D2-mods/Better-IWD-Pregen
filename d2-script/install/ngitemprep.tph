@@ -1,0 +1,404 @@
+/*
+prep for IWD Start with items
+*/
+
+
+//get weapon info (make array)
+INCLUDE ~%install%/weapontypes.tph~
+//INCLUDE ~%install%/weapontypereqs.tph~    // moved lower after array updates
+
+
+//
+//weapontype array edits
+
+//cheaper katana
+COPY_EXISTING ~SW1H43.ITM~  ~override/d2#ngkat.ITM~
+  WRITE_LONG 0x34 100    // reduce base price to 100 gold
+  SPRINT katana ~%DEST_RES%~
+  SPRINT $d2_weapontype_res (~katana~) ~%DEST_RES%~
+IF_EXISTS
+
+//iwd_in_bg2 edit (2haxe is buggy)
+ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
+  COPY_EXISTING ~2haxe.itm~  ~override/d22haxe.itm~
+    SPRINT $d2_weapontype_res (~greataxe~) ~%DEST_RES%~
+END
+
+//cd javelin mod
+ACTION_IF (FILE_EXISTS_IN_GAME ~cdjav0.itm~) BEGIN
+  OUTER_SPRINT $d2_weapontype_res (~throwingspear~) ~cdjav0~
+END
+
+//rr composite shortbows
+ACTION_IF (FILE_EXISTS_IN_GAME ~RR#BOW02.itm~) BEGIN
+  OUTER_SPRINT $d2_weapontype_res (~rrshortbow~) ~RR#BOW02~
+END
+
+//zs shurikens
+ACTION_IF (FILE_EXISTS_IN_GAME ~ZSIPSHU0.itm~) BEGIN
+  OUTER_SPRINT $d2_weapontype_res (~throwingstar~) ~ZSIPSHU0~
+END
+
+
+//cheaper flaming oil
+COPY_EXISTING ~FLAMOIL.ITM~  ~override/d2ngflam.itm~
+              ~00MISC32.ITM~  ~override/d2ngflam.itm~
+  WRITE_LONG 0x34 4
+  LPF ALTER_EFFECT INT_VAR silent=1 STR_VAR match_resource=~%SOURCE_RES%~ resource=~%DEST_RES%~ END
+  SPRINT $d2_weapontype_res (~throwingoil~) ~%DEST_RES%~
+  SPRINT flameoil  ~%DEST_RES%~
+IF_EXISTS
+
+//cheaper elven healing wine
+COPY_EXISTING ~elfwine.ITM~  ~override/d2ngwine.itm~
+              ~00POTN06.ITM~  ~override/d2ngwine.itm~
+  WRITE_LONG 0x34 4
+  LPF ALTER_EFFECT INT_VAR silent=1 STR_VAR match_resource=~%SOURCE_RES%~ resource=~%DEST_RES%~ END
+  SPRINT $d2_weapontype_res (~throwingwine~) ~%DEST_RES%~    // arbitrary name for array (you don't actually throw this)
+  SPRINT elfwine  ~%DEST_RES%~
+IF_EXISTS
+
+//
+<<<<<<<< .../temp/script
+IF
+	!Global("d2ngflameoil","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerNotExpired("d2ngitemsdelay","GLOBAL")    // in case something messes up the other timer
+	!PartyHasItem("%flameoil%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%flameoil%",Player1,2,0,0)
+		SetGlobal("d2ngflameoil","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/script~  ~inlined/2flamingoils.BAF~
+  EVALUATE_BUFFER
+
+<<<<<<<< .../temp/script
+IF
+	!Global("d2ngelfwine","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerNotExpired("d2ngitemsdelay","GLOBAL")
+	!PartyHasItem("%elfwine%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%elfwine%",Player1,2,0,0)
+		SetGlobal("d2ngelfwine","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/script~  ~inlined/2elfwines.BAF~
+  EVALUATE_BUFFER
+
+DEFINE_ACTION_FUNCTION 2flamingoils BEGIN
+  OUTER_SET oilcheck = 0
+  OUTER_SET winecheck = 0
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%flameoil%.itm~) BEGIN  OUTER_SET oilcheck = 1  END
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%elfwine%.itm~) BEGIN  OUTER_SET winecheck = 1  END
+
+  // iwd1 (duplicate items if in both area and global scripts)
+  ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
+    ACTION_IF oilcheck BEGIN  EXTEND_BOTTOM ~ar1006.BCS~ ~inlined/2flamingoils.BAF~  END
+    ACTION_IF winecheck BEGIN  EXTEND_BOTTOM ~ar1006.BCS~ ~inlined/2elfwines.BAF~  END
+  END
+  ELSE BEGIN
+
+  // add to scripts
+  ACTION_FOR_EACH script IN
+    ~ar1000~ ~ar1006~ ~TC0009~ ~baldur~
+    ~ar2600~ ~bg2600~ ~AR0015~ ~_AR2600~
+  BEGIN
+    ACTION_IF (RESOURCE_CONTAINS ~%script%.bcs~  ~d2ng~) BEGIN
+      ACTION_IF oilcheck BEGIN  EXTEND_BOTTOM ~%script%.BCS~ ~inlined/2flamingoils.BAF~  END
+      ACTION_IF winecheck BEGIN  EXTEND_BOTTOM ~%script%.BCS~ ~inlined/2elfwines.BAF~  END
+    END
+  END
+
+  END
+END
+
+
+//bgee
+COPY_EXISTING - ~dagg01q.itm~ ~~  SPRINT $d2_weapontype_res (~dagger~) ~%SOURCE_RES%~  IF_EXISTS
+COPY_EXISTING - ~hamm01q.itm~ ~~  SPRINT $d2_weapontype_res (~hammer~) ~%SOURCE_RES%~  IF_EXISTS
+COPY_EXISTING - ~sper01q.itm~ ~~  SPRINT $d2_weapontype_res (~spear~) ~%SOURCE_RES%~  IF_EXISTS
+
+//iwdification
+COPY_EXISTING - ~CDHQDAGG.itm~ ~~  SPRINT $d2_weapontype_res (~dagger~) ~%SOURCE_RES%~  IF_EXISTS
+COPY_EXISTING - ~CDHQHAMM.itm~ ~~  SPRINT $d2_weapontype_res (~hammer~) ~%SOURCE_RES%~  IF_EXISTS
+COPY_EXISTING - ~CDHQSPER.itm~ ~~  SPRINT $d2_weapontype_res (~spear~) ~%SOURCE_RES%~  IF_EXISTS
+
+
+//
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
+  OUTER_SPRINT handaxe ~00AX1H12~    // masterwork handaxe (don't add to array)
+//  OUTER_SPRINT $d2_weapontype_res (~handaxe~) ~00AX1H12~    // masterwork handaxe
+  OUTER_SPRINT $d2_weapontype_res (~dagger~) ~00DAGG02~    // masterwork dagger
+END
+ELSE BEGIN
+//  ACTION_IF (FILE_EXISTS_IN_GAME ~hqhamm.itm~) BEGIN  OUTER_SPRINT $d2_weapontype_res (~hammer~) ~hqhamm~  END
+  ACTION_IF (FILE_EXISTS_IN_GAME ~hqdagg.itm~) BEGIN  OUTER_SPRINT $d2_weapontype_res (~dagger~) ~hqdagg~  END
+END
+
+
+
+//
+//make ngitems array + set variables
+ACTION_PHP_EACH d2_weapontype_res AS type => res BEGIN
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%res%.itm~) BEGIN
+    ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~bolt~) BEGIN  OUTER_SPRINT $d2ngitemtypes (~%res%~) ~ammo~ END ELSE
+    ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~arrow~) BEGIN  OUTER_SPRINT $d2ngitemtypes (~%res%~) ~ammo~ END ELSE
+    ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~bullet~) BEGIN  OUTER_SPRINT $d2ngitemtypes (~%res%~) ~ammo~ END ELSE
+    ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~dart~) BEGIN  OUTER_SPRINT $d2ngitemtypes (~%res%~) ~ammo~ END ELSE
+    ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~throw~) BEGIN  OUTER_SPRINT $d2ngitemtypes (~%res%~) ~throwing~ END ELSE
+    ACTION_IF (~%type%~ STRING_CONTAINS_REGEXP ~staff~) BEGIN  OUTER_SPRINT $d2ngitemtypes (~%res%~) ~weapon~ END    // skip staff
+  END
+  OUTER_SPRINT  ~%type%~ ~%res%~    // set variable to use individually if needed
+END
+
+/*
+ACTION_PHP_EACH d2ngitemtypes AS item => type BEGIN
+  ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~weapon~) BEGIN  PRINT ~Weapon type: %item%~  END
+END
+ACTION_PHP_EACH d2ngitemtypes AS item => type BEGIN
+  ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~ammo~) BEGIN  PRINT ~Ammo type: %item%~  END
+END
+ACTION_PHP_EACH d2ngitemtypes AS item => type BEGIN
+  ACTION_IF !(~%type%~ STRING_CONTAINS_REGEXP ~throwing~) BEGIN  PRINT ~Throwing type: %item%~  END
+END
+*/
+
+//IWD1 - autoequip hammer is hq version
+ACTION_IF (FILE_EXISTS_IN_GAME ~hqhamm.itm~) BEGIN
+  OUTER_SPRINT hammer  ~hqhamm~
+END
+
+
+//ammo stacks
+OUTER_SET 1slots = 20    // for bag option
+OUTER_SET 2slots = 40
+OUTER_SET 3slots = 40
+OUTER_SET 4slots = 60
+OUTER_SET 5slots = 60
+OUTER_SET 6slots = 80
+OUTER_SET taxes = 5    // item stacks (these are used by both installer options)
+OUTER_SET tdags = 10
+OUTER_SET thams = 5
+OUTER_SET tjavs = 5
+OUTER_SET toils = 2
+OUTER_SET twins = 2
+OUTER_SET tstar = 30
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2ngthrowstacks BEGIN
+  ~%throwingaxe%~     => ~%taxes%~
+  ~%throwingdagger%~  => ~%tdags%~
+  ~%throwinghammer%~  => ~%thams%~    // thrown hammers
+  ~%throwingspear%~   => ~%tjavs%~    // project javelin
+  ~%throwingoil%~     => ~%toils%~
+  ~%throwingwine%~    => ~%twins%~
+  ~%throwingstar%~    => ~%tstar%~    // ZS_ItemPack
+END
+
+//min STR checks (run after all array updates)
+INCLUDE ~%install%/weapontypereqs.tph~
+
+
+
+//
+//add Worn Garment
+OUTER_SPRINT startrobe  ~d2ngrobe~
+OUTER_SPRINT copy  ~startrobe~
+ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SPRINT copy  ~startrobeiwd2~  END
+
+//desc image for bg games
+OUTER_SPRINT descimage  ~CCLCK06~
+ACTION_IF (FILE_EXISTS_IN_GAME ~CCLCK09.bam~) BEGIN  OUTER_SPRINT descimage  ~CCLCK09~  END
+
+OUTER_SPRINT desc  @712
+ACTION_IF (ee_game > 0) BEGIN  OUTER_SPRINT desc  @711  END
+ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SPRINT desc  @713  END
+
+COPY ~%ngequip%/startrobe.bam~  ~override/%startrobe%.bam~
+COPY ~%ngequip%/%copy%.itm~  ~override/%startrobe%.itm~
+  SAY NAME1 @710 SAY UNIDENTIFIED_DESC ~%desc%~
+  SAY NAME2 @710
+  WRITE_ASCII 0x3a ~%startrobe%~ #8    // bam icon
+  PATCH_IF (GAME_IS ~bgee eet bgt tutu tutu_totsc ca~) BEGIN
+    WRITE_ASCII 0x58 ~%descimage%~ #8
+  END
+  WRITE_LONG 0x34 3    // gold cost
+
+//old resources for backwards compat
+COPY ~override/%startrobe%.itm~  ~override/d2#ngrb0.itm~
+COPY ~override/%startrobe%.itm~  ~override/d2#ngrb2.itm~
+
+//bg1 - friendly arm
+COPY_EXISTING ~FRIEND.STO~  ~override~
+  LPF ADD_STORE_ITEM_EX INT_VAR unlimited=1 STR_VAR item_name=~%startrobe%~ position=~AFTER book55~ flags=~identified~ END
+IF_EXISTS BUT_ONLY
+
+//iwd1 - gerth's store
+COPY_EXISTING ~KUGERTH.STO~  ~override~
+  LPF ADD_STORE_ITEM_EX INT_VAR unlimited=1 STR_VAR item_name=~%startrobe%~ position=~AFTER ring11~ flags=~identified~ END
+IF_EXISTS BUT_ONLY
+
+//iwd2 - trading depot
+COPY_EXISTING ~11DEIRD.STO~  ~override~
+  LPF ADD_STORE_ITEM_EX INT_VAR unlimited=1 STR_VAR item_name=~%startrobe%~ position=~AFTER 00GBAG01~ flags=~identified~ END
+IF_EXISTS BUT_ONLY
+
+
+
+//
+//log or journal entry
+OUTER_SPRINT gotitems  ~~
+OUTER_SPRINT ngequipjour  ~~
+OUTER_SPRINT ngequipsolo  ~~
+
+ACTION_IF (ee_game > 0) BEGIN
+  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1011) STR_VAR color=blue RET newstring END
+  OUTER_SPRINT gotitems ~DisplayString(Myself,%newstring%)~
+
+  ACTION_IF (GAME_IS ~iwdee~) BEGIN
+    ADD_JOURNAL @1014 @1015    // EE popup
+    OUTER_SPRINT ngequipjour  ~AddJournalEntry(@1014,INFO)~
+    OUTER_SPRINT ngequipsolo  ~AddJournalEntry(@1015,INFO)~
+  END ELSE BEGIN
+    ADD_JOURNAL @1016 @1017    // EE popup
+    OUTER_SPRINT ngequipjour  ~AddJournalEntry(@1016,INFO)~
+    OUTER_SPRINT ngequipsolo  ~AddJournalEntry(@1017,INFO)~
+  END
+END ELSE
+ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
+  OUTER_SPRINT  ngequipjour ~AddJournalEntry(@1014)~
+  OUTER_SPRINT  ngequipsolo ~AddJournalEntry(@1015)~
+  OUTER_SPRINT gotitems ~TomsStringDisplayer(@1011)~
+END ELSE
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
+  OUTER_SPRINT  ngequipjour ~AddJournalEntry(@1014)~
+  OUTER_SPRINT  ngequipsolo ~AddJournalEntry(@1015)~
+  OUTER_SPRINT gotitems ~DisplayMessage(@1012)~
+END ELSE
+ACTION_IF (GAME_IS ~iwd_in_bg2~) BEGIN
+  OUTER_SPRINT  ngequipjour ~AddJournalEntry(@1014,INFO)~
+  OUTER_SPRINT  ngequipsolo ~AddJournalEntry(@1015,INFO)~
+  OUTER_SPRINT gotitems ~DisplayString(Myself,@1013)~
+END ELSE BEGIN
+  OUTER_SPRINT  ngequipjour ~AddJournalEntry(@1016,INFO)~
+  OUTER_SPRINT  ngequipsolo ~AddJournalEntry(@1017,INFO)~
+  OUTER_SPRINT gotitems ~DisplayString(Myself,@1012)~
+//  ACTION_IF (GAME_IS ~ca~) BEGIN  OUTER_SPRINT gotitems ~DisplayString(Myself,@1013)~  END
+END
+
+
+/*color variations
+LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1011) STR_VAR color=blue RET newstring END
+ACTION_IF (ee_game > 0)             BEGIN OUTER_SPRINT gotitems ~DisplayString(Myself,%newstring%)~ END
+ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN OUTER_SPRINT gotitems ~TomsStringDisplayer(@1011)~ END
+ACTION_IF (GAME_IS ~iwd2~)          BEGIN OUTER_SPRINT gotitems ~DisplayMessage(@1012)~ END
+ACTION_IF (GAME_IS ~iwd_in_bg2 ca~) BEGIN OUTER_SPRINT gotitems ~DisplayString(Myself,@1013)~ END
+
+ACTION_IF (ee_game > 0)             BEGIN OUTER_SPRINT gotitems ~DisplayStringNoName(Player1,@1011)~ END
+ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN OUTER_SPRINT gotitems ~DisplayString(Myself,@1011)~ END 
+ACTION_IF (GAME_IS ~iwd2~)          BEGIN OUTER_SPRINT gotitems ~DisplayString(Myself,@1012)~ END    // white text
+ACTION_IF (GAME_IS ~iwd_in_bg2 ca~) BEGIN OUTER_SPRINT gotitems ~DisplayStringNoName(Player1,@1013)~ END    // floats over head
+*/
+
+
+//sound effect (not used, better with no sound)
+ACTION_IF !(FILE_EXISTS_IN_GAME ~GAM_11.wav~) BEGIN
+  COPY ~%files%/GAM_11.wav~  ~override~
+END
+OUTER_SPRINT ngsound  ~PlaySound("GAM_11")~
+
+//edit for IWD1(EE)
+DEFINE_PATCH_FUNCTION d2ngitemsdelay BEGIN
+  REPLACE_TEXTUALLY ~d2Player1equip~  ~d2ngitemsdelay~
+  SPRINT match  ~GLOBAL")~
+  SPRINT string  ~!GlobalTimerNotExpired("d2Player1equip","GLOBAL")~
+  REPLACE_TEXTUALLY ~%match%~  ~%match% %string%~
+END
+
+//tutu: workaround for journal entry not being visible
+ACTION_IF (GAME_IS ~tutu tutu_totsc~) BEGIN
+  OUTER_SPRINT temp  ~SetGlobal("Chapter","GLOBAL",1)~
+  OUTER_SPRINT done  ~SetGlobal("Chapter","GLOBAL",0)~
+  OUTER_SPRINT ngequipjour  ~%temp% %ngequipjour% %done%~
+  OUTER_SPRINT ngequipsolo  ~%temp% %ngequipsolo% %done%~
+END
+
+
+//
+<<<<<<<< .../temp/script
+IF
+	!Global("d2autoequip","GLOBAL",1)
+	GlobalTimerExpired("d2Player1equip","GLOBAL")
+	PartyHasItem("%startrobe%")
+	Exists(Player2)
+THEN
+	RESPONSE #100
+		SetGlobal("d2autoequip","GLOBAL",1)
+//		%ngsound%
+		%ngequipjour%
+		%gotitems%
+		Continue()
+END
+
+IF
+	!Global("d2autoequip","GLOBAL",1)
+	GlobalTimerExpired("d2Player1equip","GLOBAL")
+	PartyHasItem("%startrobe%")
+	!Exists(Player2)
+THEN
+	RESPONSE #100
+		SetGlobal("d2autoequip","GLOBAL",1)
+//		%ngsound%
+		%ngequipsolo%
+		%gotitems%
+		Continue()
+END
+
+IF
+	!Global("d2autoequip","GLOBAL",1)
+	GlobalTimerExpired("d2Player1equip","GLOBAL")
+	!PartyHasItem("%startrobe%")
+THEN
+	RESPONSE #100
+		SetGlobal("d2autoequip","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+
+COPY - ~.../temp/script~  ~inlined/string.BAF~
+  EVALUATE_BUFFER
+  PATCH_IF (ngstartmode = 2) BEGIN
+    REPLACE_TEXTUALLY ~1012~ ~1011~
+    REPLACE_TEXTUALLY ~1013~ ~1011~
+  END
+  PATCH_IF (GAME_IS ~iwd how totlm~) BEGIN
+    REPLACE_TEXTUALLY ~!PartyHasItem~  ~False()//~
+  END
+  LPF d2ngitemsdelay END
+
+
+//IWDEE: message needs to play even if scripting was paused (no longer needed, but no reason to change this part)
+//this is now used for all games, only gives journal entry in starting areas
+<<<<<<<< .../temp/script
+IF
+	!Global("d2ngequipdial","GLOBAL",1)
+	!GlobalTimerNotExpired("d2ngitemsdelay","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2ngitemsdelay","GLOBAL",4)
+		SetGlobal("d2ngequipdial","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/script~  ~inlined/timer.BAF~
+
+
+//
+//

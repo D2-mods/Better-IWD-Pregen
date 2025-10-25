@@ -1,0 +1,44 @@
+//
+//
+
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	OR(2)
+		HasItem("%staff%",Player1)
+		!Exists(Player1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2Player1equip","GLOBAL",6)
+		Continue()
+END
+
+/*
+IF
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!Global("d2Player1melee","GLOBAL",1)
+	!Global("d2Player1staff","GLOBAL",1)
+	NumItemsGT("%staff%",Player1,0)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("%staff%"))
+		Continue()
+END
+*/
+
+IF
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%staff%",Player1)
+	OR(2)
+		!Global("d2Player1staff","GLOBAL",1)
+		NumItemsGT("%staff%",Player1,1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("%staff%"))
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+*/

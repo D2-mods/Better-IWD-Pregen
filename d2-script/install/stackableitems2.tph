@@ -10,9 +10,25 @@ ACTION_IF (stackable = 1) BEGIN  OUTER_SET weapons=0 OUTER_SET nonstackables=1 O
 ACTION_IF (stackable = 2) BEGIN  OUTER_SET weapons=1 OUTER_SET nonstackables=0 OUTER_SET allmagical=0 END  // stackables only
 ACTION_IF (stackable = 3) BEGIN  OUTER_SET weapons=1 OUTER_SET nonstackables=1 OUTER_SET allmagical=0 END  // + weapons
 ACTION_IF (stackable = 4) BEGIN  OUTER_SET weapons=1 OUTER_SET nonstackables=1 OUTER_SET allmagical=1 END  // + magic items
-OUTER_SET printarrays = 0    // 1 = weidu shows items changed from nonstackable to stackable
 
-INCLUDE ~%install%/bg1dlgfixes.tph~    // prevent weidu warnings with stackableitems patching
+INCLUDE ~%install%/bg1dlgfixes.tph~    // prevent weidu warnings when recompiling dlg files
+INCLUDE ~%install%/id2bcserror.tph~    // prevent weidu error when decompiling iwd2 scripts
+INCLUDE ~%install%/bg2bcserror.tph~    // fix scripts if bg2 fixpack not installed (fix warning message)
+
+// print additional info
+OUTER_SET printarrays = 0
+OUTER_SET printmode = 1
+
+
+//fix a SoD random item (becomes 20 items)
+OUTER_SPRINT item  ~RNDTRI03~
+OUTER_SET container = 34
+COPY_EXISTING ~BD0130.ARE~  ~override~
+  LPF REPLACE_AREA_ITEM STR_VAR old_item=~%item%~ new_item=~%item%~ END
+//  LPF DELETE_AREA_ITEM STR_VAR item_to_delete=~%item%~ END
+//  LPF ADD_AREA_ITEM INT_VAR container_to_add_to=container STR_VAR item_to_add=~%item%~ END
+IF_EXISTS BUT_ONLY
+
 
 
 DEFINE_ACTION_FUNCTION stackableitems INT_VAR stack=999 weapons=1 nonstackables=1 allmagical=0 printarrays=0 BEGIN
@@ -138,6 +154,9 @@ DEFINE_ACTION_FUNCTION stackableitems INT_VAR stack=999 weapons=1 nonstackables=
         // make store => items array
         LPF d2stackableitems_list RET list END
         SPRINT $d2stackableitems2(~%SOURCE_FILE%~) ~%list%~    // store => list
+        PATCH_IF !(~%list%~ STR_EQ ~~) BEGIN
+          LPF d2stackableitems_print END
+        END
 
       END
 //    END
@@ -164,22 +183,43 @@ DEFINE_ACTION_FUNCTION stackableitems INT_VAR stack=999 weapons=1 nonstackables=
   // check scripting (prevent taking whole stack)
   ACTION_IF (RESOURCE_CONTAINS ~action.ids~  ~TakePartyItemNum~) BEGIN
 
-    PRINT ~scanning script actions ...~
+    PRINT ~scanning script actions ... (this might take a while)~
 //    SILENT
-    ACTION_FOR_EACH ext IN ~bcs~ ~dlg~ BEGIN
-      COPY_EXISTING_REGEXP - GLOB ~.*\.%ext%$~  ~~
-        PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~TakePartyItem~) BEGIN
 
-          // make array of dlg/bcs (with items from d2stackableitems)
+    // check bcs scripts (need to decompile)
+    COPY_EXISTING_REGEXP - GLOB ~.*\.bcs$~  ~~
+      // skip some mod scripts
+      SET patch_bcs = 1
+      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^dw~) BEGIN
+        PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~difficulty~) BEGIN  SET patch_bcs = 0  END
+      END
+      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^LD~) BEGIN  SET patch_bcs = 0  END
+      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^LW~) BEGIN  SET patch_bcs = 0  END
+
+      PATCH_IF patch_bcs BEGIN
+        DECOMPILE_BCS_TO_BAF
+        COUNT_REGEXP_INSTANCES ~TakePartyItem(~  count
+        PATCH_IF (count > 0) BEGIN
           LPF d2stackableitems_list RET list END
           SPRINT $d2stackableitems3(~%SOURCE_FILE%~) ~%list%~    // script => list
-
+          PATCH_IF !(~%list%~ STR_EQ ~~) BEGIN
+            LPF d2stackableitems_print END
+          END
         END
-      // end inlined COPY
-    END
+      END
 
-    // bg2 conversions - skip warnings (unused files)
-    ACTION_IF (GAME_IS ~iwd_in_bg2 ca~) BEGIN
+    // check dlgs
+    COPY_EXISTING_REGEXP - GLOB ~.*\.dlg$~  ~~
+      PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~TakePartyItem(~) BEGIN
+        LPF d2stackableitems_list RET list END
+        SPRINT $d2stackableitems3(~%SOURCE_FILE%~) ~%list%~    // script => list
+        PATCH_IF !(~%list%~ STR_EQ ~~) BEGIN
+          LPF d2stackableitems_print END
+        END
+      END
+
+    // bg2 conversions - ignore some unused files (skip weidu warnings)
+    ACTION_IF (GAME_IS ~iwd_in_bg2 ca tutu tutu_totsc~) BEGIN    // tutu uses custom resources for bg1 files
       OUTER_SPRINT $d2stackableitems3(~ALBERT.DLG~) ~~
       OUTER_SPRINT $d2stackableitems3(~BREVLI.DLG~) ~~
       OUTER_SPRINT $d2stackableitems3(~CHARLE.DLG~) ~~
@@ -243,10 +283,10 @@ DEFINE_ACTION_FUNCTION stackableitems INT_VAR stack=999 weapons=1 nonstackables=
 END
 
 
-//this is run from main function
+//these are run from main function
 DEFINE_PATCH_FUNCTION d2stackableitems_list STR_VAR list=~~ RET list BEGIN
   PHP_EACH d2stackableitems AS item => stack BEGIN
-    PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~[^a-z^0-9^_]%item%[^a-z^0-9^_]~) BEGIN
+    PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~[^a-z^0-9]%item%[^a-z^0-9]~) BEGIN
       PATCH_IF (~%list%~ STR_EQ ~~) BEGIN
         TEXT_SPRINT list  ~%item%~
       END ELSE BEGIN
@@ -256,18 +296,15 @@ DEFINE_PATCH_FUNCTION d2stackableitems_list STR_VAR list=~~ RET list BEGIN
   END
 END
 
+//keep print=1 (print=0 pauses a long time on big installs)
+DEFINE_PATCH_FUNCTION d2stackableitems_print INT_VAR print=1 BEGIN
+  PATCH_IF (print && printmode) BEGIN
+    PATCH_PRINT ~found something in %SOURCE_FILE% ... added to patch list ...~
+  END
+END
+
 
 LAF stackableitems INT_VAR weapons=weapons nonstackables=nonstackables allmagical=allmagical printarrays=printarrays END
-
-
-//fix a SoD random item
-OUTER_SPRINT item  ~RNDTRI03~
-OUTER_SET container = 34
-COPY_EXISTING ~BD0130.ARE~  ~override~
-  LPF REPLACE_AREA_ITEM STR_VAR old_item=~%item%~ new_item=~%item%~ END
-//  LPF DELETE_AREA_ITEM STR_VAR item_to_delete=~%item%~ END
-//  LPF ADD_AREA_ITEM INT_VAR container_to_add_to=container STR_VAR item_to_add=~%item%~ END
-IF_EXISTS BUT_ONLY
 
 
 //

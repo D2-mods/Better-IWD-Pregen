@@ -1,5 +1,5 @@
 /*
-Items are auto-equipped or added to inventory
+for testing - alt with less global scripting
 */
 
 
@@ -54,26 +54,21 @@ ACTION_IF (GAME_IS ~iwdee bgee eet~) BEGIN
 
   // iwdee scripts
   ACTION_IF (RESOURCE_CONTAINS ~ar1006.are~  ~hroth~) BEGIN
-//    EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/ngitems.BAF~    // add script
+    EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/ngitems.BAF~    // add script
     EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/timer.BAF~
     EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/string.BAF~
   END
 
   // bgee scripts
-  ACTION_IF (RESOURCE_CONTAINS ~ar2600.are~  ~imoen~) BEGIN
-//    EXTEND_BOTTOM ~ar2600.BCS~  ~inlined/ngitems.BAF~
-    EXTEND_BOTTOM ~ar2600.BCS~  ~inlined/timer.BAF~
-    EXTEND_BOTTOM ~ar2600.BCS~  ~inlined/string.BAF~
+  ACTION_FOR_EACH script IN ~ar2600~ ~bg2600~ BEGIN
+    ACTION_IF (RESOURCE_CONTAINS ~%script%.are~  ~imoen~) BEGIN
+      EXTEND_BOTTOM ~%script%.BCS~  ~inlined/ngitems.BAF~
+      EXTEND_BOTTOM ~%script%.BCS~  ~inlined/timer.BAF~
+      EXTEND_BOTTOM ~%script%.BCS~  ~inlined/string.BAF~
+    END
   END
 
-  ACTION_IF (RESOURCE_CONTAINS ~bg2600.are~  ~imoen~) BEGIN
-    EXTEND_BOTTOM ~bg2600.BCS~  ~inlined/ngitems.BAF~
-    EXTEND_BOTTOM ~bg2600.BCS~  ~inlined/timer.BAF~
-    EXTEND_BOTTOM ~bg2600.BCS~  ~inlined/string.BAF~
-  END ELSE BEGIN
-    EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~    // add to baldur.bcs (except for eet)
-  END
-
+//  EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~
   LAF ngequipcre END    // invisible creature
 
 END
@@ -153,10 +148,10 @@ COPY - ~.../temp/blocks~  ~inlined/ranged.BAF~
     APPEND_FILE TEXT ~inlined/slot5.BAF~
     APPEND_FILE TEXT ~inlined/slot6.BAF~
 
-//  EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/ngitems.BAF~
+  EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/ngitems.BAF~
   EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/timer.BAF~
   EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/string.BAF~
-  EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~
+//  EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~
 
   EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/swordcheck.BAF~
   EXTEND_BOTTOM ~ar1006.BCS~  ~inlined/bowcheck.BAF~
@@ -210,10 +205,10 @@ ACTION_IF (GAME_IS ~iwd2~) BEGIN
     APPEND_FILE TEXT ~inlined/slot5.BAF~
     APPEND_FILE TEXT ~inlined/slot6.BAF~
 
-//  EXTEND_BOTTOM ~ar1000.BCS~  ~inlined/ngitems.BAF~
+  EXTEND_BOTTOM ~ar1000.BCS~  ~inlined/ngitems.BAF~
   EXTEND_BOTTOM ~ar1000.BCS~  ~inlined/timer.BAF~
   EXTEND_BOTTOM ~ar1000.BCS~  ~inlined/string.BAF~
-  EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~
+//  EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~
 
   LAF ngequipcre INT_VAR iwd2=1 END
 
@@ -297,10 +292,9 @@ ACTION_IF (GAME_IS ~iwd_in_bg2 ca bgt tutu tutu_totsc~) BEGIN
     EXTEND_BOTTOM ~AR0015.BCS~  ~inlined/ngitems.BAF~
     EXTEND_BOTTOM ~AR0015.BCS~  ~inlined/timer.BAF~
     EXTEND_BOTTOM ~AR0015.BCS~  ~inlined/string.BAF~
-  END ELSE BEGIN
-    EXTEND_BOTTOM ~BALDUR.BCS~    ~inlined/ngitems.BAF~    // add to baldur.bcs (except for bgt)
   END
 
+//  EXTEND_BOTTOM ~BALDUR.BCS~  ~inlined/ngitems.BAF~
   LAF ngequipcre INT_VAR bg2mode=1 END
 
 END

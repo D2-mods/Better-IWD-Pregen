@@ -1,0 +1,101 @@
+//
+//
+
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%lightcrossbow_prof%)
+	CheckStatGT(Player1,%lightcrossbow_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%lightcrossbow%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))    // crossbow
+		ActionOverride(Player1,CreateItem("%bolt%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%longbow_prof%)
+	CheckStatGT(Player1,%longbow_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%longbow%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))    // longbow
+		ActionOverride(Player1,CreateItem("%arrow%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%shortbow_prof%)
+	CheckStatGT(Player1,%shortbow_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%shortbow%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))    // shortbow
+		ActionOverride(Player1,CreateItem("%arrow%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%sling_prof%)
+	CheckStatGT(Player1,%sling_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%sling%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))    // sling
+		ActionOverride(Player1,CreateItem("%bullet%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%throwingdagger_prof%)
+	CheckStatGT(Player1,%throwingdagger_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%throwingdagger%",10,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%throwingaxe_prof%)
+	CheckStatGT(Player1,%throwingaxe_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%throwingaxe%",5,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%dart_prof%)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%dart%",40,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))    // darts
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+
+/*
+*/

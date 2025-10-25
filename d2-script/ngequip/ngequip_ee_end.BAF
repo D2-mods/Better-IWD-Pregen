@@ -1,0 +1,89 @@
+//
+//
+
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	!Global("d2Player1staff","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	!HasItem("%staff%",Player1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%staff%",0,0,0))    // staff (no prof)
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1robe","GLOBAL",1)
+	!Global("d2Player1robecheck","GLOBAL",1)
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player1)
+	!HasItemSlot(Player1,SLOT_ARMOR)
+	!HasItem("%startrobe%",Player1)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%startrobe%",Player1,0,0,0)    // worn garment
+		XEquipItem("%startrobe%",Player1,SLOT_ARMOR,EQUIP)
+		SetGlobal("d2Player1robe","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1robecheck","GLOBAL",1)
+	Global("d2Player1robe","GLOBAL",1)
+	!GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		HasItemSlot(Player1,SLOT_ARMOR)
+		HasItem("%startrobe%",Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1robecheck","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerExpired("d2Player1equip","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+//get rid of duplicate staves (at end because it can interrupt earlier blocks)
+IF
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerNotExpired("d2Player1staffdupe","GLOBAL")
+	Global("d2Player1staff","GLOBAL",1)
+	NumItemsGT("%staff%",Player1,1)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("%staff%"))
+		SetGlobalTimer("d2Player1staffdupe","GLOBAL",2)
+		Continue()
+END
+
+IF
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerNotExpired("d2Player1staffdupe","GLOBAL")
+	!Global("d2Player1staff","GLOBAL",1)
+	NumItemsGT("%staff%",Player1,0)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,DestroyItem("%staff%"))
+		SetGlobalTimer("d2Player1staffdupe","GLOBAL",2)
+		Continue()
+END
+*/
+
+
+/*
+*/

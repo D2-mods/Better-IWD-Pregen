@@ -1,0 +1,255 @@
+//alt - not used
+//
+
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%ninjato_prof%,0)
+	RandomNumGT(20,18)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%ninjato%",Player1,0,0,0)
+		XEquipItem("%ninjato%",Player1,SLOT_WEAPON,EQUIP)    // ninjato
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%wakizashi_prof%,0)
+	RandomNumLT(20,3)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%wakizashi%",Player1,0,0,0)
+		XEquipItem("%wakizashi%",Player1,SLOT_WEAPON,EQUIP)    // wakizashi
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%katana_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%katana%",Player1,0,0,0)
+		XEquipItem("%katana%",Player1,SLOT_WEAPON,EQUIP)    // katana
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%bastardsword_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%bastardsword%",Player1,0,0,0)
+		XEquipItem("%bastardsword%",Player1,SLOT_WEAPON,EQUIP)    // bastard sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%greatsword_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%greatsword%",Player1,0,0,0)
+		XEquipItem("%greatsword%",Player1,SLOT_WEAPON,EQUIP)    // greatsword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%greataxe_prof%,0)
+	ProficiencyGT(Player1,111,0)    // 2 handed style
+THEN
+	RESPONSE #100
+		GiveItemCreate("%greataxe%",Player1,0,0,0)
+		XEquipItem("%greataxe%",Player1,SLOT_WEAPON,EQUIP)    // greataxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%halberd_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%halberd%",Player1,0,0,0)
+		XEquipItem("%halberd%",Player1,SLOT_WEAPON,EQUIP)    // halberd
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%morningstar_prof%,0)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%morningstar%",Player1,0,0,0)
+		XEquipItem("%morningstar%",Player1,SLOT_WEAPON,EQUIP)    // morning star
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%flail_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%flail%",Player1,0,0,0)
+		XEquipItem("%flail%",Player1,SLOT_WEAPON,EQUIP)    // flail
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%longsword_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%longsword%",Player1,0,0,0)
+		XEquipItem("%longsword%",Player1,SLOT_WEAPON,EQUIP)    // long sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%scimitar_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%scimitar%",Player1,0,0,0)
+		XEquipItem("%scimitar%",Player1,SLOT_WEAPON,EQUIP)    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%hammer_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%hammer%",Player1,0,0,0)
+		XEquipItem("%hammer%",Player1,SLOT_WEAPON,EQUIP)    // hammer
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%mace_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%mace%",Player1,0,0,0)
+		XEquipItem("%mace%",Player1,SLOT_WEAPON,EQUIP)    // mace
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%club_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%club%",Player1,0,0,0)
+		XEquipItem("%club%",Player1,SLOT_WEAPON,EQUIP)    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%axe_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%axe%",Player1,0,0,0)
+		XEquipItem("%axe%",Player1,SLOT_WEAPON,EQUIP)    // axe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	!Global("d2Player1staff","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%staff_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%staff%",Player1,0,0,0)
+		XEquipItem("%staff%",Player1,SLOT_WEAPON,EQUIP)    // staff
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%spear_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%spear%",Player1,0,0,0)
+		XEquipItem("%spear%",Player1,SLOT_WEAPON,EQUIP)    // spear
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%dagger_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%dagger%",Player1,0,0,0)
+		XEquipItem("%dagger%",Player1,SLOT_WEAPON,EQUIP)    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%shortsword_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%shortsword%",Player1,0,0,0)
+		XEquipItem("%shortsword%",Player1,SLOT_WEAPON,EQUIP)    // short sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+
+//cover edge case, flail/spiked prof with 11 or 12 STR and random number rolled in flail range
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%morningstar_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%morningstar%",Player1,0,0,0)
+		XEquipItem("%morningstar%",Player1,SLOT_WEAPON,EQUIP)    // morning star
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+
+/*
+*/

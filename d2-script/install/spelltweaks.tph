@@ -104,6 +104,9 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
     PATCH_IF (iwd_classic>0 AND proj=209) BEGIN  SET patch_damage = 1  END    // iwd malavon's rage
     PATCH_IF (iwd_classic>0 AND proj=308) BEGIN  SET patch_damage = 1  END    // iwd circle of bones
     PATCH_IF (iwd_classic>0 AND proj=311) BEGIN  SET patch_damage = 1  END    // iwd circle of blades
+    PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^ZSTWT~) BEGIN  SET patch_damage = 0  END    // zs tweak (on hit damage)
+    PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^ZSIPS2~) BEGIN  SET patch_damage = 0  END    // zs items (on hit damage)
+    PATCH_IF (FILE_EXISTS_IN_GAME ~%SOURCE_RES%.itm~) BEGIN  SET patch_damage = 0  END
 
 /*
     // exclusions (config.txt)

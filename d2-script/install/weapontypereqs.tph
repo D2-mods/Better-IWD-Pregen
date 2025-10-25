@@ -1,0 +1,34 @@
+/*
+test mod to get min STR + stat for CheckStatGT
+too lazy to add to weapontypes.tph
+*/
+
+
+//get stats for CheckStatGT (1 less than min STR)
+ACTION_PHP_EACH d2_weapontype_res AS type => res BEGIN
+  COPY_EXISTING - ~%res%.itm~  ~~
+    READ_SHORT 0x26 str
+    SET EVAL ~%type%_str~  = str
+  IF_EXISTS
+END
+
+ACTION_PHP_EACH d2_weapontype_res AS type => res BEGIN
+  ACTION_IF (IS_AN_INT EVAL ~%%type%_str%~) BEGIN
+    OUTER_SPRINT str  EVAL ~%%type%_str%~
+//    PRINT ~%type% min STR is: %str%~
+    OUTER_SET EVAL ~%type%_strcheck~ = str - 1
+  END
+END
+
+/*
+ACTION_PHP_EACH d2_weapontype_res AS type => res BEGIN
+  ACTION_IF (IS_AN_INT EVAL ~%%type%_strcheck%~) BEGIN
+    OUTER_SPRINT stat  EVAL ~%%type%_strcheck%~
+    PRINT ~%type% check is: %stat%~
+  END
+END
+*/
+
+
+//
+//

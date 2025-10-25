@@ -1,0 +1,18 @@
+//
+//
+
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	OR(2)
+		HasItem("%staff%",Player1)
+		!Exists(Player1)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("d2Player1equip","GLOBAL",6)
+		Continue()
+END
+
+
+/*
+*/

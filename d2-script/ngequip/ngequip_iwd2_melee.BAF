@@ -1,0 +1,309 @@
+//
+//
+
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,FIGHTER)
+	!HasItem("%halberd%",Player1)
+	!HasItem("%flail%",Player1)
+	!HasItem("%scimitar%",Player1)
+	!HasItem("%greatsword%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%halberd%",Player1,0,0,0)    // halberd
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%flail%",Player1,0,0,0)    // flail
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%scimitar%",Player1,0,0,0)    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%greatsword%",Player1,0,0,0)    // greatsword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,RANGER)
+	!HasItem("%scimitar%",Player1)
+	!HasItem("%handaxe%",Player1)
+	!HasItem("%flail%",Player1)
+	!HasItem("%dagger%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%scimitar%",Player1,0,0,0)    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%handaxe%",Player1,0,0,0)    // handaxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%flail%",Player1,0,0,0)    // flail
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%dagger%",Player1,0,0,0)    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,PALADIN)
+	!HasItem("%longsword%",Player1)
+	!HasItem("%hammer%",Player1)
+	!HasItem("%morningstar%",Player1)
+	!HasItem("%halberd%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%longsword%",Player1,0,0,0)    // long sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%hammer%",Player1,0,0,0)    // hammer
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%morningstar%",Player1,0,0,0)    // morningstar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%halberd%",Player1,0,0,0)    // halberd
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,BARBARIAN)
+	!HasItem("%greatsword%",Player1)
+	!HasItem("%greataxe%",Player1)
+	!HasItem("%spear%",Player1)
+	!HasItem("%hammer%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%greatsword%",Player1,0,0,0)    // greatsword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%greataxe%",Player1,0,0,0)    // greataxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%spear%",Player1,0,0,0)    // spear
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%hammer%",Player1,0,0,0)    // hammer
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,MONK)
+	!HasItem("%handaxe%",Player1)
+	!HasItem("%morningstar%",Player1)
+	!HasItem("%staff%",Player1)
+	!HasItem("%greataxe%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%handaxe%",Player1,0,0,0)    // handaxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%morningstar%",Player1,0,0,0)    // morningstar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%staff%",Player1,0,0,0)    // staff
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%greataxe%",Player1,0,0,0)    // greataxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,CLERIC)
+	!HasItem("%mace%",Player1)
+	!HasItem("%morningstar%",Player1)
+	!HasItem("%shortsword%",Player1)
+	!HasItem("%staff%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%mace%",Player1,0,0,0)    // mace
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%morningstar%",Player1,0,0,0)    // morningstar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%shortsword%",Player1,0,0,0)    // short sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%staff%",Player1,0,0,0)    // staff
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,DRUID)
+	!HasItem("%scimitar%",Player1)
+	!HasItem("%spear%",Player1)
+	!HasItem("%staff%",Player1)
+	!HasItem("%club%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%scimitar%",Player1,0,0,0)    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%spear%",Player1,0,0,0)    // spear
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%staff%",Player1,0,0,0)    // staff
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%club%",Player1,0,0,0)    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,BARD)
+	!HasItem("%longsword%",Player1)
+	!HasItem("%shortsword%",Player1)
+	!HasItem("%mace%",Player1)
+	!HasItem("%dagger%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%longsword%",Player1,0,0,0)    // long sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%shortsword%",Player1,0,0,0)    // short sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%mace%",Player1,0,0,0)    // mace
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%dagger%",Player1,0,0,0)    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,ROGUE)
+	!HasItem("%dagger%",Player1)
+	!HasItem("%club%",Player1)
+	!HasItem("%shortsword%",Player1)
+	!HasItem("%morningstar%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%dagger%",Player1,0,0,0)    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%club%",Player1,0,0,0)    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%shortsword%",Player1,0,0,0)    // short sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%morningstar%",Player1,0,0,0)    // morningstar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,WIZARD)
+	!HasItem("%staff%",Player1)
+	!HasItem("%dagger%",Player1)
+	!HasItem("%club%",Player1)
+	!HasItem("%morningstar%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%staff%",Player1,0,0,0)    // staff
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%dagger%",Player1,0,0,0)    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%club%",Player1,0,0,0)    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%morningstar%",Player1,0,0,0)    // morningstar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,SORCERER)
+	!HasItem("%mace%",Player1)
+	!HasItem("%shortsword%",Player1)
+	!HasItem("%staff%",Player1)
+	!HasItem("%dagger%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%mace%",Player1,0,0,0)    // mace
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%shortsword%",Player1,0,0,0)    // short sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%staff%",Player1,0,0,0)    // staff
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%dagger%",Player1,0,0,0)    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+*/

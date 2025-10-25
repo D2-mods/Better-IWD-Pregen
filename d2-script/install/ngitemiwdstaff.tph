@@ -1,0 +1,67 @@
+/*
+for iwd1/iwd2 if using an exported CHR with no staff
+not needed for iwdee or iwd-in-bg2
+*/
+
+
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ngimportstaff","GLOBAL",1)
+	!GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player1)
+	!HasItem("%staff%",Player1)
+	!HasWeaponEquiped(Player1)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%staff%",Player1,0,0,0)
+		SetGlobal("d2Player1ngimportstaff","GLOBAL",1)
+		SetGlobalTimer("d2Player1equip","GLOBAL",6)    // keep for iwd2 (need testing with iwd1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ngimportstaff","GLOBAL",1)
+	OR(2)
+		!Exists(Player1)
+		HasWeaponEquiped(Player1)
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1ngimportstaff","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/slot1.BAF~
+  EVALUATE_BUFFER
+  PATCH_IF !(GAME_IS ~iwd2~) BEGIN
+//    REPLACE_TEXTUALLY ~SetGlobalTimer~  ~//~
+    SPRINT match  ~SetGlobalTimer("d2Player1equip~    // has issues with iwd1
+    SPRINT string  ~SetGlobalTimer("d2ngitemsdelay~    // delay journal entry (needed if "equip" variable is removed)
+    REPLACE_TEXTUALLY EXACT_MATCH  ~%match%~ ~%string%~
+  END
+COPY - ~inlined/slot1.BAF~ ~inlined/slot2.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player2~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot3.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player3~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot4.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player4~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot5.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player5~
+COPY - ~inlined/slot1.BAF~ ~inlined/slot6.BAF~  REPLACE_TEXTUALLY ~Player1~ ~Player6~
+
+COPY - ~inlined/slot1.BAF~  ~inlined/staffcheck.BAF~
+  APPEND_FILE TEXT ~inlined/slot2.BAF~
+  APPEND_FILE TEXT ~inlined/slot3.BAF~
+  APPEND_FILE TEXT ~inlined/slot4.BAF~
+  APPEND_FILE TEXT ~inlined/slot5.BAF~
+  APPEND_FILE TEXT ~inlined/slot6.BAF~
+
+
+//
+ACTION_IF (GAME_IS ~iwd how totlm~) BEGIN
+  EXTEND_TOP ~ar1006.BCS~  ~inlined/staffcheck.BAF~
+END
+
+ACTION_IF (GAME_IS ~iwd2~) BEGIN
+  EXTEND_TOP ~ar1000.BCS~  ~inlined/staffcheck.BAF~
+//  EXTEND_TOP ~baldur.BCS~  ~inlined/staffcheck.BAF~
+END
+
+
+//
+//

@@ -1,6 +1,6 @@
 BACKUP ~weidu_external/backup/d2-script~
 AUTHOR ~Dan_P~
-VERSION ~7.21~
+VERSION ~8.0~
 AUTO_EVAL_STRINGS
 
 ALWAYS
@@ -66,7 +66,7 @@ INCLUDE ~%install%/d2scrpinstall.tph~
 
 BEGIN @10201    // Use Revised script for nymph summon
 DESIGNATED 20
-REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~NYMPHSU.CRE~) @50
+REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~NYMPHSU.CRE~) ~Game not supported~
 SUBCOMPONENT @10200
 LABEL ~D2-SCRIPT-NYMPH~
 INCLUDE ~%install%/nymph.tph~
@@ -82,7 +82,7 @@ INCLUDE ~%install%/nymphlight.tph~
 
 BEGIN @1
 DESIGNATED 9999
-REQUIRE_COMPONENT ~d2-script.tp2~ 10 @50
+REQUIRE_COMPONENT ~d2-script.tp2~ 10 ~~
 SUBCOMPONENT @9999
 LABEL ~D2-SCRIPT-NGAUTO~
 OUTER_TEXT_SPRINT ngauto  ~d2scrp~     // Better IWD Pregen (d2scrp)
@@ -116,7 +116,7 @@ INCLUDE ~%install%/ngauto.tph~
 
 BEGIN @40101    // enemies don't do extra damage
 DESIGNATED 30
-REQUIRE_PREDICATE (GAME_IS ~iwd how totlm iwd2~) @50
+REQUIRE_PREDICATE (GAME_IS ~iwd how totlm iwd2~) ~Game not supported~
 SUBCOMPONENT @40100
 LABEL ~D2-TWEAKS-SUPPRESSDAMAGE1~
 OUTER_SET suppressdamage = 1
@@ -134,7 +134,7 @@ INCLUDE ~%install%/suppressdamage.tph~
 
 BEGIN @40201    // add Avarine Decanter
 DESIGNATED 40
-REQUIRE_PREDICATE (GAME_IS ~iwd2~) @50
+REQUIRE_PREDICATE (GAME_IS ~iwd2~) ~Game not supported~
 SUBCOMPONENT @40200
 LABEL ~D2-TWEAKS-NYMBONUS1~
 OUTER_SET decanter = 1
@@ -152,7 +152,7 @@ INCLUDE ~%install%/id2decanter.tph~
 
 BEGIN @40301    // Use unnerfed Animate Dead
 DESIGNATED 50
-REQUIRE_PREDICATE (GAME_IS ~iwd2~) @50
+REQUIRE_PREDICATE (GAME_IS ~iwd2~) ~Game not supported~
 REQUIRE_PREDICATE !(MOD_IS_INSTALLED ~iwd2ee.tp2~ 2) ~~
 SUBCOMPONENT @40300
 LABEL ~D2-TWEAKS-ID2ANIMATEDEAD17~
@@ -172,7 +172,7 @@ INCLUDE ~%install%/id2animatedead.tph~
 
 BEGIN @40401    // Bypass Free Action
 DESIGNATED 60
-REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc iwd how totlm iwd2 pst pstee~) @50
+REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc iwd how totlm iwd2 pst pstee~) ~Game not supported~
 SUBCOMPONENT @40400
 LABEL ~D2-TWEAKS-PLYMOVEBONUS1~
 OUTER_SET polymove = 1
@@ -190,7 +190,7 @@ INCLUDE ~%install%/polymorphmove.tph~
 
 BEGIN @40501    // for Druids and Polymorph Self
 DESIGNATED 70
-REQUIRE_PREDICATE (GAME_IS ~iwdee iwd how totlm~) @50
+REQUIRE_PREDICATE (GAME_IS ~iwdee iwd how totlm~) ~Game not supported~
 SUBCOMPONENT @40500
 LABEL ~D2-TWEAKS-FASTERDRUIDS1~
 OUTER_SET fasterdruids = 1
@@ -210,7 +210,7 @@ INCLUDE ~%install%/id1fasterdruids.tph~
 
 BEGIN @41801    // for Druids and Polymorph spells
 DESIGNATED 200
-REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc iwd how totlm iwd2 pst pstee~) @50
+REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc iwd how totlm iwd2 pst pstee~) ~Game not supported~
 SUBCOMPONENT @41800
 LABEL ~D2-TWEAKS-POLYMORPHTALK1~
 OUTER_SET polytalk = 1
@@ -254,18 +254,22 @@ INCLUDE ~%install%/polymorphtalk.tph~
 
 BEGIN @40601    // Items are auto-equipped or added to inventory
 DESIGNATED 80
-REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 iwd how totlm iwd_in_bg2 ca~) @50
+REQUIRE_PREDICATE (GAME_IS ~iwdee iwd2 iwd how totlm iwd_in_bg2 ca bgee eet bgt tutu tutu_totsc~) ~Game not supported~
 SUBCOMPONENT @40600
 LABEL ~D2-TWEAKS-NGEQUIP~
-INCLUDE ~%install%/ngequip.tph~
+OUTER_SET ngstartmode = 1
+//INCLUDE ~%install%/ngequip2.tph~
+INCLUDE ~%install%/install80.tph~
 INCLUDE ~%install%/tofavatarfix.tph~
 
 BEGIN @40602    // Start with a bag, containing a mix of weapons
-REQUIRE_PREDICATE !(GAME_IS ~iwd~) @50
+REQUIRE_PREDICATE !(GAME_IS ~iwd~) ~~
 SUBCOMPONENT @40600
 LABEL ~D2-TWEAKS-NGITEMBAG~
+OUTER_SET ngstartmode = 2
 OUTER_SET capacity = 1
-INCLUDE ~%install%/ngitembag.tph~
+//INCLUDE ~%install%/ngitembag2.tph~
+INCLUDE ~%install%/install80.tph~
 INCLUDE ~%install%/tofavatarfix.tph~
 
 ////////////////////////////////////////////////////////////
@@ -274,7 +278,7 @@ INCLUDE ~%install%/tofavatarfix.tph~
 
 BEGIN @40701    // "Bottomless" bag (same as Tweaks Anthology component)
 DESIGNATED 90
-REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc iwd pst~) @50
+REQUIRE_PREDICATE !(GAME_IS ~bg1 totsc iwd pst~) ~Game not supported~
 SUBCOMPONENT @40700
 LABEL ~D2-TWEAKS-NGBAGA~
 OUTER_SET capacity = 1
@@ -311,7 +315,7 @@ INCLUDE ~%install%/ngbag_biff.tph~    // for pstee
 BEGIN @40801    // 2E-style HP bonuses (i.e. BG-style)
 DESIGNATED 100
 REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR (GAME_INCLUDES ~bg2~) OR
-                   (GAME_INCLUDES ~iwd~) OR (GAME_IS ~pst pstee ca~ )) @50
+                   (GAME_INCLUDES ~iwd~) OR (GAME_IS ~pst pstee ca~ )) ~Game not supported~
 SUBCOMPONENT @40800
 LABEL ~D2-TWEAKS-CONBON2E~
 OUTER_TEXT_SPRINT style ~2e~
@@ -364,7 +368,7 @@ INCLUDE ~%install%/stackableitems2.tph~
 
 BEGIN @41001    // Can Sneak Attack a target once every 6 seconds (stat reduction does not stack)
 DESIGNATED 120
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @50
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
 SUBCOMPONENT @41000
 LABEL ~D2-TWEAKS-CRIPPSTR6~
 OUTER_SET new_dur = 6
@@ -387,7 +391,7 @@ INCLUDE ~%install%/crippstr16.tph~
 
 BEGIN @41101    // all salamanders, hits enemies only (relative to caster)
 DESIGNATED 130
-REQUIRE_PREDICATE (GAME_IS ~iwdee~) @50
+REQUIRE_PREDICATE (GAME_IS ~iwdee~) ~Game not supported~
 SUBCOMPONENT @41100
 LABEL ~D2-TWEAKS-SALAURA1~
 OUTER_SET salamanders = 1
@@ -453,8 +457,8 @@ INCLUDE ~%install%/salamanders.tph~
 
 BEGIN @41201    // all
 DESIGNATED 140
-//REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @50
-REQUIRE_PREDICATE !(GAME_IS ~pst~) @50
+//REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
+REQUIRE_PREDICATE !(GAME_IS ~pst~) ~Game not supported~
 SUBCOMPONENT @41200
 LABEL ~D2-TWEAKS-SPELLTWEAKS1~
 OUTER_SET spelltweaks = 1
@@ -518,7 +522,7 @@ INCLUDE ~%install%/spelltweaks.tph~
 
 BEGIN @41301    // Use at will, and reduce duration to 5 rounds (30 seconds)
 DESIGNATED 150
-REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR (GAME_INCLUDES ~bg2~)) @50
+REQUIRE_PREDICATE ((GAME_INCLUDES ~bg1~) OR (GAME_INCLUDES ~bg2~)) ~Game not supported~
 REQUIRE_PREDICATE !(FILE_EXISTS ~override/c0tbma.SPL~) @41360    // skip if detected Minsc kit (Artisan's Kitpack)
 SUBCOMPONENT @41300
 LABEL ~D2-TWEAKS-MINSCRAGE30~
@@ -552,7 +556,7 @@ INCLUDE ~%install%/minscrage0.tph~
 
 BEGIN @41401    // Yes
 DESIGNATED 160
-REQUIRE_PREDICATE (GAME_IS ~iwdee iwd_in_bg2~) @50
+REQUIRE_PREDICATE (GAME_IS ~iwdee iwd_in_bg2~) ~Game not supported~
 SUBCOMPONENT @41400
 LABEL ~D2-TWEAKS-IWDSHORTBOWFIX~
 OUTER_SET patch_items = 1
@@ -570,7 +574,7 @@ INCLUDE ~%install%/iwdshortbowfix.tph~
 
 BEGIN @41501    // for all classes
 DESIGNATED 170
-REQUIRE_PREDICATE !(GAME_IS ~pst pstee~) @50
+REQUIRE_PREDICATE !(GAME_IS ~pst pstee~) ~Game not supported~
 SUBCOMPONENT @41500
 LABEL ~D2-TWEAKS-ALIGNMENTS1~
 OUTER_SET alignments = 1
@@ -606,8 +610,8 @@ INCLUDE ~%install%/alignments.tph~
 
 BEGIN @41601    // for both (paladins and rangers)
 DESIGNATED 180
-REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) @50
-REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~fallen.2da~) @50
+REQUIRE_PREDICATE (GAME_IS ~bgee bg2ee iwdee eet~) ~Game not supported~
+REQUIRE_PREDICATE (FILE_EXISTS_IN_GAME ~fallen.2da~) ~Game not supported~
 SUBCOMPONENT @41600
 LABEL ~D2-TWEAKS-NOFALLING1~
 OUTER_SET nofalling = 1

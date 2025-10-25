@@ -8,7 +8,11 @@ ITMs count as both druid and polymorph
 ACTION_IF !(IS_AN_INT d2polymorpharray) BEGIN
 ACTION_IF (IS_AN_INT mods && mods>0) BEGIN
 
+OUTER_SET d2polymorpharray = 1
+OUTER_SET printmode = 1
 
+
+PRINT ~scanning for spells not in preset list ... (this might take a while)~
 COPY_EXISTING_REGEXP - GLOB ~.*\.SPL~  ~~
   PATCH_IF (SOURCE_SIZE > 0x99) BEGIN    // skip if no headers
     SET check = 1
@@ -21,12 +25,14 @@ COPY_EXISTING_REGEXP - GLOB ~.*\.SPL~  ~~
     PATCH_IF (check > 0) BEGIN
       GET_OFFSET_ARRAY spl_headers  SPL_V10_HEADERS
       PHP_EACH spl_headers AS num => header_off BEGIN      // array of headers
-        GET_OFFSET_ARRAY2 spl_effects header_off SPL_V10_HEAD_EFFECTS
-        PHP_EACH spl_effects AS num => effect_off BEGIN    // array of effects on each header
-          PATCH_IF (shapeshift = 0) BEGIN
-            READ_SHORT effect_off opcode                   // opcode
-            PATCH_IF (opcode = 135) BEGIN  SET shapeshift = 1  END
-            PATCH_IF (opcode = 53) BEGIN  SET shapeshift = 1  END
+        PATCH_IF (shapeshift = 0) BEGIN
+          GET_OFFSET_ARRAY2 spl_effects header_off SPL_V10_HEAD_EFFECTS
+          PHP_EACH spl_effects AS num2 => effect_off BEGIN    // array of effects on each header
+            PATCH_IF (shapeshift = 0) BEGIN
+              READ_SHORT effect_off opcode                   // opcode
+              PATCH_IF (opcode = 135) BEGIN  SET shapeshift = 1  END
+              PATCH_IF (opcode = 53) BEGIN  SET shapeshift = 1  END
+            END
           END
         END
       END
@@ -37,10 +43,17 @@ COPY_EXISTING_REGEXP - GLOB ~.*\.SPL~  ~~
       PATCH_IF (spelltype = 1) BEGIN  SPRINT type ~polymorph~  END
       PATCH_IF (spelltype = 2) BEGIN  SPRINT type ~druidpoly~  END
       SPRINT $polymorphspells (~%SOURCE_RES%~) ~%type%~
+
+PATCH_IF printmode BEGIN
+  PATCH_PRINT ~detected animation change: %SOURCE_FILE%~
+  PATCH_SILENT
+END
+
     END
   END
 
 
+PRINT ~scanning for items not in preset list ...~
 COPY_EXISTING_REGEXP - GLOB ~.*\.ITM~  ~~
   PATCH_IF (SOURCE_SIZE > 0xa0) BEGIN    // skip if no effects
     SET check = 1
@@ -63,11 +76,17 @@ COPY_EXISTING_REGEXP - GLOB ~.*\.ITM~  ~~
     PATCH_IF (shapeshift > 0) BEGIN
       SPRINT type  ~druidpoly~
       SPRINT $polymorphitems (~%SOURCE_RES%~) ~%type%~
+
+PATCH_IF printmode BEGIN
+  PATCH_PRINT ~detected animation change: %SOURCE_FILE%~
+  PATCH_SILENT
+END
+
     END
   END
 
 
-OUTER_SET d2polymorpharray = 1
+VERBOSE
 
 END
 END

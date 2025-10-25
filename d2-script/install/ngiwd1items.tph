@@ -1,0 +1,323 @@
+/*
+inlined files:
+COPY - ~.../temp/blocks~  ~inlined/blunt.BAF~
+COPY - ~.../temp/blocks~  ~inlined/warrior.BAF~
+COPY - ~.../temp/blocks~  ~inlined/thief.BAF~
+COPY - ~.../temp/blocks~  ~inlined/ranged.BAF~
+*/
+
+
+//blunt
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1blunt","GLOBAL",1)
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player1)
+	OR(2)
+		NumItemsGT("%staff%",Player1,0)
+		CheckPartyAverageLevel(3,LESS_THAN)
+	!PartyHasItem("%flameoil%")
+	!PartyHasItem("%elfwine%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%flail%",%target%,0,0,0)    // flail
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%mace%",%target%,0,0,0)    // mace
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%morningstar%",%target%,0,0,0)    // morning star
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%club%",%target%,0,0,0)    // club
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%hammer%",%target%,0,0,0)    // hammer
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/blunt.BAF~
+
+
+//heavy
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1warrior","GLOBAL",1)
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player1)
+	OR(2)
+		NumItemsGT("%staff%",Player1,0)
+		CheckPartyAverageLevel(3,LESS_THAN)
+	!PartyHasItem("%flameoil%")
+	!PartyHasItem("%elfwine%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%greatsword%",%target%,0,0,0)    // greatsword
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%bastardsword%",%target%,0,0,0)    // bastard sword
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%halberd%",%target%,0,0,0)    // halberd
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%greataxe%",%target%,0,0,0)    // greataxe
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%throwingaxe%",%target%,5,0,0)    // throwing axe
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/warrior.BAF~
+
+
+//light
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1thief","GLOBAL",1)
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player1)
+	OR(2)
+		NumItemsGT("%staff%",Player1,0)
+		CheckPartyAverageLevel(3,LESS_THAN)
+	!PartyHasItem("%flameoil%")
+	!PartyHasItem("%elfwine%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%longsword%",%target%,0,0,0)    // long sword
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%scimitar%",%target%,0,0,0)    // scimitar
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%spear%",%target%,0,0,0)    // spear
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%shortsword%",%target%,0,0,0)    // short sword
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%dagger%",%target%,0,0,0)    // dagger
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/thief.BAF~
+
+
+//ranged
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Exists(Player1)
+	OR(2)
+		NumItemsGT("%staff%",Player1,0)
+		CheckPartyAverageLevel(3,LESS_THAN)
+	!PartyHasItem("%flameoil%")
+	!PartyHasItem("%elfwine%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%shortbow%",%target%,0,0,0)    // shortbow
+		GiveItemCreate("%arrow%",%target%,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%lightcrossbow%",%target%,0,0,0)    // crossbow
+		GiveItemCreate("%bolt%",%target%,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%sling%",%target%,0,0,0)    // sling
+		GiveItemCreate("%bullet%",%target%,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%throwingdagger%",%target%,10,0,0)    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%longbow%",%target%,0,0,0)    // longbow
+		GiveItemCreate("%arrow%",%target%,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/ranged.BAF~
+
+
+
+/*
+extra checks (less janky if run from area script)
+*/
+
+//always give a large sword
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2ngswordcheck","GLOBAL",1)
+	GlobalTimerExpired("d2Player1equip","GLOBAL")
+	Global("d2ngitemsplayer1","GLOBAL",1)
+	NumItemsGT("%staff%",Player1,0)
+	!PartyHasItem("%longsword%")
+	!PartyHasItem("%scimitar%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%longsword%",Player1,0,0,0)    // long sword
+		SetGlobal("d2ngswordcheck","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%scimitar%",Player1,0,0,0)    // scimitar
+		SetGlobal("d2ngswordcheck","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngswordcheck","GLOBAL",1)
+	OR(2)
+		PartyHasItem("%longsword%")
+		PartyHasItem("%scimitar%")
+THEN
+	RESPONSE #100
+		SetGlobal("d2ngswordcheck","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/swordcheck.BAF~
+  EVALUATE_BUFFER
+
+
+//always give a bow or crossbow (if 2+ PCs)
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2ngbowcheck","GLOBAL",1)
+	GlobalTimerExpired("d2Player2equip","GLOBAL")
+	Global("d2ngitemsplayer2","GLOBAL",1)
+	NumItemsGT("%staff%",Player2,0)
+	!PartyHasItem("%shortbow%")
+	!PartyHasItem("%lightcrossbow%")
+	!PartyHasItem("%longbow%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%shortbow%",Player2,0,0,0)    // shortbow
+		GiveItemCreate("%arrow%",Player2,40,0,0)
+		SetGlobal("d2ngbowcheck","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%lightcrossbow%",Player2,0,0,0)    // crossbow
+		GiveItemCreate("%bolt%",Player2,40,0,0)
+		SetGlobal("d2ngbowcheck","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%longbow%",Player2,0,0,0)    // longbow
+		GiveItemCreate("%arrow%",Player2,40,0,0)
+		SetGlobal("d2ngbowcheck","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngbowcheck","GLOBAL",1)
+	OR(3)
+		PartyHasItem("%shortbow%")
+		PartyHasItem("%lightcrossbow%")
+		PartyHasItem("%longbow%")
+THEN
+	RESPONSE #100
+		SetGlobal("d2ngbowcheck","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/bowcheck.BAF~
+  EVALUATE_BUFFER
+
+
+//always gives an axe or halberd (if 3+ PCs)
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2ngaxecheck","GLOBAL",1)
+	GlobalTimerExpired("d2Player3equip","GLOBAL")
+	Global("d2ngitemsplayer3","GLOBAL",1)
+	NumItemsGT("%staff%",Player3,0)
+	!PartyHasItem("%greataxe%")
+	!PartyHasItem("%throwingaxe%")
+	!PartyHasItem("%halberd%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%greataxe%",Player2,0,0,0)    // greataxe
+		SetGlobal("d2ngaxecheck","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%throwingaxe%",Player2,5,0,0)    // throwing axe
+		SetGlobal("d2ngaxecheck","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%halberd%",Player2,0,0,0)    // halberd
+		SetGlobal("d2ngaxecheck","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngaxecheck","GLOBAL",1)
+	OR(3)
+		PartyHasItem("%greataxe%")
+		PartyHasItem("%throwingaxe%")
+		PartyHasItem("%halberd%")
+THEN
+	RESPONSE #100
+		SetGlobal("d2ngaxecheck","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/axecheck.BAF~
+  EVALUATE_BUFFER
+
+
+//always give a flail or morning star (if 4+ PCs)
+<<<<<<<< .../temp/blocks
+IF
+	!Global("d2ngflailcheck","GLOBAL",1)
+	GlobalTimerExpired("d2Player4equip","GLOBAL")
+	Global("d2ngitemsplayer4","GLOBAL",1)
+	NumItemsGT("%staff%",Player4,0)
+	!PartyHasItem("%flail%")
+	!PartyHasItem("%morningstar%")
+THEN
+	RESPONSE #100
+		GiveItemCreate("%flail%",Player1,0,0,0)    // flail
+		SetGlobal("d2ngflailcheck","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%morningstar%",Player1,0,0,0)    // morning star
+		SetGlobal("d2ngflailcheck","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngflailcheck","GLOBAL",1)
+	OR(2)
+		PartyHasItem("%flail%")
+		PartyHasItem("%morningstar%")
+THEN
+	RESPONSE #100
+		SetGlobal("d2ngflailcheck","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/blocks~  ~inlined/flailcheck.BAF~
+  EVALUATE_BUFFER
+
+
+/*
+*/

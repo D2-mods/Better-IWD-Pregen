@@ -1,0 +1,106 @@
+//
+//
+
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%shortbow%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%shortbow%",Player1,45,TRUE)    // shortbow
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%lightcrossbow%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%lightcrossbow%",Player1,45,TRUE)    // light crossbow
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%sling%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%sling%",Player1,45,TRUE)    // sling
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%dart%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%dart%",Player1,45,TRUE)    // dart
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%throwingdagger%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%throwingdagger%",Player1,45,TRUE)    // throwing dagger
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%throwingaxe%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%throwingaxe%",Player1,45,TRUE)    // throwing axe
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%throwinghammer%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%throwinghammer%",Player1,45,TRUE)    // throwing hammer
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%compositebow%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%compositebow%",Player1,45,TRUE)    // composite shortbow
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1equipr","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	HasItem("%longbow%",Player1)
+THEN
+	RESPONSE #100
+		XEquipItem("%longbow%",Player1,45,TRUE)    // longbow
+		SetGlobal("d2Player1equipr","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+*/

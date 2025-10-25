@@ -1,0 +1,241 @@
+//
+//
+
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		Class(Player1,FIGHTER)
+		Class(Player1,PALADIN)
+	!HasItem("%shortbow%",Player1)
+	!HasItem("%lightcrossbow%",Player1)
+	!HasItem("%sling%",Player1)
+	!HasItem("%throwinghammer%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%shortbow%",Player1,0,0,0)    // shortbow
+		GiveItemCreate("%arrow%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%lightcrossbow%",Player1,0,0,0)    // light crossbow
+		GiveItemCreate("%bolt%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%sling%",Player1,0,0,0)    // sling
+		GiveItemCreate("%bullet%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%throwinghammer%",Player1,5,0,0)    // throwing hammer
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,RANGER)
+	!HasItem("%longbow%",Player1)
+	!HasItem("%compositebow%",Player1)
+	!HasItem("%sling%",Player1)
+	!HasItem("%throwingaxe%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%longbow%",Player1,0,0,0)    // longbow
+		GiveItemCreate("%arrow%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%compositebow%",Player1,0,0,0)    // composite shortbow
+		GiveItemCreate("%arrow%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%sling%",Player1,0,0,0)    // sling
+		GiveItemCreate("%bullet%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%throwingaxe%",Player1,5,0,0)    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,BARBARIAN)
+	!HasItem("%throwingaxe%",Player1)
+	!HasItem("%longbow%",Player1)
+	!HasItem("%sling%",Player1)
+	!HasItem("%throwinghammer%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%throwingaxe%",Player1,5,0,0)    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%longbow%",Player1,0,0,0)    // longbow
+		GiveItemCreate("%arrow%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%sling%",Player1,0,0,0)    // sling
+		GiveItemCreate("%bullet%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%throwinghammer%",Player1,5,0,0)    // throwing hammer
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,MONK)
+	!HasItem("%throwingaxe%",Player1)
+	!HasItem("%sling%",Player1)
+	!HasItem("%dart%",Player1)
+	!HasItem("%throwingdagger%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%throwingaxe%",Player1,5,0,0)    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%sling%",Player1,0,0,0)    // sling
+		GiveItemCreate("%bullet%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%dart%",Player1,40,0,0)    // dart
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%throwingdagger%",Player1,10,0,0)    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,ROGUE)
+	!HasItem("%compositebow%",Player1)
+	!HasItem("%lightcrossbow%",Player1)
+	!HasItem("%dart%",Player1)
+	!HasItem("%throwingdagger%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%compositebow%",Player1,0,0,0)    // composite shortbow
+		GiveItemCreate("%arrow%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%lightcrossbow%",Player1,0,0,0)    // light crossbow
+		GiveItemCreate("%bolt%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%dart%",Player1,40,0,0)    // dart
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%throwingdagger%",Player1,10,0,0)    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,DRUID)
+	!HasItem("%sling%",Player1)
+	!HasItem("%dart%",Player1)
+THEN
+	RESPONSE #50
+		GiveItemCreate("%sling%",Player1,0,0,0)    // sling
+		GiveItemCreate("%bullet%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #50
+		GiveItemCreate("%dart%",Player1,40,0,0)    // dart
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,WIZARD)
+	!HasItem("%lightcrossbow%",Player1)
+	!HasItem("%throwingdagger%",Player1)
+THEN
+	RESPONSE #50
+		GiveItemCreate("%lightcrossbow%",Player1,0,0,0)    // light crossbow
+		GiveItemCreate("%bolt%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #50
+		GiveItemCreate("%throwingdagger%",Player1,10,0,0)    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,CLERIC)
+	!HasItem("%sling%",Player1)
+	!HasItem("%lightcrossbow%",Player1)
+THEN
+	RESPONSE #50
+		GiveItemCreate("%sling%",Player1,0,0,0)    // sling
+		GiveItemCreate("%bullet%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #50
+		GiveItemCreate("%lightcrossbow%",Player1,0,0,0)    // light crossbow
+		GiveItemCreate("%bolt%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		Class(Player1,SORCERER)
+		Class(Player1,BARD)
+	!HasItem("%lightcrossbow%",Player1)
+	!HasItem("%sling%",Player1)
+	!HasItem("%dart%",Player1)
+	!HasItem("%throwingdagger%",Player1)
+THEN
+	RESPONSE #25
+		GiveItemCreate("%lightcrossbow%",Player1,0,0,0)    // light crossbow
+		GiveItemCreate("%bolt%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%sling%",Player1,0,0,0)    // sling
+		GiveItemCreate("%bullet%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%dart%",Player1,40,0,0)    // dart
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #25
+		GiveItemCreate("%throwingdagger%",Player1,10,0,0)    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+*/

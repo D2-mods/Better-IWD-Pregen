@@ -1,0 +1,95 @@
+//alt - not used
+//
+
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%lightcrossbow_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%lightcrossbow%",Player1,0,0,0)
+		XEquipItem("%lightcrossbow%",Player1,SLOT_WEAPON1,EQUIP)    // crossbow
+		GiveItemCreate("%bolt%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%longbow_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%longbow%",Player1,0,0,0)
+		XEquipItem("%longbow%",Player1,SLOT_WEAPON1,EQUIP)    // longbow
+		GiveItemCreate("%arrow%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%shortbow_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%shortbow%",Player1,0,0,0)
+		XEquipItem("%shortbow%",Player1,SLOT_WEAPON1,EQUIP)    // shortbow
+		GiveItemCreate("%arrow%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%sling_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%sling%",Player1,0,0,0)
+		XEquipItem("%sling%",Player1,SLOT_WEAPON1,EQUIP)    // sling
+		GiveItemCreate("%bullet%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%throwingdagger_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%throwingdagger%",Player1,10,0,0)
+//		XEquipItem("%throwingdagger%",Player1,SLOT_WEAPON1,EQUIP)    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%throwingaxe_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%throwingaxe%",Player1,5,0,0)
+//		XEquipItem("%throwingaxe%",Player1,SLOT_WEAPON1,EQUIP)    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%dart_prof%,0)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%dart%",Player1,40,0,0)
+		XEquipItem("%dart%",Player1,SLOT_WEAPON1,EQUIP)    // darts
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+
+/*
+*/

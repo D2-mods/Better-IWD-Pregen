@@ -1,0 +1,106 @@
+/*
+run after polymorpharrays.tph
+SPLs count as druid, or polymorph if spelltype is wizard
+ITMs count as both druid and polymorph
+*/
+
+
+ACTION_IF !(IS_AN_INT d2polymorpharray) BEGIN
+ACTION_IF (IS_AN_INT mods && mods>0) BEGIN
+
+OUTER_SET d2polymorpharray = 1
+OUTER_SET printmode = 0
+
+
+PRINT ~scanning for spells not in preset list ... (this might take a while)~
+SILENT
+ACTION_BASH_FOR ~override~ ~.*\.SPL$~ BEGIN
+  OUTER_SET check = 1
+  OUTER_SET shapeshift = 0
+  ACTION_PHP_EACH polymorphspells AS spell => array BEGIN
+    ACTION_IF (~%BASH_FOR_RES%~ STR_EQ ~%spell%~) BEGIN    // skip stuff already in array
+      OUTER_SET check = 0
+    END
+  END
+
+  ACTION_IF (check > 0) BEGIN
+    COPY - ~%BASH_FOR_FILESPEC%~  ~~
+      PATCH_IF (SOURCE_SIZE > 0x99) BEGIN    // skip if no headers
+        GET_OFFSET_ARRAY spl_headers  SPL_V10_HEADERS
+        PHP_EACH spl_headers AS num => header_off BEGIN      // array of headers
+          PATCH_IF (shapeshift = 0) BEGIN
+            GET_OFFSET_ARRAY2 spl_effects header_off SPL_V10_HEAD_EFFECTS
+            PHP_EACH spl_effects AS num2 => effect_off BEGIN    // array of effects on each header
+              PATCH_IF (shapeshift = 0) BEGIN
+                READ_SHORT effect_off opcode                   // opcode
+                PATCH_IF (opcode = 135) BEGIN  SET shapeshift = 1  END
+                PATCH_IF (opcode = 53) BEGIN  SET shapeshift = 1  END
+              END
+            END
+          END
+        END
+      END
+      PATCH_IF (shapeshift > 0) BEGIN
+        SPRINT type  ~druid~
+        READ_SHORT 0x1c spelltype
+        PATCH_IF (spelltype = 1) BEGIN  SPRINT type ~polymorph~  END
+        PATCH_IF (spelltype = 2) BEGIN  SPRINT type ~druidpoly~  END
+        SPRINT $polymorphspells (~%SOURCE_RES%~) ~%type%~
+
+PATCH_IF printmode BEGIN
+  PATCH_PRINT ~detected animation change: %SOURCE_FILE%~
+  PATCH_SILENT
+END
+
+      END
+    // end COPY
+  END
+END
+
+
+PRINT ~scanning for items not in preset list ...~
+SILENT
+ACTION_BASH_FOR ~override~ ~.*\.ITM$~ BEGIN
+  OUTER_SET check = 1
+  OUTER_SET shapeshift = 0
+  ACTION_PHP_EACH polymorphitems AS item => array BEGIN
+    ACTION_IF (~%BASH_FOR_RES%~ STR_EQ ~%item%~) BEGIN    // skip stuff already in array
+      OUTER_SET check = 0
+    END
+  END
+
+  ACTION_IF (check > 0) BEGIN
+    COPY - ~%BASH_FOR_FILESPEC%~  ~~
+      PATCH_IF (SOURCE_SIZE > 0xa0) BEGIN               // skip if no effects
+        GET_OFFSET_ARRAY itm_equip  ITM_V10_GEN_EFFECTS
+        PHP_EACH itm_equip AS num => equip_off BEGIN    // array of equipped effects
+          PATCH_IF (shapeshift = 0) BEGIN
+            READ_SHORT equip_off opcode                 // opcode
+            PATCH_IF (opcode = 135) BEGIN  SET shapeshift = 1  END
+            PATCH_IF (opcode = 53) BEGIN  SET shapeshift = 1  END
+          END
+        END
+      END
+      PATCH_IF (shapeshift > 0) BEGIN
+        SPRINT type  ~druidpoly~
+        SPRINT $polymorphitems (~%SOURCE_RES%~) ~%type%~
+
+PATCH_IF printmode BEGIN
+  PATCH_PRINT ~detected animation change: %SOURCE_FILE%~
+  PATCH_SILENT
+END
+
+      END
+    // end COPY
+  END
+END
+
+
+VERBOSE
+
+END
+END
+
+
+//
+//

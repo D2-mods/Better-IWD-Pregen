@@ -1,0 +1,142 @@
+/*
+Some classes prioritize certain weapons usable in the unmodded game.
+This helps avoid getting a weapon you can't equip (i.e. if a tweak combined weapon types).
+*/
+
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(3)
+		Class(Player1,THIEF)
+		Class(Player1,MAGE_THIEF)
+		Class(Player1,SHAMAN)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%shortbow_prof%,0)
+	CheckStatGT(Player1,%shortbow_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%shortbow%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%shortbow%",Player1,SLOT_WEAPON1,EQUIP))    // shortbow
+		ActionOverride(Player1,CreateItem("%arrow%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(4)
+		Class(Player1,THIEF)
+		Class(Player1,MAGE_THIEF)
+		Class(Player1,MONK)
+		Race(Player1,ELF)
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%longsword_prof%,0)
+	CheckStatGT(Player1,%longsword_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%longsword%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%longsword%",Player1,SLOT_WEAPON,EQUIP))    // long sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,DRUID)
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%scimitar_prof%,0)
+	CheckStatGT(Player1,%scimitar_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%scimitar%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%scimitar%",Player1,SLOT_WEAPON,EQUIP))    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(6)
+		Class(Player1,THIEF)
+		Class(Player1,MAGE_THIEF)
+		Class(Player1,DRUID)
+		Class(Player1,MONK)
+		Class(Player1,MAGE)
+		Kit(Player1,BEASTMASTER)
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%club_prof%,0)
+	CheckStatGT(Player1,%club_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%club%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%club%",Player1,SLOT_WEAPON,EQUIP))    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	!Global("d2Player1staff","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(6)
+		Class(Player1,THIEF_ALL)
+		Class(Player1,CLERIC_ALL)
+		Class(Player1,DRUID)
+		Class(Player1,MONK)
+		Class(Player1,MAGE)
+		Kit(Player1,BEASTMASTER)
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	ProficiencyGT(Player1,%staff_prof%,0)
+	CheckStatGT(Player1,%staff_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%staff%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%staff%",Player1,SLOT_WEAPON,EQUIP))    // staff
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(5)
+		Class(Player1,CLERIC_ALL)
+		Class(Player1,DRUID_ALL)
+		Class(Player1,MAGE)
+		Class(Player1,MONK)
+		Race(Player1,HALFLING)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%sling_prof%,0)
+	CheckStatGT(Player1,%sling_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%sling%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%sling%",Player1,SLOT_WEAPON1,EQUIP))    // sling
+		ActionOverride(Player1,CreateItem("%bullet%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(3)
+		Class(Player1,FIGHTER_ALL)
+		Class(Player1,PALADIN)
+		Race(Player1,HALFORC)
+	!Class(Player1,CLERIC_ALL)
+	!Class(Player1,DRUID_ALL)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%heavycrossbow_prof%,0)
+	CheckStatGT(Player1,%heavycrossbow_strcheck%,36)
+	RandomNumGT(20,10)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%heavycrossbow%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%heavycrossbow%",Player1,SLOT_WEAPON1,EQUIP))    // heavy crossbow
+		ActionOverride(Player1,CreateItem("%bolt%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+
+/*
+*/

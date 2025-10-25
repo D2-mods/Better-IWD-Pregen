@@ -13,6 +13,10 @@ END
 
 COPY ~%ngbag%/ngbagD.BAM~ ~override/d2#ngbag.BAM~
 
+
+//skip to bottom if installed after IWD Starting items - bag option
+ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
+
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
@@ -51,7 +55,6 @@ END
 ////////////////////////////////////////////////////////////
 
 ACTION_IF (GAME_IS ~iwdee~) BEGIN
-ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
   COPY ~%ngbag%/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
@@ -68,7 +71,6 @@ ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TW
     END
   END
 
-END
 END
 
 ////////////////////////////////////////////////////////////
@@ -93,7 +95,10 @@ END
 
 ////////////////////////////////////////////////////////////
 
-//IWDEE - Patches existing bag if already added
+END   // end of IWD weapon bag check
+
+
+//IWD weapon bag - Patches existing bag if already added
 
 ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWEAKS-NGITEMBAG~)) BEGIN
 
@@ -102,6 +107,7 @@ ACTION_IF (MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TWE
   // end COPY
 
   COPY_EXISTING ~d2#ngbak.ITM~ ~override/d2#ngbag.ITM~    // revert edits to item file
+    SAY UNIDENTIFIED_DESC @734
     SAY DESC @734
     WRITE_ASCII 0x3a ~d2#ngbag~ #8    // set inventory icon
   // end COPY

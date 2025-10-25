@@ -102,11 +102,21 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 
 
 //
-//IWD auto-equip messages
-@1010 = ~The party has been given starting weapons. All items are equipped or in the inventories.~
-@1011 = ~The party has been given starting weapons. All items can be found in the inventories.~
-@1012 = ~The party has been given starting weapons. Save and reload to update the quick icons.~
-@1013 = ~The party has been given starting weapons. Weapons must be re-equipped to update the quick icons.~
+//IWD auto-equip messages (note: scripting paused issue was fixed)
+@1010 = ~The party has gained starting items! Save and reload if scripting was paused (i.e. weapons are missing).~
+@1011 = ~The party has gained starting items!~
+@1012 = ~The party has gained starting items! Save and reload or re-equip weapons to update the quick icons.~
+@1013 = ~The party has gained starting items! Weapons must be re-equipped to update the quick icons.~
+@1014 = ~We're ready to head off! In our preparations we took only our best weapons and pooled our remaining gold. We even managed to gather enough Worn Garments for everyone.~
+@1015 = ~I finally arrived at the town! I needed to travel lightly so I brought only my best weapons and remaining gold.~
+
+//bg1 entries (needs title for BGEE popup)
+@1016 = ~We're ready to head off!
+
+In our preparations we took only our best weapons and pooled our remaining gold. We even managed to gather enough Worn Garments for everyone.~
+@1017 = ~I'm finally ready to head out!
+
+I should travel lightly so I'll take only my best weapons and remaining gold.~
 
 
 
@@ -206,8 +216,8 @@ WARNING: At higher levels, the Zombie Lords and Festering Drowned Dead summoned 
 STATISTICS:
 
 Equipped abilities:
-– Fire Resistance: +3%
-– Cold Resistance: +3%
+– Fire Resistance: +5%
+– Cold Resistance: +5%
 
 Weight: 3~
 
@@ -215,8 +225,8 @@ Weight: 3~
 
 STATISTICS:
 
-Fire Resistance:  +3% bonus
-Cold Resistance:  +3% bonus
+Fire Resistance:  +5% bonus
+Cold Resistance:  +5% bonus
 Weight:  3
 Not usable by:~
 

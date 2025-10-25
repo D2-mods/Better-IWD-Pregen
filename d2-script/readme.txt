@@ -5,7 +5,7 @@ Supports: classic and EE versions of BG1, BG2, IWD1, and IWD2 (including EET/BGT
 
 --
 
-A minimalist script and tweak pack for Infinity Engine games. This mod was started as an attempt to make an improved version of the "IWD Pregen" party AI script from Icewind Dale: Enhanced Edition.
+A minimalist script and tweak pack for Infinity Engine games. This mod was started as an attempt to make an improved version of the IWD Pregen party AI script from Icewind Dale: Enhanced Edition.
 
 - See GitHub page for additional info on scripts and tweaks.
 - This mod supports any mods using the engines of supported games.
@@ -13,13 +13,26 @@ A minimalist script and tweak pack for Infinity Engine games. This mod was start
 
 --
 
-Update notes:
+Recent updates:
 - added PSTEE support for several tweaks
-- added Misc spell tweaks component (see components section)
+- added Misc spell tweaks component (see GitHub readme)
 - added "Make items stackable to 999" (weapons and magic items optional)
 - added Shapeshifts can talk (EEs, BG2)
 
-NOTE: Generalized Biffing is not required for PSTEE. The bag from this mod will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas, creatures, or stores.
+PSTEE note: Generalized Biffing is not required for PSTEE. The bag from this mod will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas or store files.
+
+--
+
+Updated IWD Starting items tweak (summary of major points):
+- now supports IWD1, IWD2, IWD:EE, IWD-in-BG2, IWD2:EE, Classic Adventures, Tutu, BGEE/EET/BGT (BG1 part only).
+- Scripting is now done for all PCs simultaneously instead of one at a time.
+- EEs/BG2 engine: autoequip option now accounts for mastery and specialization (up to 3+).
+- Autoequip option is now compatible with proficiency overhauls, install this mod after anything that changes proficiencies.
+- IWDEE: fixed the issue that could pause the scripting when starting a new game. (note: fix is only for this mod. If you see this issue with other mods, saving and reloading should fix it.)
+- better reliability on original BG2 engine (i.e. fixed issues that could prevent gaining items).
+- Bag option: adjusted item order, added a couple items that were previously intentionally left out (ex. heavy crossbow).
+- accounts for some additional mod items if detected (rr shortbows, project javelin).
+- added journal entry, bug fixes, other improvements (better weapon mix for IWD1/IWD2, etc.).
 
 
 ==================================================
@@ -31,16 +44,16 @@ Script components:
 3. Auto-assign script to new characters
 
 Tweak components:
-1. Adjust enemy damage at higher difficulties (classic IWD, IWD2)
+1. Adjust enemy damage at higher difficulties (IWD1, IWD2)
 2. Add or remove Avarine Decanter (IWD2)
 3. Unnerf Animate Dead (IWD2)
 4. Shapeshift movement bonuses bypass Free Action (EEs, BG2)
 5. Increase movement speed of IWD shapeshifts (IWD1, IWDEE)
 6. Shapeshifts can talk (EEs, BG2)
-7. Give party starting equipment (IWD games)
-	- Option 1: Items are auto-equipped or added to inventory
-	- Option 2: Start with a bag, containing a mix of weapons
-8. Give party a Bag of Holding at game start (classic and EEs)
+7. Starting items tweak (all IWD games, BGEE/EET/BGT, Classic Adventures)
+	- Option 1: Autoequip or added to inventory
+	- Option 2: Weapon Sack (has at least one of each weapon type)
+8. Start with a Bag of Holding (classic and EEs)
 9. All classes get full HP bonuses from Constitution (classic and EEs)
 10. Make items stackable to 999 (classic and EEs)
 11. Reduce delay for Sneak Attacks + uncap Crippling Strike (EEs)
@@ -62,6 +75,10 @@ Additional info:
 - All components should be safe to install at end of order. If another mod says to install last, you can try it both ways.
 - If using tweaks from other mods that do similar things, whichever is installed last will usually be used.
 - All tweaks have at least 2 subcomponents. i.e. if you say to "install all components", it won't automatically install any tweaks.
+
+Notes on a few mods:
+- IWD2EE: This mod is safe to install before or after the IWD2EE compatibility patch.
+- EET_end: This mod is safe to install before or after EET_end. (basically, if SCS or another mod says to install after EET_end, you can install this mod after as well)
 
 
 ==================================================
@@ -123,9 +140,75 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v7.27 (v8.0)
+- added more installer feedback when scanning files.
+- fixed compatibility issues with Tutu/EasyTutu mod. (some strange design decisions were breaking things that work in BG2/BGT/Classic Adventures)
+- updated Stackable items tweak: it wasn't scanning .bcs files properly, most relevant scripting is in .dlg files so this was relatively minor.
+- Auto-assign script: now fixes SCRLEV.ids for iwd games again. This reverts change from v7.24 that removed the fix.
+- Stackable items tweak (non-EE games): fixed installer errors or warnings due to trying to decompile bsd scripts. These were popping up after the improved .bcs scanning.
+- IWD2EE note: fixed Starting items tweak being buggy with IWD2EE due to recent updates.
+- SoD note: if Starting items tweak is installed, this will make it so characters pregenerated at level 1 from the BG1 part gain SoD starting items when imported into SoD. (in the unmodded game, they are treated as already equipped)
+- Starting items tweak: accounts for some additional mod items if detected (rr shortbows, project javelin).
+- Spell damage tweaks: added additional checks for RoyalProtector's mods to avoid patching subspells used for on-hit damage.
+- Stackable items tweak should install much faster after SCS AI components now (tested with v35.21).
+
+v7.26
+fixes for IWD/BG1 Starting items tweak:
+- IWD2: fixed rangers possibly getting a bow paired with bolts instead of arrows.
+- BGEE/EET/BGT: it wasn't giving weapons or ammo for monks (requires a staff and monks don't start with one in these games).
+- BGEE/EET/BGT: Weapon Sack option did not include a staff in the bag.
+- IWD1/IWD2: fixed an issue (caused by recent update, not sure which one) that made it not give weapons or ammo when importing a character with an empty inventory.
+- fixed issues for some games when importing a CHR that already had a quarterstaff.
+- better start up speed for nonglobal mode (settings.ini), still slower than global mode but faster than before.
+- IWD2: weapon sack mode now removes starting staff and includes 1 in the bag (like all except iwd1).
+- iwdee/iwdification, added rng for greataxe or battle axe if you take axe prof with no weapon styles.
+- bgt: recently added quarterstaff checks were conflicting with bgt scripting. (was making bgt not give a melee weapon at the start of bg1)
+- iwd2: fixed minor but annoying issue where melee weapon would sometimes not get moved to quickslot if the imported CHR did not have a quarterstaff already.
+
+v7.25
+fixes for IWD/BG1 Starting items tweak:
+- EEs/BG2 engine: fixed edge case issue that could prevent a character with 11 or 12 STR from gaining a morning star if taking the flail/morning star prof.
+- fixed solo PC journal entry for BGT/Tutu/Classic Adventures. It was adding the IWD entry when starting BG1 (written as if you just arrived).
+- EEs/BG2 engine: fixed issue (wrong variable) that made the class-specific blocks not account for mastery/specialization.
+- EET/BGT note: the default "global" mode in settings.ini now mostly uses the area script instead of baldur.bcs. Other games still use baldur.bcs because it starts up faster on a new game. NOTE: summoning invisible CREs is still done by global script (combo of CRE + global/area script is fastest).
+- BGT: it was using an unset variable for something (made part of scripting be skipped).
+- BGT: scripting oversight was making it give the starting robe when starting a new game in BG2.
+
+v7.24
+- Starting items tweak now usable with BG1 games. Compatible with BGEE, EET, and BGT (also accounts for Tutu but haven't tested with it).
+- "Auto-assign script" component no longer fixes SCRLEV.ids for iwd1/iwd2. (info: The table is wrong in both games so the IDS names will be wrong. This mod works around it by using the script number directly.)
+- Starting items tweak (autoequip): Minor fix for last update (compat with prof overhauls). Some classes could still get a weapon they couldn't use (ex. a thief or monk with "Blunt" prof would not get a club). Now if a proficiency includes usable and unusable weapon types, they should always get a weapon usable for the class. (note: Some edge cases might get through, ie kits with weird restrictions.)
+- added a settings.ini file that lets you reduce global scripting with the IWD/BG1 Starting items component. This was really made for myself to test scripting methods but I left it in the release version if you want to use it.
+- the Worn Garment item from the Starting items component can now be purchased for cheap if you want extras for whatever reason. It's added to one store in each game in unlimited quantities.
+
+v7.23
+IWD Starting items tweak update (autoequip):
+- now compatible with proficiency revisions/overhauls, including "skills" mods that add non-weapon profs. This mod needs to be installed after any mod that changes proficiency categories. This is so it knows what prof number to use for each weapon. (This mod doesn't use a predetermined number, it scans the info for each weapon type at install time.)
+- can now start with ninjato, wakizashi, or morning star (previously, these were left out). Chance of starting with these is smaller than scimitar or flail. This will also adjust for prof revisions. Note that a druid will never start with these over scimitar (it can't use them).
+- IWDEE/BG2 engine: Autoequip option now also checks for mastery and specialization. Previously it was only checking if you had any points at all in the weapon. Weapons with more points have higher priority (up to 3+).
+- iwd1 (classic): updated the weapon mix for the autoequip option. Player1 will always start with 1 bladed weapon, 1 blunt weapon, and 1 ranged weapon (all randomized). Each additional PC adds 2 more weapons taken from arbitrary groupings (blade, blunt, heavy, ranged). It has to be randomizaed because you can't check profs in this game but it should (hopefully) give a better mix than before.
+- added a couple Flaming Oils, these are the weak 2d8 damage ones (not per character, 2 total with either install option).
+- also added a couple Elven healing wines (2d8 healing). Both potions are cheaper than normal so they won't sell for much.
+- added Strength checks, fixes an issue where if using a mod that combines weapon types, it could give you a weapon you didn't have the STR for.
+
+v7.22
+IWD Starting items tweak notes:
+- IWDEE: fixed issue where scripting would sometimes get interrupted at the start of IWDEE.
+- IWDEE: fixed an issue where if you clicked too fast and moved before the starting dialogue, the character would not get the starting robe.
+- IWDEE: fixed a possible issue with the bag option where the starting quarterstaff wasn't always being removed.
+- BG2 engine (Classic Adventures, IWD-in-BG2): fixed possible issues when starting with a single pregenerated character (sometimes failed to add weapons for various reasons).
+- Bag option: ammo stack sizes now adjusted by party size (20, 40, 60, or 80).
+- Journal entry now added as confirmation that items were added.
+- Worn Garment (starting armor) resists increased from +3% to +5%. (no change for IWD2)
+- Major changes internally with install files and script compiling.
+- Autoequip option: scripting now runs for all party members simultaneously instead of one at a time.
+- IWD2 (autoequip): adjusted possible starting weapons for some classes, every type is possible from at least 2 classes now. (note: bastard sword only available from bag option)
+- IWD-in-BG2: fixed greataxe being bugged (turns into pile of gold). NOTE: only the ones given by this component are fixed. (bug is only with regular greataxe, so it's not a huge issue)
+- Bag option: Adjusted item order, added some missing items (composite bow, heavy crossbow). For IWD2 the bag no longer has masterwork handaxe (it already has 3 other types of axes).
+
 v7.21
-- added missing weidu labels for a component (fixes an issue with Project Infinity).
-- minor adjustments for IWDification shapeshifts for relevant components, ex. polar bear moves similar speed as brown/black bear instead of slower.
+- added missing WeiDU LABELs for a component, i.e. so it can be detected by Project Infinity.
+- EEs: Installing "Shapeshift movement bonuses bypass Free Action" (both options) will now also check movement rates on IWDification shapeshifts. The animals will move similar speed to BG2 animals.
 
 v7.20
 - Added component: Shapeshifts can talk (EEs, BG2). This does not allow spellcasting, but you can talk to NPCs, merchants, etc.

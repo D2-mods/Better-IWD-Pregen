@@ -1,0 +1,134 @@
+//not used
+//
+
+
+//blunt
+IF
+	!Global("d2Player1blunt","GLOBAL",1)
+	!GlobalTimerExpired("d2Player1equip","GLOBAL")
+	NumItemsGT("%staff%",Player1,0)
+	RandomNumGT(20,10)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%flail%",%target%,0,0,0)    // flail
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%mace%",%target%,0,0,0)    // mace
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%morningstar%",%target%,0,0,0)    // morning star
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%club%",%target%,0,0,0)    // club
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%hammer%",%target%,0,0,0)    // hammer
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		Continue()
+END
+
+
+//warrior
+IF
+	!Global("d2Player1warrior","GLOBAL",1)
+	!GlobalTimerExpired("d2Player1equip","GLOBAL")
+	NumItemsGT("%staff%",Player1,0)
+	OR(2)
+		RandomNumLT(20,6)
+		RandomNumGT(20,15)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%greatsword%",%target%,0,0,0)    // greatsword
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%bastardsword%",%target%,0,0,0)    // bastard sword
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%halberd%",%target%,0,0,0)    // halberd
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%spear%",%target%,0,0,0)    // spear
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%throwingaxe%",%target%,5,0,0)    // throwing axe
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		Continue()
+END
+
+
+//thief
+IF
+	!Global("d2Player1thief","GLOBAL",1)
+	!GlobalTimerExpired("d2Player1equip","GLOBAL")
+	NumItemsGT("%staff%",Player1,0)
+	RandomNumLT(20,11)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%longsword%",%target%,0,0,0)    // long sword
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%scimitar%",%target%,0,0,0)    // scimitar
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%shortsword%",%target%,0,0,0)    // short sword
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%dagger%",%target%,0,0,0)    // dagger
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%throwingdagger%",%target%,10,0,0)    // throwing dagger
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		Continue()
+END
+
+
+//ranged
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	!GlobalTimerExpired("d2Player1equip","GLOBAL")
+	NumItemsGT("%staff%",Player1,0)
+	OR(2)
+		RandomNumGT(20,5)
+		RandomNumLT(20,16)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%shortbow%",%target%,0,0,0)    // shortbow
+		GiveItemCreate("%arrow%",%target%,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%crossbow%",%target%,0,0,0)    // crossbow
+		GiveItemCreate("%bolt%",%target%,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%sling%",%target%,0,0,0)    // sling
+		GiveItemCreate("%bullet%",%target%,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%dart%",%target%,40,0,0)    // dart
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #100
+		GiveItemCreate("%longbow%",%target%,0,0,0)    // longbow
+		GiveItemCreate("%arrow%",%target%,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+*/

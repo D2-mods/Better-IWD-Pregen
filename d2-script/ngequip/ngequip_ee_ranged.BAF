@@ -1,0 +1,101 @@
+//
+//
+
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%lightcrossbow_prof%,0)
+	CheckStatGT(Player1,%lightcrossbow_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%lightcrossbow%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%lightcrossbow%",Player1,SLOT_WEAPON1,EQUIP))    // crossbow
+		ActionOverride(Player1,CreateItem("%bolt%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%longbow_prof%,0)
+	CheckStatGT(Player1,%longbow_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%longbow%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%longbow%",Player1,SLOT_WEAPON1,EQUIP))    // longbow
+		ActionOverride(Player1,CreateItem("%arrow%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%shortbow_prof%,0)
+	CheckStatGT(Player1,%shortbow_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%shortbow%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%shortbow%",Player1,SLOT_WEAPON1,EQUIP))    // shortbow
+		ActionOverride(Player1,CreateItem("%arrow%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%sling_prof%,0)
+	CheckStatGT(Player1,%sling_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%sling%",0,0,0))
+		ActionOverride(Player1,XEquipItem("%sling%",Player1,SLOT_WEAPON1,EQUIP))    // sling
+		ActionOverride(Player1,CreateItem("%bullet%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%throwingdagger_prof%,0)
+	CheckStatGT(Player1,%throwingdagger_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%throwingdagger%",10,0,0))
+//		ActionOverride(Player1,XEquipItem("%throwingdagger%",Player1,SLOT_WEAPON1,EQUIP))    // throwing dagger
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%throwingaxe_prof%,0)
+	CheckStatGT(Player1,%throwingaxe_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%throwingaxe%",5,0,0))
+//		ActionOverride(Player1,XEquipItem("%throwingaxe%",Player1,SLOT_WEAPON1,EQUIP))    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	ProficiencyGT(Player1,%dart_prof%,0)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%dart%",40,0,0))
+		ActionOverride(Player1,XEquipItem("%dart%",Player1,SLOT_WEAPON1,EQUIP))    // darts
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+
+/*
+*/

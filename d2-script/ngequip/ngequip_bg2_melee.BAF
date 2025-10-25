@@ -1,0 +1,296 @@
+//
+//
+
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%ninjato_prof%)
+	CheckStatGT(Player1,%ninjato_strcheck%,36)
+	RandomNumGT(20,18)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%ninjato%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // ninjato
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%wakizashi_prof%)
+	CheckStatGT(Player1,%wakizashi_strcheck%,36)
+	RandomNumLT(20,3)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%wakizashi%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // wakizashi
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%katana_prof%)
+	CheckStatGT(Player1,%katana_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%katana%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // katana
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%bastardsword_prof%)
+	CheckStatGT(Player1,%bastardsword_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%bastardsword%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // bastard sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%greatsword_prof%)
+	CheckStatGT(Player1,%greatsword_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%greatsword%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // greatsword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%halberd_prof%)
+	CheckStatGT(Player1,%halberd_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%halberd%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // halberd
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+//rng for greataxe if no weapon styles
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%greataxe_prof%)
+	!CheckStatGT(Player1,0,112)    // shield
+	!CheckStatGT(Player1,0,113)    // single
+	!CheckStatGT(Player1,0,114)    // 2 weapon
+	CheckStatGT(Player1,%greataxe_strcheck%,36)
+	RandomNumGT(20,12)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%greataxe%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // greataxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+//rng for morning star (if paired with mace or flail)
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%morningstar_prof%)
+	CheckStatGT(Player1,%morningstar_strcheck%,36)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%morningstar%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // morning star
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%flail_prof%)
+	CheckStatGT(Player1,%flail_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%flail%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // flail
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%longsword_prof%)
+	CheckStatGT(Player1,%longsword_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%longsword%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // long sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%scimitar_prof%)
+	CheckStatGT(Player1,%scimitar_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%scimitar%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%hammer_prof%)
+	CheckStatGT(Player1,%hammer_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%hammer%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // hammer
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%mace_prof%)
+	CheckStatGT(Player1,%mace_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%mace%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // mace
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+//greataxe if 2 handed style
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%greataxe_prof%)
+	CheckStatGT(Player1,0,111)    // 2 handed style
+	CheckStatGT(Player1,%greataxe_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%greataxe%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // greataxe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%club_prof%)
+	CheckStatGT(Player1,%club_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%club%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	!Global("d2Player1staff","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%staff_prof%)
+	CheckStatGT(Player1,%staff_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%staff%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // staff
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%spear_prof%)
+	CheckStatGT(Player1,%spear_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%spear%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // spear
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%dagger_prof%)
+	CheckStatGT(Player1,%dagger_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%dagger%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // dagger
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%shortsword_prof%)
+	CheckStatGT(Player1,%shortsword_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%shortsword%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // short sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+
+//fallback if rng gave flail but str was 11 or 12
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%morningstar_prof%)
+	CheckStatGT(Player1,%morningstar_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%morningstar%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // morning star
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+//fallback if rng gave greataxe but str too low
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%axe_prof%)
+	CheckStatGT(Player1,%axe_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%axe%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // axe
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+
+/*
+*/

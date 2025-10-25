@@ -1,0 +1,48 @@
+//
+//
+
+
+IF
+	!Global("d2Player1robe","GLOBAL",1)
+//	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	!HasItem("%startrobe%",Player1)
+	OR(2)
+		NumItemsGT("%staff%",Player1,0)
+		CheckPartyAverageLevel(3,LESS_THAN)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%startrobe%",Player1,0,0,0)    // worn garment
+		SetGlobal("d2Player1robe","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1prep","GLOBAL",1)
+	OR(2)
+		GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+		GlobalTimerExpired("d2Player1equip","GLOBAL")
+THEN
+	RESPONSE #100
+		SetGlobal("d2Player1prep","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2ngitemsplayer1","GLOBAL",1)
+	GlobalTimerExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		NumItemsGT("%staff%",Player1,0)
+		PartyHasItem("%flameoil%")
+THEN
+	RESPONSE #100
+		SetGlobal("d2ngitemsplayer1","GLOBAL",1)
+		SetGlobal("d2Player1blunt","GLOBAL",1)
+		SetGlobal("d2Player1warrior","GLOBAL",1)
+		SetGlobal("d2Player1thief","GLOBAL",1)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+*/

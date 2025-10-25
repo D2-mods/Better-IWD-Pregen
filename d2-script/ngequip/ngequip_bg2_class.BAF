@@ -1,0 +1,139 @@
+//
+//
+
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		Class(Player1,THIEF)
+		Class(Player1,MAGE_THIEF)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%shortbow_prof%)
+	CheckStatGT(Player1,%shortbow_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%shortbow%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))    // shortbow
+		ActionOverride(Player1,CreateItem("%arrow%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(4)
+		Class(Player1,THIEF)
+		Class(Player1,MAGE_THIEF)
+		Class(Player1,MONK)
+		Race(Player1,ELF)
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%longsword_prof%)
+	CheckStatGT(Player1,%longsword_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%longsword%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // long sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Class(Player1,DRUID)
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%scimitar_prof%)
+	CheckStatGT(Player1,%scimitar_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%scimitar%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(6)
+		Class(Player1,THIEF)
+		Class(Player1,MAGE_THIEF)
+		Class(Player1,DRUID)
+		Class(Player1,MONK)
+		Class(Player1,MAGE)
+		Kit(Player1,BEASTMASTER)
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%club_prof%)
+	CheckStatGT(Player1,%club_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%club%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // club
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	!Global("d2Player1staff","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(6)
+		Class(Player1,THIEF_ALL)
+		Class(Player1,CLERIC_ALL)
+		Class(Player1,DRUID)
+		Class(Player1,MONK)
+		Class(Player1,MAGE)
+		Kit(Player1,BEASTMASTER)
+	!HasItemSlot(Player1,SLOT_WEAPON)
+	CheckStatGT(Player1,0,%staff_prof%)
+	CheckStatGT(Player1,%staff_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%staff%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON))    // staff
+		SetGlobal("d2Player1staff","GLOBAL",1)
+		SetGlobal("d2Player1melee","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(5)
+		Class(Player1,CLERIC_ALL)
+		Class(Player1,DRUID_ALL)
+		Class(Player1,MAGE)
+		Class(Player1,MONK)
+		Race(Player1,HALFLING)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%sling_prof%)
+	CheckStatGT(Player1,%sling_strcheck%,36)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%sling%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))    // sling
+		ActionOverride(Player1,CreateItem("%bullet%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(3)
+		Class(Player1,FIGHTER_ALL)
+		Class(Player1,PALADIN)
+		Race(Player1,HALFORC)
+	!Class(Player1,CLERIC_ALL)
+	!Class(Player1,DRUID_ALL)
+	!HasItemSlot(Player1,SLOT_WEAPON1)
+	CheckStatGT(Player1,0,%heavycrossbow_prof%)
+	CheckStatGT(Player1,%heavycrossbow_strcheck%,36)
+	RandomNumGT(20,10)
+THEN
+	RESPONSE #100
+		ActionOverride(Player1,CreateItem("%heavycrossbow%",0,0,0))
+		ActionOverride(Player1,FillSlot(SLOT_WEAPON1))    // heavy crossbow
+		ActionOverride(Player1,CreateItem("%bolt%",40,0,0))
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+END
+
+
+/*
+*/

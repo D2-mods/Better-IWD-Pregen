@@ -1,0 +1,119 @@
+//
+//
+
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Race(Player1,ELF)
+	!SubRace(Player1,ELF_DROW)
+	!SubRace(Player1,ELF_WILD)
+	!HasItem("%longsword%",Player1)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%longsword%",Player1,0,0,0)    // long sword
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1melee","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	OR(2)
+		SubRace(Player1,ELF_DROW)
+		SubRace(Player1,ELF_WILD)
+	!HasItem("%scimitar%",Player1)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%scimitar%",Player1,0,0,0)    // scimitar
+		SetGlobal("d2Player1melee","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Race(Player1,ELF)
+	!SubRace(Player1,ELF_DROW)
+	!HasItem("%longbow%",Player1)
+	RandomNumGT(20,9)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%longbow%",Player1,0,0,0)    // longbow
+		GiveItemCreate("%arrow%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	SubRace(Player1,ELF_DROW)
+	!HasItem("%compositebow%",Player1)
+	RandomNumGT(20,9)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%compositebow%",Player1,0,0,0)    // composite shortbow
+		GiveItemCreate("%arrow%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Race(Player1,DWARF)
+	OR(4)
+		Class(Player1,FIGHTER)
+		Class(Player1,RANGER)
+		Class(Player1,PALADIN)
+		Class(Player1,BARBARIAN)
+	!HasItem("%throwinghammer%",Player1)
+	!HasItem("%throwingaxe%",Player1)
+	RandomNumGT(20,14)
+THEN
+	RESPONSE #50
+		GiveItemCreate("%throwinghammer%",Player1,5,0,0)    // throwing hammer
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+	RESPONSE #50
+		GiveItemCreate("%throwingaxe%",Player1,5,0,0)    // throwing axe
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Race(Player1,HALFLING)
+	!Class(Player1,WIZARD)    // no missile feat
+	!HasItem("%sling%",Player1)
+	RandomNumGT(20,11)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%sling%",Player1,0,0,0)    // sling
+		GiveItemCreate("%bullet%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+IF
+	!Global("d2Player1ranged","GLOBAL",1)
+	GlobalTimerNotExpired("d2Player1equip","GLOBAL")
+	Race(Player1,GNOME)
+	!Class(Player1,DRUID)    // no crossbow feat
+	!HasItem("%lightcrossbow%",Player1)
+	RandomNumGT(20,11)
+THEN
+	RESPONSE #100
+		GiveItemCreate("%lightcrossbow%",Player1,0,0,0)    // light crossbow
+		GiveItemCreate("%bolt%",Player1,40,0,0)
+		SetGlobal("d2Player1ranged","GLOBAL",1)
+		Continue()
+END
+
+
+/*
+*/
