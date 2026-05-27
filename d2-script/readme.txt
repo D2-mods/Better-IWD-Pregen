@@ -140,6 +140,10 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v8.1
+- minor changes to spelltweaks.tph (Spell tweaks component)
+- IWDEE: items from this mod (Bag of holding and Worn Garment) will now have description images if using a UI mod that enables them for IWDEE.
+
 v7.27 (v8.0)
 - added more installer feedback when scanning files.
 - fixed compatibility issues with Tutu/EasyTutu mod. (some strange design decisions were breaking things that work in BG2/BGT/Classic Adventures)

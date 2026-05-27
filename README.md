@@ -276,8 +276,8 @@ Nymph AI script (Call Woodland Beings)
 - Preserves invisibility (won't attack or cast spells).
 - Cooldown hotkeys to delay spellcasting (B to enable, E to disable).
 
-Compatible with EEs and classic BG2 engine, including SCS.  
-Not compatible with atweaks PnP Fey (use option 2).
+> Compatible with EEs and classic BG2 engine, including SCS.  
+> Not compatible with atweaks PnP Fey (use option 2).
 
 --
 

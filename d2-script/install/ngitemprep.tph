@@ -213,9 +213,13 @@ OUTER_SPRINT startrobe  ~d2ngrobe~
 OUTER_SPRINT copy  ~startrobe~
 ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SPRINT copy  ~startrobeiwd2~  END
 
-//desc image for bg games
+//desc images
 OUTER_SPRINT descimage  ~CCLCK06~
 ACTION_IF (FILE_EXISTS_IN_GAME ~CCLCK09.bam~) BEGIN  OUTER_SPRINT descimage  ~CCLCK09~  END
+ACTION_IF (ee_game > 0) BEGIN
+  OUTER_SPRINT descimage  ~d2ngworn~
+  COPY ~%ngequip%/startrobedesc.bam~  ~override/%descimage%.bam~
+END
 
 OUTER_SPRINT desc  @712
 ACTION_IF (ee_game > 0) BEGIN  OUTER_SPRINT desc  @711  END
@@ -226,7 +230,7 @@ COPY ~%ngequip%/%copy%.itm~  ~override/%startrobe%.itm~
   SAY NAME1 @710 SAY UNIDENTIFIED_DESC ~%desc%~
   SAY NAME2 @710
   WRITE_ASCII 0x3a ~%startrobe%~ #8    // bam icon
-  PATCH_IF (GAME_IS ~bgee eet bgt tutu tutu_totsc ca~) BEGIN
+  PATCH_IF (ee_game>0 OR bg2_engine>0) BEGIN
     WRITE_ASCII 0x58 ~%descimage%~ #8
   END
   WRITE_LONG 0x34 3    // gold cost

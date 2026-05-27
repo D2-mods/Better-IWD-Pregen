@@ -106,7 +106,6 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
     PATCH_IF (iwd_classic>0 AND proj=311) BEGIN  SET patch_damage = 1  END    // iwd circle of blades
     PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^ZSTWT~) BEGIN  SET patch_damage = 0  END    // zs tweak (on hit damage)
     PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^ZSIPS2~) BEGIN  SET patch_damage = 0  END    // zs items (on hit damage)
-    PATCH_IF (FILE_EXISTS_IN_GAME ~%SOURCE_RES%.itm~) BEGIN  SET patch_damage = 0  END
 
 /*
     // exclusions (config.txt)
@@ -184,6 +183,11 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
       PATCH_IF (not_pst > 0) BEGIN
         PATCH_IF (proj = 98) BEGIN  SET stuncheck = 0  END    // ice storm in non-IWD lasts 4 rounds
         PATCH_IF (proj = 209) BEGIN  SET stuncheck = 0  END    // beholder blast in non-IWD
+      END
+      PATCH_IF (stuncheck > 0) BEGIN
+        PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.itm~  ~[^a-z^0-9^_]%SOURCE_RES%[^a-z^0-9^_]~) BEGIN
+          SET stuncheck = 0
+        END
       END
 
       PATCH_IF (hitstun>0 AND patch_spell>0 AND stuncheck>0) BEGIN

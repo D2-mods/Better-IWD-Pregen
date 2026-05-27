@@ -45,12 +45,20 @@ ACTION_IF !(MOD_IS_INSTALLED ~d2-script.tp2~ (ID_OF_LABEL ~d2-script.tp2~ ~D2-TW
 
 ////////////////////////////////////////////////////////////
 
+ACTION_IF (ee_game > 0) BEGIN
+  OUTER_SPRINT descimage  ~d2dbag~
+  COPY ~%ngbag%/eebagdesc.bam~  ~override/%descimage%.bam~
+END
+
+////////////////////////////////////////////////////////////
+
 //bgee, bg2ee
 
 ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN
   COPY ~%ngbag%/d2hbee1.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @730 WRITE_LONG 0x50 bg2_desc
     SAY NAME2 @730
+    WRITE_ASCII 0x58 ~%descimage%~ #8
 	
   COPY ~%ngbag%/d2hbee1.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */
@@ -91,6 +99,7 @@ ACTION_IF (GAME_IS ~iwdee~) BEGIN
   COPY ~%ngbag%/d2hbee0.ITM~ ~override/d2#ngbag.ITM~
     SAY NAME1 @720 SAY UNIDENTIFIED_DESC @721
     SAY NAME2 @730 WRITE_LONG 0x54 bg2_desc
+    WRITE_ASCII 0x58 ~%descimage%~ #8
 	
   COPY ~%ngbag%/d2hbee0.STO~ ~override/d2#ngbag.STO~
     SAY 0xc @730  /* Bag of Holding */

@@ -20,6 +20,7 @@ d2_immunity_spl_block         PATCH
 read_or_set_scriptname        PATCH
 read_or_set_areascript        PATCH
 hla_multiclass_minlevel       PATCH
+d2_cloneproj                  PATCH or ACTION
 */
 
 ////////////////////////////////////////////////////////////
@@ -649,6 +650,49 @@ DEFINE_PATCH_FUNCTION hla_multiclass_minlevel BEGIN
   END
   SET_2DA_ENTRIES_NOW ~hla_edits~ 3
   PRETTY_PRINT_2DA
+END
+
+////////////////////////////////////////////////////////////
+
+//add projectile + get number for ITM/SPL
+//can copy an existing projectile, or add from mod folder
+
+/*
+"copy" can be resource name or full file path
+"proj" is new resource name
+projnum is the projectile number for ITM/SPL fields
+*/
+
+DEFINE_ACTION_FUNCTION d2_cloneproj STR_VAR copy=~~ proj=~~ RET projnum BEGIN
+  OUTER_SET projnum = 1 + IDS_OF_SYMBOL (~projectl~ ~%copy%~)
+
+  ACTION_IF (FILE_EXISTS ~%copy%~) BEGIN
+      COPY - ~%copy%~  ~inlined/%proj%.pro~
+      ADD_PROJECTILE ~inlined/%proj%.pro~
+      OUTER_SET projnum = EVAL ~%proj%~
+  END ELSE ACTION_IF (projnum > 0) BEGIN
+      COPY_EXISTING - ~%copy%.pro~  ~inlined/%proj%.pro~
+      ADD_PROJECTILE ~inlined/%proj%.pro~
+      OUTER_SET projnum = EVAL ~%proj%~
+  END
+END
+
+DEFINE_PATCH_FUNCTION d2_cloneproj STR_VAR copy=~~ proj=~~ RET projnum BEGIN
+  SET projnum = 1 + IDS_OF_SYMBOL (~projectl~ ~%copy%~)
+
+  PATCH_IF (FILE_EXISTS ~%copy%~) BEGIN
+    INNER_ACTION BEGIN
+      COPY - ~%copy%~  ~inlined/%proj%.pro~
+      ADD_PROJECTILE ~inlined/%proj%.pro~
+      OUTER_SET projnum = EVAL ~%proj%~
+    END
+  END ELSE PATCH_IF (projnum > 0) BEGIN
+    INNER_ACTION BEGIN
+      COPY_EXISTING - ~%copy%.pro~  ~inlined/%proj%.pro~
+      ADD_PROJECTILE ~inlined/%proj%.pro~
+      OUTER_SET projnum = EVAL ~%proj%~
+    END
+  END
 END
 
 ////////////////////////////////////////////////////////////
