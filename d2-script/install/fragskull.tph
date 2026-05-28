@@ -1,0 +1,40 @@
+/*
+ees or bg2 engine, make clone of skull trap proj
+removes trap flags, this is in case a tweak adds "enemies only" flag
+a trap .PRO file with "enemies only" flag won't explode if shooting allies
+*/
+
+ACTION_IF (ee_game>0 OR bg2_engine>0) BEGIN
+ACTION_IF !(RESOURCE_CONTAINS ~d2tec05.itm~  ~d2tec~) BEGIN    // skip if d2-mira installed
+
+  OUTER_SPRINT frag  ~secret03~
+  OUTER_SPRINT skull  ~d2pfrag~
+  OUTER_SPRINT proj  ~trapskul~
+
+ACTION_IF (RESOURCE_CONTAINS ~projectl.ids~  ~%proj%~) BEGIN    // skip if d2-mira installed
+  ACTION_IF !(FILE_EXISTS_IN_GAME ~%skull%.pro~) BEGIN
+    COPY_EXISTING - ~spwi313.spl~ ~~  READ_SHORT 0x98 skull_proj
+    LOOKUP_IDS_SYMBOL_OF_INT proj ~projectl~ (skull_proj - 1)    // number is 1 less in projectl.ids
+
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%proj%.pro~) BEGIN
+      LAF d2_cloneproj STR_VAR copy=~%proj%~ proj=~%skull%~ RET projnum END
+
+      COPY_EXISTING ~%skull%.pro~ ~override~
+        WRITE_SHORT 0x200 (THIS BAND BNOT BIT2)
+        WRITE_SHORT 0x200 (THIS BAND BNOT BIT3)
+        WRITE_SHORT 0x200 (THIS | BIT6)
+      IF_EXISTS BUT_ONLY
+
+      COPY_EXISTING ~%frag%.itm~ ~override~
+        LPF ALTER_ITEM_HEADER INT_VAR projectile=projnum END
+      IF_EXISTS BUT_ONLY
+    END
+  END
+END
+
+END
+END
+
+
+//
+//

@@ -35,6 +35,9 @@ ACTION_IF (GAME_IS ~bgee bg2ee iwdee eet~) BEGIN
   END
 END
 
+//ees or bg2 - changed frag grenade proj to one without a trap effect
+INCLUDE ~%install%/fragskull.tph~
+
 
 
 //

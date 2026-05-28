@@ -141,8 +141,8 @@ IWD2 exe patch:
 Updates
 ==================================================
 v8.1
-- minor changes to spelltweaks.tph (Spell tweaks component)
 - IWDEE: items from this mod (Bag of holding and Worn Garment) will now have description images if using a UI mod that enables them for IWDEE.
+- bg2 (classic): fixed possible issue with "Damage party friendly" spell tweak on oBG2 engine. It was causing the Frag Grenade ammo from ToB to leave the skulls as traps if targeting allies/neutrals. This item will now use a separate projectile that's not a trap type.
 
 v7.27 (v8.0)
 - added more installer feedback when scanning files.
