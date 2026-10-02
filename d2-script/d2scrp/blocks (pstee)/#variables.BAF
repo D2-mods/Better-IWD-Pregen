@@ -1,0 +1,64 @@
+IF
+	HotKey(B)
+	Global("d2scrp_mode","LOCALS",0)
+	!ModalState(STEALTH)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,"%activate_cooldown%")
+		SetGlobal("d2autobattle","LOCALS",0)
+		SetGlobal("d2cooldown","LOCALS",1)
+		SetGlobal("d2scrp_mode","LOCALS",1)
+		Continue()
+END
+
+IF
+	HotKey(B)
+	Global("d2scrp_mode","LOCALS",1)
+	!ModalState(STEALTH)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,"%default_script%")
+		SetGlobal("d2autobattle","LOCALS",0)
+		SetGlobal("d2cooldown","LOCALS",0)
+		SetGlobal("d2scrp_mode","LOCALS",2)
+		Continue()
+END
+
+IF
+	HotKey(B)
+	Global("d2scrp_mode","LOCALS",2)
+	!ModalState(STEALTH)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,"%change_script%")
+		SetGlobal("d2scrp_mode","LOCALS",0)
+		Continue()
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",0)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!ModalState(STEALTH)
+	See([ENEMY])
+THEN
+	RESPONSE #100
+		Shout(YAY)
+		SetGlobal("d2autobattle","LOCALS",1)
+		Continue()
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	!ModalState(STEALTH)
+	!Detect([ENEMY])
+THEN
+	RESPONSE #100
+		Shout(400)
+		SetGlobal("d2autobattle","LOCALS",0)
+		Continue()
+END

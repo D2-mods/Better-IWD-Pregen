@@ -10,112 +10,92 @@ Use INT_VAR temp=1 for weapons in magical slot
 */
 
 
-//fire weapons
-ACTION_FOR_EACH mod_item IN
-//sod2bg2 (bg2)
-  ~dtkaxe03~
-  ~dtkbln2~
-  ~dtkstaf1~
-  ~dtkswd03~
-  ~dtkswd06~
-  ~dtkswd3a~
-  ~dtkswd6a~
-  ~dtkswd8~
-  ~dtkswd8a~
-  ~dtktdag1~
-  ~dtktdag2~
-  ~dtktdag3~
-  ~dtktdag4~
-  ~dtktdag5~
+ACTION_IF (ee_game>0 OR bg2_engine>0) BEGIN
 
-//forgotten armament (bg2)
-  ~MO1H01~
-  ~MO1H05~
-  ~MOHAL02~
-  ~MOHM02~
-  ~MOMS02~
 
-//Lava (IWD)
-  ~L#bbflai~
-  ~L#ffch~
-BEGIN
-  LAF d2_elemental_weapon_arrays STR_VAR item=~%mod_item%~ element=~fire~ RET_ARRAY d2fireweap END
+//scan items and determine elemental damage bonuses
+//fire, cold, acid, electrical
+
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2damagetypearray BEGIN
+  0 => crushing
+  1 => acid
+  2 => cold
+  4 => electrical
+  8 => fire
+  16 => piercing
+  32 => poison
+  64 => magic
+  128 => missile
+  256 => slashing
+  512 => magicfire
+  1024 => magiccold
+  2048 => stunning
 END
 
 
-//acid weapons
-ACTION_FOR_EACH mod_item IN
-//sod2bg2 (bg2)
-  ~dtkax1ha~
-  ~dtkax1hb~
-  ~dtkdag1~
-  ~dtkdag2~
-  ~dtkswd1b~
-  ~dtkswd1c~
-  ~dtkswda4~
-  ~dtkswda5~
-  ~dtktdag1~
-  ~dtktdag2~
-  ~dtktdag3~
-  ~dtktdag4~
-  ~dtktdag5~
+COPY_EXISTING_REGEXP - GLOB ~.*\.itm~  ~override~
 
-//forgotten armament (bg2)
-  ~MO1H05~
-  ~MOSP02~
+  PATCH_IF (SOURCE_SIZE > 0xd9) BEGIN    // big enough for at least one header + effect
 
-//Lava (IWD)
-  ~L#HASTA1~
-  ~L#iswo2~
-  ~L#KUPOT4~
-  ~L#KUTAL~
-  ~L#TSHB02~
-  ~L#ZBKATA~
-BEGIN
-  LAF d2_elemental_weapon_arrays STR_VAR item=~%mod_item%~ element=~acid~ RET_ARRAY d2acidweap END
+    READ_BYTE 0x74 headertype
+    READ_LONG 0x18 flags
+    SET droppable = flags & BIT2
+    SET displayable = flags & BIT3
+
+    PATCH_IF (headertype = 1) BEGIN
+      GET_OFFSET_ARRAY itm_headers  ITM_V10_HEADERS
+      PHP_EACH itm_headers AS num => header_off BEGIN                    // array of headers
+        PATCH_IF (num = 0) BEGIN                                         // only check header 1
+          GET_OFFSET_ARRAY2 itm_effects header_off ITM_V10_HEAD_EFFECTS
+          PHP_EACH itm_effects AS num => effect_off BEGIN                  // array of effects on header
+            READ_SHORT effect_off opcode                                 // opcode
+            PATCH_IF (opcode = 12) BEGIN
+
+  // determine damage type
+  SET dtype_off = effect_off + 0xa
+  READ_SHORT dtype_off dtype
+  PHP_EACH d2damagetypearray AS type => name BEGIN
+    PATCH_IF (dtype = type) BEGIN
+      PATCH_IF (droppable && displayable) BEGIN
+        PATCH_IF (~%name%~ STR_EQ ~fire~) BEGIN  SPRINT $d2_op12_damagetype (~%SOURCE_RES%~) ~%name%~  END
+        PATCH_IF (~%name%~ STR_EQ ~electrical~) BEGIN  SPRINT $d2_op12_damagetype (~%SOURCE_RES%~) ~%name%~  END
+        PATCH_IF (~%name%~ STR_EQ ~cold~) BEGIN  SPRINT $d2_op12_damagetype (~%SOURCE_RES%~) ~%name%~  END
+        PATCH_IF (~%name%~ STR_EQ ~acid~) BEGIN  SPRINT $d2_op12_damagetype (~%SOURCE_RES%~) ~%name%~  END
+        PATCH_IF (~%name%~ STR_EQ ~magicfire~) BEGIN  SPRINT $d2_op12_damagetype (~%SOURCE_RES%~) ~fire~  END
+        PATCH_IF (~%name%~ STR_EQ ~magiccold~) BEGIN  SPRINT $d2_op12_damagetype (~%SOURCE_RES%~) ~cold~  END
+      END ELSE BEGIN
+        PATCH_IF (~%name%~ STR_EQ ~fire~) BEGIN  SPRINT $d2_op12_damagetemp (~%SOURCE_RES%~) ~%name%~  END
+        PATCH_IF (~%name%~ STR_EQ ~electrical~) BEGIN  SPRINT $d2_op12_damagetemp (~%SOURCE_RES%~) ~%name%~  END
+        PATCH_IF (~%name%~ STR_EQ ~cold~) BEGIN  SPRINT $d2_op12_damagetemp (~%SOURCE_RES%~) ~%name%~  END
+        PATCH_IF (~%name%~ STR_EQ ~acid~) BEGIN  SPRINT $d2_op12_damagetemp (~%SOURCE_RES%~) ~%name%~  END
+        PATCH_IF (~%name%~ STR_EQ ~magicfire~) BEGIN  SPRINT $d2_op12_damagetemp (~%SOURCE_RES%~) ~fire~  END
+        PATCH_IF (~%name%~ STR_EQ ~magiccold~) BEGIN  SPRINT $d2_op12_damagetemp (~%SOURCE_RES%~) ~cold~  END
+      END
+      SPRINT $d2_op12_damagetype_print (~%SOURCE_RES%~) ~%type% (%name%)~    // %SOURCE_RES% => dtype
+    END
+  END
+
+            END
+          END
+        END
+      END
+    END
+
+  END
+
+
+ACTION_PHP_EACH d2_op12_damagetype AS item => type BEGIN
+  PRINT ~adding %item% to: %type% weapons array~
+  LAF d2_elemental_weapon_arrays STR_VAR item=EVAL ~%item%~ element=EVAL ~%type%~ RET_ARRAY ~d2%type%weap~ END
+END
+ACTION_PHP_EACH d2_op12_damagetemp AS item => type BEGIN
+  PRINT ~adding %item% to: %type% weapons array (undroppable item)~
+  LAF d2_elemental_weapon_arrays INT_VAR temp=1 STR_VAR item=EVAL ~%item%~ element=EVAL ~%type%~ RET_ARRAY ~d2%type%weap~ END
 END
 
 
-//cold weapons
-ACTION_FOR_EACH mod_item IN
-//sod2bg2 (bg2)
-  ~dtkax1ha~
-  ~dtkax1hb~
-  ~dtkaxe01~
-  ~dtkaxe02~
-  ~dtkaxe2a~
-  ~dtkhalb1~
-  ~dtkhalb2~
-  ~dtkhalb3~
-  ~dtkham3~
-  ~dtkstaf1~
-  ~dtkswd05~
-  ~dtkswd07~
-  ~dtkswd5a~
-  ~dtkswd7a~
-  ~dtkswd7b~
-  ~dtktdag1~
-  ~dtktdag2~
-  ~dtktdag3~
-  ~dtktdag4~
-  ~dtktdag5~
-
-//forgotten armament (bg2)
-  ~MO1H30~
-  ~MOBLN02~
-  ~MODAG02~
-BEGIN
-  LAF d2_elemental_weapon_arrays STR_VAR item=~%mod_item%~ element=~cold~ RET_ARRAY d2coldweap END
 END
 
 
-//magical fire weapons
-ACTION_FOR_EACH mod_item IN
-  ~~
-BEGIN
-  LAF d2_elemental_weapon_arrays INT_VAR temp=1 STR_VAR item=~%mod_item%~ element=~fire~ RET_ARRAY d2fireweap END
-END
-
-
-/*
-*/
+//
+//

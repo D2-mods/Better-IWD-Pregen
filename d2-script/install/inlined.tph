@@ -1,0 +1,80 @@
+/*
+inlined files:
+~inlined/spell.spl~		- opcode 326
+~inlined/spell.eff~		- opcode 326
+~inlined/fail.spl~		- opcodes 139, 174, 141
+~inlined/remover.spl~	- opcode 321
+
+dummy spells:
+d2spell.spl		- fake spell, no effects
+d2spell2.spl	- same but can trigger wild magic
+*/
+
+
+//inlined files for later COPYs
+ACTION_IF (FILE_EXISTS ~%files%/applyeffects.spl~) BEGIN
+
+  COPY - ~%files%/applyeffects.spl~  ~inlined/spell.spl~  IF_EXISTS
+  COPY - ~%files%/applyeffects.eff~  ~inlined/spell.eff~  IF_EXISTS
+  COPY - ~%files%/spellfailed.spl~  ~inlined/fail.spl~  IF_EXISTS
+
+END ELSE BEGIN
+
+  OUTER_SPRINT copyspell  ~SPCL142~
+  OUTER_SPRINT copyeff  ~UNDEDDAM~
+  ACTION_IF (GAME_IS ~pstee~) BEGIN
+    OUTER_SPRINT copyspell ~SPIN001~  OUTER_SPRINT copyeff ~spin103~
+  END
+  OUTER_SET opcode = 0
+  ACTION_IF (IS_AN_INT ee_game && ee_game > 0) BEGIN  OUTER_SET opcode = 326  END
+
+  COPY_EXISTING - ~%copyspell%.spl~  ~inlined/spell.spl~
+    LPF d2_subspell_remove_effects END
+    LPF ALTER_EFFECT INT_VAR opcode=326 target=2 parameter1=0 parameter2=0 timing=0 duration=0 STR_VAR resource=~~ END
+    WRITE_LONG 0x18 THIS | BIT14
+    WRITE_LONG 0x18 THIS | BIT25
+  IF_EXISTS
+
+  COPY_EXISTING - ~%copyeff%.eff~  ~inlined/spell.eff~
+    WRITE_LONG   0x10 326    // opcode
+    WRITE_LONG   0x14 2      // target (not used for op177s)
+    WRITE_LONG   0x1c 0      // parameter1
+    WRITE_LONG   0x20 0      // parameter2
+    WRITE_LONG   0x24 0      // timing (not used for op177s)
+    WRITE_LONG   0x28 0      // duration
+    WRITE_SHORT  0x2c 100
+    WRITE_ASCII  0x30 ~~ #8    // resource
+  IF_EXISTS
+
+  COPY - ~inlined/spell.spl~  ~inlined/fail.spl~
+    LPF ALTER_EFFECT INT_VAR opcode=139 timing=1 END
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=174 STR_VAR resource=EFF_M62 END
+    LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=141 parameter2=4 END
+
+END
+
+
+//remover spell (opcode 321 with proj=0)
+COPY - ~inlined/spell.spl~  ~inlined/remover.spl~
+  LPF ALTER_EFFECT INT_VAR opcode=321 END
+  LPF ALTER_SPELL_HEADER INT_VAR projectile=0 END
+
+// proj=0 can be used from a subspell and hits before effects under it on main spell
+
+
+//make dummy spells (if not already made)
+COPY ~inlined/spell.spl~  ~override/d2spell.spl~    // cast fake spell
+COPY ~inlined/spell.spl~  ~override/d2spell2.spl~    // same but can trigger wild magic
+  WRITE_LONG 0x18 (THIS BAND BNOT BIT14)
+
+
+/*check effects
+COPY ~inlined/spell.spl~  ~%workspace%/spell.spl~
+COPY ~inlined/spell.eff~  ~%workspace%/spell.eff~
+COPY ~inlined/fail.spl~  ~%workspace%/fail.spl~
+COPY ~inlined/remover.spl~  ~%workspace%/remover.spl~
+*/
+
+
+//
+//

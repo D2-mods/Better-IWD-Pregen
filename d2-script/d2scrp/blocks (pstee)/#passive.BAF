@@ -1,0 +1,92 @@
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	AttackedBy([ENEMY],DEFAULT)
+	IsWeaponRanged(Myself)
+	Range(NearestEnemyOf(),8)
+	!IsWeaponRanged(NearestEnemyOf())
+THEN
+	RESPONSE #100
+		RunAwayFrom(NearestEnemyOf(),35)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	HPPercentLT(Myself,15)
+	OR(2)
+		CheckStatGT(Myself,0,TRAPS)
+		CheckStatGT(Myself,0,DETECTILLUSIONS)
+	!ModalState(DETECTTRAPS)
+	!InWeaponRange([ENEMY])
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	HPPercentLT(Myself,15)
+	!ModalState(DETECTTRAPS)
+	See([ENEMY])
+	!InWeaponRange([ENEMY])
+THEN
+	RESPONSE #100
+		Shout(YAY)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	HPPercentLT(Myself,15)
+	!InWeaponRange([ENEMY])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	Global("d2autobattle","LOCALS",1)
+	Class(Myself,MAGE_ALL)
+	!ModalState(DETECTTRAPS)
+	!IsWeaponRanged(Myself)
+	CheckStatGT(Myself,4,THAC0)
+	See([ENEMY])
+	!Range([ENEMY],5)
+	!InWeaponRange([ENEMY])
+THEN
+	RESPONSE #100
+		Shout(YAY)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	Class(Myself,MAGE_ALL)
+	!IsWeaponRanged(Myself)
+	CheckStatGT(Myself,4,THAC0)
+	!Range([ENEMY],5)
+	!InWeaponRange([ENEMY])
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		Heard([PC],400)
+		Heard([ALLY],400)
+	!Range([ENEMY],30)
+THEN
+	RESPONSE #100
+		NoAction()
+END

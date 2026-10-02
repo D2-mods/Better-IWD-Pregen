@@ -1,0 +1,56 @@
+/*
+pstee - add journal entry + note
+*/
+
+
+ACTION_IF (GAME_IS ~pstee~) BEGIN
+
+
+//journal entry
+<<<<<<<< .../temp/file
+IF
+	!Global("d2script_pstjournal","GLOBAL",1)
+	InParty("Morte")
+THEN
+	RESPONSE #100
+		AddJournalEntry(@778710,INFO)
+		SetGlobal("d2script_pstjournal","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/file~  ~inlined/pstinfo.baf~
+  EVALUATE_BUFFER
+EXTEND_BOTTOM ~baldur.bcs~  ~inlined/pstinfo.baf~
+
+ADD_JOURNAL @778710
+
+
+//add item to shelf
+OUTER_SPRINT pstnote  ~d2scrpn~
+OUTER_SPRINT info  @778710
+OUTER_SPRINT note  @778711
+OUTER_SPRINT psttext  ~%info%%WNL%%WNL%%note%~
+
+COPY_EXISTING ~doornote.itm~  ~override/%pstnote%.itm~
+  SAY DESC ~%psttext%~
+
+<<<<<<<< .../temp/file
+IF
+	!Global("d2script_pstnote","GLOBAL",1)
+THEN
+	RESPONSE #100
+		ActionOverride("PreparationRoom,1stShelf",CreateItem("%pstnote%",0,0,0))
+		SetGlobal("d2script_pstnote","GLOBAL",1)
+		Continue()
+END
+>>>>>>>>
+COPY - ~.../temp/file~  ~inlined/pstnote.baf~
+  EVALUATE_BUFFER
+EXTEND_BOTTOM ~AR0202.bcs~  ~inlined/pstnote.baf~
+
+
+END
+
+
+//
+//

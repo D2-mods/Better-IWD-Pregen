@@ -1,0 +1,49 @@
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalGT("d2cooldown","LOCALS",0)
+	Class(Myself,FIGHTER_ALL)
+	OR(3)
+		InWeaponRange([ENEMY])
+		Range([ENEMY],19)
+		AttackedBy([ENEMY],DEFAULT)
+	!InParty([ENEMY])
+THEN
+	RESPONSE #100
+		AttackReevaluate([ENEMY],30)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	!GlobalGT("d2cooldown","LOCALS",0)
+	OR(3)
+		Class(Myself,CLERIC_ALL)
+		Class(Myself,THIEF)
+		CheckStatLT(Myself,5,THAC0)
+	OR(2)
+		InWeaponRange([ENEMY])
+		Range([ENEMY],13)
+	!InParty([ENEMY])
+THEN
+	RESPONSE #100
+		AttackReevaluate([ENEMY],30)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([ENEMY])
+		Range([ENEMY],5)
+	!InParty([ENEMY])
+THEN
+	RESPONSE #100
+		AttackReevaluate([ENEMY],30)
+END

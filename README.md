@@ -1,7 +1,7 @@
 # Better IWD Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases  
 Supports: classic and EE versions of BG1, BG2, IWD1, and IWD2 (including EET/BGT/IWD2EE)
-> Note: A few tweaks also support PSTEE.
+> Also compatible with PSTEE. (see [v9.0 notes](https://github.com/D2-mods/Better-IWD-Pregen#pstee-notes-v90-update))
 
 --
 
@@ -14,7 +14,7 @@ A minimalist script and tweak pack for Infinity Engine games. This mod was start
 --
 
 **Recent updates:**
-- added PSTEE support for several tweaks
+- added PSTEE support (script + several tweaks)
 - added Misc spell tweaks component (see components section)
 - added "Make items stackable to 999" (weapons and magic items optional)
 - added Shapeshifts can talk (EEs, BG2)
@@ -146,7 +146,9 @@ This script manages auto-attack, while giving more nuanced control of the charac
 - d2scrp-: Same as base script, except default mode is Cooldown.
 - IWD Pregen (iwdpgen): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only)
 
-#### Auto-attack features:
+--
+
+**Auto-attack features:**
 - Melee aggro range is dependent on class (see below for full breakdown); range from 5 ft. (mages) to 27 ft..
 - Will not attack if under the effects of Invisibility or Sanctuary.
 - Will not attack if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
@@ -154,20 +156,29 @@ This script manages auto-attack, while giving more nuanced control of the charac
 - Priority targeting against enemy casters (limited to within 5 ft. or in range of current weapon).
 - Cooldown hotkeys to reduce melee aggro range to 5 ft. for 30 seconds, or set back to normal instantly.
 
-#### Other features:
+**Other features:**
 - Classes with Search will use it when not attacking (note: for IWD2, auto-Search only works if a character has Rogue or Monk levels).
 - Will not auto-Search if using Stealth, Bard Song, Turn Undead or Shamanic Dance.
 - Will attempt to stop attacking, or stop a Bard Song, if suddenly invisible (ex. from a contingency or area invisibility spell).
 - Shamanic Dance is NOT stopped if suddenly invisible. This is to preserve summons.
 - Will not auto-attack at under 15% HP, unless an enemy is in range of current weapon.
 
-#### Cooldown hotkeys:
+**Cooldown hotkeys:**
 - If the B key is pressed, the character will enter a Cooldown mode for 30 seconds.
 - Cooldown reduces melee aggro range to 5 ft. and disables some of the retargeting actions.
 - If the E key is pressed, the Cooldown mode will be deactivated.
 - If the game is saved while a character is in Cooldown mode, it will be deactivated on reload.
 
 > Note: Stealth, Bard Song, Turn Undead and Shamanic Dance will prevent any Cooldown-related actions from triggering.
+
+--
+
+#### PSTEE notes (v9.0 update):
+- The way it works is different since you can't switch scripts in the menu. Instead the new script blocks are added directly on top of the existing scripts for each character. Existing scripts, including other mod edits, are not changed other than adding a mode check for each script block.
+- The updated script has 3 modes. Use the B key to cycle through modes. The base mode when starting the game is the Better IWD Pregen scripting. Pressing B once will switch to Cooldown mode (not on a timer). Press B again to switch to the default base game scripting. Then press again to switch back to Better IWD Pregen. It will show a string message when switching modes.
+- Combat scripting is simplified somewhat due to issues making GlobalTimers work right in PST.
+- Aggro range for Fighter class is lower than in the other games. It's set to a range of 19 (same as monk/kensai in other games). This prevents some unwanted behavior after at least one cutscene.
+- You will have a journal entry stating the key presses. One of the shelves in the starting area will also have a note about it.
 
 --
 
@@ -179,8 +190,8 @@ Additional info:
 Script Compatibility:
 -
 
-- EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
-- Classic: BG1, BG2, IWD, IWD2 (tested with GOG versions)
+- **EEs:** BG1:EE, BG2:EE, IWD:EE, PST:EE, including EET
+- **Classic:** BG1, BG2, IWD1, IWD2, including BGT and IWD2:EE
 
 > Also compatible with any BG2 conversion mods (ex. BGT or Classic Adventures).
 
@@ -188,8 +199,8 @@ Script Compatibility:
 
 **Classic BG2 engine:**
 - TobEx (v26/v28): Compatibility issues should be fixed (v3.7 and later).  
-- TobEx Afterlife: Use v29.10 or later. (http://www.shsforums.net/files/file/1274-tobex-afterlife)  
-- Improved GUI mod: Use v5.1 or later. (http://www.shsforums.net/files/file/1265-bg2-improved-gui)
+- TobEx Afterlife: Use v29.10 or later. (https://github.com/Spellhold-Studios/TobEx-AfterLife/releases)
+- Improved GUI mod: Use v5.1 or later. (https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases)
 
 > Note: I'm not 100% sure the scripts work with expansionless versions of the classic games.
   
@@ -203,7 +214,7 @@ Script Compatibility:
 Auto-attack breakdown
 -
 
-**BG(EE), BG2(EE), IWD(EE):**
+**BG(EE), BG2(EE), IWD(EE), PSTEE:**
 
   ```
 Class: Fighter, Ranger, Paladin, including any multiclass combinations
@@ -229,6 +240,8 @@ Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
 	2. Enemy is within 5 ft.
 	3. If THAC0 is less than 5, will attack if enemy is within 13 ft.
   ```
+
+> PSTEE note: Fighter class uses a range of 19 ft. for PSTEE.
 
  --
 

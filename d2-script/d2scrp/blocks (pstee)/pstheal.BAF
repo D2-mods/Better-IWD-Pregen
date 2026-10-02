@@ -1,0 +1,94 @@
+IF
+	Global("d2scrp_mode","LOCALS",2)
+    InParty(Myself)
+    PartyScriptsActive()
+    ActionListEmpty()
+    AttackedBy([ENEMY],DEFAULT)
+THEN
+    RESPONSE #100
+        Attack(LastAttackerOf(Myself))
+END
+
+IF
+	Global("d2scrp_mode","LOCALS",2)
+    InParty(Myself)
+    PartyScriptsActive()
+    ActionListEmpty()
+    HPPercentLT(MostDamagedOf(Myself),90)
+    HaveSpell(CLERIC_AID)  // SPPR201.SPL (Aid)
+THEN
+    RESPONSE #100
+        Spell(MostDamagedOf(Myself),CLERIC_AID)  // SPPR201.SPL (Aid)
+END
+
+IF
+	Global("d2scrp_mode","LOCALS",2)
+    InParty(Myself)
+    PartyScriptsActive()
+    ActionListEmpty()
+    HPPercentLT(MostDamagedOf(Myself),75)
+    HaveSpell(CLERIC_CURE_LIGHT_WOUNDS)  // SPPR102.SPL (Cure Light Wounds)
+THEN
+    RESPONSE #100
+        Spell(MostDamagedOf(Myself),CLERIC_CURE_LIGHT_WOUNDS)  // SPPR102.SPL (Cure Light Wounds)
+END
+
+IF
+	Global("d2scrp_mode","LOCALS",2)
+    InParty(Myself)
+    PartyScriptsActive()
+    ActionListEmpty()
+    HPPercentLT(MostDamagedOf(Myself),65)
+    HaveSpell(CLERIC_CURE_MODERATE_WOUNDS)  // SPPR202.SPL (Cure Moderate Wounds)
+THEN
+    RESPONSE #100
+        Spell(MostDamagedOf(Myself),CLERIC_CURE_MODERATE_WOUNDS)  // SPPR202.SPL (Cure Moderate Wounds)
+END
+
+IF
+	Global("d2scrp_mode","LOCALS",2)
+    InParty(Myself)
+    PartyScriptsActive()
+    ActionListEmpty()
+    HPPercentLT(MostDamagedOf(Myself),45)
+    HaveSpell(CLERIC_CURE_SERIOUS_WOUNDS)  // SPPR401.SPL (Cure Serious Wounds)
+THEN
+    RESPONSE #100
+        Spell(MostDamagedOf(Myself),CLERIC_CURE_SERIOUS_WOUNDS)  // SPPR401.SPL (Cure Serious Wounds)
+END
+
+IF
+	Global("d2scrp_mode","LOCALS",2)
+    InParty(Myself)
+    PartyScriptsActive()
+    ActionListEmpty()
+    HPPercentLT(MostDamagedOf(Myself),25)
+    HaveSpell(CLERIC_CURE_CRITICAL_WOUNDS)  // SPPR501.SPL (Cure Critical Wounds)
+THEN
+    RESPONSE #100
+        Spell(MostDamagedOf(Myself),CLERIC_CURE_CRITICAL_WOUNDS)  // SPPR501.SPL (Cure Critical Wounds)
+END
+
+IF
+	Global("d2scrp_mode","LOCALS",2)
+    InParty(Myself)
+    PartyScriptsActive()
+    ActionListEmpty()
+    HPPercentLT([PC],0)
+    HaveSpell(CLERIC_RAISE_DEAD)  // SPPR502.SPL (Raise Dead)
+THEN
+    RESPONSE #100
+        Spell(MostDamagedOf(Myself),CLERIC_RAISE_DEAD)  // SPPR502.SPL (Raise Dead)
+END
+
+IF
+	Global("d2scrp_mode","LOCALS",2)
+    InParty(Myself)
+    PartyScriptsActive()
+    ActionListEmpty()
+    Heard(Player1,YAY)
+    Range(Player1,6)
+THEN
+    RESPONSE #100
+        Attack(LastAttackerOf(LastHeardBy))
+END

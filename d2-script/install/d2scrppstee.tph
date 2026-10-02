@@ -1,0 +1,112 @@
+//
+//
+
+
+OUTER_TEXT_SPRINT game ~pstee~
+OUTER_TEXT_SPRINT blocks  ~%d2scrp%/blocks (%game%)~
+//INCLUDE ~%install%/d2scrp.tph~
+
+
+//make blank BCS file
+<<<<<<<< .../temp/d2scrp.baf
+>>>>>>>>
+COMPILE ~.../temp/d2scrp.baf~
+
+
+//change text color (EEs)
+LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@778701) STR_VAR color=blue RET newstring END
+OUTER_TEXT_SPRINT change_script ~%newstring%~
+LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@778702) STR_VAR color=blue RET newstring END
+OUTER_TEXT_SPRINT activate_cooldown ~%newstring%~
+LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@778703) STR_VAR color=blue RET newstring END
+OUTER_TEXT_SPRINT default_script ~%newstring%~
+
+
+//edit #variables.baf
+COPY ~%blocks%/#variables.baf~  ~%workspace%~
+  EVALUATE_BUFFER
+
+
+//create script
+ACTION_FOR_EACH baf_to_add IN
+  ~#variables~
+  ~#invis~
+  ~#passive~
+//~#assist~
+  ~#game~
+  ~#immune~
+  ~#caster~
+  ~#attack~
+//~#retarget~    // causes more issues in pstee than bg/iwd
+  ~#end~
+BEGIN
+
+  ACTION_IF (FILE_EXISTS ~%workspace%/%baf_to_add%.baf~) BEGIN
+    EXTEND_BOTTOM ~d2scrp.bcs~  ~%workspace%/%baf_to_add%.baf~
+  END ELSE
+  ACTION_IF (FILE_EXISTS ~%blocks%/%baf_to_add%.baf~) BEGIN
+    EXTEND_BOTTOM ~d2scrp.bcs~  ~%blocks%/%baf_to_add%.baf~
+  END
+
+END
+
+
+//edit pstee scripts
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2scrp_pstbase BEGIN
+  pcannah => npc
+  pcdakkon => npc
+  pcgrace => heal
+  pcignus => npc
+  pcmorte => npc
+  pcname => name
+  pcnordom => npc
+  pcvhail => npc
+END
+
+COPY_EXISTING - ~d2scrp.bcs~  ~inlined/script.baf~
+  DECOMPILE_BCS_TO_BAF
+  SPRINT match  ~IF~
+  SPRINT string  ~PartyScriptsActive()~
+  REPLACE_TEXTUALLY ~^%match%~  ~%match% %string%~
+
+ACTION_PHP_EACH d2scrp_pstbase AS script => type BEGIN
+  // add d2scrp_mode check to base scripts
+  COPY_EXISTING ~%script%.bcs~  ~override~
+    DECOMPILE_AND_PATCH BEGIN
+      SPRINT match  ~IF~
+      SPRINT string  ~Global("d2scrp_mode","LOCALS",2)~
+      REPLACE_TEXTUALLY ~^%match%~  ~%match% %string%~
+    END
+  BUT_ONLY
+
+  // add blocks to base scripts
+  EXTEND_TOP ~%script%.bcs~  ~inlined/script.baf~
+
+  // make copy in scripts folder (replace pc with d2 in filename)
+  OUTER_PATCH_SAVE name ~%script%~ BEGIN
+    REPLACE_TEXTUALLY ~pc~  ~d2~
+  END
+  COPY_EXISTING ~%script%.bcs~  ~scripts/%name%.bs~
+END
+
+/*
+//copy to scripts folder (not used for pst)
+COPY_EXISTING ~pcname.bcs~  ~scripts/d2name.bs~
+COPY_EXISTING ~pcmorte.bcs~  ~scripts/d2npc.bs~
+COPY_EXISTING ~pcgrace.bcs~  ~scripts/d2heal.bs~
+*/
+
+
+//Script text
+OUTER_SET name = RESOLVE_STR_REF (@100)
+OUTER_SET desc = RESOLVE_STR_REF (@105)
+
+COPY_EXISTING ~scrpdesc.2da~  ~override~
+  LPF 2da_find_row_delete STR_VAR row_name = ~d2scrp~ RET row_number columns END
+  INSERT_2DA_ROW row_number columns ~d2scrp %name% %desc%~
+  PRETTY_PRINT_2DA
+BUT_ONLY
+
+
+/*
+*/

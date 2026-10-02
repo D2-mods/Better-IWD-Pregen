@@ -76,7 +76,7 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY d2_color_string_array BEGIN
   A => blue    // lighter blue than dialogue text
   B => gray
   C => mint
-  D => orange
+  D => light
   R => red
   G => green    // bright green, same as quicksave text
   M => skip
@@ -99,6 +99,8 @@ ACTION_DEFINE_ASSOCIATIVE_ARRAY d2_color_string_array BEGIN
   ~0xff98fbca~ => mana     // very light green
   ~0xff080888~ => blood    // blood red
   ~0xff4e2c5d~ => dark     // dark purple (reddish)
+  ~0xff3d9eff~ => citrus    // light orange
+  ~0xffc76e00~ => ocean     // blue
 //elemental
   ~0xff00d7ff~ => magic
   ~0xff002a9c~ => fire

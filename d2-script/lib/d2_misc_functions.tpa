@@ -21,6 +21,7 @@ read_or_set_scriptname        PATCH
 read_or_set_areascript        PATCH
 hla_multiclass_minlevel       PATCH
 d2_cloneproj                  PATCH or ACTION
+d2_savingthrows               PATCH
 */
 
 ////////////////////////////////////////////////////////////
@@ -202,21 +203,25 @@ BEGIN
     END
   END
 
-  PATCH_IF (globals < 0) BEGIN  PATCH_IF (~%DEST_EXT%~ STR_EQ ~spl~) BEGIN
+  PATCH_IF (globals < 0) BEGIN
+    PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~)) BEGIN
       SET globals = 0
     END ELSE BEGIN
       SET globals = 1
     END 
   END
 
-  PATCH_IF (headers < 0) BEGIN  PATCH_IF (~%DEST_EXT%~ STR_EQ ~itm~) BEGIN
+  PATCH_IF (headers < 0) BEGIN
+    PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~itm~) OR (~%DEST_EXT%~ STR_EQ ~itm~)) BEGIN
       SET headers = 0
     END ELSE BEGIN
       SET headers = 1
     END
   END
 
-  PATCH_IF (~%DEST_EXT%~ STR_EQ ~spl~) BEGIN  SET header_type = ~-1~ END
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~)) BEGIN
+    SET header_type = ~-1~
+  END
 
   //add effect
   LPF CLONE_EFFECT 
@@ -264,27 +269,35 @@ BEGIN
   END
   PATCH_IF (opcode != 318 AND opcode != 324) BEGIN  SET opcode = 318 END
 
-  PATCH_IF (globals < 0) BEGIN  PATCH_IF (~%DEST_EXT%~ STR_EQ ~spl~) BEGIN
+  PATCH_IF (globals < 0) BEGIN
+    PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~)) BEGIN
       SET globals = 0
     END ELSE BEGIN
       SET globals = 1
     END 
   END
 
-  PATCH_IF (headers < 0) BEGIN  PATCH_IF (~%DEST_EXT%~ STR_EQ ~itm~) BEGIN
+  PATCH_IF (headers < 0) BEGIN
+    PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~itm~) OR (~%DEST_EXT%~ STR_EQ ~itm~)) BEGIN
       SET headers = 0
     END ELSE BEGIN
       SET headers = 1
     END
   END
 
-  PATCH_IF (~%DEST_EXT%~ STR_EQ ~spl~) BEGIN  SET header_type = ~-1~ END
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~)) BEGIN
+    SET header_type = ~-1~
+  END
 
   PATCH_IF (timing=1 OR timing=9) BEGIN  SET duration=0 END
   SET htiming=timing SET hduration=duration
   SET gtiming=timing SET gduration=duration
-  PATCH_IF (~%DEST_EXT%~ STR_EQ ~itm~) BEGIN  SET gtiming=2 SET gduration=0 END
-  PATCH_IF (~%DEST_EXT%~ STR_EQ ~cre~) BEGIN  SET gtiming=9 SET gduration=0 END
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~itm~) OR (~%DEST_EXT%~ STR_EQ ~itm~)) BEGIN
+    SET gtiming=2 SET gduration=0
+  END
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~cre~) OR (~%DEST_EXT%~ STR_EQ ~cre~)) BEGIN
+    SET gtiming=9 SET gduration=0
+  END
 
   //add effect
   PATCH_IF (globals > 0) BEGIN
@@ -384,23 +397,45 @@ END
 
 DEFINE_PATCH_FUNCTION update_op324_restrictions
   INT_VAR opcode = 324     // 318 or 324
-  STR_VAR mode = update    // "update" or "delete"
+          match = 0        // only patch if resource is SOURCE_RES (otherwise updates/deletes all)
+  STR_VAR mode = update    // set to "delete" to remove instead of updating
 BEGIN
 
-  PATCH_IF ((opcode != 318) AND (opcode != 324)) BEGIN  SET opcode=318 END
+  // check opcodes
+  PATCH_IF ((opcode != 318) && (opcode != 324)) BEGIN  SET opcode=318 END
 
-  PATCH_IF (opcode=318) BEGIN
+  PATCH_IF (opcode=318 && match<1) BEGIN
     LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=324 opcode=opcode END
   END
-  PATCH_IF (opcode=324) BEGIN
+  PATCH_IF (opcode=318 && match>0) BEGIN
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=324 opcode=opcode STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
+  END
+  PATCH_IF (opcode=324 && match<1) BEGIN
     LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=318 opcode=opcode END
   END
+  PATCH_IF (opcode=324 && match>0) BEGIN
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=318 opcode=opcode STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
+  END
 
-  PATCH_IF (~%mode%~ STR_EQ ~update~) BEGIN
+  // check mode
+  SET updater = 1
+  PATCH_IF (~%mode%~ STR_EQ ~delete~) BEGIN  SET updater = 0  END
+  PATCH_IF (~%mode%~ STR_EQ ~remove~) BEGIN  SET updater = 0  END
+
+  // update effects
+  PATCH_IF (updater=1 && match<1) BEGIN
     LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=opcode STR_VAR resource=EVAL ~%DEST_RES%~ END
   END
-  PATCH_IF ((~%mode%~ STR_EQ ~delete~) OR (~%mode%~ STR_EQ ~remove~)) BEGIN
+  PATCH_IF (updater=1 && match>0) BEGIN
+    LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=opcode STR_VAR match_resource=EVAL ~%SOURCE_RES%~ resource=EVAL ~%DEST_RES%~ END
+  END
+
+  // or delete
+  PATCH_IF (updater=0 && match<1) BEGIN
     LPF DELETE_EFFECT INT_VAR match_opcode=opcode END
+  END
+  PATCH_IF (updater=0 && match>0) BEGIN
+    LPF DELETE_EFFECT INT_VAR match_opcode=opcode STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
   END
 
 END
@@ -484,10 +519,10 @@ BEGIN
     END
   END ELSE BEGIN
     PATCH_IF (probability < 5) BEGIN SET probability = 100 END
-    PATCH_IF (~%DEST_EXT%~ STR_EQ ~spl~) BEGIN
+    PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~)) BEGIN
       LPF ADD_SPELL_EFFECT INT_VAR opcode=45 target=2 duration=duration probability1=probability END
     END
-    PATCH_IF (~%DEST_EXT%~ STR_EQ ~itm~) BEGIN
+    PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~itm~) OR (~%DEST_EXT%~ STR_EQ ~itm~)) BEGIN
       LPF ADD_ITEM_EFFECT INT_VAR opcode=45 target=2 duration=duration probability1=probability type=1 insert_point=0 END
       LPF ADD_ITEM_EFFECT INT_VAR opcode=45 target=2 duration=duration probability1=probability type=2 insert_point=0 END
       LPF ADD_ITEM_EFFECT INT_VAR opcode=45 target=2 duration=duration probability1=probability type=4 insert_point=0 END
@@ -501,7 +536,7 @@ END
 //skipped silently if no casting sound, or if wav file does not exist
 
 DEFINE_PATCH_FUNCTION castsound_to_opcode INT_VAR match_opcode=~-1~ STR_VAR insert=first BEGIN
-  PATCH_IF (~%SOURCE_EXT%~ STR_EQ ~spl~) BEGIN
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~)) BEGIN
     READ_ASCII 0x10 castsound (8) NULL
     WRITE_ASCII 0x10 ~~ #8
     SET patch_sound = 0
@@ -559,7 +594,7 @@ END
 //scriptname and deathvar are the same thing, you can return either if needed
 
 DEFINE_PATCH_FUNCTION read_or_set_scriptname INT_VAR replace=0 STR_VAR name=~~ RET scriptname deathvar BEGIN
-  PATCH_IF (~%SOURCE_EXT%~ STR_EQ ~cre~) BEGIN
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~cre~) OR (~%DEST_EXT%~ STR_EQ ~cre~)) BEGIN
     PATCH_IF (~%name%~ STR_EQ ~~) BEGIN  TEXT_SPRINT name  ~%DEST_RES%~  END
     SET offset = 0x280
     PATCH_IF (GAME_IS ~iwd2~) BEGIN  SET offset = 0x394  END
@@ -593,7 +628,7 @@ END
 //if "replace" is set to 1, it overwrites existing script
 
 DEFINE_PATCH_FUNCTION read_or_set_areascript INT_VAR replace=0 STR_VAR script=~~ RET areascript script BEGIN
-  PATCH_IF (~%SOURCE_EXT%~ STR_EQ ~are~) BEGIN
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~are~) OR (~%DEST_EXT%~ STR_EQ ~are~)) BEGIN
     PATCH_IF (~%script%~ STR_EQ ~~) BEGIN  TEXT_SPRINT script  ~%DEST_RES%~  END
     SET offset = 0x94
     PATCH_IF (GAME_IS ~iwd2~) BEGIN  SET offset = 0xa4  END
@@ -658,7 +693,7 @@ END
 //can copy an existing projectile, or add from mod folder
 
 /*
-"copy" can be resource name or full file path
+"copy" can be resource name or file path (ex. from mod folder)
 "proj" is new resource name
 projnum is the projectile number for ITM/SPL fields
 */
@@ -693,6 +728,68 @@ DEFINE_PATCH_FUNCTION d2_cloneproj STR_VAR copy=~~ proj=~~ RET projnum BEGIN
       OUTER_SET projnum = EVAL ~%proj%~
     END
   END
+END
+
+////////////////////////////////////////////////////////////
+
+//this only patches extended header effects, works with SPL or ITM files
+//set a save type to = 1 to add saves
+//opcodes 318/324 that are blocking the patched resource are always set to no saves
+
+/*notes
+can optionally set half_damage=0 or bypass_images=0 to disable (enabled by default)
+can optionally use match_opcode to only patch a single opcode type
+can optionally set savebonus to -10 or better (no change if not set)
+if run with no variables, sets all saving throw and special fields to 0
+*/
+
+DEFINE_PATCH_FUNCTION d2_savingthrows
+  INT_VAR spell=0 breath=0 death=0 wand=0 polymorph=0 half_damage=1 bypass_images=1 savebonus=~-11~ match_opcode=~-1~ target=2
+BEGIN
+
+  PATCH_IF (spell OR breath OR death OR wand OR polymorph) BEGIN
+
+    PATCH_IF (spell > 0)      BEGIN  SET spell = 1   END ELSE BEGIN  SET spell = 0   END
+    PATCH_IF (breath > 0)     BEGIN  SET breath = 1  END ELSE BEGIN  SET breath = 0  END
+    PATCH_IF (death > 0)      BEGIN  SET death = 1   END ELSE BEGIN  SET death = 0   END
+    PATCH_IF (wand > 0)       BEGIN  SET wand = 1    END ELSE BEGIN  SET wand = 0    END
+    PATCH_IF (polymorph > 0)  BEGIN  SET poly = 1    END ELSE BEGIN  SET poly = 0    END
+    PATCH_IF (half_damage > 0)   BEGIN  SET half_damage = 1    END ELSE BEGIN  SET half_damage = 0    END
+    PATCH_IF (bypass_images > 0) BEGIN  SET bypass_images = 1  END ELSE BEGIN  SET bypass_images = 0  END
+    PATCH_IF (target<1 OR target>9) BEGIN  SET target=2  END
+
+    SET saves = EVAL ~0b%poly%%wand%%death%%breath%%spell%~
+    SET dsaves = EVAL ~0b%bypass_images%0000000000000000000%poly%%wand%%death%%breath%%spell%~
+    SET saveforhalf = EVAL ~0b%half_damage%00000000~
+  
+    PATCH_IF (match_opcode > 0) BEGIN
+      PATCH_IF (match_opcode=12 && bypass_images>0) BEGIN  SET saves = dsaves  END
+      PATCH_IF (match_opcode=25 && bypass_images>0) BEGIN  SET saves = dsaves  END
+      LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 match_opcode=match_opcode match_target=target savingthrow=saves savebonus=savebonus END
+    END
+
+    PATCH_IF (match_opcode < 1) BEGIN
+      LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 match_target=target savingthrow=saves savebonus=savebonus END
+      PATCH_IF (bypass_images > 0) BEGIN
+        LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 match_opcode=12 match_target=target savingthrow=dsaves END
+        LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 match_opcode=25 match_target=target savingthrow=dsaves END
+      END
+      LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 match_opcode=318 savingthrow=0 savebonus=0 STR_VAR match_resource=EVAL ~%DEST_RES%~ END
+      LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 match_opcode=318 savingthrow=0 savebonus=0 STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
+      LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 match_opcode=324 savingthrow=0 savebonus=0 STR_VAR match_resource=EVAL ~%DEST_RES%~ END
+      LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 match_opcode=324 savingthrow=0 savebonus=0 STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
+    END
+
+    PATCH_IF (half_damage > 0) BEGIN
+      LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 match_opcode=12 match_target=target special=saveforhalf END
+    END ELSE BEGIN
+      LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 match_opcode=12 match_target=target special=0 END
+    END
+
+  END ELSE BEGIN
+    LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 savingthrow=0 savebonus=0 special=0 END
+  END
+
 END
 
 ////////////////////////////////////////////////////////////

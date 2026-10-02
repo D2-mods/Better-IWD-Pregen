@@ -5,36 +5,47 @@ allies/enemies is relative to creature
 */
 
 
-/*opcode notes
-EEs: "opcode" variable must be 318 or 324 (defaults to 318 if not)
-IWD1/IWD2: "opcode" variable is ignored (always sets to 206)
-function matches the "block_opcode" variable for adding effect (default 12 = damage opcode)
-if "block_opcode" is not in the file, nothing happens (silently skipped)
-*/
+/*
+by default, protects allies/neutrals and hits enemies
+by default, adds as the top effect if "insert" is not set
 
-/*target notes
+opcode notes:
+EEs: "opcode" variable must be 318 or 324 (defaults to 318 if not)
+IWD1/IWD2: "opcode" variable is ignored (always uses op206)
+function does a CLONE_EFFECT, matching "block_opcode" for new effect (default 12 = damage opcode)
+if "block_opcode" is not in the file, nothing happens (silently skipped)
+
+target notes:
 if "source" is set to 1, then effect protects the caster
+if "switch" is set to 1, then it protects enemies and hits allies/neutrals
 otherwise, it uses the allies/neutrals/enemies variables
-deletes old effects (i.e. you won't have multiple effects with different allies/enemies protections)
-if source > 0, then it only deletes effects with "source" as target (parameter2=43)
+
+other notes:
+deletes old ally/enemy protections (can disable with overwrite = 0)
+if source > 0, then it only deletes effects with "source" as target
 */
 
 
 DEFINE_PATCH_FUNCTION d2_safe_spell
-  INT_VAR opcode=318 allies=1 neutrals=1 enemies=0 block_opcode=12 duration=0 source=0
+  INT_VAR opcode=318 allies=1 neutrals=1 enemies=0 block_opcode=12 duration=0
+          source=0 switch=0 overwrite=1
   STR_VAR insert=first
 BEGIN
 
   // prep
-  SET ee_game = 0
-  PATCH_IF (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN SET ee_game = 1 END
+  PATCH_IF !(IS_AN_INT ee_game) BEGIN
+    SET ee_game = 0
+    PATCH_IF (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN SET ee_game = 1 END
+    PATCH_IF !(FILE_EXISTS ~engine.lua~) BEGIN SET ee_game = 0 END
+  END
   PATCH_IF (duration < 0) BEGIN  SET duration = 0 END
-  PATCH_IF (allies > 1) BEGIN SET allies = 1 END
-  PATCH_IF (neutrals > 1) BEGIN SET neutrals = 1 END
-  PATCH_IF (enemies > 1) BEGIN SET enemies = 1 END
-  PATCH_IF (allies < 0) BEGIN SET allies = 0 END
-  PATCH_IF (neutrals < 0) BEGIN SET neutrals = 0 END
-  PATCH_IF (enemies < 0) BEGIN SET enemies = 0 END
+  PATCH_IF (allies > 1)   BEGIN  SET allies = 1 END
+  PATCH_IF (neutrals > 1) BEGIN  SET neutrals = 1 END
+  PATCH_IF (enemies > 1)  BEGIN  SET enemies = 1 END
+  PATCH_IF (allies < 0)   BEGIN  SET allies = 0 END
+  PATCH_IF (neutrals < 0) BEGIN  SET neutrals = 0 END
+  PATCH_IF (enemies < 0)  BEGIN  SET enemies = 0 END
+  PATCH_IF (switch > 0)   BEGIN  SET allies=0 SET neutrals=0 SET enemies=1 END
 
   // set protection
   PATCH_IF (allies=1 AND neutrals=1 AND enemies=1) BEGIN  SET safe = 9999 END  // all protected
@@ -57,11 +68,11 @@ BEGIN
   END
 
   // remove old effects
-  PATCH_IF (safe=43) BEGIN
+  PATCH_IF (safe = 43) BEGIN
     LPF DELETE_EFFECT INT_VAR match_opcode=318 match_parameter2=safe STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
     LPF DELETE_EFFECT INT_VAR match_opcode=324 match_parameter2=safe STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
     LPF DELETE_EFFECT INT_VAR match_opcode=206 match_parameter2=safe STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
-  END ELSE BEGIN
+  END ELSE PATCH_IF (overwrite > 0) BEGIN
     PATCH_FOR_EACH param IN ~49~ ~50~ ~51~ ~52~ BEGIN
       LPF DELETE_EFFECT INT_VAR match_opcode=318 match_parameter2=param STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END
       LPF DELETE_EFFECT INT_VAR match_opcode=324 match_parameter2=param STR_VAR match_resource=EVAL ~%SOURCE_RES%~ END

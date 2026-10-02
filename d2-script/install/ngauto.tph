@@ -26,10 +26,8 @@ COPY - ~.../temp/ngauto~  ~inlined/ngauto.BAF~
 
 
 END
-ELSE BEGIN
+ELSE ACTION_IF !(GAME_IS ~bg1 totsc~) BEGIN
 
-
-ACTION_IF !(GAME_IS ~bg1 totsc~) BEGIN
 
 //EEs + BG2 engine
 <<<<<<<< .../temp/ngauto
@@ -80,7 +78,6 @@ COPY - ~inlined/ngauto.BAF~  ~inlined/ngauto6.BAF~
   REPLACE_TEXTUALLY ~Player1~  ~Player6~
 
 
-END
 END
 
 ////////////////////////////////////////////////////////////

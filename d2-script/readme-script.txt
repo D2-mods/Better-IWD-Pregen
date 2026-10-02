@@ -6,6 +6,11 @@ Script - Quick Info
 - d2scrp-: Same as base script, except default mode is Cooldown.
 - IWD Pregen (iwdpgen): Same as vanilla IWD Pregen, but with shaman abilities added. (EE-only)
 
+--
+
+PSTEE note: This script works differently in PSTEE. Press the B key to switch between script modes: (1) Better IWD Pregen, (2) Cooldown mode (3) the default script. You will get a journal entry at the start of the game that you can check as a reminder.
+
+--
 
 ==================================================
 Auto-attack features
@@ -54,7 +59,7 @@ Note: For BG1, this will trigger once per party slot per playthrough (Player1, P
 Additional info:
 
 ==================================================
-Auto-attack breakdown (BG(EE), BG2(EE), IWD(EE))
+Auto-attack breakdown (BG1(EE), BG2(EE), IWD(EE), PSTEE)
 ==================================================
 Class: Fighter, Ranger, Paladin, including any multiclass combinations
 	Conditions (one must be met to auto-attack)
@@ -79,6 +84,7 @@ Class: Mage, Sorcerer, Mage/Thief, Cleric/Mage
 	2. Enemy is within 5 ft.
 	3. If THAC0 is less than 5, will attack if enemy is within 13 ft.
 
+PSTEE note: Fighter class uses a range of 19 ft. for PSTEE.
 
 ==================================================
 Auto-attack breakdown (IWD2)

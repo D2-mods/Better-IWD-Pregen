@@ -1,0 +1,20 @@
+//
+//
+
+
+ACTION_IF (GAME_IS ~pstee~) BEGIN
+  INCLUDE ~%install%/d2scrppstee.tph~
+  INCLUDE ~%install%/pstscriptnote.tph~
+END ELSE BEGIN
+  INCLUDE ~%install%/iwdpgen.tph~
+  INCLUDE ~%install%/d2scrpinstall.tph~
+END
+
+ACTION_IF (ee_game>0 OR bg2_engine>0) BEGIN
+  INCLUDE ~%install%/inlined.tph~
+  INCLUDE ~%install%/d2scrpvar.tph~
+END
+
+
+/*
+*/

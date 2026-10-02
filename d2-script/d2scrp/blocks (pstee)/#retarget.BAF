@@ -1,0 +1,74 @@
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	Global("d2autobattle","LOCALS",1)
+	!Global("d2retarget1","LOCALS",0)
+	!ModalState(STEALTH)
+	IsWeaponRanged(Myself)
+	AttackedBy([ENEMY],DEFAULT)
+	Range(NearestEnemyOf(),3)
+	!IsWeaponRanged(NearestEnemyOf())
+THEN
+	RESPONSE #100
+		SetGlobal("d2retarget1","LOCALS",0)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	Global("d2autobattle","LOCALS",1)
+	!Global("d2retarget1","LOCALS",0)
+	!GlobalGT("d2cooldown","LOCALS",0)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	OR(2)
+		InWeaponRange([ENEMY])
+		Range([ENEMY],5)
+	OR(2)
+		!WeaponEffectiveVs([ENEMY],MAINHAND)
+		!WeaponCanDamage([ENEMY],MAINHAND)
+THEN
+	RESPONSE #100
+		SetGlobal("d2retarget1","LOCALS",0)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	Global("d2autobattle","LOCALS",1)
+	!Global("d2retarget1","LOCALS",0)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	!See([ENEMY])
+	ActuallyInCombat()
+THEN
+	RESPONSE #100
+		SetGlobal("d2retarget1","LOCALS",0)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	Global("d2autobattle","LOCALS",1)
+	!Global("d2retarget1","LOCALS",0)
+	!Global("d2retarget2","LOCALS",0)
+	!GlobalGT("d2cooldown","LOCALS",0)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	InWeaponRange([ENEMY.0.0.MAGE])
+	!Class(NearestEnemyOf(),MAGE)
+THEN
+	RESPONSE #100
+		SetGlobal("d2retarget2","LOCALS",0)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	Global("d2autobattle","LOCALS",1)
+	!Global("d2retarget1","LOCALS",0)
+	!Global("d2retarget2","LOCALS",0)
+	!GlobalGT("d2cooldown","LOCALS",0)
+	!ModalState(DETECTTRAPS)
+	!ModalState(STEALTH)
+	InWeaponRange([ENEMY.0.0.CLERIC])
+	!Class(NearestEnemyOf(),CLERIC)
+THEN
+	RESPONSE #100
+		SetGlobal("d2retarget2","LOCALS",0)
+END

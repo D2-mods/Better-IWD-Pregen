@@ -90,7 +90,6 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 @99101 = ~This combat AI script is assigned to the members of the default party in IWD:EE. The character will defend <HIMHER>self if attacked, or if <HESHE> sees enemies. If the character is under the effects of invisibility or sanctuary, or if <HESHE> is singing a bard song, turning undead, hiding in shadows, or using shamanic dance, <HESHE> will not attack enemies. In addition, a thief, monk, or shaman will search for traps or illusions when there are no enemies nearby. (<script>)~
 
 
-
 //
 //Cooldown mode feedback
 @1000 = ~Cooldown mode activated for 60 seconds~
@@ -99,6 +98,36 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 @1003 = ~Cooldown mode disabled~
 @1004 = ~Cooldown mode disabled for 30 seconds~
 @1005 = ~Cooldown mode activated~
+
+
+//pstee
+@778701 = ~Switched to Better IWD Pregen script~
+@778702 = @1005
+@778703 = ~Switched to default script~
+
+@778710 = ~BETTER IWD PREGEN:
+
+The character will auto-attack when enemies are in range*. If not in auto-attack range, a character with skill points will search for traps. The character will not attack or search for traps if hidden or invisible.
+
+*Melee auto-attack range is dependent on class:
+   Fighter: 19 ft.
+   Thief: 13 ft.
+   Cleric: 13 ft.
+   Mage: 5 ft.
+Cooldown mode sets the range to 5 feet for all classes.
+
+^NNOTE: Use the B key to cycle through script modes.
+   Mode 1: Better IWD Pregen
+   Mode 2: Cooldown mode
+   Mode 3: Default script^-~
+
+@778711 = ~Check your journal or keep this note if you need a reminder.~
+
+
+
+
+
+
 
 
 //

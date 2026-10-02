@@ -1,13 +1,17 @@
 /*
 compatible with BG1, BG2, IWD1, IWD2, PST (classic and EEs)
 still need to finish magic weapon arrays stuff
-*/
 
-
-/*functions
+functions:
 d2_set_weapontype_fields    PATCH
 d2_get_weapontype_fields    ACTION or PATCH
 d2_weapontype_print         ACTION or PATCH
+
+arrays:
+d2_weapontype_res
+d2_magicweapon_base
+
+inlined files are also made at the bottom
 */
 
 
@@ -25,7 +29,7 @@ All info is read from base weapons at install time (this is done below)
 
 DEFINE_PATCH_FUNCTION d2_set_weapontype_fields INT_VAR magical=1 visual=1 ground=1 STR_VAR type=~~ BEGIN
 
-  PATCH_IF (~%SOURCE_EXT%~ STR_EQ ~itm~) BEGIN
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~itm~) OR (~%DEST_EXT%~ STR_EQ ~itm~)) BEGIN
 
     // match array type names
     LPF d2_check_weapontype STR_VAR type=EVAL ~%type%~ RET type END
@@ -722,10 +726,17 @@ DEFINE_PATCH_FUNCTION magic_club_edit BEGIN
   LPF weapontype_icons STR_VAR type=EVAL ~%type%~ END
 END
 
-DEFINE_PATCH_FUNCTION magic_greataxe_edit BEGIN
-  LPF ALTER_ITEM_HEADER INT_VAR dicenumber=1 dicesize=12 thac0_bonus=1 damage_bonus=1 END
+DEFINE_PATCH_FUNCTION magic_greataxe_edit INT_VAR writes=0 BEGIN
+  LPF ALTER_ITEM_HEADER INT_VAR dicenumber=1 dicesize=10 thac0_bonus=1 damage_bonus=1 speed=8 range=2 END
   LPF DELETE_EFFECT INT_VAR match_opcode=10 END
   LPF weapontype_icons STR_VAR type=EVAL ~%type%~ END
+  PATCH_IF (writes > 0) BEGIN
+    WRITE_ASCII 0x22 hb #2
+    WRITE_SHORT 0x2c 10
+    WRITE_LONG 0x34 2000
+    WRITE_SHORT 0x42 20
+    WRITE_LONG 0x4c 9
+  END
 END
 
 
@@ -761,16 +772,24 @@ ACTION_PHP_EACH d2_magicweapon_base AS type => res BEGIN
 
   ACTION_IF (~%type%~ STR_EQ ~greataxe~) BEGIN
     ACTION_IF !(GAME_IS ~iwd2~) BEGIN
-      COPY_EXISTING ~%res%.itm~  ~override/d2ax2h-1.itm~
-        LPF magic_greataxe_edit END
-        TEXT_SPRINT $d2_magicweapon_base (~greataxe~) ~d2ax2h-1~
-      IF_EXISTS
+      ACTION_IF (FILE_EXISTS_IN_GAME ~%res%.itm~) BEGIN
+        COPY_EXISTING ~%res%.itm~  ~override/d2ax2h-1.itm~
+          LPF magic_greataxe_edit END
+          TEXT_SPRINT $d2_magicweapon_base (~greataxe~) ~d2ax2h-1~
+        IF_EXISTS
+      END ELSE BEGIN
+        COPY_EXISTING ~AX1H02.itm~  ~override/d2ax2h-1.itm~
+          LPF d2_set_weapontype_fields STR_VAR type=greataxe END
+          LPF magic_greataxe_edit INT_VAR writes=1 END
+          TEXT_SPRINT $d2_magicweapon_base (~greataxe~) ~d2ax2h-1~
+        IF_EXISTS
+      END
     END
   END
 
   ACTION_IF (~%type%~ STR_EQ ~throwingdagger~) BEGIN
     ACTION_IF !(FILE_EXISTS_IN_GAME ~%res%.itm~) BEGIN
-      COPY_EXISTING ~AX1H05.itm~  ~override/d2dagt-1.itm~
+      COPY_EXISTING ~AX1H05.itm~  ~override/d2dagt-1.itm~    // clone throwing axe because it has 2 headers
         LPF d2_set_weapontype_fields STR_VAR type=throwingdagger END
         LPF magic_dagger_edit END
         TEXT_SPRINT $d2_magicweapon_base (~throwingdagger~) ~d2dagt-1~
@@ -789,6 +808,37 @@ ACTION_PHP_EACH d2_magicweapon_base AS type => res BEGIN
   END
 
 END
+
+
+
+//inlined files
+ACTION_PHP_EACH d2_weapontype_res AS type => res BEGIN
+  COPY_EXISTING - ~%res%.itm~  ~inlined/%type%~  IF_EXISTS
+END
+
+ACTION_PHP_EACH d2_magicweapon_base AS type => res BEGIN
+  COPY_EXISTING - ~%res%.itm~  ~magic/%type%~
+    PATCH_IF (~%res%~ STR_EQ ~LONESOM~) BEGIN
+      LPF DELETE_EFFECT INT_VAR match_opcode=10 END
+    END
+  IF_EXISTS
+END
+
+/*
+ACTION_PHP_EACH d2_weapontype_res AS type => res BEGIN
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%res%.itm~) BEGIN
+    OUTER_SPRINT file  ~inlined/%type%~
+    COPY ~%file%~  ~%workspace%/%file%~
+  END
+END
+
+ACTION_PHP_EACH d2_magicweapon_base AS type => res BEGIN
+  ACTION_IF (FILE_EXISTS_IN_GAME ~%res%.itm~) BEGIN
+    OUTER_SPRINT file  ~magic/%type%~
+    COPY ~%file%~  ~%workspace%/%file%~
+  END
+END
+*/
 
 
 //

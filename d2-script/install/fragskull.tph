@@ -11,7 +11,7 @@ ACTION_IF !(RESOURCE_CONTAINS ~d2tec05.itm~  ~d2tec~) BEGIN    // skip if d2-mir
   OUTER_SPRINT skull  ~d2pfrag~
   OUTER_SPRINT proj  ~trapskul~
 
-ACTION_IF (RESOURCE_CONTAINS ~projectl.ids~  ~%proj%~) BEGIN    // skip if d2-mira installed
+ACTION_IF (RESOURCE_CONTAINS ~projectl.ids~  ~%proj%~) BEGIN
   ACTION_IF !(FILE_EXISTS_IN_GAME ~%skull%.pro~) BEGIN
     COPY_EXISTING - ~spwi313.spl~ ~~  READ_SHORT 0x98 skull_proj
     LOOKUP_IDS_SYMBOL_OF_INT proj ~projectl~ (skull_proj - 1)    // number is 1 less in projectl.ids

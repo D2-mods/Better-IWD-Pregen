@@ -14,45 +14,61 @@ BUT_ONLY
 
 //speed bonus
 COPY ~%nymph%/nymphspeed.SPL~  ~override/d2cwfey.SPL~
-  PATCH_IF (is_ee > 0) BEGIN
+  PATCH_IF (ee_type > 0) BEGIN
     LPF d2_remove_effects_on_cast END
   END
 
 
-//
+
 //clone and edit projectile (classic BG2 only)
-ACTION_IF (is_ee = 0) BEGIN
+ACTION_IF (ee_game > 0) BEGIN
+  OUTER_SPRINT proj  ~%files%/entangle.pro~
+END ELSE BEGIN
   COPY_EXISTING - ~SPPR105.spl~  ~~
-    READ_SHORT 0x98 entangle_proj
-  LOOKUP_IDS_SYMBOL_OF_INT oldproj ~projectl~ (entangle_proj - 1)    // number is 1 less in IDS file
-
-  ACTION_IF (FILE_EXISTS_IN_GAME ~%oldproj%.PRO~) BEGIN
-    COPY_EXISTING - ~%oldproj%.PRO~  ~inlined/d2cwbs1.PRO~
-      WRITE_SHORT 0x200 THIS | BIT6    // affect enemies only (relative to caster)
-    IF_EXISTS
-
-    ADD_PROJECTILE ~inlined/d2cwbs1.PRO~    // set projectile in SPL to variable "d2cwbs1"
-    OUTER_SET entangle_proj = d2cwbs1
-  END
+    READ_SHORT 0x98 projnum
+    SET idsnum = projnum - 1
+    LOOKUP_IDS_SYMBOL_OF_INT proj ~projectl~ ~%idsnum%~
 END
 
+OUTER_SPRINT res  ~d2cwbs1~
+OUTER_SET projarea = 256    // use standard 15-ft. radius
 
-//
-//clone entangle (party friendly)
-COPY_EXISTING ~SPPR105.spl~  ~override/d2cwbs1.SPL~
-  PATCH_IF (is_ee > 0) BEGIN
-    LPF update_op324_restrictions END
-    LPF d2_safe_spell INT_VAR neutrals=0 block_opcode=154 duration=5 END    // add op318 (EEs)
-  END ELSE BEGIN
-    LPF ALTER_SPELL_HEADER INT_VAR projectile=entangle_proj END    // or set new projectile (classic)
+//use iwd proj/sounds
+LAF d2_cloneproj STR_VAR copy=~%proj%~ proj=~%res%~ RET projnum END
+COPY_EXISTING ~%res%.pro~  ~override~
+  PATCH_IF (ee_game > 0) BEGIN
+    WRITE_ASCII 0x10   ~~ #8      // fire sound
+    WRITE_ASCII 0x18   ~%res%~ #8  // impact sound
+    WRITE_ASCII 0x238  ~%res%~ #8  // area sound
   END
+  WRITE_SHORT 0x210  100        // explosion frequency
+  WRITE_BYTE  0x216  8          // repetitions
+  WRITE_SHORT 0x204  projarea   // trap size
+  WRITE_SHORT 0x206  projarea   // explosion size
+//  WRITE_LONG  0x2c  (THIS | BIT12)  // falling path
+  WRITE_SHORT 0x200 (THIS | BIT6)   // enemies only
+  WRITE_SHORT 0x200 (THIS | BIT12)  // ignore los
+OUTER_SET entangle_proj = projnum
+COPY ~%files%/entangle.wav~  ~override/%res%.wav~    // use iwd sound (res conflict with BG games)
 
-OUTER_TEXT_SPRINT nymph_entangle ~"D2CWBS1"~
+
+//clone entangle (party friendly)
+COPY_EXISTING ~SPPR105.spl~  ~override/%res%.SPL~
+  LPF ALTER_SPELL_HEADER INT_VAR range=1000 projectile=entangle_proj END
+  WRITE_LONG 0x18 (THIS | BIT25)
+  WRITE_LONG 0x18 (THIS BAND BNOT BIT10)    // non-hostile (unless damage taken)
+  PATCH_IF (ee_type > 0) BEGIN
+    LPF update_op324_restrictions INT_VAR match=1 END
+    LPF d2_safe_spell INT_VAR neutrals=0 block_opcode=154 duration=5 END
+  END
+  LPF ALTER_EFFECT INT_VAR savebonus=0 END
+
+OUTER_TEXT_SPRINT nymph_entangle ~"%res%"~
 
 //CLERIC_SUMMON_INSECTS (replace CLERIC_MISCAST_MAGIC in scripts)
 
 
-//
+
 //install scripts
 COPY - ~%nymph%/nymphcore.BAF~  ~inlined/d2cwfey.BAF~
   EVALUATE_BUFFER

@@ -10,6 +10,11 @@ ACTION_IF !(FILE_EXISTS ~engine.lua~) BEGIN OUTER_SET ee_game = 0 END
 OUTER_SET bg2_engine = 0
 ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN  OUTER_SET bg2_engine = 1 END
 
+//ee v1.3 uses the same as BG2 engine
+ACTION_IF (GAME_IS ~bgee bg2ee iwdee eet~) BEGIN
+  ACTION_IF (ee_game = 0) BEGIN  OUTER_SET bg2_engine = 1  END
+END
+
 
 //fix #BONECIR.SPL (wrong signature)
 ACTION_IF (FILE_EXISTS_IN_GAME ~#BONECIR.SPL~) BEGIN

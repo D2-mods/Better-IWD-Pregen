@@ -1,0 +1,22 @@
+IF
+	Global("d2scrp_mode","LOCALS",2)
+    InParty(Myself)
+    PartyScriptsActive()
+    ActionListEmpty()
+    AttackedBy([ENEMY],DEFAULT)
+THEN
+    RESPONSE #100
+        Attack(LastAttackerOf(Myself))
+END
+
+IF
+	Global("d2scrp_mode","LOCALS",2)
+    InParty(Myself)
+    PartyScriptsActive()
+    ActionListEmpty()
+    Heard(Player1,YAY)
+    Range(Player1,6)
+THEN
+    RESPONSE #100
+        Attack(LastAttackerOf(LastHeardBy))
+END

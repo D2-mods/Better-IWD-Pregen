@@ -2,6 +2,7 @@ Better IWD Pregen
 GitHub: https://github.com/D2-mods/Better-IWD-Pregen
 Download: https://github.com/D2-mods/Better-IWD-Pregen/releases
 Supports: classic and EE versions of BG1, BG2, IWD1, and IWD2 (including EET/BGT/IWD2EE)
+Also compatible with PSTEE (see v9.0 notes)
 
 --
 
@@ -14,12 +15,12 @@ A minimalist script and tweak pack for Infinity Engine games. This mod was start
 --
 
 Recent updates:
-- added PSTEE support for several tweaks
+- added PSTEE support (script + several tweaks)
 - added Misc spell tweaks component (see GitHub readme)
 - added "Make items stackable to 999" (weapons and magic items optional)
 - added Shapeshifts can talk (EEs, BG2)
 
-PSTEE note: Generalized Biffing is not required for PSTEE. The bag from this mod will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas or store files.
+PSTEE note: Generalized Biffing is not required for the bag component. The bag contents will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas or store files.
 
 --
 
@@ -91,8 +92,8 @@ Also compatible with any BG2 conversion mods (ex. BGT or Classic Adventures).
 
 Classic BG2 engine:
 TobEx (v26/v28): Compatibility issues should be fixed (v3.7 and later).
-TobEx Afterlife: Use v29.10 or later. (http://www.shsforums.net/files/file/1274-tobex-afterlife)
-Improved GUI mod: Use v5.1 or later. (http://www.shsforums.net/files/file/1265-bg2-improved-gui)
+TobEx Afterlife: Use v29.10 or later. (https://github.com/Spellhold-Studios/TobEx-AfterLife/releases)
+Improved GUI mod: Use v5.1 or later. (https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases)
 
 NOTE: I'm not 100% sure the scripts work with expansionless versions of the classic games.
 
@@ -140,9 +141,20 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
-v8.1
-- IWDEE: items from this mod (Bag of holding and Worn Garment) will now have description images if using a UI mod that enables them for IWDEE.
-- bg2 (classic): fixed possible issue with "Damage party friendly" spell tweak on oBG2 engine. It was causing the Frag Grenade ammo from ToB to leave the skulls as traps if targeting allies/neutrals. This item will now use a separate projectile that's not a trap type.
+v9.0
+PSTEE: now compatible with main script component.
+- The way it works is different since you can't switch scripts in the menu. Instead the new script blocks are added directly on top of the existing scripts for each character. Existing scripts, including other mod edits, are not changed other than adding a mode check for each script block.
+- The updated script has 3 modes. Use the B key to cycle through modes. The base mode when starting the game is the Better IWD Pregen scripting. Pressing B once will switch to Cooldown mode (not on a timer). Press B again to switch to the default base game scripting. Then press again to switch back to Better IWD Pregen. It will show a string message when switching modes.
+- Combat scripting is simplified somewhat due to issues making GlobalTimer checks work right in PSTEE.
+- Aggro range for Fighter class is lower than in the other games. It's set to a range of 19 (same as monk/kensai in other games). This prevents chasing after red circles (leaving the area) after at least one cutscene.
+- You will have a journal entry stating the key presses. One of the shelves in the starting area will also have a note about it.
+
+Other notes:
+- iwdee: items from this mod (Bag of holding, Worn Garment) will now have description images if using a UI mod that enables them for IWDEE.
+- Spell tweaks component: fixed an issue that made the hit stun option skip any spells with scrolls with the same resource as the spell. For the unmodded games, this only affected some PSTEE spells.
+- bg2 (classic): fixed minor issue with "Damage party friendly" spell tweak. It was causing the Frag Grenade ammo from ToB to leave the skulls as traps if targeting allies/neutrals.
+- Script component: archer kits now also have shortened melee aggro range similar to kensai/monks. The installer has an automated process to determine whether a mod kit is an archer. It can miss some but should catch most of them. Multiclass archers are also patched if detected.
+- Script component: updated trollarrays.tph to scan instead of using preset lists.
 
 v7.27 (v8.0)
 - added more installer feedback when scanning files.

@@ -1,0 +1,27 @@
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([ENEMY.0.0.MAGE_ALL])
+		Range([ENEMY.0.0.MAGE_ALL],5)
+	!InParty([ENEMY])
+THEN
+	RESPONSE #100
+		AttackReevaluate([ENEMY.0.0.MAGE_ALL],30)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([ENEMY.0.0.CLERIC_ALL])
+		Range([ENEMY.0.0.CLERIC_ALL],5)
+	!InParty([ENEMY])
+THEN
+	RESPONSE #100
+		AttackReevaluate([ENEMY.0.0.CLERIC_ALL],30)
+END

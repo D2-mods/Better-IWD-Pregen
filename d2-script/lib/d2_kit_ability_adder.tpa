@@ -1,0 +1,181 @@
+//add abilities to kit 2das
+//specify level or per level gains
+//running the function with no variables adds a line of ****
+
+
+/*function list
+d2_kit_ability_adder		PATCH or ACTION
+*/
+
+////////////////////////////////////////////////////////////
+  
+DEFINE_PATCH_FUNCTION d2_kit_ability_adder
+
+  INT_VAR level = 1       // level gained, or starting level if multi=1
+          passive = 0     // 0 = special ability, 1 = permanent effect
+          multi = 0       // 0 = gained once, 1 = gained per x levels
+          increment = 0   // ex. set to 4 if gained every 4 levels (starting from %level% variable)
+          limit = 50      // upper limit for per level gains (max = 50)
+  
+  STR_VAR resource = ~~   // ability filename
+	  
+      RET row_number      // line number of new line or entry
+          columns         // column count
+  
+BEGIN
+  
+//Set some variables
+  SET columns = 3               // RET variable
+  COUNT_2DA_ROWS 3 rows
+  SET row_number = rows         // RET variable (this number might still change below)
+  SET row_count = (rows - 1)    // count starts at 0 for some weidu actions
+  PATCH_IF ((level < 1) OR (level > 50)) BEGIN SET level = 1 END
+  PATCH_IF ((limit < level) OR (limit > 50)) BEGIN SET limit = 50 END
+  PATCH_IF (multi>0 && increment<1) BEGIN  SET increment = 1  END
+
+//Set entry name for ability
+  PATCH_IF (~%resource%~ STRING_EQUAL_CASE ~~) BEGIN
+    TEXT_SPRINT i ~****~
+  END
+  ELSE BEGIN
+    PATCH_IF (passive = 0) BEGIN
+      TEXT_SPRINT i ~GA_%resource%~
+    END
+    ELSE BEGIN
+      TEXT_SPRINT i ~AP_%resource%~
+    END
+  END
+  
+//Add single ability if possible
+  PATCH_IF (multi = 0) BEGIN
+    COUNT_REGEXP_INSTANCES ~%i%~ count1
+    FOR (row = row_count; row > 0; row -= 1) BEGIN
+      READ_2DA_ENTRY row level 3 ~match~
+      PATCH_IF ~%match%~ STRING_EQUAL_CASE ~****~ BEGIN
+        SET row_number = row
+      END
+    END
+  
+    PATCH_IF (row_number <= row_count) BEGIN
+      SET_2DA_ENTRY row_number level 3 ~%i%~
+    END
+    COUNT_REGEXP_INSTANCES ~%i%~ count2
+  END
+	
+//Or add new line to end
+  PATCH_IF ((multi != 0) OR (count1 = count2)) BEGIN
+  
+    FOR (n = 1; n < 51; ++n) BEGIN    // set all variables in line to **** as default
+      TEXT_SPRINT EVAL ~a%n%~ ~****~ 
+    END
+
+    PATCH_IF (multi = 0) BEGIN    // add ability to variable(s)
+      TEXT_SPRINT EVAL ~a%level%~ ~%i%~
+    END
+    ELSE BEGIN
+      FOR (x = level; x <= limit; x += increment) BEGIN
+        TEXT_SPRINT EVAL ~a%x%~ ~%i%~
+      END
+    END
+	
+    INSERT_2DA_ROW rows 3 ~ABILITY00 %a1% %a2% %a3% %a4% %a5% %a6% %a7% %a8% %a9% %a10% %a11% %a12% %a13% %a14% %a15% %a16% %a17% %a18% %a19% %a20% %a21% %a22% %a23% %a24% %a25% %a26% %a27% %a28% %a29% %a30% %a31% %a32% %a33% %a34% %a35% %a36% %a37% %a38% %a39% %a40% %a41% %a42% %a43% %a44% %a45% %a46% %a47% %a48% %a49% %a50%~
+    COUNT_REGEXP_INSTANCES ~ABILITY[0-9]*~ count
+    REPLACE_TEXTUALLY ~ABILITY00~ ~ABILITY%count%~
+//  REPLACE_TEXTUALLY ~%a[0-9]*%~ ~****~    // using the FOR action with a%n% instead
+  
+  END
+  
+  PRETTY_PRINT_2DA
+
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_ACTION_FUNCTION d2_kit_ability_adder
+
+  INT_VAR level = 1       // level gained, or starting level if multi=1
+          passive = 0     // 0 = special ability, 1 = permanent effect
+          multi = 0       // 0 = gained once, 1 = gained per x levels
+          increment = 0   // ex. set to 4 if gained every 4 levels (starting from %level% variable)
+          limit = 50      // upper limit for per level gains (max = 50)
+  
+  STR_VAR resource = ~~   // ability filename
+          2da = ~~        // 2da filename
+	  
+      RET row_number      // line number of new line or entry
+          columns         // column count
+  
+BEGIN
+
+ACTION_IF (FILE_EXISTS_IN_GAME ~%2da%.2da~) BEGIN
+COPY_EXISTING ~%2da%.2da~ ~override~
+	
+//Set some variables
+  SET columns = 3               // RET variable
+  COUNT_2DA_ROWS 3 rows
+  SET row_number = rows         // RET variable (this number might still change below)
+  SET row_count = (rows - 1)    // count starts at 0 for some weidu actions
+  PATCH_IF ((level < 1) OR (level > 50)) BEGIN SET level = 1 END
+  PATCH_IF ((limit < level) OR (limit > 50)) BEGIN SET limit = 50 END
+  PATCH_IF (multi>0 && increment<1) BEGIN  SET increment = 1  END
+
+//Set entry name for ability
+  PATCH_IF (~%resource%~ STRING_EQUAL_CASE ~~) BEGIN
+    TEXT_SPRINT i ~****~
+  END
+  ELSE BEGIN
+    PATCH_IF (passive = 0) BEGIN
+      TEXT_SPRINT i ~GA_%resource%~
+    END
+    ELSE BEGIN
+      TEXT_SPRINT i ~AP_%resource%~
+    END
+  END
+  
+//Add single ability if possible
+  PATCH_IF (multi = 0) BEGIN
+    COUNT_REGEXP_INSTANCES ~%i%~ count1
+    FOR (row = row_count; row > 0; row -= 1) BEGIN
+      READ_2DA_ENTRY row level 3 ~match~
+      PATCH_IF ~%match%~ STRING_EQUAL_CASE ~****~ BEGIN
+        SET row_number = row
+      END
+    END
+  
+    PATCH_IF (row_number <= row_count) BEGIN
+      SET_2DA_ENTRY row_number level 3 ~%i%~
+    END
+    COUNT_REGEXP_INSTANCES ~%i%~ count2
+  END
+	
+//Or add new line to end
+  PATCH_IF ((multi != 0) OR (count1 = count2)) BEGIN
+  
+    FOR (n = 1; n < 51; ++n) BEGIN    // set all variables in line to **** as default
+      TEXT_SPRINT EVAL ~a%n%~ ~****~ 
+    END
+
+    PATCH_IF (multi = 0) BEGIN    // add ability to variable(s)
+      TEXT_SPRINT EVAL ~a%level%~ ~%i%~
+    END
+    ELSE BEGIN
+      FOR (x = level; x <= limit; x += increment) BEGIN
+        TEXT_SPRINT EVAL ~a%x%~ ~%i%~
+      END
+    END
+	
+    INSERT_2DA_ROW rows 3 ~ABILITY00 %a1% %a2% %a3% %a4% %a5% %a6% %a7% %a8% %a9% %a10% %a11% %a12% %a13% %a14% %a15% %a16% %a17% %a18% %a19% %a20% %a21% %a22% %a23% %a24% %a25% %a26% %a27% %a28% %a29% %a30% %a31% %a32% %a33% %a34% %a35% %a36% %a37% %a38% %a39% %a40% %a41% %a42% %a43% %a44% %a45% %a46% %a47% %a48% %a49% %a50%~
+    COUNT_REGEXP_INSTANCES ~ABILITY[0-9]*~ count
+    REPLACE_TEXTUALLY ~ABILITY00~ ~ABILITY%count%~
+//  REPLACE_TEXTUALLY ~%a[0-9]*%~ ~****~    // using the FOR action with a%n% instead
+  
+  END
+  
+  PRETTY_PRINT_2DA
+  
+BUT_ONLY
+END
+
+END
+
+////////////////////////////////////////////////////////////

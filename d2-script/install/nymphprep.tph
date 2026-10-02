@@ -4,15 +4,15 @@ variables for nymph script
 
 
 //
-OUTER_SET is_ee = 0
-ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN  OUTER_SET is_ee = 1  END
-ACTION_IF (GAME_IS ~iwdee~)          BEGIN  OUTER_SET is_ee = 2  END
-ACTION_IF (ee_game = 0) BEGIN  OUTER_SET is_ee = 0  END
+OUTER_SET ee_type = 0
+ACTION_IF (GAME_IS ~bgee bg2ee eet~) BEGIN  OUTER_SET ee_type = 1  END
+ACTION_IF (GAME_IS ~iwdee~)          BEGIN  OUTER_SET ee_type = 2  END
+ACTION_IF (ee_game = 0) BEGIN  OUTER_SET ee_type = 0  END
 
-ACTION_IF (is_ee > 0) BEGIN
-  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1002) STR_VAR color=orange RET newstring END
+ACTION_IF (ee_type > 0) BEGIN
+  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1002) STR_VAR color=light RET newstring END
   OUTER_TEXT_SPRINT activate_cooldown ~%newstring%~
-  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1003) STR_VAR color=orange RET newstring END
+  LAF d2_color_string INT_VAR stringref=RESOLVE_STR_REF (@1003) STR_VAR color=light RET newstring END
   OUTER_TEXT_SPRINT disable_cooldown ~%newstring%~
 END ELSE BEGIN
   OUTER_SET activate_cooldown = RESOLVE_STR_REF (@1002)
@@ -23,13 +23,13 @@ END
 
 //
 //trigger variables
-ACTION_IF (is_ee = 2) BEGIN
+ACTION_IF (ee_type = 2) BEGIN
   OUTER_TEXT_SPRINT no_status ~!Race(LastSeenBy(),SWORD)~
 END ELSE BEGIN
   OUTER_TEXT_SPRINT no_status ~!Race(LastSeenBy(),SWORD) !Race(LastSeenBy(),TROLL)~
 END
 
-ACTION_IF (is_ee = 2) BEGIN
+ACTION_IF (ee_type = 2) BEGIN
   OUTER_TEXT_SPRINT no_wounds
 ~
 	!Race(LastSeenBy(),DEMONIC)
@@ -48,7 +48,7 @@ END ELSE BEGIN
   OUTER_TEXT_SPRINT no_wounds ~~
 END
 
-ACTION_IF (is_ee > 0) BEGIN
+ACTION_IF (ee_type > 0) BEGIN
   OUTER_TEXT_SPRINT caster_check
 ~
 	OR(5)
@@ -252,7 +252,7 @@ END
 //
 //function
 DEFINE_PATCH_FUNCTION ddoor_check BEGIN
-  PATCH_IF (is_ee != 1) BEGIN
+  PATCH_IF (ee_type != 1) BEGIN
     REPLACE_TEXTUALLY EXACT_MATCH
       ~ForceSpellRES("BDDDOORX",LastSummonerOf())~
       ~ForceSpell(LastSummonerOf(),WIZARD_DIMENSION_DOOR)~

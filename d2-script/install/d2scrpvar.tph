@@ -1,0 +1,155 @@
+/*
+adjust archer kit aggro range (reduce to 19 for warrior classes)
+also scans for mod kits, can miss some but should get most
+this sets variable "d2archerkit" from the clab table
+*/
+
+
+ACTION_IF (RESOURCE_CONTAINS ~kitlist.2da~  ~berserker~) BEGIN
+
+
+/*how table looks
+ACTION_DEFINE_ASSOCIATIVE_ARRAY d2scrp_archerkits BEGIN
+  ~archer~ => ~clab~
+  ~d2warhound~ => ~clab~
+  ~d2warhoundfm~ => ~multi~
+  ~d2noblescion~ => ~clab~
+END
+*/
+
+  // archer bonuses
+  OUTER_SPRINT bonus  ~spcl122~
+  OUTER_SPRINT calledshot  ~SPCL121~
+  ACTION_IF (GAME_IS ~iwdee~) BEGIN  OUTER_SPRINT bonus ~spcl124~  END
+
+  COPY_EXISTING - ~kitlist.2da~  ~~
+    COUNT_2DA_ROWS 3 kitlist_rows
+    READ_2DA_ENTRIES_NOW ~kitlist_table~ 3
+
+    FOR (row = 1; row < kitlist_rows; ++row) BEGIN
+      READ_2DA_ENTRY_FORMER ~kitlist_table~ row 8 baseclass
+      PATCH_IF (IS_AN_INT baseclass) BEGIN
+        SET check = 0
+        PATCH_IF (baseclass=2 OR baseclass=6 OR baseclass=12) BEGIN    // fighter, ranger, paladin only
+          READ_2DA_ENTRY_FORMER ~kitlist_table~ row 1 ids_name    // ids name
+          READ_2DA_ENTRY_FORMER ~kitlist_table~ row 3 string    // string number
+          READ_2DA_ENTRY_FORMER ~kitlist_table~ row 5 clab      // abilities table
+          PATCH_IF (IS_AN_INT string) BEGIN
+            GET_STRREF string  kitname
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~archer~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~snipe~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~marksman~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~sling~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~throw~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~siege~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~bow~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~dart~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~hawkeye~) BEGIN  SET check = 1  END
+            PATCH_IF (~%ids_name%~ STR_EQ ~d2warhound~) BEGIN  SET check = 1  END
+            PATCH_IF (~%ids_name%~ STR_EQ ~d2noblescion~) BEGIN  SET check = 1  END
+          END
+
+          PATCH_IF (check = 0) BEGIN
+            PATCH_IF (RESOURCE_CONTAINS ~%clab%.2da~ ~%bonus%~) BEGIN  SET check = 1  END ELSE
+            PATCH_IF (RESOURCE_CONTAINS ~%clab%.2da~ ~%calledshot%~) BEGIN  SET check = 1  END
+          END
+        END
+
+        PATCH_IF (baseclass=7 OR baseclass=8 OR baseclass=9 OR baseclass=10 OR baseclass=16 OR baseclass=17 OR baseclass=18
+        ) BEGIN    // multiclass fighters
+          READ_2DA_ENTRY_FORMER ~kitlist_table~ row 1 ids_name
+          READ_2DA_ENTRY_FORMER ~kitlist_table~ row 3 string
+          PATCH_IF (IS_AN_INT string) BEGIN
+            GET_STRREF string  kitname
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~archer~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~snipe~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~marksman~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~sling~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~throw~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~siege~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~bow~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~dart~) BEGIN  SET check = 1  END
+            PATCH_IF !(~%kitname%~ STRING_CONTAINS_REGEXP ~hawkeye~) BEGIN  SET check = 1  END
+            PATCH_IF (~%ids_name%~ STR_EQ ~d2warhoundfm~) BEGIN  SET check = 1  END
+          END
+          SPRINT clab  ~mc_fighter~
+          PATCH_IF (baseclass = 18) BEGIN  SPRINT clab  ~mc_ranger~  END
+        END
+
+        PATCH_IF (check > 0) BEGIN  SPRINT $d2scrp_archerkits (~%ids_name%~) ~%clab%~  END
+      END
+    END
+  IF_EXISTS BUT_ONLY
+
+
+
+  //
+  OUTER_SPRINT denote  ~d2sr19~    // sr = script range
+  OUTER_SPRINT multif  ~%denote%f~    // fighter mc
+  OUTER_SPRINT multir  ~%denote%r~    // ranger mc
+  OUTER_SPRINT var  ~d2archerkit~
+
+  COPY ~inlined/spell.spl~  ~override/%denote%.spl~
+    LPF ALTER_EFFECT INT_VAR opcode=177 parameter2=2 timing=9 STR_VAR resource=~%denote%~ END
+  COPY ~inlined/spell.eff~  ~override/%denote%.eff~
+    WRITE_LONG  0x10  187    // local variable
+    WRITE_LONG  0x1c  1      // set to 1
+    WRITE_ASCII 0xa8 ~%var%~ #32    // variable name
+
+  // for multiclass kits
+  COPY_EXISTING ~%denote%.spl~  ~override/%multif%.spl~
+  COPY_EXISTING ~%denote%.spl~  ~override/%multir%.spl~
+
+  ACTION_PHP_EACH d2scrp_archerkits AS class => table BEGIN
+  //  PRINT ~%class% table is: %table%~
+    ACTION_IF (~%table%~ STR_EQ ~mc_fighter~) BEGIN
+      OUTER_SET d2scrp_multif = 1
+    END ELSE ACTION_IF (~%table%~ STR_EQ ~mc_ranger~) BEGIN
+      OUTER_SET d2scrp_multir = 1
+    END ELSE BEGIN
+      COPY_EXISTING ~%table%.2da~  ~override~
+        LPF d2_kit_ability_adder INT_VAR level=1 passive=1 STR_VAR resource=~%denote%~ END
+      IF_EXISTS BUT_ONLY
+    END
+  END
+
+
+  // for multiclass kits
+  ACTION_IF (IS_AN_INT d2scrp_multif) BEGIN
+    COPY_EXISTING ~%multif%.spl~  ~override~
+      PHP_EACH d2scrp_archerkits AS class => table BEGIN
+        PATCH_IF (~%table%~ STR_EQ ~mc_fighter~) BEGIN
+          SET kitids = IDS_OF_SYMBOL (~kit~  ~%class%~)
+          LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=177 parameter1=kitids parameter2=9 END    // kit targeted effect
+        END
+      END
+      LPF DELETE_EFFECT INT_VAR match_parameter2=2 END
+    BUT_ONLY
+
+    COPY_EXISTING ~CLABFI01.2da~  ~override~
+      LPF d2_kit_ability_adder INT_VAR level=1 passive=1 STR_VAR resource=~%multif%~ END    // add to fighter table
+    BUT_ONLY
+  END
+
+  ACTION_IF (IS_AN_INT d2scrp_multir) BEGIN
+    COPY_EXISTING ~%multir%.spl~  ~override~
+      PHP_EACH d2scrp_archerkits AS class => table BEGIN
+        PATCH_IF (~%table%~ STR_EQ ~mc_ranger~) BEGIN
+          SET kitids = IDS_OF_SYMBOL (~kit~  ~%class%~)
+          LPF CLONE_EFFECT INT_VAR multi_match=1 opcode=177 parameter1=kitids parameter2=9 END    // kit targeted effect
+        END
+      END
+      LPF DELETE_EFFECT INT_VAR match_parameter2=2 END
+    BUT_ONLY
+
+    COPY_EXISTING ~CLABRN01.2da~  ~override~
+      LPF d2_kit_ability_adder INT_VAR level=1 passive=1 STR_VAR resource=~%multir%~ END    // add to ranger table
+    BUT_ONLY
+  END
+
+
+END
+
+
+//
+//

@@ -603,7 +603,7 @@ DEFINE_ACTION_FUNCTION d2_2da_row_adder INT_VAR columns=4 STR_VAR 2da=~~ string=
 END
 
 DEFINE_PATCH_FUNCTION d2_2da_row_adder INT_VAR columns=4 STR_VAR string=~~ BEGIN
-  PATCH_IF (~%SOURCE_EXT%~ STR_EQ ~2da~) BEGIN
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~2da~) OR (~%DEST_EXT%~ STR_EQ ~2da~)) BEGIN
     COUNT_2DA_COLS col_count
     COUNT_2DA_ROWS col_count row_count
 

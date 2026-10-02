@@ -1,0 +1,49 @@
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	ModalState(STEALTH)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	Global("d2autobattle","LOCALS",1)
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
+	!ModalState(STEALTH)
+THEN
+	RESPONSE #100
+		ClearActions(Myself)
+		SetGlobal("d2autobattle","LOCALS",0)
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	InWeaponRange([ENEMY])
+	OR(2)
+		CheckStatGT(Myself,0,TRAPS)
+		CheckStatGT(Myself,0,DETECTILLUSIONS)
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
+	!ModalState(DETECTTRAPS)
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	InWeaponRange([ENEMY])
+	OR(2)
+		StateCheck(Myself,STATE_INVISIBLE)
+		CheckStat(Myself,1,SANCTUARY)
+THEN
+	RESPONSE #100
+		NoAction()
+END

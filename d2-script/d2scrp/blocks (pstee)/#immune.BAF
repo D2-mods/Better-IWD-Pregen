@@ -1,0 +1,128 @@
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	OR(2)
+		CheckStatGT(Myself,0,TRAPS)
+		CheckStatGT(Myself,0,DETECTILLUSIONS)
+	!ModalState(DETECTTRAPS)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+THEN
+	RESPONSE #100
+		FindTraps()
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+THEN
+	RESPONSE #100
+		NoAction()
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([ENEMY])
+		Range([ENEMY],5)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	!InParty([ENEMY])
+THEN
+	RESPONSE #100
+		AttackOneRound(SecondNearestEnemyOf())
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([ENEMY])
+		Range([ENEMY],5)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	!InParty([ENEMY])
+THEN
+	RESPONSE #100
+		AttackOneRound(NearestEnemyOf())
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([ENEMY])
+		Range([ENEMY],5)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	!InParty([ENEMY])
+THEN
+	RESPONSE #100
+		AttackOneRound(ThirdNearestEnemyOf())
+END
+
+IF
+	!Global("d2scrp_mode","LOCALS",2)
+	ActionListEmpty()
+	!StateCheck(Myself,STATE_INVISIBLE)
+	CheckStatLT(Myself,1,SANCTUARY)
+	OR(2)
+		InWeaponRange([ENEMY])
+		Range([ENEMY],5)
+	OR(2)
+		!WeaponEffectiveVs(NearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(NearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(SecondNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(SecondNearestEnemyOf(),MAINHAND)
+	OR(2)
+		!WeaponEffectiveVs(ThirdNearestEnemyOf(),MAINHAND)
+		!WeaponCanDamage(ThirdNearestEnemyOf(),MAINHAND)
+	WeaponEffectiveVs(TenthNearestEnemyOf(),MAINHAND)
+	WeaponCanDamage(TenthNearestEnemyOf(),MAINHAND)
+	!InParty([ENEMY])
+THEN
+	RESPONSE #100
+		AttackOneRound(TenthNearestEnemyOf())
+END
