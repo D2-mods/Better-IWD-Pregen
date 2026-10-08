@@ -12,7 +12,8 @@ END
 
 ACTION_IF (ee_game>0 OR bg2_engine>0) BEGIN
   INCLUDE ~%install%/inlined.tph~
-  INCLUDE ~%install%/d2scrpvar.tph~
+  INCLUDE ~%install%/d2scrpvar13.tph~
+  INCLUDE ~%install%/d2scrpvar19.tph~
 END
 
 

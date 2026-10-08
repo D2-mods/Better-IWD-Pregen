@@ -31,6 +31,33 @@ This file contains text displayed in the game
 
 
 
+/*
+for text matching, installer scans kit text and looks for one of these words in the name
+this is one of several checks, it also checks clab abilities and/or internal ids names
+*/
+@272401 = ~archer~
+@272402 = ~sniper~
+@272403 = ~marksman~
+@272404 = ~sling~
+@272405 = ~throw~
+@272406 = ~siege~
+@272407 = ~bow~
+@272408 = ~dart~
+@272409 = ~hawkeye~
+
+@536701 = ~kensai~
+@536702 = ~monk~
+@536703 = ~ninja~
+@536704 = ~shadow~
+@536705 = ~shinobi~
+@536706 = ~blade~
+@536707 = ~thief~
+@536708 = ~dancer~
+@536709 = ~assassin~
+
+
+
+
 //
 //Script descriptions
 
@@ -122,10 +149,6 @@ Cooldown mode sets the range to 5 feet for all classes.
    Mode 3: Default script^-~
 
 @778711 = ~Check your journal or keep this note if you need a reminder.~
-
-
-
-
 
 
 

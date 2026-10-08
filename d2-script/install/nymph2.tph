@@ -20,6 +20,51 @@ COPY ~%nymph%/nymphspeed.SPL~  ~override/d2cwfey.SPL~
 
 
 
+//add entangle variant
+
+//functions
+DEFINE_PATCH_FUNCTION spell_edits INT_VAR proj=1 BEGIN
+  LPF ALTER_SPELL_HEADER INT_VAR range=1000 projectile=proj END
+  WRITE_LONG 0x18 (THIS | BIT25)
+  WRITE_LONG 0x18 (THIS BAND BNOT BIT10)    // non-hostile (unless damage taken)
+  LPF ALTER_EFFECT INT_VAR silent=1 STR_VAR match_resource=~%SOURCE_RES%~ resource=~%DEST_RES%~ END
+
+  PATCH_IF (ee_type > 0) BEGIN
+//  LPF d2_safe_spell INT_VAR block_opcode=154 END    // not needed: projectile is enemies only
+  END
+END
+
+DEFINE_PATCH_FUNCTION entangle_edits INT_VAR savebonus=0 duration=8 acdebuff=1 acsaves=1 nostacking=0 BEGIN
+  // 8 seconds entangle (normally 7 in iwd and 9 in bg2)
+  LPF ALTER_EFFECT INT_VAR silent=1 match_timing=0 duration=duration END
+  LPF ALTER_EFFECT INT_VAR silent=1 match_timing=4 duration=duration END
+  LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=318 match_timing=0 duration=0 END
+  LPF ALTER_EFFECT INT_VAR silent=1 match_opcode=324 match_timing=0 duration=0 END
+
+  // add -2 ac penalty if it doesn't already have it
+  PATCH_IF (acdebuff > 0) BEGIN
+    READ_LONG 0x34 power
+    LPF DELETE_EFFECT INT_VAR match_opcode=0 END
+    LPF ADD_SPELL_EFFECT INT_VAR opcode=0 target=2 power=power parameter1=(0 - 2) resist_dispel=1 duration=duration savingthrow=acsaves END
+  END
+
+  // prevent stacking with Entangle spell (note: BG1EE is the only game that prevents stacking entangles)
+  PATCH_IF (nostacking > 0) BEGIN
+    PATCH_IF (ee_game > 0) BEGIN
+      LPF CLONE_EFFECT INT_VAR match_opcode=154 opcode=321 parameter2=0 timing=1 duration=0 STR_VAR resource=~%DEST_RES%~ insert=first END
+      LPF CLONE_EFFECT INT_VAR match_opcode=154 opcode=321 parameter2=0 timing=1 duration=0 STR_VAR resource=SPPR105 insert=first END
+    END
+    LPF CLONE_EFFECT INT_VAR match_opcode=154 opcode=206 parameter1=0 duration=(duration - 1) STR_VAR resource=SPPR105 insert=first END
+  END
+
+  // save bonus
+  LPF ALTER_EFFECT INT_VAR savebonus=savebonus END
+  PATCH_IF (savebonus != 0) BEGIN
+    LPF ALTER_EFFECT INT_VAR silent=1 match_savingthrows=0 savebonus=0 END
+  END
+END
+
+
 //clone and edit projectile (classic BG2 only)
 ACTION_IF (ee_game > 0) BEGIN
   OUTER_SPRINT proj  ~%files%/entangle.pro~
@@ -42,7 +87,7 @@ COPY_EXISTING ~%res%.pro~  ~override~
     WRITE_ASCII 0x238  ~%res%~ #8  // area sound
   END
   WRITE_SHORT 0x210  100        // explosion frequency
-  WRITE_BYTE  0x216  8          // repetitions
+  WRITE_BYTE  0x216  5          // repetitions
   WRITE_SHORT 0x204  projarea   // trap size
   WRITE_SHORT 0x206  projarea   // explosion size
 //  WRITE_LONG  0x2c  (THIS | BIT12)  // falling path
@@ -54,18 +99,10 @@ COPY ~%files%/entangle.wav~  ~override/%res%.wav~    // use iwd sound (res confl
 
 //clone entangle (party friendly)
 COPY_EXISTING ~SPPR105.spl~  ~override/%res%.SPL~
-  LPF ALTER_SPELL_HEADER INT_VAR range=1000 projectile=entangle_proj END
-  WRITE_LONG 0x18 (THIS | BIT25)
-  WRITE_LONG 0x18 (THIS BAND BNOT BIT10)    // non-hostile (unless damage taken)
-  PATCH_IF (ee_type > 0) BEGIN
-    LPF update_op324_restrictions INT_VAR match=1 END
-    LPF d2_safe_spell INT_VAR neutrals=0 block_opcode=154 duration=5 END
-  END
-  LPF ALTER_EFFECT INT_VAR savebonus=0 END
+  LPF spell_edits INT_VAR proj=entangle_proj END
+  LPF entangle_edits END
 
 OUTER_TEXT_SPRINT nymph_entangle ~"%res%"~
-
-//CLERIC_SUMMON_INSECTS (replace CLERIC_MISCAST_MAGIC in scripts)
 
 
 

@@ -22,6 +22,8 @@ read_or_set_areascript        PATCH
 hla_multiclass_minlevel       PATCH
 d2_cloneproj                  PATCH or ACTION
 d2_savingthrows               PATCH
+d2_extraplanar_immune         PATCH
+d2_extraplanar_eff            PATCH
 */
 
 ////////////////////////////////////////////////////////////
@@ -790,6 +792,90 @@ BEGIN
     LPF ALTER_EFFECT INT_VAR check_globals=0 silent=1 savingthrow=0 savebonus=0 special=0 END
   END
 
+END
+
+////////////////////////////////////////////////////////////
+
+//adds op318 or op324 immunities for extraplanar races
+//adds as header effects only
+
+DEFINE_PATCH_FUNCTION d2_extraplanar_immune INT_VAR opcode=318 duration=0 overwrite=1 BEGIN
+  SET mephit = IDS_OF_SYMBOL (~race~ ~mephit~)
+  SET elemental = IDS_OF_SYMBOL (~race~ ~elemental~)
+  SET genie = IDS_OF_SYMBOL (~race~ ~genie~)
+  SET githyanki = IDS_OF_SYMBOL (~race~ ~githyanki~)
+  SET rakshasa = IDS_OF_SYMBOL (~race~ ~rakshasa~)
+  SET tiefling = IDS_OF_SYMBOL (~race~ ~tiefling~)
+  SET solar = IDS_OF_SYMBOL (~race~ ~solar~)
+  SET antisolar = IDS_OF_SYMBOL (~race~ ~antisolar~)
+  SET planatar = IDS_OF_SYMBOL (~race~ ~planatar~)
+  SET darkplanatar = IDS_OF_SYMBOL (~race~ ~darkplanatar~)
+
+  PATCH_IF (overwrite > 0) BEGIN
+    LPF DELETE_EFFECT INT_VAR match_opcode=318 match_parameter2=104 END
+  END
+  PATCH_IF (opcode!=318 && opcode!=324) BEGIN  SET opcode=318  END
+
+  PATCH_FOR_EACH idsnum IN
+    ~%mephit%~ ~%elemental%~ ~%genie%~ ~%githyanki%~ ~%rakshasa%~
+    ~%tiefling%~ ~%solar%~ ~%antisolar%~ ~%planatar%~ ~%darkplanatar%~
+  BEGIN
+    PATCH_IF (idsnum > 0) BEGIN
+      LPF d2_protect_on_castequip
+        INT_VAR globals=0 headers=1 opcode=opcode cre_type=104 cre_special=idsnum duration=duration overwrite=0
+        STR_VAR insert=first
+      END
+    END
+  END
+END
+
+////////////////////////////////////////////////////////////
+
+//use the "resource" eff on extraplanar races
+//SPLs - if no INT_VARs are set, adds as instant effect (0 duration)
+//ITMs - if no INT_VARs are set, adds as equipped effect
+
+DEFINE_PATCH_FUNCTION d2_extraplanar_eff
+  INT_VAR globals=~-1~ headers=~-1~ timing=~-1~ duration=0 overwrite=1 STR_VAR resource=None
+BEGIN
+  SET mephit = IDS_OF_SYMBOL (~race~ ~mephit~)
+  SET elemental = IDS_OF_SYMBOL (~race~ ~elemental~)
+  SET genie = IDS_OF_SYMBOL (~race~ ~genie~)
+  SET githyanki = IDS_OF_SYMBOL (~race~ ~githyanki~)
+  SET rakshasa = IDS_OF_SYMBOL (~race~ ~rakshasa~)
+  SET tiefling = IDS_OF_SYMBOL (~race~ ~tiefling~)
+  SET solar = IDS_OF_SYMBOL (~race~ ~solar~)
+  SET antisolar = IDS_OF_SYMBOL (~race~ ~antisolar~)
+  SET planatar = IDS_OF_SYMBOL (~race~ ~planatar~)
+  SET darkplanatar = IDS_OF_SYMBOL (~race~ ~darkplanatar~)
+
+  PATCH_IF (overwrite > 0) BEGIN
+    LPF DELETE_EFFECT INT_VAR match_opcode=177 match_parameter2=3 STR_VAR match_resource=EVAL ~%resource%~ END
+  END
+  PATCH_IF (~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~) BEGIN
+    PATCH_IF (globals < 0) BEGIN  SET globals = 0  END
+    PATCH_IF (headers < 0) BEGIN  SET headers = 1  END
+    PATCH_IF (timing < 0) BEGIN  SET timing = 0  END
+  END
+  PATCH_IF (~%SOURCE_EXT%~ STR_EQ ~itm~) OR (~%DEST_EXT%~ STR_EQ ~itm~) BEGIN
+    PATCH_IF (globals < 0) BEGIN  SET globals = 1  END
+    PATCH_IF (headers < 0) BEGIN  SET headers = 0  END
+    PATCH_IF (timing<0 && globals>0) BEGIN  SET timing = 2  END
+    PATCH_IF (timing<0 && headers>0) BEGIN  SET timing = 0  END
+  END
+
+  PATCH_FOR_EACH idsnum IN
+    ~%mephit%~ ~%elemental%~ ~%genie%~ ~%githyanki%~ ~%rakshasa%~
+    ~%tiefling%~ ~%solar%~ ~%antisolar%~ ~%planatar%~ ~%darkplanatar%~
+  BEGIN
+    PATCH_IF (idsnum > 0) BEGIN
+      LPF CLONE_EFFECT
+        INT_VAR check_globals=globals check_headers=headers multi_match=1
+                opcode=177 parameter1=idsnum parameter2=4 timing=timing duration=duration
+        STR_VAR resource=EVAL ~%resource%~
+      END
+    END
+  END
 END
 
 ////////////////////////////////////////////////////////////

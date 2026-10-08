@@ -20,7 +20,16 @@ A minimalist script and tweak pack for Infinity Engine games. This mod was start
 - added Shapeshifts can talk (EEs, BG2)
 - major update for Starting items tweak ([update notes](https://github.com/D2-mods/Better-IWD-Pregen#starting-items-tweak-all-iwd-games-bgeeeetbgt-classic-adventures)), supports more games, supports proficiency overhauls, bug fixes, scripting improvements, etc.
 
-> PSTEE note: Generalized Biffing is not required for PSTEE. The bag from this mod will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas or store files.
+--
+
+**Recommended fixpacks:**
+- All Enhanced Editions: G3 EE Fixpack (https://www.gibberlings3.net/mods/fixes/eefp/)
+- BG1 engine: BGFixPack (https://github.com/Sasha-alTherin/BGFixPack)
+- BG2 engine: G3 BG2 Fixpack (https://www.gibberlings3.net/mods/fixes/bg2fixpack/)
+- IWD1 engine: G3 IWD Fixpack (https://www.gibberlings3.net/mods/fixes/iwd_fixpack/)
+- IWD2 engine: Almateria's IWD2 Fixpack (https://github.com/Spellhold-Studios/Almateria-IWD2-Fixpack/releases)
+
+> Note: For the non-EE games, any installer warnings without these fixpacks installed will not be considered issues.
 
 --
 

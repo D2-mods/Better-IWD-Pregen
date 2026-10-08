@@ -20,7 +20,16 @@ Recent updates:
 - added "Make items stackable to 999" (weapons and magic items optional)
 - added Shapeshifts can talk (EEs, BG2)
 
-PSTEE note: Generalized Biffing is not required for the bag component. The bag contents will not reset when doing the Modron Maze (it is biffed automatically when installing). However, it's still recommended to install Generalized Biffing (option 2 - biff all) if using any other mods that edit areas or store files.
+--
+
+Recommended fixpacks:
+- All Enhanced Editions: G3 EE Fixpack (https://www.gibberlings3.net/mods/fixes/eefp/)
+- BG1 engine: BGFixPack (https://github.com/Sasha-alTherin/BGFixPack)
+- BG2 engine: G3 BG2 Fixpack (https://www.gibberlings3.net/mods/fixes/bg2fixpack/)
+- IWD1 engine: G3 IWD Fixpack (https://www.gibberlings3.net/mods/fixes/iwd_fixpack/)
+- IWD2 engine: Almateria's IWD2 Fixpack (https://github.com/Spellhold-Studios/Almateria-IWD2-Fixpack/releases)
+
+Note: For the non-EE games, any installer warnings without these fixpacks installed will not be considered issues.
 
 --
 
@@ -85,8 +94,8 @@ Notes on a few mods:
 ==================================================
 Script Compatibility (v4.0+)
 ==================================================
-EEs: BG:EE, BG2:EE, IWD:EE, EET (tested on v2.5/v2.6)
-Classic: BG1, BG2, IWD1, IWD2 (tested with GOG versions)
+EEs: BG1:EE, BG2:EE, IWD:EE, PST:EE, including EET
+Classic: BG1, BG2, IWD1, IWD2, including BGT and IWD2:EE
 
 Also compatible with any BG2 conversion mods (ex. BGT or Classic Adventures).
 
@@ -95,7 +104,7 @@ TobEx (v26/v28): Compatibility issues should be fixed (v3.7 and later).
 TobEx Afterlife: Use v29.10 or later. (https://github.com/Spellhold-Studios/TobEx-AfterLife/releases)
 Improved GUI mod: Use v5.1 or later. (https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases)
 
-NOTE: I'm not 100% sure the scripts work with expansionless versions of the classic games.
+Note: I'm not 100% sure the scripts work with expansionless versions of the classic games.
 
 
 ==================================================
@@ -141,6 +150,14 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v9.1
+tweaking for EEs and BG engine games
+- script component: moved text matching strings to the .tra file. Also added more internal ids name checks.
+- script component: Archer type kits now have a melee aggro range of 13-ft., same as cleric and thief classes. This is reduced from the 19-ft. range used in the v9.0.
+- script component: The installer now also identifies kensai/monk type warrior kits. They will have a max melee range of 19-ft., which is the same as kensais already were, but now also searches for mod kits under the warrior classes, including custom multiclasses.
+- Call Woodland Beings scripting: The entangle spell cast by the revised nymph script now has standardized effects across games (15-ft. radius, 5 rounds duration, -2 ac penalty, no save bonus).
+- added list of recommended fixpacks to the readme.
+
 v9.0
 PSTEE: now compatible with main script component.
 - The way it works is different since you can't switch scripts in the menu. Instead the new script blocks are added directly on top of the existing scripts for each character. Existing scripts, including other mod edits, are not changed other than adding a mode check for each script block.
