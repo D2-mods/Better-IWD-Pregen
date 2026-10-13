@@ -73,7 +73,7 @@ Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
 	2. Enemy is within 19 ft.
 	3. Attacked by enemy
 
-Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
+Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief, Archers
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 13 ft.

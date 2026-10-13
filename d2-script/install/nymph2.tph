@@ -93,6 +93,7 @@ COPY_EXISTING ~%res%.pro~  ~override~
 //  WRITE_LONG  0x2c  (THIS | BIT12)  // falling path
   WRITE_SHORT 0x200 (THIS | BIT6)   // enemies only
   WRITE_SHORT 0x200 (THIS | BIT12)  // ignore los
+BUT_ONLY
 OUTER_SET entangle_proj = projnum
 COPY ~%files%/entangle.wav~  ~override/%res%.wav~    // use iwd sound (res conflict with BG games)
 

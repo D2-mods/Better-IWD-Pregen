@@ -23,26 +23,26 @@ Recent updates:
 --
 
 Recommended fixpacks:
-- All Enhanced Editions: G3 EE Fixpack (https://www.gibberlings3.net/mods/fixes/eefp/)
-- BG1 engine: BGFixPack (https://github.com/Sasha-alTherin/BGFixPack)
+- EE engine: G3 EE Fixpack (https://www.gibberlings3.net/mods/fixes/eefp/)
+- BG1 engine: BGFixPack, original repo (https://github.com/Sasha-alTherin/BGFixPack)
+- BG1 engine: BGFixPack, fork with updates (https://github.com/eyre-j/BGFixPack)
 - BG2 engine: G3 BG2 Fixpack (https://www.gibberlings3.net/mods/fixes/bg2fixpack/)
 - IWD1 engine: G3 IWD Fixpack (https://www.gibberlings3.net/mods/fixes/iwd_fixpack/)
 - IWD2 engine: Almateria's IWD2 Fixpack (https://github.com/Spellhold-Studios/Almateria-IWD2-Fixpack/releases)
 
-Note: For the non-EE games, any installer warnings without these fixpacks installed will not be considered issues.
+Note: For the non-EE games, any installer warnings without the fixpacks installed will not be considered issues.
 
 --
 
-Updated IWD Starting items tweak (summary of major points):
-- now supports IWD1, IWD2, IWD:EE, IWD-in-BG2, IWD2:EE, Classic Adventures, Tutu, BGEE/EET/BGT (BG1 part only).
-- Scripting is now done for all PCs simultaneously instead of one at a time.
-- EEs/BG2 engine: autoequip option now accounts for mastery and specialization (up to 3+).
-- Autoequip option is now compatible with proficiency overhauls, install this mod after anything that changes proficiencies.
-- IWDEE: fixed the issue that could pause the scripting when starting a new game. (note: fix is only for this mod. If you see this issue with other mods, saving and reloading should fix it.)
-- better reliability on original BG2 engine (i.e. fixed issues that could prevent gaining items).
-- Bag option: adjusted item order, added a couple items that were previously intentionally left out (ex. heavy crossbow).
-- accounts for some additional mod items if detected (rr shortbows, project javelin).
-- added journal entry, bug fixes, other improvements (better weapon mix for IWD1/IWD2, etc.).
+Engine enhancements (some are Windows only):
+- EE engine: EEex (https://github.com/Bubb13/EEex/releases)
+- BG1 engine: Enhanced Widescreen (https://github.com/Bubb13/EnhancedWidescreen/releases)
+- BG2 engine: TobEx (https://github.com/BGforgeNet/TobEx/releases)
+- BG2 engine: TobEx AfterLife (https://github.com/Spellhold-Studios/TobEx-AfterLife/releases)
+- BG2 engine: Improved GUI (https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases)
+- IWD2 engine: IWD2EE (https://github.com/RedChimera/IWD2EE/releases)
+
+Note: These are not required but I do my modding work with these installed. I do test without them, but not for every update.
 
 
 ==================================================
@@ -121,8 +121,8 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 Tools/Coding
 ==================================================
 Custom Functions:
-- CD_LEVEL_SELECT-O-MATIC, by CamDawg (https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220)
-- 2DA_MISSING_COLS - by K4thos (https://github.com/K4thos/IE-code-repository)
+- CD_LEVEL_SELECT-O-MATIC by CamDawg (https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220)
+- 2DA_MISSING_COLS by K4thos (https://github.com/K4thos/IE-code-repository)
 
 Tools and Resources used:
 - WeiDU (https://github.com/WeiDUorg/weidu)
@@ -150,8 +150,12 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v9.2
+- fix possible install error that could happen if the main script component was installed after an item mod that used exclamation marks in the filenames for the ITM files. The script component would install fine, but all other components would error out.
+- add list of Engine enhancements under the Recommended fixpacks list.
+
 v9.1
-tweaking for EEs and BG engine games
+tweaking for EEs and BG2 engine games
 - script component: moved text matching strings to the .tra file. Also added more internal ids name checks.
 - script component: Archer type kits now have a melee aggro range of 13-ft., same as cleric and thief classes. This is reduced from the 19-ft. range used in the v9.0.
 - script component: The installer now also identifies kensai/monk type warrior kits. They will have a max melee range of 19-ft., which is the same as kensais already were, but now also searches for mod kits under the warrior classes, including custom multiclasses.

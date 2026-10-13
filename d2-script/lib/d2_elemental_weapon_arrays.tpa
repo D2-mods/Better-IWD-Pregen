@@ -1,5 +1,11 @@
-//Fire, Cold, Electrical, Acid weapons (skips consumable ammo)
-//also a function at the end for adding mod items to arrays (and to a file in override)
+/*
+makes arrays of fire, cold, acid, lightning weapons
+also a function at the end for adding mod items to arrays
+
+d2-script mod uses trollarrays.tph to scan mod items and add to array/file
+Items with a ! in the resource name can be in array but are not added to text file
+*/
+
 
 /*array list
 d2fireweap
@@ -9,13 +15,14 @@ d2acidweap
 */
 
 
-//clear arrays (everything gets added back)
+//clear arrays
 ACTION_CLEAR_ARRAY ~d2fireweap~
 ACTION_CLEAR_ARRAY ~d2coldweap~
 ACTION_CLEAR_ARRAY ~d2electricalweap~
 ACTION_CLEAR_ARRAY ~d2acidweap~
 
 
+//add base game items to arrays
 ACTION_DEFINE_ASSOCIATIVE_ARRAY d2fireweap BEGIN    // resource => type (weap or temp)
   bdblun09 => fireweap
   bddagg01 => fireweap
@@ -205,16 +212,19 @@ ACTION_IF (FILE_EXISTS ~override/d2_elemental_weapon_arrays.txt~) BEGIN
   REINCLUDE ~override/d2_elemental_weapon_arrays.txt~
 END
 
+//file names with a ! symbol can be in array but are not added to the txt file
+
 
 
 //add mod weapons to arrays
-//also adds to d2_elemental_weapon_arrays file in override
+//also adds to d2_elemental_weapon_arrays.txt in override
 
 /*example 
 LAF d2_elemental_weapon_arrays STR_VAR item=~fireacid~ element=~fire acid~ RET_ARRAY d2fireweap d2acidweap END
 
-This adds the item "fireacid" to array of fire and acid damage weapons.
-Use RET_ARRAY to get the results of the arrays.
+This adds the item fireacid.itm to d2fireweap and d2acidweap arrays.
+Use RET_ARRAY to get the updated arrays for current install.
+Arrays are reset to base items each time you INCLUDE this function file
 */
 
 
@@ -308,17 +318,19 @@ END
     OUTER_TEXT_SPRINT damagetype ~%element2%~
     OUTER_SET add_to_array = EVAL ~%damagetype%~
 
-    ACTION_IF (%add_to_array% > 0) BEGIN
+    ACTION_IF (add_to_array > 0) BEGIN
 
-      //add item to array
+      // add item to array
       ACTION_DEFINE_ASSOCIATIVE_ARRAY ~d2%element2%weap~ BEGIN    // resource => result
         ~%item%~ => ~%result%~
       END
   
-      //add item to file in override
-      COPY ~override/d2_elemental_weapon_arrays.txt~  ~override~
-        REPLACE_TEXTUALLY ~%element2% => %result%~  ~%element2% => %result%%WNL%  %item% => %result%~
-      BUT_ONLY UNLESS ~%item% => %result%~
+      // add item to file in override
+      ACTION_IF (~%item%~ STRING_CONTAINS_REGEXP ~!~) BEGIN    // skip if name has ! (workaround for install errors)
+        COPY ~override/d2_elemental_weapon_arrays.txt~  ~override~
+          REPLACE_TEXTUALLY ~%element2% => %result%~  ~%element2% => %result%%WNL%  %item% => %result%~
+        BUT_ONLY UNLESS ~%item% => %result%~
+      END
 
     END
   END

@@ -23,13 +23,26 @@ A minimalist script and tweak pack for Infinity Engine games. This mod was start
 --
 
 **Recommended fixpacks:**
-- All Enhanced Editions: G3 EE Fixpack (https://www.gibberlings3.net/mods/fixes/eefp/)
-- BG1 engine: BGFixPack (https://github.com/Sasha-alTherin/BGFixPack)
+- EE engine: G3 EE Fixpack (https://www.gibberlings3.net/mods/fixes/eefp/)
+- BG1 engine: BGFixPack, original repo (https://github.com/Sasha-alTherin/BGFixPack)
+- BG1 engine: BGFixPack, fork with updates (https://github.com/eyre-j/BGFixPack)
 - BG2 engine: G3 BG2 Fixpack (https://www.gibberlings3.net/mods/fixes/bg2fixpack/)
 - IWD1 engine: G3 IWD Fixpack (https://www.gibberlings3.net/mods/fixes/iwd_fixpack/)
 - IWD2 engine: Almateria's IWD2 Fixpack (https://github.com/Spellhold-Studios/Almateria-IWD2-Fixpack/releases)
 
-> Note: For the non-EE games, any installer warnings without these fixpacks installed will not be considered issues.
+> Note: For the non-EE games, any installer warnings without the fixpacks installed will not be considered issues.
+
+--
+
+**Engine enhancements (some are Windows only):**
+- EE engine: EEex (https://github.com/Bubb13/EEex/releases)
+- BG1 engine: Enhanced Widescreen (https://github.com/Bubb13/EnhancedWidescreen/releases)
+- BG2 engine: TobEx (https://github.com/BGforgeNet/TobEx/releases)
+- BG2 engine: TobEx AfterLife (https://github.com/Spellhold-Studios/TobEx-AfterLife/releases)
+- BG2 engine: Improved GUI (https://github.com/Spellhold-Studios/BG2-Improved-GUI/releases)
+- IWD2 engine: IWD2EE (https://github.com/RedChimera/IWD2EE/releases)
+
+> Note: These are not required but I do my modding work with these installed. I do test without them, but not for every update.
 
 --
 
@@ -238,7 +251,7 @@ Class: Kensai, Monk, Shapeshift/Polymorph (without Fighter levels)
 	2. Enemy is within 19 ft.
 	3. Attacked by enemy
 
-Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief
+Class: Cleric, Druid, Shaman, Thief, Bard, Cleric/Thief, Archers
 	Conditions (one must be met to auto-attack)
 	1. Enemy is within range of the currently equipped weapon
 	2. Enemy is within 13 ft.
