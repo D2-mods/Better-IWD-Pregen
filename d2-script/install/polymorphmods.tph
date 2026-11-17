@@ -14,7 +14,9 @@ OUTER_SET printmode = 1
 
 PRINT ~scanning for spells not in preset list ... (this might take a while)~
 COPY_EXISTING_REGEXP - GLOB ~.*\.SPL~  ~~
-  PATCH_IF (SOURCE_SIZE > 0x99) BEGIN    // skip if no headers
+
+  LPF d2_validate_spellitem RET is_valid END
+  PATCH_IF (is_valid && SOURCE_SIZE > 0x99) BEGIN    // skip if no headers
     SET check = 1
     SET shapeshift = 0
     PHP_EACH polymorphspells AS spell => array BEGIN
@@ -55,7 +57,9 @@ END
 
 PRINT ~scanning for items not in preset list ...~
 COPY_EXISTING_REGEXP - GLOB ~.*\.ITM~  ~~
-  PATCH_IF (SOURCE_SIZE > 0xa0) BEGIN    // skip if no effects
+
+  LPF d2_validate_spellitem RET is_valid END
+  PATCH_IF (is_valid && SOURCE_SIZE > 0xa0) BEGIN    // skip if no effects
     SET check = 1
     SET shapeshift = 0
     PHP_EACH polymorphitems AS item => array BEGIN

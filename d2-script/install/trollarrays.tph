@@ -35,7 +35,8 @@ END
 
 COPY_EXISTING_REGEXP - GLOB ~.*\.itm~  ~override~
 
-  PATCH_IF (SOURCE_SIZE > 0xd9) BEGIN    // big enough for at least one header + effect
+  LPF d2_validate_spellitem RET is_valid END
+  PATCH_IF (is_valid && SOURCE_SIZE > 0xd9) BEGIN    // big enough for at least one header + effect
 
     READ_BYTE 0x74 headertype
     READ_LONG 0x18 flags

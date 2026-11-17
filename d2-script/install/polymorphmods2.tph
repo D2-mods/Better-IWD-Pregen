@@ -1,7 +1,5 @@
 /*
-run after polymorpharrays.tph
-SPLs count as druid, or polymorph if spelltype is wizard
-ITMs count as both druid and polymorph
+alt file, not used
 */
 
 
@@ -25,7 +23,8 @@ ACTION_BASH_FOR ~override~ ~.*\.SPL$~ BEGIN
 
   ACTION_IF (check > 0) BEGIN
     COPY - ~%BASH_FOR_FILESPEC%~  ~~
-      PATCH_IF (SOURCE_SIZE > 0x99) BEGIN    // skip if no headers
+      LPF d2_validate_spellitem RET is_valid END
+      PATCH_IF (is_valid && SOURCE_SIZE > 0x99) BEGIN    // skip if no headers
         GET_OFFSET_ARRAY spl_headers  SPL_V10_HEADERS
         PHP_EACH spl_headers AS num => header_off BEGIN      // array of headers
           PATCH_IF (shapeshift = 0) BEGIN
@@ -71,7 +70,8 @@ ACTION_BASH_FOR ~override~ ~.*\.ITM$~ BEGIN
 
   ACTION_IF (check > 0) BEGIN
     COPY - ~%BASH_FOR_FILESPEC%~  ~~
-      PATCH_IF (SOURCE_SIZE > 0xa0) BEGIN               // skip if no effects
+      LPF d2_validate_spellitem RET is_valid END
+      PATCH_IF (is_valid && SOURCE_SIZE > 0xa0) BEGIN    // skip if no effects
         GET_OFFSET_ARRAY itm_equip  ITM_V10_GEN_EFFECTS
         PHP_EACH itm_equip AS num => equip_off BEGIN    // array of equipped effects
           PATCH_IF (shapeshift = 0) BEGIN

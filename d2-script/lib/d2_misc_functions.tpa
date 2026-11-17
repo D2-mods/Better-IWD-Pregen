@@ -24,6 +24,7 @@ d2_cloneproj                  PATCH or ACTION
 d2_savingthrows               PATCH
 d2_extraplanar_immune         PATCH
 d2_extraplanar_eff            PATCH
+d2_set_spell_schools          PATCH
 */
 
 ////////////////////////////////////////////////////////////
@@ -590,26 +591,32 @@ END
 ////////////////////////////////////////////////////////////
 
 //read or set script name/death variable (all IE games)
-//does not change scriptname if it has one already
-//if "name" variable not set, it automatically uses the CRE resource
-//if "replace" is set to 1, it overwrites existing name
-//scriptname and deathvar are the same thing, you can return either if needed
+//does not change scriptname if it has one already (unless replace=1)
+//if "name" variable is not set, it automatically uses the CRE resource
+//RET variables are the same thing, can use either
 
 DEFINE_PATCH_FUNCTION read_or_set_scriptname INT_VAR replace=0 STR_VAR name=~~ RET scriptname deathvar BEGIN
   PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~cre~) OR (~%DEST_EXT%~ STR_EQ ~cre~)) BEGIN
+    // set "name" to creature resource if not set
     PATCH_IF (~%name%~ STR_EQ ~~) BEGIN  TEXT_SPRINT name  ~%DEST_RES%~  END
+
+    // script name offset
     SET offset = 0x280
     PATCH_IF (GAME_IS ~iwd2~) BEGIN  SET offset = 0x394  END
     PATCH_IF (GAME_IS ~iwd how totlm~) BEGIN  SET offset = 0x2e8  END
-
     READ_ASCII offset deathvar (32) NULL
+
+    // check if it already has a script name
     SET novar = 0
     PATCH_IF (~%deathvar%~ STR_EQ ~~) BEGIN  SET novar = 1  END
     PATCH_IF (~%deathvar%~ STR_EQ ~None~) BEGIN  SET novar = 1  END
 
-    PATCH_IF (novar>0 OR replace>0) BEGIN    // use "name" var if none or if replace=1
+    // change to match "name" if it doesn't have one (or if replace=1)
+    PATCH_IF (novar>0 OR replace>0) BEGIN
       TEXT_SPRINT deathvar  ~%name%~
     END
+
+    // write script name into offset
     WRITE_EVALUATED_ASCII  offset ~%deathvar%~ #32
     TEXT_SPRINT scriptname  ~%deathvar%~
   END
@@ -625,24 +632,31 @@ END
 ////////////////////////////////////////////////////////////
 
 //read or set area script (all IE games)
-//does not change current script if it has one already
-//if "script" variable not set, it automatically uses the ARE resource
-//if "replace" is set to 1, it overwrites existing script
+//does not change current script if it has one already (unless replace=1)
+//if "script" variable is not set, it automatically uses the ARE resource
+//RET variables are the same thing, can use either
 
 DEFINE_PATCH_FUNCTION read_or_set_areascript INT_VAR replace=0 STR_VAR script=~~ RET areascript script BEGIN
   PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~are~) OR (~%DEST_EXT%~ STR_EQ ~are~)) BEGIN
+    // set "script" to area resource if not set
     PATCH_IF (~%script%~ STR_EQ ~~) BEGIN  TEXT_SPRINT script  ~%DEST_RES%~  END
+
+    // area script offset
     SET offset = 0x94
     PATCH_IF (GAME_IS ~iwd2~) BEGIN  SET offset = 0xa4  END
-
     READ_ASCII offset bcs (8) NULL
+
+    // check if it already has an area script
     SET noscript = 0
     PATCH_IF (~%bcs%~ STR_EQ ~~) BEGIN  SET noscript = 1  END
     PATCH_IF (~%bcs%~ STR_EQ ~None~) BEGIN  SET noscript = 1  END
 
-    PATCH_IF (noscript=0 && replace<1) BEGIN    // use current script if it has one, unless replace=1
+    // change to existing script if it has one (unless replace=1)
+    PATCH_IF (noscript=0 && replace<1) BEGIN
       TEXT_SPRINT script  ~%bcs%~
     END
+
+    // write script into offset
     WRITE_EVALUATED_ASCII  offset ~%script%~ #8
     TEXT_SPRINT areascript  ~%script%~
   END
@@ -876,6 +890,90 @@ BEGIN
       END
     END
   END
+END
+
+////////////////////////////////////////////////////////////
+
+//writes to spell header or adds to item extended headers
+//header and header_type variables for for items only (default type=3)
+//function does nothing if none of the school/type variables are set
+
+/*notes
+ptype and stype or an exact number to input (default no change)
+primary and secondary are strings roughly matching the type (ex. primary=enchanter or secondary=battleground)
+if ptype >= 0, it uses it for spell school and ignores primary string, otherwise is checks primary string
+if stype >= 0, it uses it for secondary type and ignores secondary string, otherwise is checks secondary string
+if a specific header is set, header_type is automatically set to -1 (any)
+*/
+
+DEFINE_PATCH_FUNCTION d2_set_spell_schools
+  INT_VAR ptype=~-1~ stype=~-1~ header=0 header_type=3
+  STR_VAR primary=~~ secondary=~~
+BEGIN
+  //primary
+  SET none=0 SET abjurer=1 SET conjurer=2 SET diviner=3 SET enchanter=4 SET illusionist=5
+  SET invoker=6 SET necromancer=7 SET transmuter=8 SET generalist=9 SET wildmage=10
+  //secondary
+  SET none=0 SET spellprotections=1 SET specificprotections=2 SET illusionaryprotections=3 SET magicattack=4 SET divinationattack=5
+  SET conjuration=6 SET combatprotections=7 SET contingency=8 SET battleground=9 SET offensivedamage=10
+  SET disabling=11 SET combination=12 SET noncombat=13
+
+  SET spell = 0
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~)) BEGIN  SET spell = 1  END
+  SET item = 0
+  PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~itm~) OR (~%DEST_EXT%~ STR_EQ ~itm~)) BEGIN  SET item = 1  END
+
+  PATCH_IF (ptype < 0) BEGIN
+    PATCH_IF !(~%primary%~ STR_EQ ~~) BEGIN
+      SET ptype=none
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~abjur~)     BEGIN  SET ptype=abjurer      END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~conjur~)    BEGIN  SET ptype=conjurer     END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~divin~)     BEGIN  SET ptype=diviner      END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~enchant~)   BEGIN  SET ptype=enchanter    END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~illusion~)  BEGIN  SET ptype=illusionist  END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~invo~)      BEGIN  SET ptype=invoker      END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~evoc~)      BEGIN  SET ptype=invoker      END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~necro~)     BEGIN  SET ptype=necromancer  END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~trans~)     BEGIN  SET ptype=transmuter   END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~alter~)     BEGIN  SET ptype=transmuter   END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~general~)   BEGIN  SET ptype=generalist   END
+      PATCH_IF !(~%primary%~ STRING_CONTAINS_REGEXP ~wild~)      BEGIN  SET ptype=wildmage     END
+    END
+  END
+
+  PATCH_IF (stype < 0) BEGIN
+    PATCH_IF !(~%secondary%~ STR_EQ ~~) BEGIN
+      SET stype=none
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~spellprot~)     BEGIN  SET stype=spellprotections        END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~specific~)      BEGIN  SET stype=specificprotections     END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~illusion~)      BEGIN  SET stype=illusionaryprotections  END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~magicattack~)   BEGIN  SET stype=magicattack             END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~divin~)         BEGIN  SET stype=divinationattack        END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~conjur~)        BEGIN  SET stype=conjuration             END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~combat~)        BEGIN  SET stype=combatprotections       END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~conting~)       BEGIN  SET stype=contingency             END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~battleground~)  BEGIN  SET stype=battleground            END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~damage~)        BEGIN  SET stype=offensivedamage         END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~offens~)        BEGIN  SET stype=offensivedamage         END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~disabl~)        BEGIN  SET stype=disabling               END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~combination~)   BEGIN  SET stype=combination             END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~non.*combat~)   BEGIN  SET stype=noncombat               END
+      PATCH_IF !(~%secondary%~ STRING_CONTAINS_REGEXP ~other~)         BEGIN  SET stype=noncombat               END
+    END
+  END
+
+  // patch file
+  PATCH_IF spell BEGIN
+    PATCH_IF (ptype >= 0) BEGIN  WRITE_BYTE 0x25 ptype  END
+    PATCH_IF (stype >= 0) BEGIN  WRITE_BYTE 0x27 stype  END
+  END
+  PATCH_IF item BEGIN
+    PATCH_IF (ptype>=0 OR stype>=0) BEGIN
+      PATCH_IF (header > 0) BEGIN  SET header_type = (0 - 1)  END
+      LPF ALTER_ITEM_HEADER INT_VAR header=header header_type=header_type primary_type=ptype secondary_type=stype END
+    END
+  END
+
 END
 
 ////////////////////////////////////////////////////////////

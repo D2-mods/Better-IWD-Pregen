@@ -120,9 +120,10 @@ Cooldown mode: Reduces melee aggro range to 5 feet. Press the B key to enter for
 ==================================================
 Tools/Coding
 ==================================================
-Custom Functions:
+Custom Functions (not including my own):
 - CD_LEVEL_SELECT-O-MATIC by CamDawg (https://www.gibberlings3.net/forums/topic/28835-toss-your-semi-useful-weidu-macros-here/#comment-254220)
 - 2DA_MISSING_COLS by K4thos (https://github.com/K4thos/IE-code-repository)
+- d2_validate_spellitem.tpa uses functions written by Google Gemini
 
 Tools and Resources used:
 - WeiDU (https://github.com/WeiDUorg/weidu)
@@ -150,6 +151,9 @@ IWD2 exe patch:
 ==================================================
 Updates
 ==================================================
+v9.3
+- Added file validation checks to a couple mass patching parts (i.e. if a mod added corrupted ITM/SPL files to the game). This bypasses possible installer errors.
+
 v9.2
 - fix possible install error that could happen if the main script component was installed after an item mod that used exclamation marks in the filenames for the ITM files. The script component would install fine, but all other components would error out.
 - add list of Engine enhancements under the Recommended fixpacks list.

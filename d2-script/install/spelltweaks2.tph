@@ -132,7 +132,8 @@ ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET itmcheck = 0xb9  END    // iwd2
 
 //
 COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
-  PATCH_IF (SOURCE_SIZE > splcheck) BEGIN    // file check
+  LPF d2_validate_spellitem RET is_valid END
+  PATCH_IF (is_valid && SOURCE_SIZE > splcheck) BEGIN    // file check
     READ_SHORT 0x1c type       // 1 = wizard
     READ_SHORT 0x68 headers    // if range/headers both < 2, it's probably a subspell or non-damage spell
     READ_BYTE  0x27 sec        // 4, 5, 6, 9, 10, 11 ("secondary type" is an attack spell)
@@ -266,7 +267,8 @@ BUT_ONLY
 
 //
 COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
-  PATCH_IF (SOURCE_SIZE > itmcheck) BEGIN    // file check
+  LPF d2_validate_spellitem RET is_valid END
+  PATCH_IF (is_valid && SOURCE_SIZE > itmcheck) BEGIN    // file check
     READ_SHORT 0x1c cat
 
     PATCH_IF (itmcheck = 0xa9) BEGIN

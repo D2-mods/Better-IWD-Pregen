@@ -16,11 +16,12 @@ ACTION_IF (GAME_IS ~bgee bg2ee iwdee eet~) BEGIN
 END
 
 
-//fix #BONECIR.SPL (wrong signature)
+//fix possible wrong signatures
 ACTION_IF (FILE_EXISTS_IN_GAME ~#BONECIR.SPL~) BEGIN
-  COPY_EXISTING ~#BONECIR.SPL~  ~override~
-    WRITE_ASCII 0x0 ~SPL ~ #4
-  BUT_ONLY
+  COPY_EXISTING ~#BONECIR.spl~ ~override~  WRITE_ASCII 0x0 ~SPL ~ #4  BUT_ONLY
+END
+ACTION_IF (FILE_EXISTS_IN_GAME ~cddetect.spl~) BEGIN
+  COPY_EXISTING ~cddetect.spl~ ~override~  WRITE_ASCII 0x0 ~SPL ~ #4  BUT_ONLY
 END
 
 

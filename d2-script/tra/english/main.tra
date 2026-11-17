@@ -305,7 +305,7 @@ STATISTICS:
 Weight: 5~
 
 //iwd2
-@722 = ~This is a common cloth sack of about 2 feet by 4 feet in size.
+@722 = ~This is a common cloth sack of about 2 feet by 4 feet size.
 
 STATISTICS:
 
@@ -346,27 +346,27 @@ Weight: 5 lb.~
 @730 = ~Bag of Holding~
 
 //bg1, bg2, iwd1
-@731 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+@731 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
 
 STATISTICS:
 
 Weight: 5~
 
-@732 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+@732 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
 
 STATISTICS:
 
 Capacity: 50 items
 Weight: 5~
 
-@733 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+@733 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
 
 STATISTICS:
 
 Capacity: 100 items
 Weight: 5~
 
-@734 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+@734 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
 
 STATISTICS:
 
@@ -377,20 +377,20 @@ Weight: 5~
 
 //
 //iwd2
-@735 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+@735 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
 
 STATISTICS:
 
 Weight: 5 lb.~
 
-@736 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+@736 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
 
 STATISTICS:
 
 Capacity: 50 items
 Weight: 5 lb.~
 
-@737 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
+@737 = ~As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.
 
 STATISTICS:
 
@@ -403,25 +403,25 @@ Weight: 5 lb.~
 @778731 = ~BAG OF HOLDING
 Weight: 5
 
-As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
+As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
 
 @778732 = ~BAG OF HOLDING
 Capacity: 50
 Weight: 5
 
-As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
+As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
 
 @778733 = ~BAG OF HOLDING
 Capacity: 100
 Weight: 5
 
-As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
+As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
 
 @778734 = ~BAG OF HOLDING
 Special: Gold is exchanged when adding or removing items
 Weight: 5
 
-As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet in size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
+As with other magical bags, this one appears to be a common cloth sack of about 2 feet by 4 feet size. The bag of holding opens into a nondimensional space, and its inside is larger than its outside dimensions. Regardless of what is put into this item, the bag always weighs a fixed amount.~
 
 
 

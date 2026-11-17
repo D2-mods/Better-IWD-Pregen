@@ -1,0 +1,323 @@
+/*
+VALIDATE_SPL_OFFSETS
+VALIDATE_ITM_OFFSETS
+VALIDATE_IWD2_SPL_OFFSETS
+VALIDATE_IWD2_ITM_OFFSETS
+These functions were written by Gemini when searching info on checking corrupted itm/spl files.
+
+d2_validate_spellitem combines the above functions
+Run function and RET is_valid, it will be 1 or 0
+*/
+
+////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION d2_validate_spellitem RET is_valid BEGIN
+
+  PATCH_IF (GAME_IS ~iwd2~) BEGIN
+    PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~)) BEGIN
+      LPF VALIDATE_IWD2_SPL_OFFSETS RET is_valid END
+    END ELSE
+    PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~itm~) OR (~%DEST_EXT%~ STR_EQ ~itm~)) BEGIN
+      LPF VALIDATE_IWD2_ITM_OFFSETS RET is_valid END
+    END
+  END ELSE BEGIN
+    PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~)) BEGIN
+      LPF VALIDATE_SPL_OFFSETS RET is_valid END
+    END ELSE
+    PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~itm~) OR (~%DEST_EXT%~ STR_EQ ~itm~)) BEGIN
+      LPF VALIDATE_ITM_OFFSETS RET is_valid END
+    END
+  END
+
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION VALIDATE_SPL_OFFSETS
+  INT_VAR
+    verbose = 0 // 1 = log warnings via PATCH_PRINT, 0 = silent
+  RET
+    is_valid
+BEGIN
+  SET is_valid = 1
+
+  // 1. Check minimum header size and signature
+  PATCH_IF (SOURCE_SIZE < 0x72) BEGIN
+    PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: File smaller than 0x72 header.~ END
+    SET is_valid = 0
+  END ELSE BEGIN
+    READ_ASCII 0x00 sig (8)
+    PATCH_IF (~%sig%~ STR_CMP ~SPL V1  ~) BEGIN
+      PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: Invalid signature (%sig%).~ END
+      SET is_valid = 0
+    END
+  END
+
+  PATCH_IF (is_valid) BEGIN
+    READ_LONG  0x64 abil_off
+    READ_SHORT 0x68 abil_cnt
+    READ_LONG  0x6a fx_off
+    READ_SHORT 0x6e glob_fx_idx
+    READ_SHORT 0x70 glob_fx_cnt
+
+    // 2. Validate Extended Header bounds
+    SET abil_end = abil_off + (abil_cnt * 0x28)
+    PATCH_IF (abil_off < 0x72) OR (abil_end > SOURCE_SIZE) BEGIN
+      PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: Extended header table out of bounds.~ END
+      SET is_valid = 0
+    END
+
+    // 3. Track highest effect index referenced
+    SET max_fx_idx = glob_fx_idx + glob_fx_cnt
+    PATCH_IF (glob_fx_cnt > 0) AND (glob_fx_idx != 0) BEGIN
+      PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: Global effects do not start at index 0.~ END
+    END
+
+    // 4. Loop through each Extended Header to check its effect indices
+    FOR (i = 0; i < abil_cnt; ++i) BEGIN
+      SET cur_abil = abil_off + (i * 0x28)
+      PATCH_IF (cur_abil + 0x28 <= SOURCE_SIZE) BEGIN
+        READ_SHORT (cur_abil + 0x1e) abil_fx_idx
+        READ_SHORT (cur_abil + 0x20) abil_fx_cnt
+        SET end_idx = abil_fx_idx + abil_fx_cnt
+        PATCH_IF (end_idx > max_fx_idx) BEGIN
+          SET max_fx_idx = end_idx
+        END
+      END
+    END
+
+    // 5. Validate Feature Block table bounds
+    SET fx_end = fx_off + (max_fx_idx * 0x30)
+    PATCH_IF (fx_off < 0x72) OR (fx_end > SOURCE_SIZE) BEGIN
+      PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: Feature block table exceeds file size.~ END
+      SET is_valid = 0
+    END
+
+    // 6. Check for overlapping Ability and Effect sections
+    PATCH_IF (abil_cnt > 0) AND (max_fx_idx > 0) BEGIN
+      PATCH_IF NOT ((abil_end <= fx_off) OR (fx_end <= abil_off)) BEGIN
+        PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: Ability and Effect tables overlap.~ END
+        SET is_valid = 0
+      END
+    END
+  END
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION VALIDATE_ITM_OFFSETS
+  INT_VAR
+    verbose = 0 // 1 = log warnings via PATCH_PRINT, 0 = silent
+  RET
+    is_valid
+BEGIN
+  SET is_valid = 1
+
+  // 1. Check minimum ITM V1 header size (0x72 bytes) and signature
+  PATCH_IF (SOURCE_SIZE < 0x72) BEGIN
+    SET is_valid = 0
+    PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: Invalid size (%SOURCE_SIZE% < 0x72)~ END
+  END ELSE BEGIN
+    READ_ASCII 0x00 sig (8)
+    PATCH_IF (~%sig%~ STRING_COMPARE_CASE ~ITM V1  ~ != 0) BEGIN
+      SET is_valid = 0
+      PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: Invalid signature (%sig%)~ END
+    END
+  END
+
+  // 2. Validate Extended Header (Ability) and Feature Block (Effect) tables
+  PATCH_IF (is_valid) BEGIN
+    READ_LONG  0x64 abil_off
+    READ_SHORT 0x68 abil_cnt
+    READ_LONG  0x6a fx_off
+    READ_SHORT 0x6e fx_idx
+    READ_SHORT 0x70 fx_cnt
+
+    SET abil_end = abil_off + (abil_cnt * 0x38)
+    SET glob_fx_end = fx_off + ((fx_idx + fx_cnt) * 0x30)
+
+    // Verify ability table fits within file
+    PATCH_IF (abil_cnt > 0) AND ((abil_off < 0x72) OR (abil_end > SOURCE_SIZE)) BEGIN
+      SET is_valid = 0
+      PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: Ability table out of bounds~ END
+    END
+
+    // Verify global equipping effects fit within file
+    PATCH_IF (fx_cnt > 0) AND ((fx_off < 0x72) OR (glob_fx_end > SOURCE_SIZE)) BEGIN
+      SET is_valid = 0
+      PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: Global effects out of bounds~ END
+    END
+
+    // 3. Validate each extended header's effect slice
+    FOR (i = 0; i < abil_cnt; ++i) BEGIN
+      SET cur_abil = abil_off + (i * 0x38)
+      READ_SHORT (cur_abil + 0x1e) ab_fx_cnt
+      READ_SHORT (cur_abil + 0x20) ab_fx_idx
+      SET ab_fx_end = fx_off + ((ab_fx_idx + ab_fx_cnt) * 0x30)
+
+      PATCH_IF (ab_fx_cnt > 0) AND ((fx_off < 0x72) OR (ab_fx_end > SOURCE_SIZE)) BEGIN
+        SET is_valid = 0
+        PATCH_IF (verbose) BEGIN PATCH_PRINT ~%SOURCE_FILE%: Ability %i% effects out of bounds~ END
+      END
+    END
+  END
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION VALIDATE_IWD2_SPL_OFFSETS
+  INT_VAR
+    warn_only = 1 // Set to 1 to log PATCH_PRINT instead of failing with PATCH_FAIL
+  RET
+    is_valid
+BEGIN
+  SET is_valid = 1
+  SPRINT error_msg ~~
+
+  // 1. Minimum header size check (SPL V2.0 header is 0x82 bytes)
+  PATCH_IF (BUFFER_LENGTH < 0x82) BEGIN
+    SET is_valid = 0
+    SPRINT error_msg ~File size (%BUFFER_LENGTH%) is smaller than SPL V2.0 header (0x82).~
+  END
+
+  // 2. Signature and Version check
+  PATCH_IF (is_valid) BEGIN
+    READ_ASCII 0x00 sig (8)
+    PATCH_IF (~%sig%~ STRING_COMPARE ~SPL V2.0~ != 0) BEGIN
+      SET is_valid = 0
+      SPRINT error_msg ~Invalid signature/version: expected 'SPL V2.0', found '%sig%'.~
+    END
+  END
+
+  // 3. Read core table offsets and counts
+  PATCH_IF (is_valid) BEGIN
+    READ_LONG  0x64 abil_off       // Extended Header offset
+    READ_SHORT 0x68 abil_cnt       // Extended Header count
+    READ_LONG  0x6a fx_off         // Feature Block Table offset
+    READ_SHORT 0x6e cast_fx_idx    // Casting Feature Block starting index
+    READ_SHORT 0x70 cast_fx_cnt    // Casting Feature Block count
+
+    SET abil_size = 0x28
+    SET fx_size   = 0x30
+
+    // Validate Extended Header table bounds
+    SET abil_end = abil_off + (abil_cnt * abil_size)
+    PATCH_IF (abil_cnt > 0 AND (abil_off < 0x82 OR abil_end > BUFFER_LENGTH)) BEGIN
+      SET is_valid = 0
+      SPRINT error_msg ~Extended headers out of bounds (offset: %abil_off%, end: %abil_end%, file size: %BUFFER_LENGTH%).~
+    END
+
+    // Validate Feature Block table base offset
+    PATCH_IF (is_valid AND fx_off < 0x82) BEGIN
+      SET is_valid = 0
+      SPRINT error_msg ~Feature block table offset (%fx_off%) overlaps main header.~
+    END
+
+    // Calculate maximum possible feature blocks that fit in the file
+    SET max_fx_cnt = (fx_off <= BUFFER_LENGTH) ? ((BUFFER_LENGTH - fx_off) / fx_size) : 0
+
+    // Validate Global/Casting Feature Blocks
+    PATCH_IF (is_valid AND (cast_fx_idx + cast_fx_cnt > max_fx_cnt)) BEGIN
+      SET is_valid = 0
+      SPRINT error_msg ~Casting feature blocks exceed file bounds (index: %cast_fx_idx%, count: %cast_fx_cnt%, max: %max_fx_cnt%).~
+    END
+
+    // 4. Loop through each Extended Header to validate its Feature Block slice
+    PATCH_IF (is_valid) BEGIN
+      FOR (i = 0; i < abil_cnt; ++i) BEGIN
+        SET cur_abil = abil_off + (i * abil_size)
+        READ_SHORT (cur_abil + 0x1e) abil_fx_cnt
+        READ_SHORT (cur_abil + 0x20) abil_fx_idx
+
+        PATCH_IF (abil_fx_idx + abil_fx_cnt > max_fx_cnt) BEGIN
+          SET is_valid = 0
+          SPRINT error_msg ~Extended header #%i% feature blocks exceed bounds (index: %abil_fx_idx%, count: %abil_fx_cnt%, max: %max_fx_cnt%).~
+          SET i = abil_cnt // Break loop
+        END
+      END
+    END
+  END
+
+  // 5. Handle validation failure
+  PATCH_IF (!is_valid) BEGIN
+    PATCH_IF (warn_only) BEGIN
+      PATCH_PRINT ~WARNING [%SOURCE_FILE%]: %error_msg%~
+    END ELSE BEGIN
+      PATCH_FAIL ~ERROR [%SOURCE_FILE%]: %error_msg%~
+    END
+  END
+END
+
+////////////////////////////////////////////////////////////
+
+DEFINE_PATCH_FUNCTION VALIDATE_IWD2_ITM_OFFSETS
+  INT_VAR
+    warn_only = 1 // 1 = PATCH_PRINT on failure, 0 = PATCH_FAIL
+  RET
+    is_valid
+BEGIN
+  SET is_valid = 1
+  SPRINT error_msg ~~
+
+  // 1. Check minimum header size (ITM V2.0 header is 0x82 bytes)
+  PATCH_IF (SOURCE_SIZE < 0x82) BEGIN
+    SET is_valid = 0
+    SPRINT error_msg ~File size (%SOURCE_SIZE%) is smaller than ITM V2.0 header (0x82).~
+  END ELSE BEGIN
+    // 2. Verify Signature and Version
+    READ_ASCII 0x00 sig (4)
+    READ_ASCII 0x04 ver (4)
+    PATCH_IF (~%sig%~ STRING_COMPARE_CASE ~ITM ~ != 0) OR (~%ver%~ STRING_COMPARE_CASE ~V2.0~ != 0) BEGIN
+      SET is_valid = 0
+      SPRINT error_msg ~Invalid header signature/version: "%sig%" "%ver%" (expected "ITM " "V2.0").~
+    END
+  END
+
+  // 3. Validate Offset Pointers and Counts
+  PATCH_IF (is_valid = 1) BEGIN
+    READ_LONG  0x64 abil_off       // Extended headers offset
+    READ_SHORT 0x68 abil_num       // Extended headers count
+    READ_LONG  0x6a fx_off         // Feature blocks offset
+    READ_SHORT 0x6e eq_fx_idx      // Equipping feature block start index
+    READ_SHORT 0x70 eq_fx_num      // Equipping feature block count
+
+    // Extended Header table bounds (each ability is 0x38 bytes)
+    SET abil_end = abil_off + (abil_num * 0x38)
+    PATCH_IF (abil_num > 0) AND ((abil_off < 0x82) OR (abil_end > SOURCE_SIZE)) BEGIN
+      SET is_valid = 0
+      SPRINT error_msg ~Extended headers out of bounds (offset: %abil_off%, end: %abil_end%, size: %SOURCE_SIZE%).~
+    END
+
+    // Track highest referenced effect index (each feature block is 0x30 bytes)
+    SET max_fx_idx = eq_fx_idx + eq_fx_num
+
+    PATCH_IF (is_valid = 1) BEGIN
+      FOR (i = 0; i < abil_num; ++i) BEGIN
+        SET cur_abil = abil_off + (i * 0x38)
+        READ_SHORT (cur_abil + 0x1e) abil_fx_num
+        READ_SHORT (cur_abil + 0x20) abil_fx_idx
+        PATCH_IF ((abil_fx_idx + abil_fx_num) > max_fx_idx) BEGIN
+          SET max_fx_idx = abil_fx_idx + abil_fx_num
+        END
+      END
+
+      // Feature Block table bounds
+      SET fx_end = fx_off + (max_fx_idx * 0x30)
+      PATCH_IF (max_fx_idx > 0) AND ((fx_off < 0x82) OR (fx_end > SOURCE_SIZE)) BEGIN
+        SET is_valid = 0
+        SPRINT error_msg ~Feature blocks out of bounds (offset: %fx_off%, end: %fx_end%, size: %SOURCE_SIZE%).~
+      END
+    END
+  END
+
+  // 4. Report Result
+  PATCH_IF (is_valid = 0) BEGIN
+    PATCH_IF (warn_only = 1) BEGIN
+      PATCH_PRINT ~WARNING [%SOURCE_FILE%]: %error_msg%~
+    END ELSE BEGIN
+      PATCH_FAIL ~ERROR [%SOURCE_FILE%]: %error_msg%~
+    END
+  END
+END
+
+////////////////////////////////////////////////////////////

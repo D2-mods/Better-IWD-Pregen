@@ -19,21 +19,24 @@ OUTER_SET not_pst = 1
 ACTION_IF (GAME_IS ~pstee~) BEGIN  OUTER_SET noschools=0 OUTER_SET not_pst=0  END
 ACTION_IF (GAME_IS ~pst~) BEGIN  OUTER_SET safespell=0 OUTER_SET noschools=0 OUTER_SET not_pst=0  END
 
-OUTER_SET bg2_engine = 0
-ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN  OUTER_SET bg2_engine = 1 END
-OUTER_SET ee_game = 0
-ACTION_IF (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN OUTER_SET ee_game = 1 END
 OUTER_SET iwd_classic = 0
 ACTION_IF (GAME_IS ~iwd how totlm iwd2~) BEGIN OUTER_SET iwd_classic = 1 END
 OUTER_SET is_iwd2ee = 0
 ACTION_IF (FILE_EXISTS ~IEex.dll~ AND FILE_EXISTS ~IWD2EE.exe~) BEGIN OUTER_SET is_iwd2ee = 1 END
 
+/*moved to always.tpa
+OUTER_SET ee_game = 0
+ACTION_IF (RESOURCE_CONTAINS ~action.ids~ ~zoomlock~) BEGIN OUTER_SET ee_game = 1 END
+ACTION_IF !(FILE_EXISTS ~engine.lua~) BEGIN OUTER_SET ee_game = 0 END
+
+OUTER_SET bg2_engine = 0
+ACTION_IF (GAME_IS ~bg2 tob tutu tutu_totsc iwd_in_bg2 ca~) BEGIN  OUTER_SET bg2_engine = 1 END
+
 //ee v1.3 uses the same as BG2 engine
 ACTION_IF (GAME_IS ~bgee bg2ee iwdee eet~) BEGIN
-  ACTION_IF (ee_game = 0) BEGIN
-    OUTER_SET bg2_engine = 1
-  END
+  ACTION_IF (ee_game = 0) BEGIN  OUTER_SET bg2_engine = 1  END
 END
+*/
 
 //ees or bg2 - changed frag grenade proj to one without a trap effect
 INCLUDE ~%install%/fragskull.tph~
@@ -75,13 +78,61 @@ DEFINE_PATCH_FUNCTION exdamage_stun STR_VAR type=EXDAMAGE BEGIN
 END
 
 
+//item check for spell patching
+DEFINE_ACTION_FUNCTION itmheadercheck INT_VAR type=3 STR_VAR file=~%SOURCE_RES%~ RET match BEGIN
+    OUTER_SET header = type
+    COPY_EXISTING - ~%file%.itm~  ~~
+      PATCH_IF (SOURCE_SIZE > itmcheck) BEGIN
+        PATCH_IF (itmcheck = 0xa9) BEGIN
+          READ_BYTE  0x72 header     // 3 = magical
+        END ELSE BEGIN
+          READ_BYTE  0x82 header     // iwd2
+        END
+      END
+    IF_EXISTS
+    OUTER_SET match = 0
+    ACTION_IF (header = type) BEGIN  OUTER_SET match = 1  END    // if first item header matches "type"
+END
 
-//
+
+//main functions
+DEFINE_PATCH_FUNCTION spellprotect BEGIN
+      PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine=0) BEGIN
+        SET neutrals = 1
+//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^spin~) BEGIN  SET neutrals=0  END
+        LPF d2_safe_spell INT_VAR neutrals=neutrals STR_VAR insert=above END    // EEs, IWD1, IWD2
+      END
+
+      PATCH_IF (safespell>0 AND exdamage>0 AND bg2_engine=0) BEGIN
+        LPF exdamage_protect END
+      END
+END
+
+DEFINE_PATCH_FUNCTION spellstun BEGIN
+      PATCH_IF (hitstun>0 AND patch_spell>0 AND stuncheck>0) BEGIN
+        SET overwrite = 0
+//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^d2~) BEGIN  SET overwrite=1  END
+        LPF d2_addhitstun INT_VAR match_opcode=12 overwrite=overwrite END
+      END
+
+      PATCH_IF (hitstun>0 AND exdamage>0 AND stuncheck>0) BEGIN
+        LPF exdamage_stun END
+      END
+END
+
+
+
+//file checks
 OUTER_SET splcheck = 0x99
 ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET splcheck = 0xa9  END    // iwd2
 
+OUTER_SET itmcheck = 0xa9
+ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET itmcheck = 0xb9  END    // iwd2
+
+
+//
 COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
-  PATCH_IF (SOURCE_SIZE > splcheck) BEGIN    // skip if no headers
+  PATCH_IF (SOURCE_SIZE > splcheck) BEGIN    // file check
     READ_SHORT 0x1c type       // 1 = wizard
     READ_SHORT 0x68 headers    // if range/headers both < 2, it's probably a subspell or non-damage spell
     READ_BYTE  0x27 sec        // 4, 5, 6, 9, 10, 11 ("secondary type" is an attack spell)
@@ -133,7 +184,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
         END
       END
 
-      // check iwd2ee
+      // iwd2ee check
       SET exdamage = 0
       PATCH_IF (patch_iwd2ee>0 AND is_iwd2ee>0) BEGIN
         PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~EXDAMAGE~) BEGIN
@@ -141,17 +192,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
         END
       END
 
-      // party friendly
-      PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine=0) BEGIN
-        SET neutrals = 1
-//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^spin~) BEGIN  SET neutrals=0  END
-        LPF d2_safe_spell INT_VAR neutrals=neutrals STR_VAR insert=above END    // EEs, IWD1, IWD2
-      END
-
-      PATCH_IF (safespell>0 AND exdamage>0 AND bg2_engine=0) BEGIN
-        LPF exdamage_protect END
-      END
-
+      // array for classic BG2
       PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine>0) BEGIN
         SET proj_num = proj - 1
         LOOKUP_IDS_SYMBOL_OF_INT res ~projectl~ proj_num
@@ -173,9 +214,11 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
       PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPWI016~) BEGIN SET stuncheck = 0 END
       PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPIN917~) BEGIN SET stuncheck = 0 END
       PATCH_IF (~%SOURCE_RES%~ STR_EQ ~SPPR450~) BEGIN SET stuncheck = 1 END
-      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^EFF~) BEGIN SET stuncheck = 0 END    // iwd2 (skip unknown SPLs)
-      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~EFFHW~) BEGIN SET stuncheck = 1 END    // iwd2 (horrid wilting)
-      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~EFFWT~) BEGIN SET stuncheck = 1 END    // iwd2 (horrid wilting)
+//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^EFF~) BEGIN SET stuncheck = 0 END    // iwd2 (skip unknown SPLs)
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~EFFBL1~) BEGIN SET stuncheck = 0 END    // iwd2 (ball lightning)
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~EFFDA3~) BEGIN SET stuncheck = 0 END    // iwd2 (death armor)
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~EFFFS1~) BEGIN SET stuncheck = 0 END    // iwd2 (fire shield red)
+      PATCH_IF (~%SOURCE_RES%~ STR_EQ ~EFFFS2~) BEGIN SET stuncheck = 0 END    // iwd2 (fire shield blue)
 
       PATCH_IF (not_pst > 0) BEGIN
         PATCH_IF (proj=187 OR proj=95 OR proj=279 OR proj=229) BEGIN  SET stuncheck = 0  END
@@ -189,27 +232,22 @@ COPY_EXISTING_REGEXP GLOB ~.*\.SPL~  ~override~
         PATCH_IF (proj = 209) BEGIN  SET stuncheck = 0  END    // beholder blast in non-IWD
       END
 
-/*caused issues in pstee
+      // no stun if resource matches a weapon
       PATCH_IF (stuncheck > 0) BEGIN
         PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.itm~  ~[^a-z^0-9^_]%SOURCE_RES%[^a-z^0-9^_]~) BEGIN
-          SET stuncheck = 0
+          INNER_ACTION BEGIN
+            LAF itmheadercheck INT_VAR type=3 RET match END
+            ACTION_IF (match = 0) BEGIN  OUTER_SET stuncheck = 0  END
+          END
         END
       END
 
-add item check, set stuncheck = 0 only if the first header is not spell type
-*/
-
-      PATCH_IF (hitstun>0 AND patch_spell>0 AND stuncheck>0) BEGIN
-        SET overwrite = 0
-//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^d2~) BEGIN  SET overwrite=1  END
-        LPF d2_addhitstun INT_VAR match_opcode=12 overwrite=overwrite END
-      END
-
-      PATCH_IF (hitstun>0 AND exdamage>0 AND stuncheck>0) BEGIN
-        LPF exdamage_stun END
-      END
+      LPF spellprotect END
+      LPF spellstun END
     END
 
+
+    // school flags (not used for iwd2)
     PATCH_IF (noschools>0 AND type=1) BEGIN
       WRITE_LONG 0x1e (THIS BAND BNOT BIT6)    // abjurer
       WRITE_LONG 0x1e (THIS BAND BNOT BIT7)    // conjurer
@@ -225,13 +263,10 @@ add item check, set stuncheck = 0 only if the first header is not spell type
 BUT_ONLY
 
 
-//
-//check spells cast from items
-OUTER_SET itmcheck = 0xa9
-ACTION_IF (GAME_IS ~iwd2~) BEGIN  OUTER_SET itmcheck = 0xb9  END    // iwd2
 
+//
 COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
-  PATCH_IF (SOURCE_SIZE > itmcheck) BEGIN    // skip if no header
+  PATCH_IF (SOURCE_SIZE > itmcheck) BEGIN    // file check
     READ_SHORT 0x1c cat
 
     PATCH_IF (itmcheck = 0xa9) BEGIN
@@ -276,7 +311,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
         END
       END
 
-      // check iwd2ee
+      // iwd2ee check
       SET exdamage = 0
       PATCH_IF (patch_iwd2ee>0 AND is_iwd2ee>0) BEGIN
         PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~EXDAMAGE~) BEGIN
@@ -284,17 +319,7 @@ COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
         END
       END
 
-      // party friendly
-      PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine=0) BEGIN
-        SET neutrals = 1
-//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^spin~) BEGIN  SET neutrals=0  END
-        LPF d2_safe_spell INT_VAR neutrals=neutrals STR_VAR insert=above END    // EEs, IWD1, IWD2
-      END
-
-      PATCH_IF (safespell>0 AND exdamage>0 AND bg2_engine=0) BEGIN
-        LPF exdamage_protect END
-      END
-
+      // array for classic BG2
       PATCH_IF (safespell>0 AND patch_spell>0 AND bg2_engine>0) BEGIN
         SET proj_num = proj - 1
         LOOKUP_IDS_SYMBOL_OF_INT res ~projectl~ proj_num
@@ -324,15 +349,8 @@ COPY_EXISTING_REGEXP GLOB ~.*\.ITM~  ~override~
         PATCH_IF (proj = 209) BEGIN  SET stuncheck = 0  END    // beholder blast in non-IWD
       END
 
-      PATCH_IF (hitstun>0 AND patch_spell>0 AND stuncheck>0) BEGIN
-        SET overwrite = 0
-//      PATCH_IF !(~%SOURCE_RES%~ STRING_CONTAINS_REGEXP ~^d2~) BEGIN  SET overwrite=1  END
-        LPF d2_addhitstun INT_VAR match_opcode=12 overwrite=overwrite END
-      END
-
-      PATCH_IF (hitstun>0 AND exdamage>0 AND stuncheck>0) BEGIN
-        LPF exdamage_stun END
-      END
+      LPF spellprotect END
+      LPF spellstun END
     END
 
 
