@@ -13,6 +13,8 @@ Run function and RET is_valid, it will be 1 or 0
 
 DEFINE_PATCH_FUNCTION d2_validate_spellitem RET is_valid BEGIN
 
+  SET is_valid = 0
+
   PATCH_IF (GAME_IS ~iwd2~) BEGIN
     PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~spl~) OR (~%DEST_EXT%~ STR_EQ ~spl~)) BEGIN
       LPF VALIDATE_IWD2_SPL_OFFSETS RET is_valid END
@@ -31,11 +33,17 @@ DEFINE_PATCH_FUNCTION d2_validate_spellitem RET is_valid BEGIN
 
 END
 
+DEFINE_ACTION_FUNCTION d2_validate_spellitem STR_VAR spell=~~ item=~~ RET is_valid BEGIN
+  OUTER_SET is_valid = 0
+  COPY_EXISTING - ~%spell%.spl~ ~~  LPF d2_validate_spellitem RET is_valid END  IF_EXISTS
+  COPY_EXISTING - ~%item%.itm~ ~~  LPF d2_validate_spellitem RET is_valid END  IF_EXISTS
+END
+
 ////////////////////////////////////////////////////////////
 
 DEFINE_PATCH_FUNCTION VALIDATE_SPL_OFFSETS
   INT_VAR
-    verbose = 0 // 1 = log warnings via PATCH_PRINT, 0 = silent
+    verbose = 1 // 1 = log warnings via PATCH_PRINT, 0 = silent
   RET
     is_valid
 BEGIN
@@ -107,7 +115,7 @@ END
 
 DEFINE_PATCH_FUNCTION VALIDATE_ITM_OFFSETS
   INT_VAR
-    verbose = 0 // 1 = log warnings via PATCH_PRINT, 0 = silent
+    verbose = 1 // 1 = log warnings via PATCH_PRINT, 0 = silent
   RET
     is_valid
 BEGIN

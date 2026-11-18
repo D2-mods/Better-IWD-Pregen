@@ -9,6 +9,7 @@ d2_splprot_adder    - adds new row to splprot.2da, or uses existing row if found
 d2_clone_hla_table  - creates new HLA table for kit by cloning current one, or copying from another class/kit
 d2_2da_row_adder    - for 2das with few or set columns (add full string to table)
 d2_weapprof_styles  - updated function for weapon styles (for prof function, see weapontypes2.tph)
+d2_get_kitnum       - get kit number from kitlist.2da, added for patching ToF files
 */
 
 
@@ -33,30 +34,28 @@ d2_get_kitnum           PATCH or ACTION
 //col_read is the column to check for row_name (0 = first column)
 //col_name should be the column header
 
-DEFINE_ACTION_FUNCTION d2_edit_2da_entry
-  INT_VAR col_read=0
-  STR_VAR 2da=~~ col_name=~~ row_name=~~ entry=~*~
-BEGIN
-  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^0-9^a-z^_]%col_name%[^0-9^a-z^_]~) BEGIN
-  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^0-9^a-z^_]%row_name%[^0-9^a-z^_]~) BEGIN
-    COPY_EXISTING ~%2da%.2da~  ~override~
-      LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
-      LPF 2da_find_row_set INT_VAR col_read=col_read col_write=col_number STR_VAR row_name=EVAL ~%row_name%~ entry=EVAL ~%entry%~ END
-    BUT_ONLY
-  END
-  END
-END
-
 DEFINE_PATCH_FUNCTION d2_edit_2da_entry
   INT_VAR col_read=0
   STR_VAR col_name=~~ row_name=~~ entry=~*~
 BEGIN
-  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^0-9^a-z^_]%col_name%[^0-9^a-z^_]~) BEGIN
-  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^0-9^a-z^_]%row_name%[^0-9^a-z^_]~) BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2da~  ~[^0-9^a-z^_]%col_name%[^0-9^a-z^_]~) BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2da~  ~[^0-9^a-z^_]%row_name%[^0-9^a-z^_]~) BEGIN
     LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
     LPF 2da_find_row_set INT_VAR col_read=col_read col_write=col_number STR_VAR row_name=EVAL ~%row_name%~ entry=EVAL ~%entry%~ END
   END
   END
+END
+
+DEFINE_ACTION_FUNCTION d2_edit_2da_entry
+  INT_VAR col_read=0
+  STR_VAR 2da=~~ col_name=~~ row_name=~~ entry=~*~
+BEGIN
+  COPY_EXISTING ~%2da%.2da~  ~override~
+    LPF d2_edit_2da_entry
+      INT_VAR col_read=col_read
+      STR_VAR col_name=EVAL ~%col_name%~ row_name=EVAL ~%row_name%~ entry=EVAL ~%entry%~
+    END
+  IF_EXISTS BUT_ONLY
 END
 
 ////////////////////////////////////////////////////////////
@@ -65,34 +64,32 @@ END
 //col_read is the column to check for row_name (0 = first column)
 //col_name should be the column header
 
-DEFINE_ACTION_FUNCTION d2_get_2da_entry
-  INT_VAR col_read=0
-  STR_VAR 2da=~~ col_name=~~ row_name=~~ entry=~RET variable~
-  RET entry
-BEGIN
-  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^0-9^a-z^_]%col_name%[^0-9^a-z^_]~) BEGIN
-  ACTION_IF (RESOURCE_CONTAINS ~%2da%.2DA~  ~[^0-9^a-z^_]%row_name%[^0-9^a-z^_]~) BEGIN
-    COPY_EXISTING ~%2da%.2da~  ~override~
-      LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
-      LPF 2da_find_row INT_VAR col_read=col_read STR_VAR row_name=EVAL ~%row_name%~ RET row_number columns END
-      READ_2DA_ENTRY row_number col_number columns entry
-    BUT_ONLY
-  END
-  END
-END
-
 DEFINE_PATCH_FUNCTION d2_get_2da_entry
   INT_VAR col_read=0
   STR_VAR col_name=~~ row_name=~~ entry=~RET variable~
   RET entry
 BEGIN
-  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^0-9^a-z^_]%col_name%[^0-9^a-z^_]~) BEGIN
-  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2DA~  ~[^0-9^a-z^_]%row_name%[^0-9^a-z^_]~) BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2da~  ~[^0-9^a-z^_]%col_name%[^0-9^a-z^_]~) BEGIN
+  PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_RES%.2da~  ~[^0-9^a-z^_]%row_name%[^0-9^a-z^_]~) BEGIN
     LPF 2da_find_column STR_VAR col_name=EVAL ~%col_name%~ RET col_number END
     LPF 2da_find_row INT_VAR col_read=col_read STR_VAR row_name=EVAL ~%row_name%~ RET row_number columns END
     READ_2DA_ENTRY row_number col_number columns entry
   END
   END
+END
+
+DEFINE_ACTION_FUNCTION d2_get_2da_entry
+  INT_VAR col_read=0
+  STR_VAR 2da=~~ col_name=~~ row_name=~~ entry=~RET variable~
+  RET entry
+BEGIN
+  COPY_EXISTING - ~%2da%.2da~  ~~
+    LPF d2_get_2da_entry
+      INT_VAR col_read=col_read
+      STR_VAR col_name=EVAL ~%col_name%~ row_name=EVAL ~%row_name%~ entry=EVAL ~%entry%~
+      RET entry
+    END
+  IF_EXISTS
 END
 
 ////////////////////////////////////////////////////////////
@@ -102,15 +99,11 @@ END
 //set col_read to column to check
 
 DEFINE_PATCH_FUNCTION 2da_find_row
-
   INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
           col_count = 1     // required column count
-		  
   STR_VAR row_name  = ~~    // name to search for in the column
-  
   RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
           columns           // required columns for row_number (set by col_count)
-   
 BEGIN
 
   PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
@@ -131,35 +124,20 @@ BEGIN
 END
 
 DEFINE_ACTION_FUNCTION 2da_find_row
-
   INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
           col_count = 1     // required column count
-		  
   STR_VAR row_name  = ~~    // name to search for in the column
           2da       = ~~    // 2da file to read
-  
   RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
           columns           // required columns for row_number (set by col_count)
-   
 BEGIN
-
-COPY_EXISTING - ~%2da%.2DA~ ~~
-
-  PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
-  PATCH_IF (col_read>1 AND col_count<3) BEGIN  SET col_count = 3 END
-
-  SET columns = col_count        // RET variable
-  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
-  SET row_number = rows          // set RET variable to final blank line as default
-  
-  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
-  FOR (row = 0; row < rows; ++row) BEGIN
-    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
-    PATCH_IF (~%match%~ STR_EQ ~%row_name%~) BEGIN    // if %match% is same as %row_name%
-      SET row_number = row       // RET variable
+  COPY_EXISTING - ~%2da%.2da~  ~~
+    LPF 2da_find_row
+      INT_VAR col_read=col_read col_count=col_count
+      STR_VAR row_name=EVAL ~%row_name%~
+      RET row_number columns
     END
-  END
-
+  IF_EXISTS
 END
 
 ////////////////////////////////////////////////////////////
@@ -169,17 +147,13 @@ END
 //will set entries for multiple rows if multiple matches are found
 
 DEFINE_PATCH_FUNCTION 2da_find_row_set
-
   INT_VAR col_read  = 0      // 2da column to read, default = 0 (1st column)
           col_count = 1      // required column count
           col_write = 1      // column to add %entry%, default = 1 (2nd column)
-  
   STR_VAR row_name  = ~~     // name to search for in the column
           entry     = ~~     // new entry in column %col_write% of row with %row_name%
-		  
   RET     row_number         // gives the row number with the row_name (returns final blank row if no match)
           columns            // required columns for row_number (set by col_count)
-     
 BEGIN
 
   PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
@@ -204,44 +178,24 @@ BEGIN
 END
 
 DEFINE_ACTION_FUNCTION 2da_find_row_set
-
   INT_VAR col_read  = 0      // 2da column to read, default = 0 (1st column)
           col_count = 1      // required column count
           col_write = 1      // column to add %entry%, default = 1 (2nd column)
-  
   STR_VAR row_name  = ~~     // name to search for in the column
           entry     = ~~     // new entry in column %col_write% of row with %row_name%
-          2da       = ~~     // 2da file to read
-		  
+          2da       = ~~     // 2da file to read  
   RET     row_number         // gives the row number with the row_name (returns final blank row if no match)
           columns            // required columns for row_number (set by col_count)
-     
 BEGIN
 
-COPY_EXISTING ~%2da%.2DA~ ~override~
-
-  PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
-  PATCH_IF (col_read>1 AND col_count<3) BEGIN  SET col_count = 3 END
-
-  SET columns = col_count        // RET variable
-  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
-  SET row_number = rows          // set RET variable to final blank line as default
-
-  COUNT_2DA_COLS total_columns
-  PATCH_IF (col_write > total_columns) BEGIN SET col_write = total_columns END
-  
-  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
-  FOR (row = 0; row < rows; ++row) BEGIN
-    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
-    PATCH_IF (~%match%~ STR_EQ ~%row_name%~) BEGIN    // if %match% is same as %row_name%
-      SET_2DA_ENTRY row col_write columns ~%entry%~
-      SET row_number = row       // RET variable
+  COPY_EXISTING ~%2da%.2da~  ~override~
+    LPF 2da_find_row_set
+      INT_VAR col_read=col_read col_count=col_count col_write=col_write
+      STR_VAR row_name=EVAL ~%row_name%~ entry=EVAL ~%entry%~
+      RET row_number columns
     END
-  END
-
-  PRETTY_PRINT_2DA
-
-BUT_ONLY
+    PRETTY_PRINT_2DA
+  IF_EXISTS BUT_ONLY
 
 END
 
@@ -252,15 +206,11 @@ END
 //can also return the row_number to add a new line at the same spot (with INSERT_2DA_ROW)
 
 DEFINE_PATCH_FUNCTION 2da_find_row_delete
-
   INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
           col_count = 1     // required column count
-		  
   STR_VAR row_name  = ~~    // name to search for in the column
-  
   RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
           columns           // required columns for row_number (set by col_count)
-   
 BEGIN
 
   PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
@@ -282,38 +232,20 @@ BEGIN
 END
 
 DEFINE_ACTION_FUNCTION 2da_find_row_delete
-
   INT_VAR col_read  = 0     // 2da column to read, default = 0 (1st column)
           col_count = 1     // required column count
-		  
   STR_VAR row_name  = ~~    // name to search for in the column
           2da       = ~~    // 2da file to read
-  
   RET     row_number        // gives the row number with the row_name (returns final blank row if no match)
           columns           // required columns for row_number (set by col_count)
-     
 BEGIN
-
-COPY_EXISTING ~%2da%.2DA~ ~override~
-
-  PATCH_IF (col_read=1 AND col_count<2) BEGIN  SET col_count = 2 END
-  PATCH_IF (col_read>1 AND col_count<3) BEGIN  SET col_count = 3 END
-
-  SET columns = col_count        // RET variable
-  COUNT_2DA_ROWS columns rows    // rows = # rows with the required amount of columns
-  SET row_number = rows          // set RET variable to final blank line as default
-  
-  READ_2DA_ENTRIES_NOW ~2da_table~ columns
-  FOR (row = (rows - 1); row >= 0; row -= 1) BEGIN    // checks %row%, starting from bottom
-    READ_2DA_ENTRY_FORMER ~2da_table~ row col_read match
-    PATCH_IF (~%match%~ STR_EQ ~%row_name%~) BEGIN    // if %match% is same as %row_name%
-      REMOVE_2DA_ROW row columns
-      SET row_number = row       // RET variable
+  COPY_EXISTING ~%2da%.2da~  ~override~
+    LPF 2da_find_row_delete
+      INT_VAR col_read=col_read col_count=col_count
+      STR_VAR row_name=EVAL ~%row_name%~
+      RET row_number columns
     END
-  END
-
-BUT_ONLY
-	
+  IF_EXISTS BUT_ONLY
 END
 
 ////////////////////////////////////////////////////////////
@@ -323,13 +255,9 @@ END
 //useful for finding mod-added columns in 2da files
 
 DEFINE_PATCH_FUNCTION 2da_find_column
-
   INT_VAR row_read  = 0     // 2da row to read (default = row with headers)
-		  
   STR_VAR col_name  = ~~    // name to search for in the column
-  
   RET     col_number        // gives the column number of col_name (returns final blank column if no match)
- 
 BEGIN
 
   COUNT_2DA_COLS cols           // get column count of current 2da
@@ -358,73 +286,42 @@ BEGIN
 END
 
 DEFINE_ACTION_FUNCTION 2da_find_column
-
   INT_VAR row_read  = 0     // 2da row to read (default = row with headers)
-		  
   STR_VAR col_name  = ~~    // name to search for in the column
           2da       = ~~    // 2da file to read
-  
   RET     col_number        // gives the column number of col_name (returns final blank column if no match)
- 
 BEGIN
-
-COPY_EXISTING - ~%2da%.2DA~ ~~
-
-  COUNT_2DA_COLS cols           // get column count of current 2da
-  SET col_count = (cols - 1)
-  SET col_number = cols         // set RET variable to final blank line as default
-
-  // check header row
-  SET header = 1
-  PATCH_IF (col_count=2 AND row_read<1) BEGIN  SET row_read = 1 END
-  PATCH_IF (col_count=1 AND row_read<2) BEGIN  SET row_read = 2 END
-
-  // check if row_read is below header
-  PATCH_IF (col_count=2 AND row_read>1) BEGIN  SET header = 0 END
-  PATCH_IF (col_count=1 AND row_read>2) BEGIN  SET header = 0 END
-  PATCH_IF (col_count>2 AND row_read>0) BEGIN  SET header = 0 END
-  
-  READ_2DA_ENTRIES_NOW ~2da_table~ col_count
-  FOR (col = 0; col < col_count; ++col) BEGIN
-    READ_2DA_ENTRY_FORMER ~2da_table~ row_read col match
-    PATCH_IF (~%match%~ STR_EQ ~%col_name%~) BEGIN    // if %match% is same as %col_name%
-      SET col_number = col
-      PATCH_IF (header > 0) BEGIN  SET col_number += 1 END    // RET variable (+1 if header because it has 1 less rows)
+  COPY_EXISTING - ~%2da%.2da~  ~~
+    LPF 2da_find_column
+      INT_VAR row_read=row_read
+      STR_VAR col_name=EVAL ~%col_name%~
+      RET col_number
     END
-  END
-	
+  IF_EXISTS
 END
 
 ////////////////////////////////////////////////////////////
 
 //this function removes a kit from all 3 backstab-related 2das
-//you can use the variable %kit% as a synonym for %row_name%
+//kit and row_name are botht he ids kit name, you can use either
 
 DEFINE_ACTION_FUNCTION no_backstab
-  
-  STR_VAR row_name = ~~    // internal kit name
-          kit      = ~~    // same as above (will check for both)
-     
+  STR_VAR row_name=~~ kit=~~     
 BEGIN
+  ACTION_IF (~%kit%~ STR_EQ ~~) BEGIN  OUTER_SPRINT kit ~%row_name%~  END
 
-ACTION_FOR_EACH 2da IN ~backstab~ ~crippstr~ ~sneakatt~ BEGIN
-
-  ACTION_IF (FILE_EXISTS_IN_GAME ~%2da%.2DA~) BEGIN
-    COPY_EXISTING ~%2da%.2DA~ ~override~
+  ACTION_FOR_EACH 2da IN ~backstab~ ~crippstr~ ~sneakatt~ BEGIN
+    COPY_EXISTING ~%2da%.2da~ ~override~
       COUNT_2DA_ROWS 1 rows
       READ_2DA_ENTRIES_NOW ~2da_table~ 1
       FOR (row = (rows - 1); row >= 0; row -= 1) BEGIN
         READ_2DA_ENTRY_FORMER ~2da_table~ row 0 match
-        PATCH_IF ((~%match%~ STR_EQ ~%row_name%~) OR 
-                  (~%match%~ STR_EQ ~%kit%~)) BEGIN
+        PATCH_IF (~%match%~ STR_EQ ~%kit%~) BEGIN
           REMOVE_2DA_ROW row 1
         END
       END
-    BUT_ONLY
+    IF_EXISTS BUT_ONLY
   END
-
-END
-
 END
 
 ////////////////////////////////////////////////////////////
@@ -439,45 +336,13 @@ if "match" is found, "stat" is for existing line, and "string" will not be added
 set exact = 1 for exact match or leave at default (only needs to contain the "match" string)
 */
 
-DEFINE_ACTION_FUNCTION d2_splprot_adder INT_VAR exact=0 STR_VAR match=d2stats string=~~ RET stat BEGIN
-
-  COPY_EXISTING ~splprot.2DA~  ~override~
-    SET stat = 0
-    COUNT_2DA_ROWS 1 count
-
-    PATCH_IF (RESOURCE_CONTAINS ~splprot.2DA~ ~%match%~) BEGIN
-      READ_2DA_ENTRIES_NOW ~splprot_table~ 1
-      FOR (row = 0; row < count; ++row) BEGIN
-        READ_2DA_ENTRY_FORMER ~splprot_table~ row 0 row_name
-        PATCH_IF (exact > 0) BEGIN
-          PATCH_IF (~%row_name%~ STR_EQ ~%match%~) BEGIN                     // exact match of row_name and "match" strings
-            SET stat = row - 3
-          END
-        END ELSE BEGIN
-          PATCH_IF !(~%row_name%~ STRING_CONTAINS_REGEXP ~%match%~) BEGIN    // "row_name" just needs to contain "match"
-            SET stat = row - 3
-          END
-        END
-      END
-    END ELSE BEGIN
-      PATCH_IF !(~%string%~ STR_EQ ~~) BEGIN
-        INSERT_2DA_ROW count 1 EVAL ~%string%~
-        SET stat = count - 3
-        PRETTY_PRINT_2DA
-      END
-    END
-
-  BUT_ONLY
-
-END
-
 DEFINE_PATCH_FUNCTION d2_splprot_adder INT_VAR exact=0 STR_VAR match=d2stats string=~~ RET stat BEGIN
 
   PATCH_IF (~%SOURCE_RES%~ STR_EQ ~splprot~) BEGIN
     SET stat = 0
     COUNT_2DA_ROWS 1 count
 
-    PATCH_IF (RESOURCE_CONTAINS ~splprot.2DA~ ~%match%~) BEGIN
+    PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~ ~%match%~) BEGIN
       READ_2DA_ENTRIES_NOW ~splprot_table~ 1
       FOR (row = 0; row < count; ++row) BEGIN
         READ_2DA_ENTRY_FORMER ~splprot_table~ row 0 row_name
@@ -500,6 +365,12 @@ DEFINE_PATCH_FUNCTION d2_splprot_adder INT_VAR exact=0 STR_VAR match=d2stats str
     END
   END
 
+END
+
+DEFINE_ACTION_FUNCTION d2_splprot_adder INT_VAR exact=0 STR_VAR match=d2stats string=~~ RET stat BEGIN
+  COPY_EXISTING ~splprot.2da~  ~override~
+    LPF d2_splprot_adder INT_VAR exact=exact STR_VAR match=EVAL ~%match%~ string=EVAL ~%string%~ RET stat END
+  IF_EXISTS BUT_ONLY
 END
 
 ////////////////////////////////////////////////////////////
@@ -526,44 +397,44 @@ DEFINE_ACTION_FUNCTION d2_clone_hla_table
     hlatable    // resource of new hla table (full name including the "lu")
 BEGIN
 
-  OUTER_TEXT_SPRINT hlatable  ~file not found~
+  OUTER_SPRINT hlatable  ~file not found~
 
   ACTION_IF !(~%clone%~ STR_EQ ~~) BEGIN
-    OUTER_TEXT_SPRINT hlatable  ~lu%clone%~
+    OUTER_SPRINT hlatable  ~lu%clone%~
   END
 
   ACTION_IF (RESOURCE_CONTAINS ~luabbr.2da~ ~%kitids%~) BEGIN
-    ACTION_IF !(FILE_EXISTS_IN_GAME ~%hlatable%.2DA~) BEGIN
+    ACTION_IF !(FILE_EXISTS_IN_GAME ~%hlatable%.2da~) BEGIN
       ACTION_IF !(~%copy%~ STR_EQ ~~) BEGIN
         COPY_EXISTING - ~luabbr.2da~  ~~
           LPF 2da_find_row STR_VAR row_name=EVAL ~%copy%~ RET row_number columns END
           READ_2DA_ENTRY row_number 1 columns ~tableres~
-        OUTER_TEXT_SPRINT hlatable  ~lu%tableres%~
+        OUTER_SPRINT hlatable  ~lu%tableres%~
       END
     END
 
-    ACTION_IF !(FILE_EXISTS_IN_GAME ~%hlatable%.2DA~) BEGIN
+    ACTION_IF !(FILE_EXISTS_IN_GAME ~%hlatable%.2da~) BEGIN
       ACTION_IF !(~%kitids%~ STR_EQ ~~) BEGIN
         COPY_EXISTING - ~luabbr.2da~  ~~
           LPF 2da_find_row STR_VAR row_name=EVAL ~%kitids%~ RET row_number columns END
           READ_2DA_ENTRY row_number 1 columns ~tableres~
-        OUTER_TEXT_SPRINT hlatable  ~lu%tableres%~
+        OUTER_SPRINT hlatable  ~lu%tableres%~
       END
     END
   END
 
   // add new 2da table
   ACTION_IF !(~%abbrev%~ STR_EQ ~~) BEGIN
-    ACTION_IF (FILE_EXISTS_IN_GAME ~%hlatable%.2DA~) BEGIN
-      COPY_EXISTING ~%hlatable%.2DA~  ~override/lu%abbrev%.2DA~
-      OUTER_TEXT_SPRINT hlatable  ~lu%abbrev%~
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%hlatable%.2da~) BEGIN
+      COPY_EXISTING ~%hlatable%.2da~  ~override/lu%abbrev%.2da~
+      OUTER_SPRINT hlatable  ~lu%abbrev%~
     END ELSE BEGIN
-      OUTER_TEXT_SPRINT hlatable  ~file not found~
+      OUTER_SPRINT hlatable  ~file not found~
     END
   END
 
   ACTION_IF (RESOURCE_CONTAINS ~luabbr.2da~ ~%kitids%~) BEGIN
-    ACTION_IF (FILE_EXISTS_IN_GAME ~%hlatable%.2DA~) BEGIN
+    ACTION_IF (FILE_EXISTS_IN_GAME ~%hlatable%.2da~) BEGIN
       COPY_EXISTING ~luabbr.2da~  ~override~
         LPF 2da_find_row_set STR_VAR row_name=EVAL ~%kitids%~ entry=EVAL ~%abbrev%~ END
       BUT_ONLY
@@ -582,25 +453,6 @@ END
 "string" should be full new line
 "columns" is number of columns in "string" (default 4 because this was originally made for tooltip.2da)
 */
-
-DEFINE_ACTION_FUNCTION d2_2da_row_adder INT_VAR columns=4 STR_VAR 2da=~~ string=~~ BEGIN
-  COPY_EXISTING ~%2da%.2da~  ~override~
-    COUNT_2DA_COLS col_count
-    COUNT_2DA_ROWS col_count row_count
-
-    // extend string if too few columns
-    SET check = col_count - columns
-    PATCH_IF (check > 0) BEGIN
-      READ_2DA_ENTRY 1 0 1 default
-      FOR (n = 1; n <= check; ++n) BEGIN
-        TEXT_SPRINT string ~%string%%TAB%%default%~
-      END
-    END
-
-    INSERT_2DA_ROW row_count col_count ~%string%~
-    PRETTY_PRINT_2DA
-  BUT_ONLY
-END
 
 DEFINE_PATCH_FUNCTION d2_2da_row_adder INT_VAR columns=4 STR_VAR string=~~ BEGIN
   PATCH_IF ((~%SOURCE_EXT%~ STR_EQ ~2da~) OR (~%DEST_EXT%~ STR_EQ ~2da~)) BEGIN
@@ -621,6 +473,12 @@ DEFINE_PATCH_FUNCTION d2_2da_row_adder INT_VAR columns=4 STR_VAR string=~~ BEGIN
   END
 END
 
+DEFINE_ACTION_FUNCTION d2_2da_row_adder INT_VAR columns=4 STR_VAR 2da=~~ string=~~ BEGIN
+  COPY_EXISTING ~%2da%.2da~  ~override~
+    LPF d2_2da_row_adder INT_VAR columns=columns STR_VAR string=EVAL ~%string%~ END
+  IF_EXISTS BUT_ONLY
+END
+
 ////////////////////////////////////////////////////////////
 
 //If "amount" is 0 or higher, then it is used for all styles
@@ -631,86 +489,6 @@ Higher numbers will lower to match base Fighter class
 If no INT_VARs are set, will give Fighter class styles
 */
 
-DEFINE_ACTION_FUNCTION d2_weapprof_styles
-  INT_VAR amount = ~-1~
-    a = ~-1~    // 2 handed
-    b = ~-1~    // shield
-    c = ~-1~    // single
-    d = ~-1~    // 2 weapon
-  STR_VAR kit = none
-BEGIN
-
-  COPY_EXISTING ~weapprof.2da~  ~override~
-
-    PATCH_IF (RESOURCE_CONTAINS ~weapprof.2da~  ~[^0-9^a-z^_]%kit%[^0-9^a-z^_]~) BEGIN
-
-      // check amount
-      PATCH_IF (amount >= 0) BEGIN
-        SET a=amount SET b=amount SET c=amount SET d=amount
-      END
-      PATCH_IF (a<0 AND b<0 AND c<0 AND d<0) BEGIN
-        SET a=5 SET b=5 SET c=5 SET d=5
-      END
-
-      // variables
-      COUNT_2DA_ROWS 3 weapprof_rows
-      READ_2DA_ENTRIES_NOW ~weapprof_table~ 3
-      COUNT_2DA_COLS weapprof_cols
-  
-      LPF 2da_find_column STR_VAR col_name=fighter RET col_number END
-      SET fighter_col = col_number
-      LPF 2da_find_column STR_VAR col_name=EVAL ~%kit%~ RET col_number END
-      SET kit_col = col_number
-
-      PATCH_IF (fighter_col>3 AND fighter_col<weapprof_cols) BEGIN
-      PATCH_IF (kit_col>3 AND kit_col<weapprof_cols) BEGIN
-
-        // patch
-        FOR (r = 1; r < weapprof_rows; ++r) BEGIN
-          READ_2DA_ENTRY_FORMER ~weapprof_table~ r 1 value
-
-          // 2 handed
-          PATCH_IF (value=111 AND a >= 0) BEGIN
-            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
-            PATCH_IF (a > fighter_slots) BEGIN SET a = fighter_slots END
-            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col a
-          END
-
-          // shield
-          PATCH_IF (value=112 AND b >= 0) BEGIN
-            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
-            PATCH_IF (b > fighter_slots) BEGIN SET b = fighter_slots END
-            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col b
-          END
-
-          // single
-          PATCH_IF (value=113 AND c >= 0) BEGIN
-            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
-            PATCH_IF (c > fighter_slots) BEGIN SET c = fighter_slots END
-            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col c
-          END
-
-          // 2 weapon
-          PATCH_IF (value=114 AND d >= 0) BEGIN
-            READ_2DA_ENTRY_FORMER ~weapprof_table~ r fighter_col fighter_slots
-            PATCH_IF (d > fighter_slots) BEGIN SET d = fighter_slots END
-            SET_2DA_ENTRY_LATER ~d2weapprof_edits~ r kit_col d
-          END
-        END
-
-        // make edits
-        SET_2DA_ENTRIES_NOW ~d2weapprof_edits~ 3
-        PRETTY_PRINT_2DA
-
-      END
-      END
-    END
-  IF_EXISTS BUT_ONLY
-
-END
-
-
-//
 DEFINE_PATCH_FUNCTION d2_weapprof_styles
   INT_VAR amount = ~-1~
     a = ~-1~    // 2 handed
@@ -722,7 +500,7 @@ BEGIN
 
   PATCH_IF (~%SOURCE_RES%~ STR_EQ ~weapprof~) BEGIN
 
-    PATCH_IF (RESOURCE_CONTAINS ~weapprof.2da~  ~[^0-9^a-z^_]%kit%[^0-9^a-z^_]~) BEGIN
+    PATCH_IF (RESOURCE_CONTAINS ~%SOURCE_FILE%~  ~[^0-9^a-z^_]%kit%[^0-9^a-z^_]~) BEGIN
 
       // check amount
       PATCH_IF (amount >= 0) BEGIN
@@ -787,6 +565,19 @@ BEGIN
     END
   END
 
+END
+
+DEFINE_ACTION_FUNCTION d2_weapprof_styles
+  INT_VAR amount = ~-1~
+    a = ~-1~    // 2 handed
+    b = ~-1~    // shield
+    c = ~-1~    // single
+    d = ~-1~    // 2 weapon
+  STR_VAR kit = none
+BEGIN
+  COPY_EXISTING ~weapprof.2da~  ~override~
+    LPF d2_weapprof_styles INT_VAR amount=amount a=a b=b c=c d=d STR_VAR kit=EVAL ~%kit%~ END
+  IF_EXISTS BUT_ONLY
 END
 
 ////////////////////////////////////////////////////////////
